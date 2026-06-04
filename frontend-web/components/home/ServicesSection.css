@@ -1,0 +1,357 @@
+/* ============================================================
+   SERVICES SECTION — CLEAN & PROFESSIONAL ✦ West Chemist Clinic
+   ============================================================ */
+
+.ss_section {
+    position: relative;
+    padding: 120px 5% 50px;
+    background: transparent;
+    /* Slightly off-white for depth removed for transparency */
+    overflow: hidden;
+}
+
+/* ════════════════════════════════════
+   BACKGROUND: CLEAN & SUBTLE
+════════════════════════════════════ */
+.ss_bg_gradient {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(75, 45, 113, 0.03) 0%, transparent 60%);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.ss_bg_pattern {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+        radial-gradient(rgba(32, 107, 94, 0.08) 1px, transparent 1px);
+    background-size: 30px 30px;
+    mask-image: linear-gradient(to bottom, black 0%, transparent 80%);
+    z-index: 0;
+}
+
+/* ════════════════════════════════════
+   CONTAINER & HEADER
+════════════════════════════════════ */
+.ss_container {
+    max-width: 1240px;
+    /* Standard professional width */
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+.ss_header {
+    text-align: center;
+    margin-bottom: 70px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ss_eyebrow {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--secondary);
+    background: #ffffff;
+    border: 1px solid rgba(32, 107, 94, 0.15);
+    padding: 6px 16px;
+    border-radius: 99px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+}
+
+.ss_title {
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    font-weight: 800;
+    color: var(--foreground);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+}
+
+.ss_title_accent {
+    color: var(--primary);
+    position: relative;
+    display: inline-block;
+}
+
+.ss_title_accent::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: rgba(75, 45, 113, 0.15);
+    border-radius: 4px;
+}
+
+.ss_subtitle {
+    font-size: 1.1rem;
+    color: rgba(15, 23, 42, 0.65);
+    line-height: 1.6;
+}
+
+/* ════════════════════════════════════
+   SCROLL REVEAL 
+════════════════════════════════════ */
+.ss_reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition:
+        opacity 0.8s cubic-bezier(0.2, 1, 0.3, 1) var(--delay, 0s),
+        transform 0.8s cubic-bezier(0.2, 1, 0.3, 1) var(--delay, 0s);
+}
+
+.ss_visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ════════════════════════════════════
+   THE MAIN GRID
+════════════════════════════════════ */
+.ss_grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-bottom: 60px;
+}
+
+@media (max-width: 1024px) {
+    .ss_section {
+        padding: 80px 5% 40px;
+    }
+    .ss_grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+}
+
+@media (max-width: 640px) {
+    .ss_section {
+        padding: 60px 5% 30px;
+    }
+    .ss_grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ════════════════════════════════════
+   CARD STYLES (Professional & Clean)
+════════════════════════════════════ */
+.ss_card {
+    position: relative;
+    border-radius: 16px;
+    padding: 6px;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    perspective: 1500px;
+    transform-style: preserve-3d;
+}
+
+.ss_card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 18px;
+    background: linear-gradient(135deg, transparent, rgba(75, 45, 113, 0.03), transparent);
+    z-index: 0;
+    transition: background 0.4s ease;
+}
+
+.ss_card:hover {
+    transform: translateY(-8px);
+}
+
+.ss_card:hover::before {
+    background: linear-gradient(135deg, var(--scolor), rgba(255, 255, 255, 0));
+    opacity: 0.3;
+}
+
+.ss_card_inner {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.03),
+        0 1px 3px rgba(0, 0, 0, 0.02);
+    position: relative;
+    z-index: 1;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    transform-style: preserve-3d;
+    transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transition: box-shadow 0.4s ease, border-color 0.4s ease, transform 0.15s ease-out;
+    will-change: transform;
+}
+
+.ss_card:hover .ss_card_inner {
+    box-shadow:
+        0 25px 50px rgba(0, 0, 0, 0.1),
+        0 10px 20px rgba(0, 0, 0, 0.05);
+    border-color: rgba(75, 45, 113, 0.1);
+}
+
+/* ════════════════════════════════════
+   IMAGE BLOCK
+════════════════════════════════════ */
+.ss_img_wrapper {
+    width: 100%;
+    height: 220px;
+    position: relative;
+    overflow: hidden;
+    background: #f4f4f4;
+    transform: translateZ(10px);
+}
+
+.ss_img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.ss_card:hover .ss_img {
+    transform: scale(1.06);
+}
+
+/* ════════════════════════════════════
+   CONTENT BLOCK
+════════════════════════════════════ */
+.ss_content {
+    padding: 26px 24px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex-grow: 1;
+    background: transparent;
+    position: relative;
+    transform: translateZ(30px);
+}
+
+.ss_card_title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+}
+
+.ss_card_desc {
+    font-size: 0.95rem;
+    color: rgba(15, 23, 42, 0.6);
+    margin-bottom: 26px;
+    line-height: 1.5;
+}
+
+/* ACTIONS */
+.ss_actions {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    justify-content: center;
+    margin-top: auto;
+}
+
+.ss_btn {
+    padding: 10px 18px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    border-radius: 6px;
+    transition: all 0.25s ease;
+    text-transform: uppercase;
+}
+
+/* Outline button */
+.ss_btn_outline {
+    color: var(--primary);
+    border: 1.5px solid rgba(75, 45, 113, 0.15);
+    background: #fff;
+}
+
+.ss_btn_outline:hover {
+    background: rgba(75, 45, 113, 0.04);
+    border-color: var(--primary);
+}
+
+/* Solid Button */
+.ss_btn_solid {
+    background: var(--foreground);
+    color: #fff;
+    border: 1.5px solid var(--foreground);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.ss_btn_solid:hover {
+    background: var(--scolor);
+    border-color: var(--scolor);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+    transform: translateY(-1px);
+}
+
+/* Subtle mouse glare */
+.ss_card_glare {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 5;
+    background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%),
+            rgba(255, 255, 255, 0.4) 0%,
+            transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.ss_card:hover .ss_card_glare {
+    opacity: 1;
+}
+
+/* ════════════════════════════════════
+   GLOBAL VIEW ALL BUTTON
+════════════════════════════════════ */
+.ss_bottom_cta {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.ss_global_btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 18px 46px;
+    background: var(--secondary);
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    border-radius: 99px;
+    text-decoration: none;
+    box-shadow: 0 8px 25px rgba(32, 107, 94, 0.25);
+    transition: all 0.3s ease;
+}
+
+.ss_global_btn:hover {
+    transform: translateY(-4px);
+    background: #19584d;
+    box-shadow: 0 12px 30px rgba(32, 107, 94, 0.35);
+}
+
+.ss_global_btn svg {
+    transition: transform 0.3s ease;
+}
+
+.ss_global_btn:hover svg {
+    transform: translateX(4px);
+}
+

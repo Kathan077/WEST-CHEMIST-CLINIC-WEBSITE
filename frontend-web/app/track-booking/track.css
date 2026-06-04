@@ -1,0 +1,692 @@
+/* ============================================================
+   TRACK-BOOKING.CSS — ULTIMATE PREMIUM ✦ West Chemist Clinic
+   ============================================================ */
+
+.track_page_wrap {
+    min-height: 100vh;
+    background: radial-gradient(circle at 10% 20%, rgba(243, 244, 246, 0.9) 0%, rgba(229, 231, 235, 0.6) 90%);
+    padding: 120px 24px 80px;
+    font-family: 'Outfit', sans-serif;
+    color: #1e293b;
+    display: flex;
+    justify-content: center;
+}
+
+.track_container {
+    width: 100%;
+    max-width: 1100px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+/* Header Section */
+.track_header {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.track_page_title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #2d1b69;
+    letter-spacing: -0.03em;
+    margin-bottom: 12px;
+}
+
+.track_page_desc {
+    color: #64748b;
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+/* Glassmorphic Search Panel */
+.search_glass_panel {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.06);
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search_glass_panel:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 30px 60px rgba(15, 23, 42, 0.08);
+}
+
+.input_label {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.uk_phone_wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.uk_flag_addon {
+    position: absolute;
+    left: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #64748b;
+    font-weight: 700;
+    font-size: 0.95rem;
+    pointer-events: none;
+    border-right: 1px solid #cbd5e1;
+    padding-right: 12px;
+}
+
+.uk_flag_addon svg {
+    border-radius: 2px;
+}
+
+.premium_input {
+    width: 100%;
+    padding: 16px 16px 16px 105px;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #0f172a;
+    background: #f8fafc;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.premium_input:focus {
+    border-color: #5e35b1;
+    background: #ffffff;
+    outline: none;
+    box-shadow: 0 0 0 5px rgba(94, 53, 177, 0.12);
+}
+
+.btn_glow_search {
+    width: 100%;
+    background: linear-gradient(135deg, #2d1b69, #4b2d71);
+    color: #ffffff;
+    border: none;
+    border-radius: 16px;
+    padding: 16px 28px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 10px 25px rgba(45, 27, 105, 0.2);
+    transition: all 0.3s ease;
+}
+
+.btn_glow_search:hover {
+    background: linear-gradient(135deg, #3d2880, #5c398b);
+    transform: translateY(-2px);
+    box-shadow: 0 15px 35px rgba(45, 27, 105, 0.3);
+}
+
+.btn_glow_search:active {
+    transform: translateY(0);
+}
+
+.btn_glow_search:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Patient Summary Banner */
+.patient_profile_card {
+    background: linear-gradient(135deg, #2d1b69, #1e1145);
+    border-radius: 24px;
+    padding: 32px;
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+    box-shadow: 0 20px 40px rgba(45, 27, 105, 0.15);
+}
+
+.patient_info_details h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 6px;
+}
+
+.patient_info_details p {
+    opacity: 0.8;
+    font-size: 1rem;
+}
+
+.patient_badge {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 10px 20px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+/* Grid of Tickets */
+.tickets_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 32px;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .tickets_grid {
+        grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+        gap: 40px;
+    }
+}
+
+/* Boarding Pass Ticket */
+.pro_ticket {
+    background: #ffffff;
+    border-radius: 24px;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.04);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 100%;
+    max-width: 540px;
+    margin: 0 auto;
+}
+
+.pro_ticket:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.08);
+}
+
+/* Ticket Perforation line with Punch Holes */
+.ticket_perforation_line {
+    position: relative;
+    height: 2px;
+    background-image: linear-gradient(to right, #cbd5e1 50%, rgba(255, 255, 255, 0) 0%);
+    background-position: bottom;
+    background-size: 8px 2px;
+    background-repeat: repeat-x;
+    margin: 0 32px;
+}
+
+.punch_hole {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #f3f4f6; /* matches the general body background */
+    z-index: 5;
+    top: -9px;
+}
+
+.punch_hole.left {
+    left: -42px;
+    border-right: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: inset -3px 0 4px -2px rgba(0, 0, 0, 0.05);
+}
+
+.punch_hole.right {
+    right: -42px;
+    border-left: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: inset 3px 0 4px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Ticket Top Header */
+.ticket_top_header {
+    background: #ffffff;
+    padding: 28px 32px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    border-radius: 24px 24px 0 0;
+}
+
+.ticket_top_text_group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.ticket_top_title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #1e1145;
+    letter-spacing: -0.02em;
+}
+
+.ticket_top_subtitle {
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+/* Ticket Status Glowing Badge */
+.status_badge {
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    flex-shrink: 0;
+}
+
+.status_badge.confirmed, .status_badge.upcoming {
+    background: rgba(16, 185, 129, 0.08);
+    color: #059669;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.status_badge.pending {
+    background: rgba(245, 158, 11, 0.08);
+    color: #d97706;
+    border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.status_badge.cancelled {
+    background: rgba(239, 68, 68, 0.08);
+    color: #dc2626;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.status_badge.today, .status_badge.appointment_day {
+    background: rgba(37, 99, 235, 0.08);
+    color: #1d4ed8;
+    border: 1px solid rgba(37, 99, 235, 0.2);
+}
+
+.status_badge.expired {
+    background: rgba(100, 116, 139, 0.08);
+    color: #475569;
+    border: 1px solid rgba(100, 116, 139, 0.2);
+}
+
+.status_dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.status_badge.confirmed .status_dot, .status_badge.upcoming .status_dot {
+    background: #10b981;
+    box-shadow: 0 0 6px #10b981;
+}
+
+.status_badge.pending .status_dot {
+    background: #f59e0b;
+    box-shadow: 0 0 6px #f59e0b;
+}
+
+.status_badge.cancelled .status_dot {
+    background: #ef4444;
+}
+
+.status_badge.today .status_dot, .status_badge.appointment_day .status_dot {
+    background: #3b82f6;
+    box-shadow: 0 0 6px #3b82f6;
+}
+
+.status_badge.expired .status_dot {
+    background: #94a3b8;
+}
+
+/* Ticket Body details */
+.ticket_body {
+    padding: 28px 32px 32px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.ticket_row_detail {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.ticket_label_txt {
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.ticket_value_txt {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.ticket_value_time {
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: #0f766e;
+}
+
+/* Action Rows for directions / print */
+.ticket_action_bar {
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.action_link_btn {
+    flex: 1;
+    padding: 11px 14px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.action_link_btn.direction {
+    background: #f8fafc;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+}
+
+.action_link_btn.direction:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+    border-color: #cbd5e1;
+}
+
+.action_link_btn.cancel {
+    background: #fff5f5;
+    color: #c53030;
+    border: 1px solid #feb2b2;
+}
+
+.action_link_btn.cancel:hover {
+    background: #fff0f0;
+    color: #9b2c2c;
+    border-color: #fc8181;
+}
+
+.action_link_btn.print {
+    background: linear-gradient(135deg, #2d1b69, #4b2d71);
+    color: #ffffff;
+    border: 1px solid rgba(45, 27, 105, 0.1);
+    box-shadow: 0 4px 12px rgba(45, 27, 105, 0.12);
+}
+
+.action_link_btn.print:hover {
+    background: linear-gradient(135deg, #3d2880, #5c398b);
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(45, 27, 105, 0.2);
+}
+
+/* Bottom Barcode section */
+.ticket_footer_barcode {
+    background: #fafaf9;
+    border-top: 1px dashed #e2e8f0;
+    padding: 24px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.barcode_strip_img {
+    height: 48px;
+    width: 100%;
+    max-width: 280px;
+    background-image: repeating-linear-gradient(
+        90deg,
+        #000000,
+        #000000 2px,
+        transparent 2px,
+        transparent 5px,
+        #000000 5px,
+        #000000 7px,
+        transparent 7px,
+        transparent 10px
+    );
+    opacity: 0.85;
+}
+
+.barcode_number_label {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    color: #64748b;
+}
+
+/* Ticket Info Grid Boarding Pass */
+.ticket_info_grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 24px;
+    margin-bottom: 8px;
+}
+
+.ticket_info_cell {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.ticket_info_cell.span_full {
+    grid-column: 1 / -1;
+}
+
+.service_highlight {
+    color: #2d1b69 !important;
+    font-weight: 800 !important;
+}
+
+.compliance_status_badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #0d9488;
+    font-size: 0.8rem;
+    font-weight: 800;
+}
+
+/* Print Friendly Layout */
+@media print {
+    .track_page_wrap {
+        background: none;
+        padding: 0;
+    }
+    .track_header, .search_glass_panel, .track_action_bar, .patient_badge {
+        display: none !important;
+    }
+    .pro_ticket {
+        box-shadow: none !important;
+        border: 2px solid #000000 !important;
+        page-break-inside: avoid;
+    }
+}
+
+/* Reschedule Button and Inline Panel */
+.action_link_btn.reschedule {
+    background: #f5f3ff;
+    color: #7c3aed;
+    border: 1px solid #ddd6fe;
+    border-radius: 9999px;
+    padding: 10px 18px;
+}
+
+.action_link_btn.reschedule:hover {
+    background: #ede9fe;
+    border-color: #c084fc;
+    color: #6d28d9;
+}
+
+.reschedule_panel {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 20px;
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    animation: slideDown 0.25s ease-out;
+    text-align: left;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.reschedule_title {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #2d1b69;
+    margin: 0;
+}
+
+.reschedule_input_date {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #0f172a;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.reschedule_input_date:focus {
+    border-color: #7c3aed;
+}
+
+.reschedule_slots_grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    max-height: 160px;
+    overflow-y: auto;
+    padding-right: 4px;
+    margin-top: 8px;
+}
+
+.reschedule_slot_btn {
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-align: center;
+    border: 1px solid #e2e8f0;
+    background: #ffffff;
+    color: #475569;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.reschedule_slot_btn:hover:not(:disabled) {
+    border-color: #7c3aed;
+    color: #7c3aed;
+    background: #f5f3ff;
+}
+
+.reschedule_slot_btn.selected {
+    background: #7c3aed;
+    color: #ffffff;
+    border-color: #7c3aed;
+    box-shadow: 0 4px 10px rgba(124, 58, 237, 0.2);
+}
+
+.reschedule_slot_btn:disabled {
+    background: #f1f5f9;
+    color: #94a3b8;
+    cursor: not-allowed;
+    border-color: #f1f5f9;
+}
+
+.reschedule_actions {
+    display: flex;
+    gap: 10px;
+}
+
+.reschedule_submit_btn {
+    flex: 2;
+    background: #7c3aed;
+    color: #ffffff;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: background 0.2s;
+}
+
+.reschedule_submit_btn:hover:not(:disabled) {
+    background: #6d28d9;
+}
+
+.reschedule_submit_btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.reschedule_cancel_btn {
+    flex: 1;
+    background: #f1f5f9;
+    color: #475569;
+    border: 1px solid #cbd5e1;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.2s;
+}
+
+.reschedule_cancel_btn:hover {
+    background: #e2e8f0;
+}

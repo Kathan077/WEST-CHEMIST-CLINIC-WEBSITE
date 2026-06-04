@@ -1,0 +1,142 @@
+.tt_section {
+    padding: 60px 5% 80px;
+    background: #ffffff;
+}
+
+.tt_container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.tt_header {
+    margin-bottom: 50px;
+    text-align: left;
+}
+
+.tt_title {
+    font-size: 2.4rem;
+    font-weight: 900;
+    color: var(--primary);
+    margin-bottom: 10px;
+    letter-spacing: -0.02em;
+}
+
+.tt_subtitle {
+    color: #64748b;
+    font-size: 1.15rem;
+    line-height: 1.6;
+    max-width: 600px;
+}
+
+
+.tt_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.tt_tag_card {
+    background: #f8fafc;
+    border-radius: 16px; /* Slightly sharper but smooth */
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tt_tag_card:hover {
+    transform: translateY(-4px);
+    background: #ffffff;
+    border-color: var(--t-color);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.06);
+}
+
+.tt_tag_inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+
+.tt_name {
+    font-weight: 700;
+    color: var(--foreground);
+    font-size: 0.95rem;
+}
+
+.tt_tag_card:hover .tt_name {
+    color: var(--t-color);
+}
+
+.tt_count {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    background: #ffffff;
+    padding: 4px 10px;
+    border-radius: 100px;
+    font-weight: 800;
+    transition: all 0.3s ease;
+}
+
+.tt_tag_card:hover .tt_count {
+    background: var(--t-color);
+    color: #ffffff;
+}
+
+@media (max-width: 768px) {
+    .tt_section {
+        padding: 80px 5%;
+    }
+
+    .tt_header {
+        margin-bottom: 30px;
+    }
+
+    .tt_tag_card {
+        padding: 10px 20px;
+    }
+}
+
+@media (max-width: 425px) {
+    .tt_section {
+        padding: 50px 20px;
+    }
+
+    .tt_grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 12px;
+    }
+
+    .tt_title {
+        font-size: 1.8rem;
+    }
+    
+    .tt_tag_card {
+        padding: 15px 12px;
+        border-radius: 12px;
+    }
+    
+    .tt_name {
+        font-size: 0.9rem;
+    }
+}
+
+
+@media (max-width: 320px) {
+    .tt_section {
+        padding: 40px 15px;
+    }
+    
+    .tt_title {
+        font-size: 1.6rem;
+    }
+}

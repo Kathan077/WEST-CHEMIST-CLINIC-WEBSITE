@@ -1,0 +1,346 @@
+/* ============================================================
+   WEIGHTLOSS.CSS — PRO LEVEL ✦ West Chemist Clinic
+   ============================================================ */
+
+.wl_section {
+    position: relative;
+    padding: 50px 5% 60px;
+    background: transparent;
+    overflow: hidden;
+}
+
+.wl_container {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+/* ════════════════════════════════════
+   SCROLL REVEALS
+════════════════════════════════════ */
+.wl_reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition:
+        opacity 0.8s cubic-bezier(0.19, 1, 0.22, 1) var(--delay, 0ms),
+        transform 0.8s cubic-bezier(0.19, 1, 0.22, 1) var(--delay, 0ms);
+}
+
+.wl_visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ════════════════════════════════════
+   CONTENT PORTION (LEFT)
+════════════════════════════════════ */
+.wl_content {
+    display: flex;
+    flex-direction: column;
+}
+
+.wl_title {
+    font-size: clamp(2.4rem, 4vw, 3.4rem);
+    font-weight: 800;
+    color: var(--primary);
+    line-height: 1.15;
+    margin-bottom: 30px;
+    letter-spacing: -0.02em;
+}
+
+.wl_actions {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.wl_btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 28px;
+    border-radius: 999px;
+    /* Pill shape */
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1), box-shadow 0.3s ease, background 0.3s ease;
+    white-space: nowrap;
+}
+
+.wl_btn_solid {
+    background: #0081a7;
+    /* Theme blue/primary */
+    color: #fff;
+    border: 2px solid #0081a7;
+    box-shadow: 0 4px 15px rgba(0, 129, 167, 0.2);
+}
+
+.wl_btn_solid:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0, 129, 167, 0.3);
+    background: #00607a;
+    border-color: #00607a;
+}
+
+.wl_btn_outline {
+    background: transparent;
+    color: var(--primary);
+    border: 2px solid rgba(75, 45, 113, 0.2);
+}
+
+.wl_btn_outline:hover {
+    transform: translateY(-4px);
+    border-color: var(--primary);
+    background: rgba(75, 45, 113, 0.03);
+}
+
+.wl_desc {
+    font-size: 1.15rem;
+    color: rgba(15, 23, 42, 0.8);
+    line-height: 1.6;
+    margin-bottom: 24px;
+    max-width: 90%;
+}
+
+.wl_list {
+    list-style: none;
+    /* We will use custom bullets */
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.wl_list li {
+    font-size: 1.05rem;
+    color: rgba(15, 23, 42, 0.8);
+    position: relative;
+    padding-left: 20px;
+    transition: transform 0.3s ease;
+}
+
+.wl_list li::before {
+    content: "✔";
+    position: absolute;
+    left: 0;
+    color: var(--primary);
+    font-weight: bold;
+    font-size: 1.1rem;
+    line-height: 1;
+    top: 2px;
+}
+
+.wl_list li:hover {
+    transform: translateX(5px);
+    color: var(--primary);
+}
+
+/* ════════════════════════════════════
+   IMAGE PORTION (RIGHT)
+════════════════════════════════════ */
+.wl_image_box {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    perspective: 1500px;
+    /* preserve-3d will be used in inner */
+}
+
+.wl_image_inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    transform-style: preserve-3d;
+    transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transition: transform 0.2s ease-out;
+    will-change: transform;
+}
+
+.wl_img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* ════════════════════════════════════
+   FLOATING BADGES (PRO LEVEL)
+════════════════════════════════════ */
+.wl_badge {
+    position: absolute;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transform: translateZ(40px);
+    /* 3D pop out */
+}
+
+.bubble_purple_1 {
+    width: 90px;
+    height: 90px;
+    background: #fff;
+    border: 3px solid #8e6baa;
+    /* matching the purple from screenshot */
+    color: #8e6baa;
+    top: 50px;
+    right: 170px;
+    animation: float1 4s ease-in-out infinite alternate;
+}
+
+.bubble_purple_2 {
+    width: 70px;
+    height: 70px;
+    background: #fff;
+    border: 3px solid #8e6baa;
+    color: #8e6baa;
+    top: 10px;
+    right: 80px;
+    animation: float2 5s ease-in-out infinite alternate-reverse;
+}
+
+.red_badge {
+    width: 150px;
+    height: 150px;
+    background: #e62031;
+    /* Bright red */
+    color: #fff;
+    border: 6px solid #fff;
+    right: -20px;
+    bottom: 50px;
+    animation: float1 6s ease-in-out infinite alternate;
+    transform: translateZ(80px);
+    /* Huge 3D pop */
+}
+
+.red_badge_lg {
+    font-size: 2.2rem;
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    line-height: 1;
+}
+
+.red_badge_sm {
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.wl_badge svg {
+    width: 40px;
+    height: 40px;
+}
+
+.bubble_purple_2 svg {
+    width: 32px;
+    height: 32px;
+}
+
+@keyframes float1 {
+    to {
+        transform: translateZ(40px) translateY(-15px);
+    }
+}
+
+@keyframes float2 {
+    to {
+        transform: translateZ(40px) translateY(10px);
+    }
+}
+
+.wl_image_inner:hover .red_badge {
+    transform: translateZ(100px) scale(1.05);
+    /* Extra pop on hover */
+}
+
+/* ════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════ */
+@media (max-width: 1024px) {
+    .wl_section {
+        padding: 40px 5% 40px;
+    }
+
+    .wl_container {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+
+    .wl_content {
+        order: 1;
+    }
+
+    .wl_image_box {
+        order: 2;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 640px) {
+    .wl_section {
+        padding: 30px 5% 30px;
+    }
+
+    .wl_title {
+        font-size: 2.2rem;
+    }
+
+    .wl_actions {
+        flex-direction: column;
+    }
+
+    .wl_btn {
+        width: 100%;
+    }
+
+    .red_badge {
+        width: 110px;
+        height: 110px;
+        right: -10px;
+        border-width: 4px;
+    }
+
+    .red_badge_lg {
+        font-size: 1.6rem;
+    }
+
+    .red_badge_sm {
+        font-size: 0.8rem;
+    }
+
+    .bubble_purple_1 {
+        width: 70px;
+        height: 70px;
+        top: 20px;
+        right: 120px;
+    }
+
+    .bubble_purple_1 svg {
+        width: 30px;
+        height: 30px;
+    }
+
+    .bubble_purple_2 {
+        width: 50px;
+        height: 50px;
+        top: 5px;
+        right: 60px;
+    }
+
+    .bubble_purple_2 svg {
+        width: 24px;
+        height: 24px;
+    }
+}
+

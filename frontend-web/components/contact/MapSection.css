@@ -1,0 +1,108 @@
+.mapContainer {
+    position: relative;
+    width: 100%;
+    height: 480px;
+    border-radius: 24px;
+    overflow: hidden;
+    background: #f1f5f9;
+    border: 1px solid rgba(45, 27, 105, 0.08);
+    box-shadow: 0 20px 40px rgba(45, 27, 105, 0.05);
+}
+
+.mapIframe {
+    filter: grayscale(0.15) contrast(1.1) brightness(0.98);
+    transition: filter 0.3s ease;
+}
+
+.mapIframe:hover {
+    filter: none;
+}
+
+.mapFloatingCard {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(45, 27, 105, 0.08);
+    border-radius: 16px;
+    padding: 24px;
+    width: 280px;
+    box-shadow: 0 10px 30px rgba(45, 27, 105, 0.12);
+    z-index: 10;
+    pointer-events: auto;
+    animation: cardSlideUp 0.6s cubic-bezier(0.19, 1, 0.22, 1) both;
+}
+
+@keyframes cardSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.mapCardTitle {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary, #2d1b69);
+    margin-bottom: 8px;
+}
+
+.mapCardAddress {
+    font-size: 0.9rem;
+    color: #475569;
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+
+.mapCardBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--primary, #2d1b69);
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 10px 20px;
+    border-radius: 99px;
+    width: 100%;
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    box-shadow: 0 4px 12px rgba(45, 27, 105, 0.15);
+}
+
+.mapCardBtn:hover {
+    background: #3d2880;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(45, 27, 105, 0.25);
+}
+
+.mapCardBtn svg {
+    transition: transform 0.3s ease;
+}
+
+.mapCardBtn:hover svg {
+    transform: translate(2px, -2px);
+}
+
+@media (max-width: 768px) {
+    .mapContainer {
+        height: 380px;
+    }
+    .mapFloatingCard {
+        bottom: 16px;
+        left: 16px;
+        right: 16px;
+        width: calc(100% - 32px);
+        padding: 16px;
+    }
+    .mapCardAddress {
+        margin-bottom: 12px;
+    }
+}

@@ -1,0 +1,105 @@
+"use client";
+
+import React, { useState, useEffect, useRef } from 'react';
+import './AboutFaq.css';
+
+const faqs = [
+    {
+        id: 1,
+        question: "How do I book an appointment online?",
+        answer: "You can easily book an appointment through our online patient portal by selecting your preferred doctor and available time slot."
+    },
+    {
+        id: 2,
+        question: "Can I access my medical records digitally?",
+        answer: "Yes, all patients can securely access their medical history, prescriptions, and reports through our online patient portal."
+    },
+    {
+        id: 3,
+        question: "Do you accept health insurance?",
+        answer: "We accept most major health insurance plans. Please contact our billing department or check our insurance page for a full list of providers."
+    },
+    {
+        id: 4,
+        question: "Are online consultations available?",
+        answer: "Yes, we offer secure telehealth consultations for non-emergency medical advice and follow-ups with our specialists."
+    },
+    {
+        id: 5,
+        question: "How secure is my medical data?",
+        answer: "Your privacy is our priority. We use industry-standard encryption and fully comply with HIPAA regulations to ensure your data is safe."
+    },
+    {
+        id: 6,
+        question: "What if I need to reschedule or cancel my appointment?",
+        answer: "You can reschedule or cancel your appointment via the patient portal or by calling our clinic directly at least 24 hours in advance."
+    }
+];
+
+export default function AboutFaq() {
+    const [openId, setOpenId] = useState(2); // ID 2 is open by default in screenshot
+    const sectionRef = useRef(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                entries[0].target.classList.add('med_animate');
+                observer.disconnect();
+            }
+        }, { threshold: 0.2 });
+
+        if (sectionRef.current) observer.observe(sectionRef.current);
+        return () => observer?.disconnect();
+    }, []);
+
+    const toggleFaq = (id) => {
+        setOpenId(openId === id ? null : id);
+    };
+
+    return (
+        <section className="med_faq_bg" ref={sectionRef}>
+            <div className="med_faq_container">
+                <div className="med_faq_header">
+                    <span className="med_faq_badge">FAQs</span>
+                    <h2>Frequently Asked Questions</h2>
+                    <p>Find quick answers to the most common questions about our services, treatments, and patient care. We're here to make things simple and clear for you.</p>
+                </div>
+
+                <div className="med_faq_list">
+                    {faqs.map((faq, index) => {
+                        const isOpen = openId === faq.id;
+                        return (
+                            <div 
+                                key={faq.id} 
+                                className={`med_faq_item ${isOpen ? 'open' : ''}`}
+                                style={{ animationDelay: `${0.2 + (index * 0.1)}s` }}
+                                onClick={() => toggleFaq(faq.id)}
+                            >
+                                <div className="med_faq_q">
+                                    <h3>{faq.question}</h3>
+                                    <div className="med_faq_icon">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                            {isOpen ? (
+                                                <line x1="5" y1="12" x2="19" y2="12" />
+                                            ) : (
+                                                <>
+                                                    <line x1="12" y1="5" x2="12" y2="19" />
+                                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                                </>
+                                            )}
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div className="med_faq_a_wrapper">
+                                    <div className="med_faq_a_inner">
+                                        <p>{faq.answer}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
+        </section>
+    );
+}

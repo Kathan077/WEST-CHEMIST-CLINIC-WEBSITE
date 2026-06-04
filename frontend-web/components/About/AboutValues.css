@@ -1,0 +1,459 @@
+/* ============================================================
+   ABOUT WHY CSS — "GOD LEVEL" PRO ANIMATION
+   ============================================================ */
+
+.med_why_bg {
+    background-color: #fafbfc;
+    padding: 120px 5%;
+    font-family: 'Outfit', sans-serif;
+    overflow: hidden;
+}
+
+.med_why_header {
+    text-align: center;
+    margin-bottom: 80px;
+}
+
+.med_why_header h2 {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 15px;
+    letter-spacing: -0.02em;
+}
+
+.med_divider_dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.med_divider_dots span {
+    width: 6px;
+    height: 6px;
+    background: var(--primary);
+    border-radius: 50%;
+    opacity: 0.5;
+}
+
+.med_why_container {
+    position: relative;
+    max-width: 1000px;
+    height: 550px;
+    margin: 0 auto;
+}
+
+/* Connection Lines */
+.med_connection_svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.med_connecting_line {
+    stroke-dashoffset: 400;
+    stroke-dasharray: 6 6;
+    opacity: 0;
+    transition: opacity 1s ease, stroke-dashoffset 2s cubic-bezier(0.16, 1, 0.3, 1) ease;
+}
+
+.med_connecting_line.med_animate {
+    opacity: 0.4;
+    stroke-dashoffset: 0;
+    animation: medLineMarch 20s linear infinite forwards;
+}
+
+@keyframes medLineMarch {
+    to { stroke-dashoffset: -1000; }
+}
+
+/* Center Circle */
+.med_why_center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 120px;
+    height: 120px;
+    background: var(--primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 15px 35px -10px rgba(75, 45, 113, 0.5);
+    opacity: 0;
+    z-index: 10;
+    transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.med_why_center.med_animate {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    animation: medFloatCenter 4s ease-in-out infinite alternate 1s;
+}
+
+@keyframes medFloatCenter {
+    0%   { transform: translate(-50%, -50%) scale(1); }
+    100% { transform: translate(-50%, -55%) scale(1); }
+}
+
+/* Pulse Rings */
+.med_pulse_ring {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border: 2px solid var(--primary);
+    border-radius: 50%;
+    animation: medPulse 3s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+    opacity: 0;
+}
+
+.med_pulse_ring.ring2 { animation-delay: 1.5s; }
+
+@keyframes medPulse {
+    0%   { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(2.5); opacity: 0; }
+}
+
+.med_center_icon {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.med_center_icon svg {
+    width: 65px;
+    height: 65px;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.4));
+    animation: medIconHeartbeat 1.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite;
+}
+
+@keyframes medIconHeartbeat {
+    0%, 100% { transform: scale(1);    opacity: 0.9; }
+    15%       { transform: scale(1.15); opacity: 1;   }
+    30%       { transform: scale(1.05); opacity: 0.95;}
+    45%       { transform: scale(1.1);  opacity: 1;   }
+}
+
+/* 4 Items Radial */
+.med_why_item {
+    position: absolute;
+    width: 280px;
+    text-align: center;
+    opacity: 0;
+    z-index: 5;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 30px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 1);
+    box-shadow: 0 15px 40px -15px rgba(0, 0, 0, 0.05);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.med_w_top_left  { top: 0;    left: 0;  transform: translate(50px, 50px) scale(0.8);   transition-delay: 0.2s; }
+.med_w_top_right { top: 0;    right: 0; transform: translate(-50px, 50px) scale(0.8);  transition-delay: 0.4s; }
+.med_w_bot_left  { bottom: 0; left: 0;  transform: translate(50px, -50px) scale(0.8);  transition-delay: 0.6s; }
+.med_w_bot_right { bottom: 0; right: 0; transform: translate(-50px, -50px) scale(0.8); transition-delay: 0.8s; }
+
+.med_why_item.med_animate {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+    transition-delay: 0s;
+}
+
+.med_why_item:hover {
+    transform: translateY(-8px) scale(1.02) !important;
+    box-shadow: 0 25px 50px -15px rgba(75, 45, 113, 0.15);
+    border: 1px solid rgba(75, 45, 113, 0.1);
+}
+
+.med_why_item h4 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.4;
+    margin-top: 20px;
+}
+
+.med_why_text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.med_why_desc {
+    font-size: 0.92rem;
+    color: #64748b;
+    line-height: 1.5;
+    margin-top: 8px;
+    font-weight: 400;
+}
+
+.med_why_icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.med_why_item:hover .med_why_icon {
+    background: var(--primary);
+    color: #ffffff;
+    transform: rotate(5deg) scale(1.1);
+}
+
+.med_why_icon svg {
+    width: 28px;
+    height: 28px;
+}
+
+/* ============================================================
+   RESPONSIVE ENGINE — "PRO" FLUID MOBILE (768px and below)
+   ============================================================ */
+@media (max-width: 768px) {
+    .med_why_bg {
+        padding: 80px 6%;
+    }
+
+    .med_why_header {
+        margin-bottom: 50px;
+    }
+
+    .med_why_header h2 {
+        font-size: 2rem;
+    }
+
+    .med_why_container {
+        height: auto;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+        width: 100%;
+    }
+
+    .med_connection_svg {
+        display: none;
+    }
+
+    /* Shift center circle above items or eliminate it */
+    .med_why_center {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: translate(0, 0) scale(0);
+        margin: 0 auto 20px;
+        width: 90px;
+        height: 90px;
+    }
+
+    .med_why_center.med_animate {
+        transform: translate(0, 0) scale(1);
+        animation: none;
+    }
+
+    .med_center_icon svg {
+        width: 45px;
+        height: 45px;
+    }
+
+    /* PRO CHANGE: Convert stacked layout to a tight horizontal list for efficiency */
+    .med_why_item {
+        position: relative;
+        top: auto; left: auto; right: auto; bottom: auto;
+        display: flex;
+        align-items: flex-start;
+        gap: 20px;
+        width: 100%;
+        max-width: 550px;
+        margin: 0 auto;
+        padding: 24px;
+        text-align: left;
+        box-sizing: border-box;
+        background: #ffffff;
+        border: 1px solid rgba(0,0,0,0.03);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+    }
+
+    .med_w_top_left,
+    .med_w_top_right,
+    .med_w_bot_left,
+    .med_w_bot_right {
+        transform: translateY(30px) scale(0.95);
+        transition-delay: 0s;
+    }
+
+    .med_why_item.med_animate {
+        transform: translateY(0) scale(1);
+    }
+
+    .med_why_icon {
+        width: 56px;
+        height: 56px;
+        flex-shrink: 0;
+        margin: 0;
+        border-radius: 14px;
+    }
+
+    .med_why_icon svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    .med_why_text {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .med_why_item h4 {
+        font-size: 1.15rem;
+        margin-top: 0; /* Remove top margin now that it is beside */
+        line-height: 1.3;
+    }
+
+    .med_why_desc {
+        font-size: 0.88rem;
+        margin-top: 4px;
+        text-align: left;
+    }
+}
+
+/* ============================================================
+   RESPONSIVE — 425px (Phone Landscape / Large Phone)
+   ============================================================ */
+@media (max-width: 425px) {
+    .med_why_bg {
+        padding: 60px 5%;
+    }
+
+    .med_why_header h2 {
+        font-size: 1.7rem;
+    }
+
+    .med_why_container {
+        gap: 16px;
+    }
+
+    .med_why_center {
+        width: 80px;
+        height: 80px;
+    }
+
+    .med_center_icon svg {
+        width: 40px;
+        height: 40px;
+    }
+
+    .med_why_item {
+        padding: 20px 18px;
+        gap: 15px;
+        border-radius: 18px;
+    }
+
+    .med_why_icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+    }
+
+    .med_why_icon svg {
+        width: 22px;
+        height: 22px;
+    }
+
+    .med_why_item h4 {
+        font-size: 1.05rem;
+    }
+}
+
+/* ============================================================
+   RESPONSIVE — 375px (Standard Smartphone)
+   ============================================================ */
+@media (max-width: 375px) {
+    .med_why_header h2 {
+        font-size: 1.5rem;
+    }
+
+    .med_why_item {
+        padding: 18px 15px;
+        gap: 12px;
+    }
+
+    .med_why_icon {
+        width: 46px;
+        height: 46px;
+    }
+
+    .med_why_item h4 {
+        font-size: 0.98rem;
+    }
+}
+
+/* ============================================================
+   RESPONSIVE — 320px (Compact Smartphone)
+   ============================================================ */
+@media (max-width: 320px) {
+    .med_why_bg {
+        padding: 45px 4%;
+    }
+
+    .med_why_header {
+        margin-bottom: 35px;
+    }
+
+    .med_why_header h2 {
+        font-size: 1.35rem;
+    }
+
+    .med_why_container {
+        gap: 12px;
+    }
+
+    .med_why_center {
+        width: 65px;
+        height: 65px;
+        margin-bottom: 15px;
+    }
+
+    .med_center_icon svg {
+        width: 30px;
+        height: 30px;
+    }
+
+    .med_why_item {
+        padding: 15px 12px;
+        gap: 10px;
+        border-radius: 14px;
+    }
+
+    .med_why_icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+    }
+
+    .med_why_icon svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .med_why_item h4 {
+        font-size: 0.9rem;
+        line-height: 1.25;
+    }
+}

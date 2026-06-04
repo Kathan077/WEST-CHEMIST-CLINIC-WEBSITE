@@ -1,0 +1,259 @@
+/* ============================================================
+   TESTIMONIALS.CSS — PURE CLINICAL HOSPITAL VIBE
+   ============================================================ */
+
+.testimonials_section {
+    position: relative;
+    padding: 120px 5%;
+    background: transparent;
+    /* Clinical light grey/blue removed for transparency */
+    overflow: hidden;
+    isolation: isolate;
+}
+
+/* ════════════════════════════════════
+   MEDICAL BACKGROUND PATTERN
+════════════════════════════════════ */
+.t_medical_pattern {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    /* Soft plus-sign grid pattern (medical cross) */
+    background-image: radial-gradient(rgba(0, 129, 167, 0.1) 1.5px, transparent 1.5px);
+    background-size: 40px 40px;
+    opacity: 0.7;
+}
+
+/* Fading out the top and bottom of the pattern so it blends */
+.t_medical_pattern::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, #f4f7f9 0%, transparent 15%, transparent 85%, #f4f7f9 100%);
+}
+
+.t_container {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+/* ════════════════════════════════════
+   SCROLL REVEALS
+════════════════════════════════════ */
+.t_reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition:
+        opacity 0.9s cubic-bezier(0.19, 1, 0.22, 1) var(--delay, 0ms),
+        transform 0.9s cubic-bezier(0.19, 1, 0.22, 1) var(--delay, 0ms);
+}
+
+.t_visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ════════════════════════════════════
+   HEADER (HOSPITAL VIBE)
+════════════════════════════════════ */
+.t_header {
+    text-align: center;
+    margin-bottom: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.t_badge_wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 18px;
+    background: #ffffff;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 129, 167, 0.15);
+    margin-bottom: 24px;
+    box-shadow: 0 4px 15px rgba(0, 129, 167, 0.05);
+}
+
+.t_medical_cross {
+    width: 12px;
+    height: 12px;
+    /* Drawing a cross */
+    background:
+        linear-gradient(var(--primary), var(--primary)) center/2px 100% no-repeat,
+        linear-gradient(var(--primary), var(--primary)) center/100% 2px no-repeat;
+}
+
+.t_eyebrow {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+}
+
+.t_title {
+    font-size: clamp(2.4rem, 4vw, 3.2rem);
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.15;
+    margin-bottom: 20px;
+    letter-spacing: -0.03em;
+}
+
+.t_accent {
+    color: var(--primary);
+}
+
+.t_desc {
+    font-size: 1.15rem;
+    color: #475569;
+    max-width: 600px;
+    line-height: 1.6;
+}
+
+/* ════════════════════════════════════
+   GRID & CARDS
+════════════════════════════════════ */
+.t_grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.t_card {
+    background: rgba(255, 255, 255, 0.7);
+    /* removed blur */
+    border-radius: 12px;
+    padding: 36px 36px 30px;
+    box-shadow: 0 10px 40px rgba(15, 23, 42, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition:
+        transform 0.4s cubic-bezier(0.19, 1, 0.22, 1),
+        box-shadow 0.4s cubic-bezier(0.19, 1, 0.22, 1),
+        border-color 0.4s ease;
+    cursor: default;
+}
+
+/* Subtle Hospital Hover Lift */
+.t_card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 25px 60px rgba(0, 129, 167, 0.08);
+    /* Primary brand color shadow */
+    border-color: rgba(0, 129, 167, 0.2);
+}
+
+/* Glowing top bar accent typical of medical tech */
+.t_card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--primary);
+    border-radius: 12px 12px 0 0;
+    opacity: 0.3;
+    transition: opacity 0.4s ease;
+}
+
+.t_card:hover::before {
+    opacity: 1;
+}
+
+/* ════════════════════════════════════
+   CARD INTERNAL CONTENT
+════════════════════════════════════ */
+.t_card_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.t_stars {
+    display: flex;
+    gap: 4px;
+    color: #ebb305;
+    /* bright premium star gold */
+}
+
+.t_service_tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--primary);
+    background: rgba(0, 129, 167, 0.08);
+    padding: 4px 10px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.t_review_text {
+    font-size: 1.05rem;
+    color: #1e293b;
+    line-height: 1.7;
+    margin-bottom: 30px;
+    flex-grow: 1;
+}
+
+.t_patient_info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    padding-top: 20px;
+}
+
+.t_patient_meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.t_name {
+    font-weight: 700;
+    color: #0f172a;
+    font-size: 1.05rem;
+}
+
+.t_role_wrap {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.t_role {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #10b981;
+    /* verified medical green */
+}
+
+/* ════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════ */
+@media (max-width: 1024px) {
+    .t_grid {
+        gap: 24px;
+    }
+
+    .t_card {
+        padding: 30px 24px 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .t_grid {
+        grid-template-columns: 1fr;
+    }
+
+    .t_section {
+        padding: 80px 5%;
+    }
+}
+

@@ -1,0 +1,201 @@
+.nl_section {
+    padding: 80px 5% 120px;
+    background: #ffffff;
+    position: relative;
+    overflow: hidden;
+}
+
+.nl_container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.nl_glass_card {
+    background: linear-gradient(135deg, var(--primary) 0%, #341e54 100%);
+    border-radius: 40px;
+    padding: 80px 40px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    box-shadow: 0 40px 100px -20px rgba(75, 45, 113, 0.4);
+}
+
+.nl_content {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.nl_icon_box {
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    margin: 0 auto 30px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nl_title {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+}
+
+.nl_subtitle {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+
+.nl_form {
+    display: flex;
+    gap: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    margin-bottom: 25px;
+}
+
+.nl_input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    padding: 0 20px;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.nl_input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.nl_btn {
+    padding: 16px 32px;
+    background: var(--accent);
+    color: #ffffff;
+    border-radius: 16px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.3s ease;
+}
+
+.nl_btn:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 10px 20px rgba(0, 132, 115, 0.3);
+}
+
+.nl_privacy {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* ─── Decor ─── */
+.nl_circle {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--accent);
+    filter: blur(100px);
+    opacity: 0.2;
+    z-index: 1;
+}
+
+.nl_c1 {
+    width: 400px;
+    height: 400px;
+    top: -200px;
+    right: -200px;
+}
+
+.nl_c2 {
+    width: 300px;
+    height: 300px;
+    bottom: -150px;
+    left: -150px;
+}
+
+@media (max-width: 768px) {
+    .nl_section {
+        padding: 60px 5% 80px;
+    }
+
+    .nl_glass_card {
+        padding: 60px 30px;
+    }
+
+    .nl_form {
+        flex-direction: column;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        padding: 0;
+    }
+
+    .nl_input {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 18px 20px;
+        border-radius: 16px;
+        margin-bottom: 10px;
+        border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .nl_btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 425px) {
+    .nl_glass_card {
+        padding: 45px 20px;
+        border-radius: 28px;
+    }
+
+    .nl_icon_box {
+        width: 60px;
+        height: 60px;
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+    }
+
+    .nl_title {
+        font-size: 1.9rem;
+    }
+
+    .nl_subtitle {
+        font-size: 1rem;
+        margin-bottom: 25px;
+    }
+    
+    .nl_privacy {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 320px) {
+    .nl_section {
+        padding: 40px 15px;
+    }
+
+    .nl_title {
+        font-size: 1.65rem;
+    }
+    
+    .nl_glass_card {
+        padding: 35px 15px;
+    }
+}

@@ -1,0 +1,23 @@
+# Dependency folders
+node_modules/
+jspm_packages/
+
+# Environment configurations and keys
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.pem
+*.key
+
+# Patient Upload files (Critical for privacy / HIPAA compliance)
+uploads/ids/*
+!uploads/ids/.gitkeep
+
+# System and logs files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+Thumbs.db

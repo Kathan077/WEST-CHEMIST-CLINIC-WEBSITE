@@ -1,0 +1,308 @@
+/* ============================================================
+   ABOUT IMPACT CSS — "GOD LEVEL" PRO ANIMATION
+   ============================================================ */
+
+.med_impact_bg {
+    background-color: #f8fafb;
+    padding: 100px 5%;
+    font-family: 'Outfit', sans-serif;
+    overflow: hidden;
+}
+
+.med_impact_container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 80px;
+}
+
+/* Image Reveal Masking */
+.med_impact_img_col {
+    flex: 1;
+    border-radius: 24px;
+    overflow: hidden;
+    height: 550px;
+    position: relative;
+    opacity: 0;
+    transform: perspective(1000px) rotateY(15deg) translateX(-50px);
+    transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.1);
+}
+
+.med_animate .med_impact_img_col {
+    opacity: 1;
+    transform: perspective(1000px) rotateY(0deg) translateX(0);
+}
+
+.med_impact_img_col img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.2);
+    transition: transform 3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.med_animate .med_impact_img_col img {
+    transform: scale(1);
+}
+
+/* Text Reveal Staggering */
+.med_impact_text_col {
+    flex: 1;
+}
+
+.med_impact_text_col h2 {
+    font-size: clamp(2.2rem, 4vw, 3rem);
+    font-weight: 800;
+    color: #1a1a2e;
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+}
+
+.med_impact_text_col p {
+    font-size: 1.15rem;
+    color: #64748b;
+    line-height: 1.6;
+    margin-bottom: 50px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+}
+
+.med_impact_grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+.med_stat_box {
+    opacity: 0;
+    transform: translateY(30px) scale(0.9);
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Animate triggers */
+.med_animate .med_impact_text_col h2,
+.med_animate .med_impact_text_col p {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.med_animate .med_stat_box {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.med_animate .med_stat_box:nth-child(1) { transition-delay: 0.4s; }
+.med_animate .med_stat_box:nth-child(2) { transition-delay: 0.5s; }
+.med_animate .med_stat_box:nth-child(3) { transition-delay: 0.6s; }
+.med_animate .med_stat_box:nth-child(4) { transition-delay: 0.7s; }
+
+/* Box Styles */
+.med_stat_box h3 {
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 5px;
+    line-height: 1;
+}
+
+.med_plus {
+    color: var(--accent);
+}
+
+.med_stat_box span {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+/* ============================================================
+   RESPONSIVE — 900px (Tablet)
+   ============================================================ */
+@media (max-width: 900px) {
+    .med_impact_container {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .med_impact_img_col {
+        height: 350px;
+        transform: translateY(40px);
+        width: 100%;
+    }
+
+    .med_animate .med_impact_img_col {
+        transform: translateY(0);
+    }
+
+    .med_impact_grid {
+        gap: 28px;
+    }
+
+    .med_stat_box h3 {
+        font-size: 2.4rem;
+    }
+}
+
+/* ============================================================
+   RESPONSIVE — 765px
+   ============================================================ */
+@media (max-width: 765px) {
+    .med_impact_bg {
+        padding: 80px 5%;
+    }
+
+    .med_impact_img_col {
+        height: 300px;
+        border-radius: 20px;
+    }
+
+    .med_impact_text_col h2 {
+        font-size: 1.9rem;
+    }
+
+    .med_impact_text_col p {
+        font-size: 1.05rem;
+        margin-bottom: 36px;
+    }
+
+    .med_impact_grid {
+        gap: 24px;
+    }
+
+    .med_stat_box h3 {
+        font-size: 2.2rem;
+    }
+
+    .med_stat_box span {
+        font-size: 0.88rem;
+    }
+}
+
+/* ============================================================
+   RESPONSIVE — 425px (Large Mobile)
+   ============================================================ */
+@media (max-width: 425px) {
+    .med_impact_bg {
+        padding: 60px 4%;
+    }
+
+    .med_impact_container {
+        gap: 28px;
+    }
+
+    .med_impact_img_col {
+        height: 240px;
+        border-radius: 16px;
+    }
+
+    .med_impact_text_col h2 {
+        font-size: 1.6rem;
+        margin-bottom: 14px;
+    }
+
+    .med_impact_text_col p {
+        font-size: 0.98rem;
+        margin-bottom: 28px;
+    }
+
+    .med_impact_grid {
+        gap: 18px;
+    }
+
+    .med_stat_box h3 {
+        font-size: 2rem;
+    }
+
+    .med_stat_box span {
+        font-size: 0.8rem;
+        letter-spacing: 0.05em;
+    }
+}
+
+/* ============================================================
+   RESPONSIVE — 345px (Small Mobile)
+   ============================================================ */
+@media (max-width: 345px) {
+    .med_impact_bg {
+        padding: 50px 4%;
+    }
+
+    .med_impact_container {
+        gap: 22px;
+    }
+
+    .med_impact_img_col {
+        height: 200px;
+        border-radius: 14px;
+    }
+
+    .med_impact_text_col h2 {
+        font-size: 1.35rem;
+    }
+
+    .med_impact_text_col p {
+        font-size: 0.92rem;
+        margin-bottom: 22px;
+    }
+
+    .med_impact_grid {
+        gap: 14px;
+    }
+
+    .med_stat_box h3 {
+        font-size: 1.75rem;
+    }
+
+    .med_stat_box span {
+        font-size: 0.75rem;
+    }
+}
+
+/* ============================================================
+   RESPONSIVE — 320px (Smallest Mobile)
+   ============================================================ */
+@media (max-width: 320px) {
+    .med_impact_bg {
+        padding: 40px 3%;
+    }
+
+    .med_impact_container {
+        gap: 18px;
+    }
+
+    .med_impact_img_col {
+        height: 180px;
+        border-radius: 12px;
+    }
+
+    .med_impact_text_col h2 {
+        font-size: 1.2rem;
+        letter-spacing: -0.01em;
+    }
+
+    .med_impact_text_col p {
+        font-size: 0.88rem;
+        margin-bottom: 18px;
+    }
+
+    .med_impact_grid {
+        gap: 12px;
+    }
+
+    .med_stat_box h3 {
+        font-size: 1.55rem;
+    }
+
+    .med_stat_box span {
+        font-size: 0.7rem;
+        letter-spacing: 0.04em;
+    }
+}

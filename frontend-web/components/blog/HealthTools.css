@@ -1,0 +1,148 @@
+.ht_section {
+    padding: 100px 5% 80px;
+    background: linear-gradient(to bottom, #ffffff, #f8fafc);
+}
+
+.ht_container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.ht_header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.ht_title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 15px;
+}
+
+.ht_subtitle {
+    color: #64748b;
+    font-size: 1.1rem;
+}
+
+.ht_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.ht_card {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 30px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    transition: all 0.4s ease;
+}
+
+.ht_card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(75, 45, 113, 0.08);
+    border-color: rgba(75, 45, 113, 0.1);
+}
+
+.ht_icon_shell {
+    font-size: 2.8rem;
+    margin-bottom: 25px;
+}
+
+.ht_card_title {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--foreground);
+    margin-bottom: 12px;
+}
+
+.ht_card_desc {
+    color: #64748b;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.ht_launch_btn {
+    width: 100%;
+    padding: 12px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    font-weight: 700;
+    color: var(--primary);
+    transition: all 0.3s ease;
+}
+
+.ht_card:hover .ht_launch_btn {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #ffffff;
+}
+
+@media (max-width: 768px) {
+    .ht_section {
+        padding: 80px 5%;
+    }
+
+    .ht_title {
+        font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 425px) {
+    .ht_section {
+        padding: 60px 20px;
+    }
+
+    .ht_header {
+        margin-bottom: 40px;
+    }
+
+    .ht_title {
+        font-size: 2rem;
+    }
+
+    .ht_subtitle {
+        font-size: 1rem;
+    }
+
+    .ht_grid {
+        gap: 20px;
+    }
+
+    .ht_card {
+        padding: 30px 20px;
+        border-radius: 24px;
+    }
+    
+    .ht_icon_shell {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+    }
+    
+    .ht_card_title {
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 375px) {
+    .ht_title {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 320px) {
+    .ht_section {
+        padding: 45px 15px;
+    }
+
+    .ht_title {
+        font-size: 1.6rem;
+    }
+    
+    .ht_card_desc {
+        font-size: 0.95rem;
+    }
+}

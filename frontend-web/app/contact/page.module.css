@@ -1,0 +1,35 @@
+.contactPage {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    background-color: #fafafa;
+    /* Bright white/light bg */
+    overflow: hidden;
+    color: #1e293b;
+}
+
+.contentWrapper {
+    position: relative;
+    width: 100%;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+.mainGrid {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 5%;
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 4rem;
+    width: 100%;
+}
+
+@media (max-width: 1024px) {
+    .mainGrid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+}

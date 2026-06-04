@@ -1,0 +1,377 @@
+.sd_page {
+    background: #ffffff;
+    min-height: 100vh;
+}
+
+/* ─── Cinematic Hero ─── */
+.sd_hero {
+    position: relative;
+    height: 75vh;
+    /* Increased hero height */
+    min-height: 550px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.sd_hero_bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.05);
+    filter: brightness(0.65) contrast(1.1);
+}
+
+.sd_hero_overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5));
+}
+
+.sd_hero_content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: #ffffff;
+    max-width: 1000px;
+    padding: 0 5%;
+}
+
+.sd_eyebrow {
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.4em;
+    font-weight: 800;
+    font-size: 1rem;
+    margin-bottom: 25px;
+    color: var(--accent);
+    opacity: 0.9;
+}
+
+.sd_title {
+    font-size: clamp(3.5rem, 10vw, 6.5rem);
+    /* Bigger title */
+    font-weight: 950;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.4));
+}
+
+/* ─── Main Content ─── */
+.sd_main {
+    padding: 120px 5%;
+    /* More breathing room */
+}
+
+.sd_container {
+    max-width: 1400px;
+    /* Wider container */
+    margin: 0 auto;
+}
+
+.sd_grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 100px;
+}
+
+.sd_sec_title {
+    font-size: 2.8rem;
+    /* Bigger subtitle */
+    color: var(--primary);
+    font-weight: 950;
+    margin-bottom: 35px;
+    letter-spacing: -0.02em;
+}
+
+.sd_desc {
+    font-size: 1.4rem;
+    /* More readable large text */
+    color: #334155;
+    line-height: 1.8;
+    margin-bottom: 60px;
+}
+
+/* Benefit Cards */
+.sd_benefits_grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 80px;
+}
+
+.sd_benefit_card {
+    background: #f8fafc;
+    padding: 40px;
+    border-radius: 32px;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    transition: all 0.4s ease;
+}
+
+.sd_benefit_card:hover {
+    background: #ffffff;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.06);
+    transform: translateY(-8px);
+}
+
+.sd_benefit_icon {
+    font-size: 2.2rem;
+    color: var(--accent);
+    margin-bottom: 20px;
+}
+
+.sd_benefit_card h3 {
+    font-size: 1.4rem;
+    font-weight: 850;
+    color: var(--primary);
+    margin-bottom: 12px;
+}
+
+.sd_benefit_card p {
+    color: #64748b;
+    line-height: 1.6;
+    font-size: 1.05rem;
+}
+
+.sd_list_title {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: var(--primary);
+    margin-bottom: 30px;
+}
+
+.sd_features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.sd_feature_item {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    font-weight: 750;
+    font-size: 1.15rem;
+    color: #1e293b;
+}
+
+.sd_feature_dot {
+    width: 10px;
+    height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(0, 132, 115, 0.4);
+}
+
+/* ─── Sidebar Booking Card ─── */
+.sd_booking_card {
+    background: #ffffff;
+    padding: 60px;
+    /* Bigger padding */
+    border-radius: 48px;
+    box-shadow: 0 50px 120px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 120px;
+    border: 1px solid rgba(0, 0, 0, 0.02);
+}
+
+.sd_card_header {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.sd_price_label {
+    display: block;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: #94a3b8;
+    margin-bottom: 10px;
+}
+
+.sd_card_price {
+    font-size: 3.8rem;
+    /* Massive price */
+    font-weight: 950;
+    color: var(--primary);
+    line-height: 1;
+}
+
+.sd_card_meta {
+    margin-bottom: 40px;
+    padding: 25px 0;
+    border-top: 1px solid #f1f5f9;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.sd_meta_item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: #475569;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.sd_book_btn {
+    width: 100%;
+    padding: 25px;
+    background: var(--primary);
+    color: #ffffff;
+    border: none;
+    border-radius: 100px;
+    font-weight: 900;
+    font-size: 1.25rem;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    margin-bottom: 25px;
+    box-shadow: 0 15px 40px rgba(45, 27, 105, 0.2);
+}
+
+.sd_book_btn:hover {
+    background: var(--accent);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 25px 50px rgba(0, 132, 115, 0.3);
+}
+
+.sd_card_footer {
+    text-align: center;
+}
+
+.sd_trust_badge {
+    display: inline-flex;
+    align-items: center;
+    background: #ecfdf5;
+    color: #059669;
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 850;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+.sd_card_hint {
+    font-size: 0.95rem;
+    color: #94a3b8;
+    font-weight: 600;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 1400px) {
+    .sd_grid {
+        gap: 60px;
+    }
+
+    .sd_title {
+        font-size: clamp(3rem, 8vw, 5rem);
+    }
+}
+
+@media (max-width: 1200px) {
+    .sd_booking_card {
+        padding: 40px;
+        border-radius: 32px;
+    }
+
+    .sd_card_price {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 1024px) {
+    .sd_hero {
+        height: 60vh;
+        min-height: 450px;
+    }
+
+    .sd_grid {
+        grid-template-columns: 1fr;
+        gap: 80px;
+    }
+
+    .sd_sidebar {
+        order: -1;
+        /* Move booking card to the top on tablet/mobile */
+        margin-bottom: 20px;
+    }
+
+    .sd_booking_card {
+        position: static;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .sd_sec_title {
+        font-size: 2.2rem;
+    }
+
+    .sd_desc {
+        font-size: 1.2rem;
+        margin-bottom: 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .sd_hero {
+        height: 50vh;
+    }
+
+    .sd_title {
+        font-size: clamp(2.5rem, 12vw, 4rem);
+    }
+
+    .sd_benefits_grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .sd_features {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .sd_main {
+        padding: 60px 5%;
+    }
+
+    .sd_benefit_card {
+        padding: 30px;
+    }
+
+    .sd_booking_card {
+        padding: 30px 20px;
+        border-radius: 24px;
+    }
+
+    .sd_card_price {
+        font-size: 2.5rem;
+    }
+
+    .sd_book_btn {
+        padding: 20px;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .sd_hero {
+        height: 45vh;
+        min-height: 350px;
+    }
+
+    .sd_eyebrow {
+        font-size: 0.8rem;
+        letter-spacing: 0.25em;
+        margin-bottom: 15px;
+    }
+
+    .sd_feature_item {
+        font-size: 1rem;
+    }
+}

@@ -1,0 +1,310 @@
+/* ============================================================
+   FOOTER.CSS — CLINICAL PREMIUM
+   ============================================================ */
+
+.footer_sec {
+    position: relative;
+    background: #ffffff;
+    color: #475569;
+    font-family: inherit;
+    margin-top: 0; /* Removed extra top margin */
+    border-top: 1px solid #f1f5f9;
+}
+
+/* ════════════════════════════════════
+   TOP GLOWING BORDER
+════════════════════════════════════ */
+.footer_top_border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--highlight-purple) 0%, var(--primary) 50%, #10b981 100%);
+    opacity: 0.8;
+}
+
+/* ════════════════════════════════════
+   CONTAINER & GRID
+════════════════════════════════════ */
+.footer_container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 45px 5% 60px; /* Compacting massive padding */
+}
+
+.footer_grid {
+    display: grid;
+    grid-template-columns: 1.4fr 0.8fr 1.1fr 1.1fr;
+    gap: 40px;
+}
+
+.f_col {
+    display: flex;
+    flex-direction: column;
+}
+
+/* ════════════════════════════════════
+   COLUMN 1: LOGO & ABOUT
+════════════════════════════════════ */
+.f_logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    margin-bottom: 0px; /* Heavy reduction to counter balance img transparency */
+}
+
+.f_logo img {
+    width: 220px; /* Restoring original strong width */
+    height: auto;
+    object-fit: contain;
+    margin-bottom: -60px; /* Aggressively swallowing LARGER expanded transparent padding */
+    margin-top: -90px; /* Swallow top transparency as well */
+    margin-left: -12px; /* Align clean edge */
+}
+
+.f_logo_accent {
+    color: #10b981;
+    /* medical green cross */
+    margin-right: 6px;
+}
+
+.f_desc {
+    color: #64748b;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 20px; /* Tightening space to badges */
+    max-width: 330px;
+}
+
+.f_trust_badges {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.trust_badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.8rem;
+    color: #1e0a40;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    padding: 6px 14px;
+    border-radius: 6px;
+    width: fit-content;
+    font-weight: 600;
+}
+
+/* ════════════════════════════════════
+   TITLES
+════════════════════════════════════ */
+.f_col_title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #1e0a40;
+    margin-bottom: 24px;
+    letter-spacing: -0.01em;
+}
+
+/* ════════════════════════════════════
+   LINKS
+════════════════════════════════════ */
+.f_links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.f_links li a {
+    color: #64748b;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    display: inline-block;
+    font-weight: 500;
+}
+
+.f_links li a:hover {
+    color: #4B2D71;
+    transform: translateX(5px);
+}
+
+/* ════════════════════════════════════
+   CONTACT INFO
+════════════════════════════════════ */
+.f_contact_info {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.f_contact_info li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #64748b;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.f_contact_info li a {
+    color: #64748b;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    display: inline-block;
+}
+
+.f_contact_info li a:hover {
+    color: var(--primary);
+    transform: translateX(3px);
+}
+
+.f_contact_info li.location_li {
+    align-items: flex-start;
+}
+
+.f_contact_info li svg {
+    color: var(--primary);
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+/* ════════════════════════════════════
+   CLINIC HOURS
+════════════════════════════════════ */
+.f_hours {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.hour_row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px dashed #e2e8f0;
+    padding-bottom: 8px;
+    font-size: 0.95rem;
+}
+
+.hour_row .day {
+    color: #1e0a40;
+    font-weight: 600;
+}
+
+.hour_row .time {
+    color: #64748b;
+    font-weight: 500;
+}
+
+.closed .time {
+    color: #e11d48;
+    /* soft red */
+}
+
+/* ════════════════════════════════════
+   COPYRIGHT BOTTOM
+════════════════════════════════════ */
+.footer_bottom {
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+}
+
+.f_bottom_container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 24px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.copyright {
+    color: #94a3b8;
+    font-size: 0.85rem;
+}
+
+.f_legal_links {
+    display: flex;
+    gap: 24px;
+}
+
+.f_legal_links a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.3s ease;
+}
+
+.f_legal_links a:hover {
+    color: #1e0a40;
+}
+
+/* ════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════ */
+@media (max-width: 1024px) {
+    .footer_grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+    }
+}
+
+@media (max-width: 640px) {
+    .footer_container {
+        padding: 60px 5%;
+    }
+
+    .footer_grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: center;
+    }
+
+    .f_col {
+        align-items: center;
+    }
+
+    .f_logo {
+        justify-content: center;
+    }
+
+    .f_logo img {
+        margin-left: 0; /* Reset side offset for perfect mobile centering */
+    }
+
+    .f_desc {
+        max-width: 100%;
+        margin: 0 auto 30px;
+    }
+
+    .f_trust_badges {
+        align-items: center;
+    }
+
+    .f_contact_info li {
+        justify-content: center;
+        text-align: center;
+    }
+
+    .f_bottom_container {
+        flex-direction: column;
+        text-align: center;
+        justify-content: center;
+    }
+    .f_hours {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+}
+

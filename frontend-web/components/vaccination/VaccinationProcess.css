@@ -1,0 +1,134 @@
+.vp_section {
+    padding: 120px 5%;
+    background: #ffffff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.vp_container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.vp_header {
+    text-align: center;
+    margin-bottom: 80px;
+}
+
+.vp_eyebrow {
+    color: var(--accent);
+    text-transform: uppercase;
+    font-weight: 850;
+    letter-spacing: 0.3em;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+.vp_title {
+    font-size: clamp(3rem, 5vw, 4.5rem);
+    color: var(--primary);
+    font-weight: 950;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 20px;
+}
+
+.vp_lead {
+    font-size: 1.25rem;
+    color: #64748b;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+/* ─── Timeline ─── */
+.vp_steps_timeline {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    position: relative;
+}
+
+/* Connecting Line */
+.vp_steps_timeline::before {
+    content: '';
+    position: absolute;
+    top: 50px;
+    /* Aligns with middle of numbers */
+    left: 15%;
+    right: 15%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(79, 209, 197, 0.3), transparent);
+    z-index: 0;
+}
+
+.vp_step {
+    background: #f8fafb;
+    padding: 60px 40px;
+    border-radius: 32px;
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    transition: all 0.4s ease;
+    text-align: center;
+    z-index: 1;
+}
+
+.vp_step:hover {
+    background: #ffffff;
+    transform: translateY(-10px);
+    box-shadow: 0 40px 80px rgba(45, 27, 105, 0.08);
+    border-color: rgba(79, 209, 197, 0.3);
+}
+
+.vp_step_number {
+    font-size: 4rem;
+    font-weight: 950;
+    color: rgba(79, 209, 197, 0.2);
+    line-height: 1;
+    margin-bottom: 25px;
+    font-family: inherit;
+    letter-spacing: -0.05em;
+    transition: color 0.4s ease;
+}
+
+.vp_step:hover .vp_step_number {
+    color: var(--accent);
+}
+
+.vp_step_content h3 {
+    font-size: 1.5rem;
+    font-weight: 850;
+    color: var(--primary);
+    margin-bottom: 15px;
+}
+
+.vp_step_content p {
+    color: #64748b;
+    line-height: 1.7;
+    font-size: 1.05rem;
+}
+
+/* ─── Animations ─── */
+.vp_reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vp_reveal_active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 1024px) {
+    .vp_steps_timeline {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .vp_steps_timeline::before {
+        display: none;
+    }
+}

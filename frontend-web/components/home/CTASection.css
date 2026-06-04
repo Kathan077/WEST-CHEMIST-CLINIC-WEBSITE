@@ -1,0 +1,215 @@
+/* ============================================================
+   CTASECTION.CSS — MASSIVE & PRO ANIMATED
+   ============================================================ */
+
+.cta_mega_section {
+    position: relative;
+    padding: 160px 5%;
+    /* Bada (BIG) padding */
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+/* ════════════════════════════════════
+   PRO BACKGROUND GLOWS
+════════════════════════════════════ */
+.cta_glow_blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.15;
+    z-index: -1;
+    pointer-events: none;
+    animation: rotateBlob 20s linear infinite;
+}
+
+.blob_1 {
+    width: 600px;
+    height: 600px;
+    background: var(--primary);
+    /* #0081a7 */
+    top: -100px;
+    left: -150px;
+}
+
+.blob_2 {
+    width: 500px;
+    height: 500px;
+    background: var(--secondary);
+    /* #4b2d71 */
+    bottom: -150px;
+    right: -100px;
+    animation-direction: reverse;
+}
+
+@keyframes rotateBlob {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+
+    50% {
+        transform: rotate(180deg) scale(1.1);
+    }
+
+    100% {
+        transform: rotate(360deg) scale(1);
+    }
+}
+
+/* ════════════════════════════════════
+   CONTAINER & TEXT
+════════════════════════════════════ */
+.cta_container {
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cta_title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 50px;
+    letter-spacing: -0.02em;
+}
+
+/* ════════════════════════════════════
+   SCROLL REVEAL
+════════════════════════════════════ */
+.cta_reveal {
+    opacity: 0;
+    transform: translateY(50px);
+    transition:
+        opacity 1s cubic-bezier(0.19, 1, 0.22, 1) var(--delay, 0ms),
+        transform 1s cubic-bezier(0.19, 1, 0.22, 1) var(--delay, 0ms);
+}
+
+.cta_visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ════════════════════════════════════
+   BUTTON OVERRIDES (MEGA SIZE)
+════════════════════════════════════ */
+.cta_buttons_wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+    max-width: 480px;
+}
+
+.cta_btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 22px 30px;
+    border-radius: 999px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    text-decoration: none;
+    overflow: hidden;
+    /* Magnetic transitions via JS inline, ease return via CSS */
+    transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1), box-shadow 0.3s ease, background 0.3s ease;
+    will-change: transform;
+}
+
+.cta_btn span {
+    position: relative;
+    z-index: 2;
+}
+
+/* 1. SOLID BUTTON (TOP) */
+.cta_solid {
+    background: #0081a7;
+    /* var(--primary) */
+    color: #fff;
+    border: 2px solid #0081a7;
+    box-shadow: 0 10px 25px rgba(0, 129, 167, 0.2);
+}
+
+.cta_solid:hover {
+    box-shadow: 0 15px 35px rgba(0, 129, 167, 0.35);
+}
+
+/* Shine Sweep Effect for Solid */
+.cta_btn_shine {
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.3) 50%,
+            rgba(255, 255, 255, 0) 100%);
+    transform: skewX(-25deg);
+    z-index: 1;
+    transition: none;
+}
+
+.cta_solid:hover .cta_btn_shine {
+    animation: shineSweep 1.5s infinite;
+}
+
+@keyframes shineSweep {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 200%;
+    }
+}
+
+/* 2. OUTLINE BUTTON (BOTTOM) */
+.cta_outline {
+    background: transparent;
+    color: #0081a7;
+    border: 2px solid #0081a7;
+    background: #ffffff;
+}
+
+/* Glow Border Effect for Outline */
+.cta_btn_glow {
+    position: absolute;
+    inset: 0;
+    border-radius: 999px;
+    background: rgba(0, 129, 167, 0.05);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 0;
+}
+
+.cta_outline:hover {
+    box-shadow: 0 10px 30px rgba(0, 129, 167, 0.15);
+}
+
+.cta_outline:hover .cta_btn_glow {
+    opacity: 1;
+}
+
+/* ════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════ */
+@media (max-width: 640px) {
+    .cta_mega_section {
+        padding: 100px 5%;
+    }
+
+    .cta_btn {
+        padding: 18px 24px;
+        font-size: 1rem;
+    }
+}
+
