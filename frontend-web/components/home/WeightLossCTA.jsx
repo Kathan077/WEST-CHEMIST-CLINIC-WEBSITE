@@ -58,11 +58,8 @@ export default function WeightLossCTA() {
                     </h2>
                     
                     <div className="wl_actions wl_reveal" style={{ '--delay': '150ms' }}>
-                        <Link href="/consultation/online" className="wl_btn wl_btn_solid">
-                            Start an Online Consultation
-                        </Link>
-                        <Link href="/consultation/in-person" className="wl_btn wl_btn_outline">
-                            Book an In-Person Consultation
+                        <Link href="/book-appointment" className="wl_btn wl_btn_solid">
+                            Book Free Consultation
                         </Link>
                     </div>
 
@@ -114,11 +111,13 @@ export default function WeightLossCTA() {
                             </svg>
                         </div>
 
-                        {/* Free Consultation Red Badge */}
-                        <div className="wl_badge red_badge">
-                            <span className="red_badge_lg">FREE</span>
-                            <span className="red_badge_sm">consultation</span>
-                        </div>
+                        {/* Book Now Red Badge */}
+                        <Link href="/book-appointment" className="wl_badge red_badge">
+                            <span className="red_badge_lg">Book</span>
+                            <span className="red_badge_sm">Now</span>
+                        </Link>
+
+
                         
                     </div>
                 </div>

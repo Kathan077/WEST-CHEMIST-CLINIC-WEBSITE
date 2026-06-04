@@ -355,7 +355,7 @@ function TrackBookingContent() {
                                             <div className={`status_badge ${apt.isRescheduleRequested ? 'pending' : dynamicStatus}`}>
                                                 <span className="status_dot"></span>
                                                 <span>{
-                                                    apt.isRescheduleRequested ? 'PENDING RESCHEDULE' :
+                                                    apt.isRescheduleRequested ? 'PENDING ' :
                                                     dynamicStatus === 'appointment_day' ? 'APPOINTMENT DAY' : 
                                                     dynamicStatus === 'pending' ? 'AWAITING AUDIT' :
                                                     dynamicStatus.toUpperCase()
@@ -371,61 +371,55 @@ function TrackBookingContent() {
 
                                     {/* Body details */}
                                     <div className="ticket_body">
-                                        <div className="ticket_info_grid">
-                                            <div className="ticket_info_cell">
-                                                <span className="ticket_label_txt">Patient Name</span>
-                                                <span className="ticket_value_txt" style={{ textTransform: 'capitalize' }}>{patient.fullName}</span>
+                                        <div className="bk_ticket_table">
+                                            <div className="bk_ticket_row">
+                                                <span>Patient Name</span>
+                                                <strong style={{ textTransform: 'capitalize' }}>{patient.fullName}</strong>
                                             </div>
                                             
-                                            <div className="ticket_info_cell">
-                                                <span className="ticket_label_txt">Clinical Service</span>
-                                                <span className="ticket_value_txt service_highlight">{apt.service}</span>
+                                            <div className="bk_ticket_row">
+                                                <span>Clinical Service</span>
+                                                <strong className="service_highlight">{apt.service}</strong>
                                             </div>
 
-                                            <div className="ticket_info_cell span_full">
-                                                <span className="ticket_label_txt">Location Branch</span>
-                                                <span className="ticket_value_txt">{apt.clinic}</span>
+                                            <div className="bk_ticket_row">
+                                                <span>Location Branch</span>
+                                                <strong>{apt.clinic}</strong>
                                             </div>
+                                        </div>
 
-                                            <div className="ticket_info_cell">
-                                                <span className="ticket_label_txt">Date</span>
-                                                <span className="ticket_value_txt" style={{ fontSize: '0.9rem' }}>
+                                        <div className="bk_ticket_divider" />
+
+                                        <div className="bk_ticket_table">
+                                            <div className="bk_ticket_row">
+                                                <span>Date</span>
+                                                <strong>
                                                     {new Date(apt.date).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })}
-                                                </span>
+                                                </strong>
                                             </div>
                                             
-                                            <div className="ticket_info_cell">
-                                                <span className="ticket_label_txt">Time Slot</span>
-                                                <span className="ticket_value_time">{apt.time}</span>
+                                            <div className="bk_ticket_row">
+                                                <span>Time Slot</span>
+                                                <strong className="bk_ticket_time">{apt.time}</strong>
                                             </div>
 
-                                            <div className="ticket_info_cell span_full">
-                                                <span className="ticket_label_txt">GPhC Regulation</span>
-                                                {apt.status === 'approved' ? (
-                                                    <span className="compliance_status_badge" style={{ color: '#0d9488' }}>
-                                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" style={{ color: '#0d9488' }}>
-                                                            <polyline points="20 6 9 17 4 12"/>
-                                                        </svg>
-                                                        <span>PASS (NHS VERIFIED ID)</span>
-                                                    </span>
-                                                ) : apt.status === 'rejected' ? (
-                                                    <span className="compliance_status_badge" style={{ color: '#ef4444' }}>
-                                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" style={{ color: '#ef4444' }}>
-                                                            <line x1="18" y1="6" x2="6" y2="18"/>
-                                                            <line x1="6" y1="6" x2="18" y2="18"/>
-                                                        </svg>
-                                                        <span>REJECTED (FAILED COMPLIANCE)</span>
-                                                    </span>
-                                                ) : (
-                                                    <span className="compliance_status_badge" style={{ color: '#d97706' }}>
-                                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" style={{ color: '#d97706' }}>
-                                                            <circle cx="12" cy="12" r="10" />
-                                                            <line x1="12" y1="8" x2="12" y2="12" />
-                                                            <line x1="12" y1="16" x2="12.01" y2="16" />
-                                                        </svg>
-                                                        <span>AWAITING PHARMACIST AUDIT</span>
-                                                    </span>
-                                                )}
+                                            <div className="bk_ticket_row">
+                                                <span>GPhC Regulation</span>
+                                                <strong style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                                    {apt.status === 'approved' ? (
+                                                        <span className="bk_ticket_verified" style={{ color: '#0d9488', background: 'rgba(13, 148, 136, 0.08)' }}>
+                                                            PASS (NHS VERIFIED ID)
+                                                        </span>
+                                                    ) : apt.status === 'rejected' ? (
+                                                        <span className="bk_ticket_verified" style={{ color: '#ef4444', background: 'rgba(239, 68, 68, 0.08)' }}>
+                                                            REJECTED (FAILED COMPLIANCE)
+                                                        </span>
+                                                    ) : (
+                                                        <span className="bk_ticket_verified" style={{ color: '#d97706', background: 'rgba(217, 119, 6, 0.08)' }}>
+                                                            PENDING 
+                                                        </span>
+                                                    )}
+                                                </strong>
                                             </div>
                                         </div>
 

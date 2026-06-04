@@ -1,6 +1,6 @@
 .wl_faq_section {
     padding: 120px 5%;
-    background: #ffffff;
+    background: transparent;
 }
 
 .wl_faq_container {
@@ -60,7 +60,7 @@
 
 .wlf_item.active {
     background: #ffffff;
-    box-shadow: 0 20px 40px rgba(45, 27, 105, 0.08);
+    box-shadow: 0 20px 40px rgba(75, 45, 113, 0.08);
     border-color: rgba(79, 209, 197, 0.3);
 }
 

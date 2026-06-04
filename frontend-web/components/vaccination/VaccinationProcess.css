@@ -1,7 +1,6 @@
 .vp_section {
     padding: 120px 5%;
-    background: #ffffff;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    background: transparent;
 }
 
 .vp_container {
@@ -58,7 +57,7 @@
     left: 15%;
     right: 15%;
     height: 2px;
-    background: linear-gradient(90deg, transparent, rgba(79, 209, 197, 0.3), transparent);
+    background: linear-gradient(90deg, transparent, rgba(0, 132, 115, 0.3), transparent);
     z-index: 0;
 }
 
@@ -76,14 +75,14 @@
 .vp_step:hover {
     background: #ffffff;
     transform: translateY(-10px);
-    box-shadow: 0 40px 80px rgba(45, 27, 105, 0.08);
-    border-color: rgba(79, 209, 197, 0.3);
+    box-shadow: 0 40px 80px rgba(75, 45, 113, 0.08);
+    border-color: rgba(0, 132, 115, 0.3);
 }
 
 .vp_step_number {
     font-size: 4rem;
     font-weight: 950;
-    color: rgba(79, 209, 197, 0.2);
+    color: rgba(0, 132, 115, 0.2);
     line-height: 1;
     margin-bottom: 25px;
     font-family: inherit;

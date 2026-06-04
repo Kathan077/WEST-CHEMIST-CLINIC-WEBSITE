@@ -37,7 +37,7 @@ export default function BlogHero() {
                         </div>
                         
                         <h1 className="bh_main_title">
-                            Digital <span className="bh_highlight">Health</span> <br />
+                            Digital <span className="bh_highlight">Health</span> 
                             & Medical <span className="bh_highlight">Innovation</span>
                         </h1>
                         

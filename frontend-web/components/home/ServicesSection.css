@@ -77,19 +77,6 @@
 
 .ss_title_accent {
     color: var(--primary);
-    position: relative;
-    display: inline-block;
-}
-
-.ss_title_accent::after {
-    content: '';
-    position: absolute;
-    bottom: 2px;
-    left: 0;
-    right: 0;
-    height: 6px;
-    background: rgba(75, 45, 113, 0.15);
-    border-radius: 4px;
 }
 
 .ss_subtitle {

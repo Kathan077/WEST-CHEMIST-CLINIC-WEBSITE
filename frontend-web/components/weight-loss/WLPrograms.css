@@ -1,6 +1,6 @@
 .wl_programs_section {
     padding: 150px 5%;
-    background: #f8fafb;
+    background: transparent;
     position: relative;
 }
 
@@ -207,7 +207,7 @@
 .wlp_btn:hover {
     background: var(--primary);
     color: #ffffff;
-    box-shadow: 0 15px 30px rgba(45, 27, 105, 0.15);
+    box-shadow: 0 15px 30px rgba(75, 45, 113, 0.15);
 }
 
 /* ─── Animations ─── */

@@ -1,7 +1,7 @@
 .wl_benefits_section {
     padding: 120px 5%;
-    background: #0f172a;
-    color: #ffffff;
+    background: transparent;
+    color: #0f172a;
 }
 
 .wl_benefits_container {
@@ -26,7 +26,7 @@
 
 .wlb_title {
     font-size: clamp(3rem, 5vw, 4.5rem);
-    color: #ffffff;
+    color: #0f172a;
     font-weight: 950;
     line-height: 1.1;
     letter-spacing: -0.03em;
@@ -35,7 +35,7 @@
 
 .wlb_lead {
     font-size: 1.25rem;
-    color: #94a3b8;
+    color: #475569;
     max-width: 700px;
     margin: 0 auto;
     line-height: 1.7;
@@ -64,7 +64,7 @@
 .wlb_bento_item:hover {
     transform: translateY(-8px) scale(1.02);
     z-index: 2;
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 30px 60px rgba(15, 23, 42, 0.15);
 }
 
 .wlb_bento_icon {

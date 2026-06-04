@@ -1,6 +1,7 @@
 "use client";
 import React from 'react';
 import { useParams } from 'next/navigation';
+import Link from 'next/link';
 import './ServiceDetail.css';
 
 // Comprehensive data mapper for all services
@@ -426,7 +427,9 @@ export default function ServiceDetail() {
                                         <span>Consultation: {service.duration}</span>
                                     </div>
                                 </div>
-                                <button className="sd_book_btn">Book Your Appointment</button>
+                                <Link href="/book-appointment" className="sd_book_btn">
+                                    Book Your Appointment
+                                </Link>
                                 <div className="sd_card_footer">
                                     <div className="sd_trust_badge">
                                         <span>Verified Professional Service</span>

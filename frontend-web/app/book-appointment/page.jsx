@@ -625,7 +625,7 @@ export default function BookingPage() {
                                 </div>
 
                                 {verificationState === 'approved' ? (
-                                    <div className="bk_verified_bypass anim_in" style={{ textAlign: 'center', padding: '40px 20px' }}>
+                                    <div className="bk_verified_bypass anim_in">
                                         <div style={{
                                             width: '80px',
                                             height: '80px',
@@ -643,8 +643,8 @@ export default function BookingPage() {
                                                 <polyline points="22 4 12 14.01 9 11.01" />
                                             </svg>
                                         </div>
-                                        <h2 style={{ fontSize: '1.5rem', color: '#0f172a', fontWeight: '800', marginBottom: '12px' }}>Identity Securely Verified</h2>
-                                        <p style={{ color: '#64748b', fontSize: '0.95rem', maxWidth: '440px', margin: '0 auto 30px', lineHeight: '1.6' }}>
+                                        <h2 className="bk_bypass_title">Identity Securely Verified</h2>
+                                        <p className="bk_bypass_desc">
                                             Welcome back, <strong>{formData.fullName}</strong>. Our clinical system has retrieved your approved GPhC statutory verification. No further documents are required.
                                         </p>
                                         <div className="bk_footer" style={{ borderTop: 'none', padding: '0', justifyContent: 'center', gap: '16px' }}>
@@ -797,7 +797,7 @@ export default function BookingPage() {
                                                 </div>
                                             </>
                                         ) : (
-                                            <div className="bk_scanner anim_in" style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '30px', alignItems: 'stretch' }}>
+                                            <div className="bk_scanner anim_in">
                                                 {!verifyComplete && <div className="bk_scanner_laser" />}
                                                 {/* Scanner Left - Progress Checks */}
                                                 <div>
@@ -829,19 +829,7 @@ export default function BookingPage() {
                                                 </div>
 
                                                 {/* Scanner Right - Visual Hud Console */}
-                                                <div style={{
-                                                    background: '#040711',
-                                                    borderRadius: '20px',
-                                                    border: '1px solid rgba(13, 148, 136, 0.15)',
-                                                    padding: '24px',
-                                                    display: 'flex',
-                                                    flexDirection: 'column',
-                                                    justifyContent: 'space-between',
-                                                    fontFamily: 'monospace',
-                                                    color: '#14b8a6',
-                                                    fontSize: '0.78rem',
-                                                    position: 'relative'
-                                                }}>
+                                                <div className="bk_scanner_console">
                                                     {/* Rotating Hologram Radar SVG overlay */}
                                                     <div style={{
                                                         position: 'absolute',
@@ -1016,9 +1004,9 @@ export default function BookingPage() {
                                                 {showSummaryPage && (
                                                     <div className="bk_serv_details anim_in" style={{ borderLeft: 'none', paddingLeft: 0, maxWidth: '600px', margin: '0 auto', width: '100%' }}>
                                                         <div className="bk_serv_card">
-                                                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px' }}>
+                                                                                                                        <div className="bk_serv_header_row">
                                                                 <div className="bk_serv_name" style={{ marginBottom: 0 }}>{formData.service || "Cryotherapy"}</div>
-                                                                <button className="bk_btn_ghost" onClick={() => { setStep(1); setShowSummaryPage(false); }} style={{ padding: '6px 12px', fontSize: '0.8rem', color: '#0f766e', border: '1px solid rgba(13, 148, 136, 0.2)' }}>
+                                                                <button className="bk_btn_ghost" onClick={() => { setStep(1); setShowSummaryPage(false); }}>
                                                                     Edit Service
                                                                 </button>
                                                             </div>

@@ -98,7 +98,12 @@ export default function PrivateServices() {
                                     >
                                         View
                                     </button>
-                                    <button className="ps_btn_book">Book Now</button>
+                                    <button 
+                                        className="ps_btn_book"
+                                        onClick={() => window.location.href = '/book-appointment'}
+                                    >
+                                        Book Now
+                                    </button>
                                 </div>
                                 <div className="ps_line" />
                             </div>

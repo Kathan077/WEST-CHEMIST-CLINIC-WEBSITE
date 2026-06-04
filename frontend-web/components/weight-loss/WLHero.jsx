@@ -32,11 +32,11 @@ const WLHero = () => {
             </div>
 
             <div className="wl_hero_container">
-                <div className="wl_hero_content">
+                {/* Top Row: Heading Content */}
+                <div className="wl_hero_content_row">
                     <span className="wlh_eyebrow wlh_reveal">Clinical Weight Management</span>
                     <h1 className="wlh_title wlh_reveal" style={{ transitionDelay: '0.1s' }}>
-                        Medical Weight Loss.<br />
-                        <span className="wlh_highlight">Reimagined.</span>
+                        Medical Weight Loss. <span className="wlh_highlight">Reimagined.</span>
                     </h1>
                     <p className="wlh_lead wlh_reveal" style={{ transitionDelay: '0.2s' }}>
                         Transform your health with our doctor-led GLP-1 weight loss programs, including Wegovy® and Mounjaro®. Backed by science, tailored to you.
@@ -53,8 +53,8 @@ const WLHero = () => {
                     </div>
                 </div>
 
-                {/* Floating Glass Stats */}
-                <div className="wl_hero_stats wlh_reveal" style={{ transitionDelay: '0.4s' }}>
+                {/* Bottom Row: Horizontal Glass Stats */}
+                <div className="wl_hero_stats_row wlh_reveal" style={{ transitionDelay: '0.4s' }}>
                     <div className="wlh_stat_card">
                         <div className="wlh_icon">🩺</div>
                         <div className="wlh_stat_info">

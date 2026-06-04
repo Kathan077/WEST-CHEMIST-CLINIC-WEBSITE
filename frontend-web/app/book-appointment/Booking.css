@@ -4,6 +4,10 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
 
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 :root {
     --primary: #4B2D71;
     --primary-light: #7c4dba;
@@ -655,6 +659,10 @@ select.bk_input {
 
 /* ── CLINICAL SECURITY SCANNER HUD ── */
 .bk_scanner {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 30px;
+    align-items: stretch;
     background: #090d16;
     border: 1px solid rgba(13, 148, 136, 0.25);
     border-radius: 24px;
@@ -662,6 +670,20 @@ select.bk_input {
     position: relative;
     overflow: hidden;
     box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.4);
+}
+
+.bk_scanner_console {
+    background: #040711;
+    border-radius: 20px;
+    border: 1px solid rgba(13, 148, 136, 0.15);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-family: monospace;
+    color: #14b8a6;
+    font-size: 0.78rem;
+    position: relative;
 }
 
 /* Biometric Neon Scanning Laser line */
@@ -958,6 +980,14 @@ select.bk_input {
     letter-spacing: -0.01em;
 }
 
+.bk_serv_header_row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
 .bk_serv_card {
     display: flex;
     flex-direction: column;
@@ -1017,7 +1047,7 @@ select.bk_input {
 .bk_summary_item {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     gap: 16px;
     padding: 12px 16px;
     background: rgba(248, 250, 252, 0.8);
@@ -1041,7 +1071,8 @@ select.bk_input {
     font-weight: 800;
     font-size: 0.95rem;
     text-align: right;
-    max-width: 60%;
+    max-width: 65%;
+    margin-left: auto;
     line-height: 1.3;
 }
 
@@ -1378,7 +1409,7 @@ select.bk_input {
     border-radius: 28px;
     padding: 36px 40px;
     max-width: 480px;
-    margin: 0 auto 36px;
+    margin: 0 auto 20px;
     text-align: left;
     position: relative;
     box-shadow: 0 25px 50px -20px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.01);
@@ -1397,53 +1428,136 @@ select.bk_input {
     }
 }
 
-/* Punch card holes on boarding pass */
-.bk_ticket::before,
-.bk_ticket::after {
+/* Ticket Header Classes */
+.bk_ticket_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid rgba(226, 232, 240, 0.6);
+    padding-bottom: 14px;
+    gap: 16px;
+}
+
+.bk_ticket_header_left {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.bk_ticket_super {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--primary-light);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.bk_ticket_title {
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: var(--primary);
+    font-family: 'Outfit', sans-serif;
+    line-height: 1.25;
+}
+
+.bk_ticket_status {
+    padding: 6px 12px;
+    border-radius: 10px;
+    border: 1px solid;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.bk_ticket_status span {
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+/* Punch card holes on boarding pass - attached to divider for perfect dynamic centering */
+.bk_ticket_divider::before,
+.bk_ticket_divider::after {
     content: '';
     position: absolute;
-    top: 73%;
+    top: -13px; /* Center of 24px height circle relative to the dashed line */
     width: 24px;
     height: 24px;
     background: #e2e8f0;
     border-radius: 50%;
     z-index: 2;
     border: 1px solid var(--border-color);
+    box-sizing: border-box;
 }
 
-.bk_ticket::before {
+.bk_ticket_divider::before {
     left: -13px;
     box-shadow: 4px 0 6px -3px rgba(0, 0, 0, 0.03) inset;
 }
 
-.bk_ticket::after {
+.bk_ticket_divider::after {
     right: -13px;
     box-shadow: -4px 0 6px -3px rgba(0, 0, 0, 0.03) inset;
+}
+
+
+/* Premium Table-wise Ticket Details Container */
+.bk_ticket_table {
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    border-radius: 16px;
+    background: #ffffff;
+    overflow: hidden;
+    margin: 16px 0;
+    box-shadow: 0 4px 12px rgba(75, 45, 113, 0.02);
 }
 
 .bk_ticket_row {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 12px 0;
-    font-size: 0.96rem;
+    align-items: flex-start;
+    padding: 14px 16px;
+    font-size: 0.92rem;
+    border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+    background: #ffffff;
+    transition: background 0.25s ease;
+}
+
+.bk_ticket_table .bk_ticket_row:nth-child(even) {
+    background: rgba(248, 250, 252, 0.5);
+}
+
+.bk_ticket_table .bk_ticket_row:last-child {
+    border-bottom: none;
+}
+
+.bk_ticket_table .bk_ticket_row:hover {
+    background: rgba(75, 45, 113, 0.02);
 }
 
 .bk_ticket_row span {
     color: var(--text-muted);
     font-weight: 700;
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
+    padding-top: 2px;
+    width: 32%;
+    flex-shrink: 0;
 }
 
 .bk_ticket_row strong {
     color: var(--text-main);
     font-weight: 800;
     text-align: right;
-    max-width: 60%;
+    width: 68%;
+    word-break: break-word;
     line-height: 1.35;
 }
+
+
 
 .bk_ticket_divider {
     border-top: 2px dashed rgba(226, 232, 240, 0.9);
@@ -1462,6 +1576,9 @@ select.bk_input {
     background: rgba(13, 148, 136, 0.08);
     padding: 3px 10px;
     border-radius: 8px;
+    white-space: nowrap !important;
+    display: inline-block !important;
+    flex-shrink: 0 !important;
 }
 
 /* Mock barcode for premium clinical feeling */
@@ -1526,12 +1643,163 @@ select.bk_input {
     }
 }
 
+/* ── SUCCESS PAGE DETAILS ── */
+.bk_success_panel {
+    padding: 48px 40px;
+}
+
+
+/* Premium Timeline Audit Checklist */
+.bk_checklist_title {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 20px;
+    letter-spacing: -0.01em;
+    font-family: 'Outfit', sans-serif;
+}
+
+.bk_checklist_wrapper {
+    position: relative;
+}
+
+.bk_checklist_line {
+    position: absolute;
+    left: 11px;
+    top: 12px;
+    bottom: 12px;
+    width: 2px;
+    z-index: 0;
+}
+
+.bk_checklist_list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.bk_checklist_item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.bk_checklist_circle {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.bk_circle_success {
+    background: #10b981;
+    color: #ffffff;
+    border: 2px solid #10b981;
+}
+
+.bk_checklist_dot {
+    width: 6px;
+    height: 6px;
+    background: #ffffff;
+    border-radius: 50%;
+}
+
+.bk_checklist_content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.bk_checklist_headline {
+    font-size: 0.88rem;
+    font-weight: 750;
+    color: var(--text-main);
+    line-height: 1.3;
+}
+
+.bk_checklist_sub {
+    font-size: 0.76rem;
+    color: var(--text-muted);
+    line-height: 1.35;
+}
+
+@keyframes goldPulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 0 6px rgba(245, 158, 11, 0);
+    }
+}
+
+.bk_success_checklist {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto 20px;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    border-radius: 24px;
+    padding: 24px;
+    text-align: left;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+
+.bk_btn_success_home {
+    border: 2px solid var(--primary) !important;
+    color: var(--primary) !important;
+}
+
+.bk_btn_success_another {
+    border: 1px dashed var(--primary-light) !important;
+    color: var(--primary) !important;
+    background: transparent !important;
+}
+
+.bk_verified_bypass {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.bk_bypass_title {
+    font-size: 1.5rem;
+    color: #0f172a;
+    font-weight: 800;
+    margin-bottom: 12px;
+}
+
+.bk_bypass_desc {
+    color: #64748b;
+    font-size: 0.95rem;
+    max-width: 440px;
+    margin: 0 auto 30px;
+    line-height: 1.6;
+}
+
+
 /* ================================================================
    RESPONSIVE LAYOUT · BREAKPOINTS
    ================================================================ */
 
+
 /* ── TABLET (≤ 768px) ── */
 @media (max-width: 768px) {
+    .bk_ticket {
+        margin: 0 auto 16px !important;
+    }
+    .bk_success_checklist {
+        margin: 0 auto 16px !important;
+    }
     .bk_page {
         padding: 16px 14px 40px;
     }
@@ -1564,35 +1832,45 @@ select.bk_input {
     .bk_brand_name { font-size: 1rem; }
     .bk_brand_sub  { font-size: 0.73rem; }
 
-    /* Horizontal scrolling steps */
+    /* Premium horizontal stepper */
     .bk_steps {
         flex-direction: row;
         align-items: flex-start;
-        overflow-x: auto;
-        padding: 10px 10px 14px 10px;
-        margin: -10px -10px 0 -10px;
+        justify-content: space-between;
+        overflow: visible;
+        padding: 8px 0 12px;
+        margin: 0;
         gap: 0;
-        scrollbar-width: none;
     }
-    .bk_steps::-webkit-scrollbar { display: none; }
 
     .bk_step {
         flex: 1;
         flex-direction: column;
         align-items: center;
         text-align: center;
-        min-width: 90px;
+        min-width: 0;
+        gap: 8px;
+        position: relative;
     }
 
-    .bk_step_info { padding: 8px 0 0; align-items: center; }
+    .bk_step_info {
+        padding: 0;
+        align-items: center;
+    }
     .bk_step_line { display: none; }
+
+    .bk_step_circle {
+        width: 38px;
+        height: 38px;
+        font-size: 0.85rem;
+    }
 
     .bk_step::after {
         content: '';
         position: absolute;
-        top: 20px;
-        left: calc(50% + 22px);
-        width: calc(100% - 44px);
+        top: 19px;
+        left: calc(50% + 19px);
+        width: calc(100% - 38px);
         height: 2px;
         background: rgba(226, 232, 240, 0.9);
     }
@@ -1635,8 +1913,73 @@ select.bk_input {
     .bk_admin_actions { flex-direction: column-reverse; }
 
     .bk_scanner {
-        grid-template-columns: 1fr !important;
+        grid-template-columns: 1fr;
+        gap: 20px;
         padding: 24px 20px;
+    }
+
+    /* Summary Card & Header Responsive Layouts */
+    .bk_serv_header_row {
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+    }
+    .bk_serv_header_row .bk_serv_name {
+        flex: 1;
+        min-width: 160px;
+        font-size: 1.15rem;
+    }
+    .bk_serv_header_row .bk_btn_ghost {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+        color: #0f766e;
+        border: 1px solid rgba(13, 148, 136, 0.2);
+        align-self: flex-start;
+    }
+
+    /* Fluid flex wrap for Summary Items to prevent text squishing */
+    .bk_summary_item {
+        flex-wrap: wrap;
+        gap: 8px 12px;
+        padding: 10px 14px;
+        font-size: 0.84rem;
+    }
+    .bk_summary_item span {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .bk_summary_item strong {
+        max-width: 100%;
+        text-align: right;
+        flex: 1;
+        min-width: 120px;
+        font-size: 0.88rem;
+    }
+
+    /* Fluid flex wrap for Success Ticket Rows */
+    .bk_ticket_row {
+        flex-wrap: wrap;
+        gap: 6px 12px;
+        padding: 10px 0;
+        font-size: 0.88rem;
+    }
+    .bk_ticket_row span {
+        flex-shrink: 0;
+    }
+    .bk_ticket_row strong {
+        max-width: 100%;
+        text-align: right;
+        flex: 1;
+        min-width: 120px;
+        font-size: 0.92rem;
+    }
+
+    /* Fluid time slot grid using auto-fill instead of fixed columns */
+    .bk_times {
+        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)) !important;
+        gap: 10px;
     }
 }
 
@@ -1661,7 +2004,10 @@ select.bk_input {
     .bk_upload { padding: 32px 18px; border-radius: 18px; }
     .bk_upload_icon { font-size: 2.2rem; }
 
-    .bk_times { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .bk_times {
+        grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)) !important;
+        gap: 8px;
+    }
     .bk_time  { padding: 12px 8px; font-size: 0.87rem; border-radius: 12px; }
 
     .bk_footer {
@@ -1687,25 +2033,60 @@ select.bk_input {
     .bk_confirmed_title { font-size: 1.6rem; }
 
     .bk_ticket { padding: 24px 20px; border-radius: 20px; }
-    .bk_ticket::before, .bk_ticket::after { top: 73%; }
+
     .bk_ticket_divider { margin: 8px -20px; }
 
-    .bk_step_label  { font-size: 0.76rem; }
+    .bk_step { gap: 6px; }
     .bk_step_circle { width: 36px; height: 36px; font-size: 0.85rem; }
+    .bk_step::after {
+        top: 18px;
+        left: calc(50% + 18px);
+        width: calc(100% - 36px);
+    }
+    .bk_scanner_console {
+        padding: 16px;
+        border-radius: 16px;
+    }
+
+    /* Summary overrides at 680px */
+    .bk_summary_item {
+        padding: 8px 12px;
+        gap: 6px 10px;
+        font-size: 0.82rem;
+    }
+    .bk_summary_item strong {
+        min-width: 110px;
+        font-size: 0.84rem;
+    }
+    .bk_ticket_row {
+        padding: 8px 0;
+        gap: 4px 10px;
+        font-size: 0.84rem;
+    }
+    .bk_ticket_row strong {
+        min-width: 110px;
+        font-size: 0.88rem;
+    }
 }
 
 /* ── MOBILE 425px ── */
 @media (max-width: 425px) {
+    .bk_ticket {
+        margin: 0 auto 12px !important;
+    }
+    .bk_success_checklist {
+        margin: 0 auto 12px !important;
+    }
     .bk_page { padding: 12px 10px 28px; }
 
     .bk_sidebar { padding: 16px 14px; border-radius: 18px; }
     .bk_brand_icon { width: 40px; height: 40px; border-radius: 11px; }
     .bk_brand_name { font-size: 0.95rem; }
 
-    .bk_step { min-width: 80px; }
-    .bk_step_circle { width: 34px; height: 34px; font-size: 0.82rem; }
-    .bk_step_label  { font-size: 0.73rem; }
-    .bk_step_sublabel { font-size: 0.68rem; }
+    .bk_step { min-width: 0; gap: 5px; }
+    .bk_step_circle { width: 34px; height: 34px; font-size: 0.8rem; }
+    .bk_step_label  { font-size: 0.72rem; }
+    .bk_step_sublabel { font-size: 0.64rem; }
 
     .bk_panel { padding: 16px 14px; border-radius: 18px; }
     .bk_title { font-size: 1.35rem; }
@@ -1720,7 +2101,10 @@ select.bk_input {
     .bk_upload_title { font-size: 0.95rem; }
     .bk_upload_sub   { font-size: 0.8rem; }
 
-    .bk_times { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .bk_times {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)) !important;
+        gap: 8px;
+    }
     .bk_time  { padding: 11px 6px; font-size: 0.84rem; border-radius: 10px; }
 
     .bk_footer { margin-top: 22px; padding-top: 18px; gap: 12px; }
@@ -1729,8 +2113,6 @@ select.bk_input {
     .bk_btn_ghost { padding: 14px 16px; font-size: 0.9rem; }
 
     .bk_ticket { padding: 20px 16px; border-radius: 18px; }
-    .bk_ticket_row { font-size: 0.84rem; }
-    .bk_ticket_row strong { font-size: 0.88rem; max-width: 55%; }
     .bk_ticket_divider { margin: 6px -16px; }
 
     .bk_barcode_num { font-size: 0.7rem; letter-spacing: 0.04em; }
@@ -1742,10 +2124,72 @@ select.bk_input {
     .bk_trust { display: none; }
     .bk_scanner_badge { font-size: 0.76rem; }
     .bk_check { font-size: 0.76rem; }
+    .bk_step::after {
+        top: 17px;
+        left: calc(50% + 17px);
+        width: calc(100% - 34px);
+    }
+    .bk_calendar {
+        padding: 16px;
+        border-radius: 18px;
+    }
+    .bk_success_panel {
+        padding: 24px 16px;
+    }
+    .bk_success_checklist {
+        padding: 16px;
+        border-radius: 18px;
+    }
+    .bk_bypass_title {
+        font-size: 1.3rem;
+    }
+    .bk_bypass_desc {
+        font-size: 0.88rem;
+    }
+
+    /* Summary overrides at 425px */
+    .bk_ticket_header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding-bottom: 12px;
+    }
+    .bk_ticket_status {
+        align-self: flex-start;
+    }
+    .bk_ticket_title {
+        font-size: 1.05rem;
+    }
+    .bk_summary_item {
+        padding: 8px 10px;
+        gap: 6px 8px;
+        font-size: 0.8rem;
+    }
+    .bk_summary_item strong {
+        min-width: 100px;
+        font-size: 0.82rem;
+    }
+    .bk_ticket_row {
+        padding: 12px;
+    }
+    .bk_ticket_row span {
+        width: 35%;
+        font-size: 0.74rem;
+    }
+    .bk_ticket_row strong {
+        width: 65%;
+        font-size: 0.86rem;
+    }
 }
 
 /* ── MOBILE 375px ── */
 @media (max-width: 375px) {
+    .bk_ticket {
+        margin: 0 auto 10px !important;
+    }
+    .bk_success_checklist {
+        margin: 0 auto 10px !important;
+    }
     .bk_page { padding: 10px 8px 24px; }
 
     .bk_sidebar { padding: 14px 12px; border-radius: 16px; }
@@ -1754,9 +2198,9 @@ select.bk_input {
     .bk_brand_name { font-size: 0.9rem; }
     .bk_brand_sub  { font-size: 0.69rem; }
 
-    .bk_step { min-width: 74px; }
-    .bk_step_circle { width: 32px; height: 32px; font-size: 0.78rem; }
-    .bk_step_label  { font-size: 0.7rem; }
+    .bk_step { min-width: 0; gap: 4px; }
+    .bk_step_circle { width: 30px; height: 30px; font-size: 0.75rem; }
+    .bk_step_label  { font-size: 0.68rem; }
     .bk_step_sublabel { display: none; }
 
     .bk_panel { padding: 14px 12px; border-radius: 16px; }
@@ -1777,7 +2221,10 @@ select.bk_input {
     .bk_upload_title { font-size: 0.9rem; }
     .bk_upload_sub   { font-size: 0.75rem; }
 
-    .bk_times { grid-template-columns: repeat(2, 1fr); gap: 7px; }
+    .bk_times {
+        grid-template-columns: repeat(auto-fill, minmax(75px, 1fr)) !important;
+        gap: 6px;
+    }
     .bk_time  { padding: 10px 6px; font-size: 0.82rem; border-radius: 10px; }
 
     .bk_btn_primary,
@@ -1786,8 +2233,6 @@ select.bk_input {
     .bk_footer { margin-top: 18px; padding-top: 16px; gap: 10px; }
 
     .bk_ticket { padding: 18px 14px; border-radius: 16px; }
-    .bk_ticket_row { font-size: 0.8rem; gap: 8px; flex-wrap: wrap; }
-    .bk_ticket_row strong { font-size: 0.84rem; max-width: 100%; text-align: right; }
     .bk_ticket_divider { margin: 6px -14px; }
     .bk_barcode { padding: 12px 14px 14px; }
     .bk_barcode_num { font-size: 0.65rem; }
@@ -1803,20 +2248,77 @@ select.bk_input {
 
     .bk_summary_actions { gap: 10px; }
     .bk_serv_card { padding: 18px 16px; border-radius: 18px; }
-    .bk_summary_item { font-size: 0.82rem; }
+    .bk_step::after {
+        top: 15px;
+        left: calc(50% + 15px);
+        width: calc(100% - 30px);
+    }
+    .bk_calendar {
+        padding: 12px;
+        border-radius: 16px;
+    }
+    .bk_cal_grid {
+        gap: 4px;
+    }
+    .bk_cal_day {
+        border-radius: 8px;
+        font-size: 0.85rem;
+    }
+    .bk_cal_nav {
+        margin-bottom: 12px;
+    }
+    .bk_cal_nav_btn {
+        width: 30px;
+        height: 30px;
+    }
+    .bk_cal_month {
+        font-size: 1rem;
+    }
+    .bk_cal_wd {
+        font-size: 0.68rem;
+        padding-bottom: 6px;
+    }
+
+    /* Summary overrides at 375px */
+    .bk_summary_item {
+        padding: 6px 8px;
+        gap: 4px 6px;
+        font-size: 0.78rem;
+    }
+    .bk_summary_item strong {
+        min-width: 90px;
+        font-size: 0.8rem;
+    }
+    .bk_ticket_row {
+        padding: 10px;
+    }
+    .bk_ticket_row span {
+        width: 38%;
+        font-size: 0.7rem;
+    }
+    .bk_ticket_row strong {
+        width: 62%;
+        font-size: 0.8rem;
+    }
 }
 
-/* ── MOBILE 320px (smallest supported) ── */
+/* ── MOBILE 320px ── */
 @media (max-width: 320px) {
+    .bk_ticket {
+        margin: 0 auto 8px !important;
+    }
+    .bk_success_checklist {
+        margin: 0 auto 8px !important;
+    }
     .bk_page { padding: 8px 6px 20px; }
 
     .bk_sidebar { padding: 12px 10px; border-radius: 14px; }
     .bk_brand_icon { width: 34px; height: 34px; border-radius: 9px; }
     .bk_brand_name { font-size: 0.85rem; }
 
-    .bk_step { min-width: 68px; }
-    .bk_step_circle { width: 30px; height: 30px; font-size: 0.75rem; }
-    .bk_step_label  { font-size: 0.66rem; }
+    .bk_step { min-width: 0; gap: 3px; }
+    .bk_step_circle { width: 28px; height: 28px; font-size: 0.7rem; }
+    .bk_step_label  { font-size: 0.62rem; }
 
     .bk_panel { padding: 12px 10px; border-radius: 14px; }
     .bk_title { font-size: 1.1rem; letter-spacing: -0.02em; }
@@ -1833,7 +2335,10 @@ select.bk_input {
 
     .bk_upload { padding: 18px 10px; border-radius: 14px; }
 
-    .bk_times { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+    .bk_times {
+        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)) !important;
+        gap: 6px;
+    }
     .bk_time  { padding: 9px 5px; font-size: 0.78rem; border-radius: 9px; }
 
     .bk_btn_primary,
@@ -1842,8 +2347,6 @@ select.bk_input {
     .bk_footer { margin-top: 16px; padding-top: 14px; gap: 9px; }
 
     .bk_ticket { padding: 14px 11px; border-radius: 14px; }
-    .bk_ticket_row { font-size: 0.76rem; }
-    .bk_ticket_row strong { font-size: 0.8rem; }
     .bk_ticket_divider { margin: 5px -11px; }
     .bk_barcode_num { font-size: 0.6rem; letter-spacing: 0.02em; }
 
@@ -1856,5 +2359,77 @@ select.bk_input {
     .bk_scanner_badge { font-size: 0.68rem; gap: 8px; }
 
     .bk_serv_card { padding: 14px 12px; border-radius: 14px; }
-    .bk_summary_item { font-size: 0.78rem; }
+    .bk_step::after {
+        top: 14px;
+        left: calc(50% + 14px);
+        width: calc(100% - 28px);
+    }
+    .bk_calendar {
+        padding: 8px;
+        border-radius: 12px;
+    }
+    .bk_cal_grid {
+        gap: 3px;
+    }
+    .bk_cal_day {
+        border-radius: 6px;
+        font-size: 0.78rem;
+    }
+    .bk_cal_nav {
+        margin-bottom: 10px;
+    }
+    .bk_cal_nav_btn {
+        width: 28px;
+        height: 28px;
+    }
+    .bk_cal_month {
+        font-size: 0.9rem;
+    }
+    .bk_cal_wd {
+        font-size: 0.6rem;
+        padding-bottom: 4px;
+    }
+    .bk_scanner_console {
+        padding: 12px;
+        border-radius: 12px;
+        font-size: 0.74rem;
+    }
+    .bk_success_panel {
+        padding: 18px 12px;
+    }
+    .bk_success_checklist {
+        padding: 12px;
+        border-radius: 14px;
+    }
+    .bk_bypass_title {
+        font-size: 1.1rem;
+    }
+    .bk_bypass_desc {
+        font-size: 0.82rem;
+    }
+
+    /* Summary overrides at 320px */
+    .bk_summary_item {
+        padding: 6px;
+        gap: 4px;
+        font-size: 0.75rem;
+    }
+    .bk_summary_item strong {
+        min-width: 80px;
+        font-size: 0.76rem;
+    }
+    .bk_ticket_row {
+        padding: 8px;
+        flex-direction: column;
+        gap: 4px;
+    }
+    .bk_ticket_row span {
+        width: 100%;
+        font-size: 0.68rem;
+    }
+    .bk_ticket_row strong {
+        width: 100%;
+        text-align: left;
+        font-size: 0.78rem;
+    }
 }

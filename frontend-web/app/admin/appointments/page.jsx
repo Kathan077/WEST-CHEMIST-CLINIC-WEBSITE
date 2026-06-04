@@ -376,7 +376,7 @@ function ViewApptModal({ appointment, onClose, onApprove, onReject, onReschedule
                     </span>
                   </div>
                   <span className={`comp_check_badge ${ver.status === 'approved' ? 'passed' : ver.status === 'rejected' ? 'failed' : 'pending'}`} style={{ margin: 0, fontSize: '0.72rem' }}>
-                    {ver.status === 'approved' ? 'Passed' : ver.status === 'rejected' ? 'Failed' : 'Pending Review'}
+                    {ver.status === 'approved' ? 'Passed' : ver.status === 'rejected' ? 'Failed' : 'Pending '}
                   </span>
                 </div>
 

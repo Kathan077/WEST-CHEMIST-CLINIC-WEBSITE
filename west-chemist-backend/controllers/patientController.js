@@ -16,13 +16,13 @@ const registerOrFindPatient = async (req, res) => {
       });
     }
 
-    // Airtight UK Mobile Number validation check
+    // Airtight UK Phone Number validation check
     const cleanMobile = mobile.replace(/[\s\-()]/g, '');
-    const ukRegex = /^(?:07|(?:\+44|44)7)\d{9}$/;
+    const ukRegex = /^(?:\+44|44|0)\d{9,10}$/;
     if (!ukRegex.test(cleanMobile)) {
       return res.status(400).json({
         success: false,
-        message: 'Please enter a valid UK mobile number starting with 07 or +447 (e.g. 07123456789)'
+        message: 'Please enter a valid UK phone number (e.g. 07123456789 or 02079460192)'
       });
     }
 

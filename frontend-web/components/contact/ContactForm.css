@@ -1,6 +1,6 @@
 .formContainer {
     position: relative;
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.75);
     border: 1px solid rgba(0, 0, 0, 0.08);
     border-radius: 20px;
     padding: 3rem;
@@ -16,7 +16,7 @@
     left: 0;
     width: 100%;
     height: 5px;
-    background: linear-gradient(90deg, #38bdf8, #818cf8);
+    background: linear-gradient(90deg, var(--primary), var(--accent));
 }
 
 .formHeader {
@@ -77,9 +77,9 @@
     top: -0.8rem;
     left: 1rem;
     font-size: 0.85rem;
-    color: #0284c7;
-    background: #fafafa;
-    padding: 0 0.4rem;
+    color: var(--accent);
+    background: rgba(255, 255, 255, 0.95);
+    padding: 0 0.6rem;
     border-radius: 4px;
 }
 
@@ -102,38 +102,42 @@ textarea.formInput:not(:placeholder-shown)~.formLabel {
     padding: 1.2rem;
     border-radius: 12px;
     border: none;
-    background: linear-gradient(135deg, #38bdf8 0%, #6366f1 100%);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--highlight-purple) 100%);
     color: #fff;
     font-size: 1.1rem;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+    box-shadow: 0 8px 24px rgba(75, 45, 113, 0.2);
 }
 
 .submitBtn::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: all 0.5s ease;
-}
-
-.submitBtn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4);
+    top: -50%;
+    left: -60%;
+    width: 20%;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.25);
+    transform: rotate(30deg);
+    transition: none;
+    pointer-events: none;
 }
 
 .submitBtn:hover::before {
-    left: 100%;
+    left: 140%;
+    transition: left 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.submitBtn:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 16px 36px rgba(75, 45, 113, 0.3);
 }
 
 .submitBtn:active {
-    transform: translateY(0);
+    transform: translateY(1px) scale(0.98);
 }
 
 @media (max-width: 600px) {

@@ -1,8 +1,7 @@
 .wl_process_section {
     padding: 120px 5%;
-    background: #ffffff;
+    background: transparent;
     position: relative;
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .wl_process_container {
@@ -87,7 +86,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    box-shadow: 0 40px 80px rgba(45, 27, 105, 0.3);
+    box-shadow: 0 40px 80px rgba(75, 45, 113, 0.3);
 }
 
 .wlc_cta_content h3 {

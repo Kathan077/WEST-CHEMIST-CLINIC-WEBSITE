@@ -118,7 +118,12 @@ export default function NHSServices() {
                                     >
                                         View
                                     </button>
-                                    <button className="ns_btn_book">Book Now</button>
+                                    <button 
+                                        className="ns_btn_book"
+                                        onClick={() => window.location.href = '/book-appointment'}
+                                    >
+                                        Book Now
+                                    </button>
                                 </div>
                             </div>
                             <div className="ns_card_bottom">

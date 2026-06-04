@@ -1,8 +1,7 @@
-/* ─── Ultra Premium Grid Section Base ─── */
 .vacc_grid_pro_section {
     position: relative;
     padding: 140px 5%;
-    background: #f8fafc;
+    background: transparent;
     overflow: hidden;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
@@ -14,8 +13,8 @@
     z-index: 0;
     pointer-events: none;
     background-image:
-        radial-gradient(circle at 100% 0%, rgba(94, 234, 212, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 0% 100%, rgba(56, 189, 248, 0.08) 0%, transparent 50%);
+        radial-gradient(circle at 100% 0%, rgba(0, 132, 115, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 0% 100%, rgba(75, 45, 113, 0.08) 0%, transparent 50%);
 }
 
 .vacc_grid_pro_container {
@@ -34,15 +33,15 @@
 .vacc_section_badge {
     display: inline-block;
     padding: 8px 16px;
-    background: rgba(14, 116, 144, 0.05);
-    color: #0e7490;
+    background: rgba(75, 45, 113, 0.06);
+    color: var(--primary);
     border-radius: 100px;
     font-size: 0.85rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.15em;
     margin-bottom: 20px;
-    border: 1px solid rgba(14, 116, 144, 0.1);
+    border: 1px solid rgba(75, 45, 113, 0.12);
 }
 
 .vacc_grid_pro_header h2 {
@@ -94,7 +93,7 @@
 .pro_grid_card:hover {
     transform: translateY(-12px);
     box-shadow: 0 30px 60px rgba(15, 23, 42, 0.08), 0 10px 20px rgba(15, 23, 42, 0.03);
-    border-color: rgba(94, 234, 212, 0.4);
+    border-color: rgba(0, 132, 115, 0.4);
 }
 
 /* ─── Card Visual Area (Image + Overlay) ─── */
@@ -167,7 +166,7 @@
 }
 
 .pro_grid_card:hover .pro_card_content h3 {
-    color: #0e7490;
+    color: var(--accent);
 }
 
 .pro_card_desc {
@@ -205,12 +204,12 @@
     left: 0;
     width: 0%;
     height: 2px;
-    background: #0e7490;
+    background: var(--accent);
     transition: width 0.3s ease;
 }
 
 .pro_btn_outline:hover {
-    color: #0e7490;
+    color: var(--accent);
 }
 
 .pro_btn_outline:hover::after {
@@ -239,9 +238,9 @@
 }
 
 .pro_btn_solid:hover {
-    background: #0e7490;
+    background: var(--accent);
     color: #ffffff;
-    box-shadow: 0 10px 20px rgba(14, 116, 144, 0.3);
+    box-shadow: 0 10px 20px rgba(0, 132, 115, 0.3);
     transform: translateY(-2px);
 }
 

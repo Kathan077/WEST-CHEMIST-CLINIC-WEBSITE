@@ -4,6 +4,7 @@ import { API_URL } from '@/config';
 
 import React, { Suspense, useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 import Navbar from '../../components/layout/Navbar';
 import Footer from '../../components/layout/Footer';
 import '../book-appointment/Booking.css';
@@ -87,7 +88,7 @@ function BookingSuccessContent() {
         </svg>
     );
 
-    let complianceLabel = 'PENDING REVIEW';
+    let complianceLabel = 'PENDING ';
     let complianceColor = '#d97706';
     let complianceBg = 'rgba(217, 119, 6, 0.08)';
     
@@ -296,24 +297,24 @@ function BookingSuccessContent() {
 
                 {/* ── MAIN WORKSPACE ── */}
                 <main className="bk_main">
-                    <div className="bk_panel anim_in" style={{ padding: '48px 40px' }}>
+                    <div className="bk_panel bk_success_panel anim_in">
                         <div className="bk_confirmed anim_in" style={{ textAlign: 'center' }}>
                             <div className="bk_confirmed_ring" style={{ background: iconGradient, boxShadow: iconShadow, margin: '0 auto 24px' }}>
                                 {topIcon}
                             </div>
-                            <h2 className="bk_confirmed_title" style={{ fontFamily: 'Outfit', fontWeight: 900, fontSize: '2rem', color: 'var(--primary)', marginBottom: '8px', letterSpacing: '-0.02em' }}>{headingTitle}</h2>
-                            <p className="bk_confirmed_sub" style={{ maxWidth: '480px', margin: '0 auto 36px', lineHeight: '1.6', fontSize: '0.96rem', color: 'var(--text-muted)', fontWeight: 550 }}>
+                            <h2 className="bk_confirmed_title">{headingTitle}</h2>
+                            <p className="bk_confirmed_sub">
                                 {headingSubtitle}
                             </p>
 
                             {/* Boarding Pass Clinical Ticket with Punch Holes */}
-                            <div className="bk_ticket" style={{ maxWidth: '480px', margin: '0 auto 32px' }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', borderBottom: '2px solid rgba(226, 232, 240, 0.6)', paddingBottom: '14px' }}>
-                                    <div>
-                                        <div style={{ fontSize: '0.72rem', fontWeight: '800', color: 'var(--primary-light)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Clinical Ticket</div>
-                                        <div style={{ fontSize: '1.1rem', fontWeight: '900', color: 'var(--primary)', fontFamily: 'Outfit' }}>West Chemist Clinic</div>
+                            <div className="bk_ticket" style={{ maxWidth: '480px' }}>
+                                <div className="bk_ticket_header">
+                                    <div className="bk_ticket_header_left">
+                                        <div className="bk_ticket_super">Clinical Ticket</div>
+                                        <div className="bk_ticket_title">West Chemist Clinic</div>
                                     </div>
-                                    <div style={{ background: statusBg, border: `1px solid ${statusBorder}`, padding: '6px 12px', borderRadius: '10px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                    <div className="bk_ticket_status" style={{ background: statusBg, borderColor: statusBorder }}>
                                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={statusColor} strokeWidth="2.5">
                                             {status === 'approved' || status === 'confirmed' ? (
                                                 <polyline points="20 6 9 17 4 12" />
@@ -330,20 +331,31 @@ function BookingSuccessContent() {
                                                 </>
                                             )}
                                         </svg>
-                                        <span style={{ fontSize: '0.75rem', fontWeight: '800', color: statusColor }}>{statusLabel}</span>
+                                        <span style={{ color: statusColor }}>{statusLabel}</span>
                                     </div>
                                 </div>
 
-                                <div className="bk_ticket_row"><span>Patient</span><strong>{fullName}</strong></div>
-                                <div className="bk_ticket_row"><span>Mobile</span><strong>{mobile}</strong></div>
-                                <div className="bk_ticket_row"><span>Service Type</span><strong>{service}</strong></div>
-                                <div className="bk_ticket_row"><span>Clinic Branch</span><strong>{clinic}</strong></div>
+                                <div className="bk_ticket_table">
+                                    <div className="bk_ticket_row"><span>Patient</span><strong>{fullName}</strong></div>
+                                    <div className="bk_ticket_row"><span>Mobile</span><strong>{mobile}</strong></div>
+                                    <div className="bk_ticket_row"><span>Service Type</span><strong>{service}</strong></div>
+                                    <div className="bk_ticket_row"><span>Clinic Branch</span><strong>{clinic}</strong></div>
+                                </div>
 
                                 <div className="bk_ticket_divider" />
 
-                                <div className="bk_ticket_row"><span>Reserved Date</span><strong>{formattedDate}</strong></div>
-                                <div className="bk_ticket_row"><span>Reserved Time</span><strong className="bk_ticket_time">{time}</strong></div>
-                                <div className="bk_ticket_row"><span>GPhC Compliance</span><strong className="bk_ticket_verified" style={{ color: complianceColor, background: complianceBg }}>{complianceLabel}</strong></div>
+                                <div className="bk_ticket_table">
+                                    <div className="bk_ticket_row"><span>Reserved Date</span><strong>{formattedDate}</strong></div>
+                                    <div className="bk_ticket_row"><span>Reserved Time</span><strong className="bk_ticket_time">{time}</strong></div>
+                                    <div className="bk_ticket_row">
+                                        <span>GPhC Compliance</span>
+                                        <strong style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                            <span className="bk_ticket_verified" style={{ color: complianceColor, background: complianceBg }}>
+                                                {complianceLabel}
+                                            </span>
+                                        </strong>
+                                    </div>
+                                </div>
 
                                 {/* Barcode block */}
                                 <div className="bk_barcode">
@@ -353,50 +365,52 @@ function BookingSuccessContent() {
                             </div>
 
                             {/* Verification Workflow Timeline */}
-                            <div style={{
-                                width: '100%',
-                                maxWidth: '480px',
-                                margin: '0 auto 32px',
-                                background: 'rgba(255, 255, 255, 0.6)',
-                                backdropFilter: 'blur(8px)',
-                                WebkitBackdropFilter: 'blur(8px)',
-                                border: '1px solid rgba(226, 232, 240, 0.9)',
-                                borderRadius: '24px',
-                                padding: '24px',
-                                textAlign: 'left',
-                                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.02)'
-                            }}>
-                                <h3 style={{ fontSize: '0.95rem', fontWeight: '800', color: 'var(--primary)', marginBottom: '16px', letterSpacing: '-0.01em', fontFamily: 'Outfit' }}>GPhC Statutory Audit Checklist</h3>
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                        <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: '#10b981', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4.5">
-                                                <polyline points="20 6 9 17 4 12" />
-                                            </svg>
+                            <div className="bk_success_checklist">
+                                <h3 className="bk_checklist_title">GPhC Statutory Audit Checklist</h3>
+                                <div className="bk_checklist_wrapper">
+                                    {/* Timeline connector line */}
+                                    <div className="bk_checklist_line" style={{
+                                        background: `linear-gradient(to bottom, #10b981 66%, ${checklistStep3Bg} 100%)`
+                                    }} />
+                                    
+                                    <div className="bk_checklist_list">
+                                        <div className="bk_checklist_item">
+                                            <div className="bk_checklist_circle bk_circle_success">
+                                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4.5">
+                                                    <polyline points="20 6 9 17 4 12" />
+                                                </svg>
+                                            </div>
+                                            <div className="bk_checklist_content">
+                                                <div className="bk_checklist_headline">Secure Document Uploaded</div>
+                                                <div className="bk_checklist_sub">Identity document linked to patient profile</div>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <div style={{ fontSize: '0.85rem', fontWeight: '700', color: '#1e293b' }}>Secure Document Uploaded</div>
-                                            <div style={{ fontSize: '0.75rem', color: '#64748b' }}>Identity document linked to patient profile</div>
+
+                                        <div className="bk_checklist_item">
+                                            <div className="bk_checklist_circle bk_circle_success">
+                                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4.5">
+                                                    <polyline points="20 6 9 17 4 12" />
+                                                </svg>
+                                            </div>
+                                            <div className="bk_checklist_content">
+                                                <div className="bk_checklist_headline">AI Compliance Pre-Screen</div>
+                                                <div className="bk_checklist_sub">MRZ extraction and tampering checks completed</div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                        <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: '#10b981', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4.5">
-                                                <polyline points="20 6 9 17 4 12" />
-                                            </svg>
-                                        </div>
-                                        <div>
-                                            <div style={{ fontSize: '0.85rem', fontWeight: '700', color: '#1e293b' }}>AI Compliance Pre-Screen</div>
-                                            <div style={{ fontSize: '0.75rem', color: '#64748b' }}>MRZ extraction and tampering checks completed</div>
-                                        </div>
-                                    </div>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                                        <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: checklistStep3Bg, color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                            {checklistStep3Icon}
-                                        </div>
-                                        <div>
-                                            <div style={{ fontSize: '0.85rem', fontWeight: '700', color: '#1e293b' }}>{checklistStep3Label}</div>
-                                            <div style={{ fontSize: '0.75rem', color: '#64748b' }}>{checklistStep3Sub}</div>
+
+                                        <div className="bk_checklist_item">
+                                            <div className="bk_checklist_circle" style={{
+                                                background: checklistStep3Bg,
+                                                borderColor: checklistStep3Bg,
+                                                color: 'white',
+                                                animation: (checklistStep3Bg === '#f59e0b' || checklistStep3Bg === '#d97706') ? 'goldPulse 2s infinite ease-in-out' : 'none'
+                                            }}>
+                                                {checklistStep3Icon}
+                                            </div>
+                                            <div className="bk_checklist_content">
+                                                <div className="bk_checklist_headline">{checklistStep3Label}</div>
+                                                <div className="bk_checklist_sub">{checklistStep3Sub}</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -404,32 +418,32 @@ function BookingSuccessContent() {
 
                             {/* Action Buttons */}
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: '100%', maxWidth: '480px', margin: '20px auto 0 auto' }}>
-                                <button 
+                                <Link 
+                                    href={`/track-booking?mobile=${encodeURIComponent(mobile)}`} 
                                     className="bk_btn_primary" 
-                                    onClick={() => window.location.href = `/track-booking?mobile=${encodeURIComponent(mobile)}`} 
-                                    style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
+                                    style={{ width: '100%', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px', textDecoration: 'none' }}
                                 >
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                                         <circle cx="11" cy="11" r="8" />
                                         <line x1="21" y1="21" x2="16.65" y2="16.65" />
                                     </svg>
                                     Track Your Booking
-                                </button>
-                                <button 
-                                    className="bk_btn_ghost" 
-                                    onClick={() => window.location.href = '/'} 
-                                    style={{ width: '100%', border: '2px solid var(--primary)', color: 'var(--primary)', fontWeight: '800', borderRadius: '16px', padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
+                                </Link>
+                                <Link 
+                                    href="/" 
+                                    className="bk_btn_ghost bk_btn_success_home" 
+                                    style={{ width: '100%', justifyContent: 'center', display: 'inline-flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}
                                 >
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                                         <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
                                         <polyline points="9 22 9 12 15 12 15 22" />
                                     </svg>
                                     Return to Portal Home
-                                </button>
-                                <button 
-                                    className="bk_btn_ghost" 
-                                    onClick={() => window.location.href = '/book-appointment'} 
-                                    style={{ width: '100%', border: '1px dashed var(--primary-light)', color: 'var(--primary)', fontWeight: '700', borderRadius: '16px', padding: '12px 20px', background: 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
+                                </Link>
+                                <Link 
+                                    href="/book-appointment" 
+                                    className="bk_btn_ghost bk_btn_success_another" 
+                                    style={{ width: '100%', justifyContent: 'center', display: 'inline-flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}
                                 >
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                                         <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
@@ -440,7 +454,7 @@ function BookingSuccessContent() {
                                         <line x1="10" y1="16" x2="14" y2="16" />
                                     </svg>
                                     Book Another Appointment
-                                </button>
+                                </Link>
                             </div>
                         </div>
                     </div>

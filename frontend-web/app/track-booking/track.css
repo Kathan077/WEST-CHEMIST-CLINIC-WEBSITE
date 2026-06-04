@@ -1,3 +1,112 @@
+
+/* Premium Table-wise Ticket Details Container */
+.bk_ticket_table {
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    border-radius: 16px;
+    background: #ffffff;
+    overflow: hidden;
+    margin: 16px 0;
+    box-shadow: 0 4px 12px rgba(75, 45, 113, 0.02);
+    width: 100%;
+}
+
+.bk_ticket_row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 14px 16px;
+    font-size: 0.92rem;
+    border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+    background: #ffffff;
+    transition: background 0.25s ease;
+    text-align: left;
+}
+
+.bk_ticket_table .bk_ticket_row:nth-child(even) {
+    background: rgba(248, 250, 252, 0.5);
+}
+
+.bk_ticket_table .bk_ticket_row:last-child {
+    border-bottom: none;
+}
+
+.bk_ticket_table .bk_ticket_row:hover {
+    background: rgba(75, 45, 113, 0.02);
+}
+
+.bk_ticket_row span {
+    color: #64748b;
+    font-weight: 700;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding-top: 2px;
+    width: 32%;
+    flex-shrink: 0;
+    text-align: left;
+}
+
+.bk_ticket_row strong {
+    color: #1e293b;
+    font-weight: 800;
+    text-align: right;
+    width: 68%;
+    word-break: break-word;
+    line-height: 1.35;
+}
+
+.bk_ticket_divider {
+    border-top: 2px dashed rgba(226, 232, 240, 0.9);
+    margin: 8px -32px;
+    position: relative;
+    z-index: 1;
+}
+
+.bk_ticket_time {
+    color: #0d9488 !important;
+    font-size: 1.15rem !important;
+}
+
+.bk_ticket_verified {
+    color: #0d9488 !important;
+    background: rgba(13, 148, 136, 0.08);
+    padding: 3px 10px;
+    border-radius: 8px;
+    font-size: 0.76rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.03em;
+    display: inline-block !important;
+    text-transform: uppercase;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+}
+
+/* Punch card holes on boarding pass - attached to divider for perfect dynamic centering */
+.bk_ticket_divider::before,
+.bk_ticket_divider::after {
+    content: '';
+    position: absolute;
+    top: -13px;
+    width: 24px;
+    height: 24px;
+    background: #f3f4f6;
+    border-radius: 50%;
+    z-index: 2;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    box-sizing: border-box;
+}
+
+.bk_ticket_divider::before {
+    left: -13px;
+    box-shadow: 4px 0 6px -3px rgba(0, 0, 0, 0.03) inset;
+}
+
+.bk_ticket_divider::after {
+    right: -13px;
+    box-shadow: -4px 0 6px -3px rgba(0, 0, 0, 0.03) inset;
+}
+
+
 /* ============================================================
    TRACK-BOOKING.CSS — ULTIMATE PREMIUM ✦ West Chemist Clinic
    ============================================================ */
@@ -689,4 +798,311 @@
 
 .reschedule_cancel_btn:hover {
     background: #e2e8f0;
+}
+
+
+/* ============================================================
+   MOBILE RESPONSIVENESS OVERRIDES (320px, 375px, 425px, 768px)
+   ============================================================ */
+
+@media (max-width: 768px) {
+    .track_page_wrap {
+        padding: 80px 16px 40px;
+    }
+
+    .track_container {
+        gap: 24px;
+    }
+
+    .track_page_title {
+        font-size: 2rem;
+    }
+
+    .search_glass_panel {
+        padding: 30px 24px;
+    }
+
+    .patient_profile_card {
+        padding: 24px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .tickets_grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 24px;
+    }
+
+    .pro_ticket {
+        max-width: 100%;
+    }
+
+    .ticket_top_header {
+        padding: 20px 24px 16px;
+    }
+
+    .ticket_body {
+        padding: 20px 24px 24px;
+    }
+
+    .ticket_perforation_line {
+        margin: 0 24px;
+    }
+
+    .punch_hole.left {
+        left: -34px;
+    }
+
+    .punch_hole.right {
+        right: -34px;
+    }
+}
+
+@media (max-width: 480px) {
+    .bk_ticket_row {
+        padding: 12px;
+    }
+    .bk_ticket_row span {
+        width: 35%;
+        font-size: 0.74rem;
+    }
+    .bk_ticket_row strong {
+        width: 65%;
+        font-size: 0.86rem;
+    }
+    .track_page_title {
+        font-size: 1.7rem;
+    }
+
+    .track_page_desc {
+        font-size: 0.95rem;
+    }
+
+    .search_glass_panel {
+        padding: 24px 16px;
+        border-radius: 20px;
+    }
+
+    .premium_input {
+        font-size: 1rem;
+        padding: 14px 14px 14px 95px;
+    }
+
+    .uk_flag_addon {
+        left: 12px;
+        font-size: 0.88rem;
+        gap: 6px;
+        padding-right: 8px;
+    }
+
+    .btn_glow_search {
+        padding: 14px 20px;
+        font-size: 1rem;
+    }
+
+    .patient_profile_card {
+        padding: 20px 16px;
+        border-radius: 20px;
+    }
+
+    .patient_info_details h2 {
+        font-size: 1.5rem;
+    }
+
+    .patient_info_details p {
+        font-size: 0.9rem;
+    }
+
+    .ticket_top_header {
+        padding: 18px 20px 14px;
+    }
+
+    .ticket_body {
+        padding: 18px 20px 20px;
+    }
+
+    .ticket_perforation_line {
+        margin: 0 20px;
+    }
+
+    .punch_hole.left {
+        left: -30px;
+    }
+
+    .punch_hole.right {
+        right: -30px;
+    }
+
+    .ticket_info_grid {
+        gap: 14px 16px;
+    }
+
+    .ticket_value_time {
+        font-size: 1.15rem;
+    }
+
+    .ticket_action_bar {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .action_link_btn {
+        width: 100%;
+        padding: 12px;
+    }
+
+    .ticket_footer_barcode {
+        padding: 18px 20px;
+    }
+
+    .reschedule_slots_grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 375px) {
+    .bk_ticket_row {
+        padding: 10px;
+    }
+    .bk_ticket_row span {
+        width: 38%;
+        font-size: 0.7rem;
+    }
+    .bk_ticket_row strong {
+        width: 62%;
+        font-size: 0.8rem;
+    }
+    .track_page_title {
+        font-size: 1.5rem;
+    }
+
+    .premium_input {
+        padding: 12px 12px 12px 90px;
+        font-size: 0.92rem;
+    }
+
+    .uk_flag_addon {
+        left: 10px;
+        font-size: 0.85rem;
+    }
+
+    .ticket_top_header {
+        padding: 14px 16px 12px;
+    }
+
+    .ticket_body {
+        padding: 14px 16px 16px;
+    }
+
+    .ticket_perforation_line {
+        margin: 0 16px;
+    }
+
+    .punch_hole.left {
+        left: -26px;
+    }
+
+    .punch_hole.right {
+        right: -26px;
+    }
+
+    .ticket_top_title {
+        font-size: 1.1rem;
+    }
+
+    .status_badge {
+        padding: 4px 8px;
+        font-size: 0.65rem;
+    }
+
+    .ticket_value_txt {
+        font-size: 0.88rem;
+    }
+}
+
+@media (max-width: 320px) {
+    .bk_ticket_row {
+        padding: 8px;
+        flex-direction: column;
+        gap: 4px;
+    }
+    .bk_ticket_row span {
+        width: 100%;
+        font-size: 0.68rem;
+    }
+    .bk_ticket_row strong {
+        width: 100%;
+        text-align: left;
+        font-size: 0.78rem;
+    }
+    .track_page_wrap {
+        padding: 60px 8px 30px;
+    }
+
+    .search_glass_panel {
+        padding: 16px 10px;
+        border-radius: 16px;
+    }
+
+    .premium_input {
+        padding: 10px 10px 10px 80px;
+        font-size: 0.85rem;
+        border-radius: 12px;
+    }
+
+    .uk_flag_addon {
+        left: 8px;
+        font-size: 0.78rem;
+        gap: 4px;
+        padding-right: 6px;
+    }
+
+    .btn_glow_search {
+        padding: 12px;
+        font-size: 0.9rem;
+        border-radius: 12px;
+    }
+
+    .patient_profile_card {
+        padding: 16px 12px;
+        border-radius: 16px;
+    }
+
+    .patient_info_details h2 {
+        font-size: 1.3rem;
+    }
+
+    .ticket_info_grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .ticket_top_header {
+        padding: 12px;
+    }
+
+    .ticket_body {
+        padding: 12px;
+    }
+
+    .ticket_perforation_line {
+        margin: 0 12px;
+    }
+
+    .punch_hole.left {
+        left: -22px;
+    }
+
+    .punch_hole.right {
+        right: -22px;
+    }
+
+    .barcode_strip_img {
+        height: 36px;
+    }
+
+    .barcode_number_label {
+        font-size: 0.7rem;
+    }
 }

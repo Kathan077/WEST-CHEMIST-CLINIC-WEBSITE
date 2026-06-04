@@ -56,31 +56,17 @@ export default function CTASection() {
                 </h2>
                 
                 <div className="cta_buttons_wrap">
-                    
                     <div className="cta_reveal" style={{'--delay': '150ms'}}>
                         <Link 
-                            href="/consultation/online" 
+                            href="/book-appointment" 
                             className="cta_btn cta_solid"
                             onMouseMove={handleMouse}
                             onMouseLeave={handleLeave}
                         >
-                            <span>Start an Online Consultation</span>
+                            <span>Book Free Consultation</span>
                             <div className="cta_btn_shine"></div>
                         </Link>
                     </div>
-
-                    <div className="cta_reveal" style={{'--delay': '300ms'}}>
-                        <Link 
-                            href="/consultation/in-person" 
-                            className="cta_btn cta_outline"
-                            onMouseMove={handleMouse}
-                            onMouseLeave={handleLeave}
-                        >
-                            <span>Book an In-Person Consultation</span>
-                            <div className="cta_btn_glow"></div>
-                        </Link>
-                    </div>
-
                 </div>
             </div>
         </section>

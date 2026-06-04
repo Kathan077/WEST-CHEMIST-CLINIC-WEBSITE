@@ -519,7 +519,7 @@ export default function AdminPatientsPage() {
   const stats = [
     {label:'Total Patients',    val:patients.length, total: patientsTarget, iconPath:ICONS.users,  cls:'c1', trend:patientsTrend.text, up:patientsTrend.up},
     {label:'Appointments',      val:appts.length,    total: apptsTarget,    iconPath:ICONS.cal,    cls:'c2', trend:apptsTrend.text,  up:apptsTrend.up},
-    {label:'Pending Review',    val:pending,         total: pendingTarget,  iconPath:ICONS.shield, cls:'c3', trend:pendingTrend.text, up:pendingTrend.up},
+    {label:'Pending',    val:pending,         total: pendingTarget,  iconPath:ICONS.shield, cls:'c3', trend:pendingTrend.text, up:pendingTrend.up},
     {label:'Approved Today',    val:approvedToday,   total: approvedTodayTarget, iconPath:ICONS.check,  cls:'c4', trend:approvedTodayTrend, up:approvedTodayUp},
   ];
 
@@ -672,7 +672,7 @@ export default function AdminPatientsPage() {
             {[
               {v:`${patients.length}+`, l:'Total Patients'},
               {v:`${appts.length}+`, l:'Appointments'},
-              {v:`${pending}`, l:'Pending Review'},
+              {v:`${pending}`, l:'Pending'},
               {v:'100%', l:'GDPR Compliant'},
             ].map((s,i) => (
               <div key={i} style={{display:'flex',flexDirection:'column'}}>

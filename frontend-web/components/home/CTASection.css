@@ -172,32 +172,7 @@
     }
 }
 
-/* 2. OUTLINE BUTTON (BOTTOM) */
-.cta_outline {
-    background: transparent;
-    color: #0081a7;
-    border: 2px solid #0081a7;
-    background: #ffffff;
-}
 
-/* Glow Border Effect for Outline */
-.cta_btn_glow {
-    position: absolute;
-    inset: 0;
-    border-radius: 999px;
-    background: rgba(0, 129, 167, 0.05);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: 0;
-}
-
-.cta_outline:hover {
-    box-shadow: 0 10px 30px rgba(0, 129, 167, 0.15);
-}
-
-.cta_outline:hover .cta_btn_glow {
-    opacity: 1;
-}
 
 /* ════════════════════════════════════
    RESPONSIVE

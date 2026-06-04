@@ -1,6 +1,6 @@
 .nl_section {
     padding: 80px 5% 120px;
-    background: #ffffff;
+    background: transparent;
     position: relative;
     overflow: hidden;
 }
@@ -83,6 +83,8 @@
 }
 
 .nl_btn {
+    position: relative;
+    overflow: hidden;
     padding: 16px 32px;
     background: var(--accent);
     color: #ffffff;
@@ -91,7 +93,27 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    transition: all 0.3s ease;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.nl_btn::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -60%;
+    width: 20%;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.25);
+    transform: rotate(30deg);
+    transition: none;
+    pointer-events: none;
+}
+
+.nl_btn:hover::before {
+    left: 140%;
+    transition: left 0.6s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .nl_btn:hover {

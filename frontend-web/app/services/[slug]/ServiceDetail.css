@@ -231,6 +231,10 @@
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     margin-bottom: 25px;
     box-shadow: 0 15px 40px rgba(45, 27, 105, 0.2);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .sd_book_btn:hover {
