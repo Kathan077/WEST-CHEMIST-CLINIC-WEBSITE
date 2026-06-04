@@ -1,4 +1,6 @@
 "use client";
+
+import { API_URL } from '@/config';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '../../components/layout/Navbar';
@@ -169,7 +171,7 @@ export default function BookingPage() {
         setLoading(true);
         setApiError('');
         try {
-            const response = await fetch('http://localhost:5000/api/patients/register-or-find', {
+            const response = await fetch(`${API_URL}/api/patients/register-or-find`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -290,7 +292,7 @@ export default function BookingPage() {
             uploadForm.append('idType', formData.idType);
             uploadForm.append('file', selectedFile || new File([""], "demo_id.jpg", { type: "image/jpeg" }));
 
-            const uploadResponse = await fetch('http://localhost:5000/api/verifications/upload', {
+            const uploadResponse = await fetch(`${API_URL}/api/verifications/upload`, {
                 method: 'POST',
                 body: uploadForm
             });
@@ -302,7 +304,7 @@ export default function BookingPage() {
                 setVerificationId(vId);
 
                 // Trigger compliance engine checks on backend
-                const processResponse = await fetch(`http://localhost:5000/api/verifications/${vId}/process`, {
+                const processResponse = await fetch(`${API_URL}/api/verifications/${vId}/process`, {
                     method: 'POST'
                 });
                 const processResult = await processResponse.json();
@@ -324,7 +326,7 @@ export default function BookingPage() {
             const fetchSlots = async () => {
                 setLoading(true);
                 try {
-                    const response = await fetch(`http://localhost:5000/api/appointments/slots?clinic=${encodeURIComponent(formData.clinic)}&date=${formData.date}`);
+                    const response = await fetch(`${API_URL}/api/appointments/slots?clinic=${encodeURIComponent(formData.clinic)}&date=${formData.date}`);
                     const result = await response.json();
                     if (result.success) {
                         setAvailableSlots(result.slots);
@@ -352,7 +354,7 @@ export default function BookingPage() {
         setLoading(true);
         setApiError('');
         try {
-            const response = await fetch('http://localhost:5000/api/appointments/book', {
+            const response = await fetch(`${API_URL}/api/appointments/book`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

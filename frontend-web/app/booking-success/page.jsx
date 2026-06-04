@@ -1,5 +1,7 @@
 "use client";
 
+import { API_URL } from '@/config';
+
 import React, { Suspense, useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Navbar from '../../components/layout/Navbar';
@@ -32,7 +34,7 @@ function BookingSuccessContent() {
 
         const fetchStatus = async () => {
             try {
-                const res = await fetch(`http://localhost:5000/api/appointments/${apptId}`);
+                const res = await fetch(`${API_URL}/api/appointments/${apptId}`);
                 const data = await res.json();
                 if (data.success && data.data) {
                     const apt = data.data;

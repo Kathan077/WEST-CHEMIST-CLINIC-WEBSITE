@@ -1,5 +1,7 @@
 'use client';
 
+import { API_URL } from '@/config';
+
 import React, { useState, useEffect } from 'react';
 import '../patients/dashboard.css';
 
@@ -65,7 +67,7 @@ export default function AdminCompliancePage() {
 
     const fetchPatientsAndVerifications = async () => {
       try {
-        const resPatients = await fetch('http://localhost:5000/api/patients', {
+        const resPatients = await fetch(`${API_URL}/api/patients`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         const dataPatients = await resPatients.json();
@@ -75,7 +77,7 @@ export default function AdminCompliancePage() {
           const tempVerifications = [];
 
           for (const patient of patientsList) {
-            const resVer = await fetch(`http://localhost:5000/api/verifications/patient/${patient._id}`, {
+            const resVer = await fetch(`${API_URL}/api/verifications/patient/${patient._id}`, {
               headers: { 'Authorization': `Bearer ${token}` }
             });
             const dataVer = await resVer.json();

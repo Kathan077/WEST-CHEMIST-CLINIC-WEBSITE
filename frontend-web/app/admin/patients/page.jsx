@@ -1,4 +1,6 @@
 'use client';
+
+import { API_URL } from '@/config';
 import { useState, useEffect } from 'react';
 import './dashboard.css';
 
@@ -417,8 +419,8 @@ export default function AdminPatientsPage() {
     (async () => {
       try {
         const [rP, rA] = await Promise.all([
-          fetch('http://localhost:5000/api/patients',               {headers:{Authorization:`Bearer ${token}`}}),
-          fetch('http://localhost:5000/api/appointments/admin/all', {headers:{Authorization:`Bearer ${token}`}}),
+          fetch(`${API_URL}/api/patients`,               {headers:{Authorization:`Bearer ${token}`}}),
+          fetch(`${API_URL}/api/appointments/admin/all`, {headers:{Authorization:`Bearer ${token}`}}),
         ]);
         const dP = await rP.json(); const dA = await rA.json();
         if (dP.success) { setPatients(dP.data); setFiltered(dP.data); }

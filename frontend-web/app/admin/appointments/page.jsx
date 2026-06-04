@@ -1,5 +1,7 @@
 'use client';
 
+import { API_URL } from '@/config';
+
 import { useState, useEffect, useCallback, useRef } from 'react';
 import './appointments.css';
 
@@ -75,7 +77,7 @@ function RescheduleModal({ appointment, onClose, onConfirm }) {
     const fetchSlots = async () => {
       setLoadingSlots(true);
       try {
-        const res = await fetch(`http://localhost:5000/api/appointments/slots?clinic=${encodeURIComponent(appointment.clinic)}&date=${newDate}`);
+        const res = await fetch(`${API_URL}/api/appointments/slots?clinic=${encodeURIComponent(appointment.clinic)}&date=${newDate}`);
         const data = await res.json();
         if (data.success) {
           setSlots(data.slots);
@@ -181,7 +183,7 @@ function ViewApptModal({ appointment, onClose, onApprove, onReject, onReschedule
     const fetchVer = async () => {
       const token = localStorage.getItem('adminToken');
       try {
-        const res = await fetch(`http://localhost:5000/api/verifications/patient/${appointment.patientId?._id}`, {
+        const res = await fetch(`${API_URL}/api/verifications/patient/${appointment.patientId?._id}`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await res.json();
@@ -205,7 +207,7 @@ function ViewApptModal({ appointment, onClose, onApprove, onReject, onReschedule
     setSavingNote(true);
     const token = localStorage.getItem('adminToken');
     try {
-      await fetch(`http://localhost:5000/api/appointments/${appointment._id}/reschedule`, {
+      await fetch(`${API_URL}/api/appointments/${appointment._id}/reschedule`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({
@@ -437,7 +439,7 @@ function ViewApptModal({ appointment, onClose, onApprove, onReject, onReschedule
                 }}>
                   {ver.documentImage ? (
                     <img
-                      src={`http://localhost:5000/uploads/${ver.documentImage}`}
+                      src={`${API_URL}/uploads/${ver.documentImage}`}
                       alt="Uploaded Patient ID"
                       style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                       onError={(e) => {
@@ -553,7 +555,7 @@ export default function AdminAppointmentsPage() {
     if (spin) setSpinning(true);
     const token = localStorage.getItem('adminToken');
     try {
-      const res  = await fetch('http://localhost:5000/api/appointments/admin/all', {
+      const res  = await fetch(`${API_URL}/api/appointments/admin/all`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
@@ -599,7 +601,7 @@ export default function AdminAppointmentsPage() {
   const adminAction = async (id, action, body = {}) => {
     const token = localStorage.getItem('adminToken');
     try {
-      const res  = await fetch(`http://localhost:5000/api/appointments/${id}/${action}`, {
+      const res  = await fetch(`${API_URL}/api/appointments/${id}/${action}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify(body)

@@ -1,5 +1,7 @@
 'use client';
 
+import { API_URL } from '@/config';
+
 import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import html2canvas from 'html2canvas';
@@ -68,7 +70,7 @@ function TrackBookingContent() {
         setError('');
         setSuccessMessage('');
         try {
-            const res = await fetch(`http://localhost:5000/api/appointments/track?mobile=${encodeURIComponent(searchMobile)}`);
+            const res = await fetch(`${API_URL}/api/appointments/track?mobile=${encodeURIComponent(searchMobile)}`);
             const data = await res.json();
             if (data.success) {
                 setPatient(data.patient);
@@ -116,7 +118,7 @@ function TrackBookingContent() {
         setError('');
         setSuccessMessage('');
         try {
-            const res = await fetch(`http://localhost:5000/api/appointments/${appointmentId}/cancel`, {
+            const res = await fetch(`${API_URL}/api/appointments/${appointmentId}/cancel`, {
                 method: 'PUT'
             });
             const result = await res.json();
@@ -146,7 +148,7 @@ function TrackBookingContent() {
         }
         setLoadingSlots(true);
         try {
-            const res = await fetch(`http://localhost:5000/api/appointments/slots?clinic=${encodeURIComponent(appointment.clinic)}&date=${dateVal}`);
+            const res = await fetch(`${API_URL}/api/appointments/slots?clinic=${encodeURIComponent(appointment.clinic)}&date=${dateVal}`);
             const data = await res.json();
             if (data.success) {
                 setRescheduleSlots(data.slots);
@@ -171,7 +173,7 @@ function TrackBookingContent() {
         setError('');
         setSuccessMessage('');
         try {
-            const res = await fetch(`http://localhost:5000/api/appointments/${appointmentId}/request-reschedule`, {
+            const res = await fetch(`${API_URL}/api/appointments/${appointmentId}/request-reschedule`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ newDate: rescheduleDate, newTime: rescheduleTime })
