@@ -143,7 +143,7 @@ html, body { margin: 0 !important; padding: 0 !important; }
   background:#fff;color:var(--em2);font-size:.85rem;font-weight:700;font-family:var(--f);
   box-shadow:0 4px 14px rgba(0,0,0,.15);transition:all .22s;
 }
-.banner_btn_p:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.2)}
+.banner_btn_p:hover{transform: translate3d(0, -2px, 0);box-shadow:0 6px 20px rgba(0,0,0,.2)}
 .banner_btn_s{
   padding:11px 22px;border-radius:12px;cursor:pointer;font-family:var(--f);
   background:rgba(255,255,255,.12);backdrop-filter:blur(8px);
@@ -152,7 +152,7 @@ html, body { margin: 0 !important; padding: 0 !important; }
 .banner_btn_s:hover{background:rgba(255,255,255,.2)}
 
 .banner_illus{
-  position:absolute;right:30px;top:50%;transform:translateY(-50%);
+  position:absolute;right:30px;top:50%;transform: translate3d(0, -50%, 0);
   width:240px;height:240px;pointer-events:none;
   filter: drop-shadow(0 12px 24px rgba(0,0,0,0.2));
 }
@@ -197,7 +197,7 @@ html, body { margin: 0 !important; padding: 0 !important; }
 .stat_card.c4 { border-bottom: 4px solid var(--lavender) !important; }
 
 .stat_card:hover {
-  transform: translateY(-6px);
+  transform: translate3d(0, -6px, 0);
   box-shadow: var(--sh2);
 }
 
@@ -428,7 +428,7 @@ html, body { margin: 0 !important; padding: 0 !important; }
 .mini_stat_row.row_c3::before { background: var(--purple); }
 
 .mini_stat_row:hover {
-  transform: translateY(-3px);
+  transform: translate3d(0, -3px, 0);
   box-shadow: var(--sh2);
 }
 .mini_stat_row.row_c1:hover { border-color: var(--pine); }
@@ -578,7 +578,7 @@ html, body { margin: 0 !important; padding: 0 !important; }
   position: absolute;
   bottom: 2px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate3d(-50%, 0, 0);
   width: 4px;
   height: 4px;
   border-radius: 50%;
@@ -603,7 +603,7 @@ html, body { margin: 0 !important; padding: 0 !important; }
 .tbl_wrap{background:var(--card);border-radius:var(--r);border:1px solid var(--border);box-shadow:var(--sh);overflow:hidden}
 .tbl_toolbar{display:flex;align-items:center;gap:12px;padding:20px 24px;border-bottom:1px solid var(--border);background:var(--card)}
 .tbl_search{position:relative;flex:1;max-width:320px}
-.tbl_search svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--t4);pointer-events:none}
+.tbl_search svg{position:absolute;left:14px;top:50%;transform: translate3d(0, -50%, 0);color:var(--t4);pointer-events:none}
 .tbl_search input{
   width:100%;padding:10px 14px 10px 40px;border-radius:12px;
   border:1.5px solid var(--border);background:#f9fafb;
@@ -615,14 +615,14 @@ html, body { margin: 0 !important; padding: 0 !important; }
   border:1.5px solid var(--purple);background:var(--purple);color:#fff;
   font-size:.82rem;font-weight:700;font-family:var(--f);cursor:pointer;transition:all .25s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.tbl_filter_btn:hover{background:#3c235b;border-color:#3c235b;box-shadow:0 4px 14px rgba(75, 45, 113, 0.25);transform:translateY(-1px)}
+.tbl_filter_btn:hover{background:#3c235b;border-color:#3c235b;box-shadow:0 4px 14px rgba(75, 45, 113, 0.25);transform: translate3d(0, -1px, 0)}
 
 table{width:100%;border-collapse:collapse}
 thead tr{background:#f9fafb;border-bottom:1px solid var(--border)}
 th{padding:14px 20px;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--t3);text-align:left}
 tbody tr{border-bottom:1px solid #f1f5f9;transition:all .22s cubic-bezier(0.4, 0, 0.2, 1);background:var(--card)}
 tbody tr:last-child{border-bottom:none}
-tbody tr:hover{background:linear-gradient(90deg, rgba(75, 45, 113, 0.015) 0%, rgba(32, 107, 94, 0.015) 100%) !important;transform:translateX(3px)}
+tbody tr:hover{background:linear-gradient(90deg, rgba(75, 45, 113, 0.015) 0%, rgba(32, 107, 94, 0.015) 100%) !important;transform: translate3d(3px, 0, 0)}
 td{padding:16px 20px;font-size:.86rem;vertical-align:middle}
 input[type="checkbox"]{
   width:16px;height:16px;border-radius:4px;border:1.5px solid var(--border);accent-color:var(--purple);cursor:pointer;transition:all 0.2s ease;
@@ -677,10 +677,10 @@ tbody tr:hover .td_avatar{transform:scale(1.08) rotate(5deg)}
 .det_btn:hover{
   background:var(--purple);color:#fff;border-color:var(--purple);
   box-shadow:0 4px 14px rgba(75, 45, 113, 0.2);
-  transform:translateY(-1px);
+  transform: translate3d(0, -1px, 0);
 }
 .det_btn:hover svg{
-  transform:translateX(3px);
+  transform: translate3d(3px, 0, 0);
 }
 
 /* ── Empty/Loading ── */
@@ -698,23 +698,23 @@ tbody tr:hover .td_avatar{transform:scale(1.08) rotate(5deg)}
   font-size:.86rem;font-weight:600;color:var(--t1);
   border-left:4px solid var(--em);
 }
-@keyframes toastIn{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:translateX(0)}}
+@keyframes toastIn{from{opacity:0;transform: translate3d(28px, 0, 0)}to{opacity:1;transform: translate3d(0, 0, 0)}}
 
 /* ═══════════════════════════════════
    PREMIUM ANIMATION SYSTEM
 ═══════════════════════════════════ */
 
 /* ── Core Keyframes ── */
-@keyframes fadeUp       { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeUp       { from{opacity:0;transform: translate3d(0, 22px, 0)} to{opacity:1;transform: translate3d(0, 0, 0)} }
 @keyframes fadeIn       { from{opacity:0} to{opacity:1} }
-@keyframes slideRight   { from{opacity:0;transform:translateX(-20px)} to{opacity:1;transform:translateX(0)} }
-@keyframes floatY       { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+@keyframes slideRight   { from{opacity:0;transform: translate3d(-20px, 0, 0)} to{opacity:1;transform: translate3d(0, 0, 0)} }
+@keyframes floatY       { 0%,100%{transform: translate3d(0, 0, 0)} 50%{transform: translate3d(0, -8px, 0)} }
 @keyframes shimmer      { 0%{background-position:-400px 0} 100%{background-position:400px 0} }
 @keyframes gradShift    { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
 @keyframes glowPulse    { 0%,100%{box-shadow:0 0 0 0 rgba(75,45,113,0)} 50%{box-shadow:0 0 0 8px rgba(75,45,113,.12)} }
 @keyframes borderGlow   { 0%,100%{border-color:#e2dde9} 50%{border-color:var(--purple)} }
 @keyframes scaleIn      { from{opacity:0;transform:scale(.92)} to{opacity:1;transform:scale(1)} }
-@keyframes countUp      { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+@keyframes countUp      { from{opacity:0;transform: translate3d(0, 10px, 0)} to{opacity:1;transform: translate3d(0, 0, 0)} }
 
 /* ── Page Entry ── */
 .dash_banner    { animation: fadeUp   .65s cubic-bezier(.22,1,.36,1) both }
@@ -745,7 +745,7 @@ tbody tr:hover .td_avatar{transform:scale(1.08) rotate(5deg)}
   opacity:0; transition: opacity .22s;
 }
 .sb_link:hover::after { opacity:1 }
-.sb_link:hover { transform: translateX(4px) }
+.sb_link:hover { transform: translate3d(4px, 0, 0) }
 .sb_link.active { animation: scaleIn .3s cubic-bezier(.22,1,.36,1) }
 
 /* ── Header premium ── */
@@ -768,13 +768,13 @@ tbody tr:hover .td_avatar{transform:scale(1.08) rotate(5deg)}
 
 .hdr_btn { transition: all .22s cubic-bezier(.4,0,.2,1) }
 .hdr_btn:hover {
-  transform: translateY(-2px);
+  transform: translate3d(0, -2px, 0);
   box-shadow: 0 4px 14px rgba(75,45,113,.15);
 }
 
 .hdr_av { transition: all .22s cubic-bezier(.4,0,.2,1) }
 .hdr_av:hover {
-  transform: translateY(-1px);
+  transform: translate3d(0, -1px, 0);
   box-shadow: 0 4px 14px rgba(75,45,113,.12);
 }
 
@@ -797,13 +797,13 @@ tbody tr:hover .td_avatar{transform:scale(1.08) rotate(5deg)}
   transition: left .4s;
 }
 .banner_btn_p:hover::before { left: 100% }
-.banner_btn_p:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,.22) }
+.banner_btn_p:hover { transform: translate3d(0, -3px, 0); box-shadow: 0 8px 28px rgba(0,0,0,.22) }
 
 .banner_btn_s {
   transition: all .25s cubic-bezier(.22,1,.36,1);
   position: relative; overflow: hidden;
 }
-.banner_btn_s:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,.18) }
+.banner_btn_s:hover { transform: translate3d(0, -3px, 0); box-shadow: 0 6px 20px rgba(0,0,0,.18) }
 
 /* ── Stat cards premium ── */
 .stat_card {
@@ -816,7 +816,7 @@ tbody tr:hover .td_avatar{transform:scale(1.08) rotate(5deg)}
 .stat_card:nth-child(4){ animation-delay:.26s }
 
 .stat_card:hover {
-  transform: translateY(-6px) scale(1.01);
+  transform: translate3d(0, -6px, 0) scale(1.01);
   box-shadow: 0 16px 48px rgba(75,45,113,.12);
 }
 
@@ -842,7 +842,7 @@ tbody tr:hover .td_avatar{transform:scale(1.08) rotate(5deg)}
 }
 .panel:hover {
   box-shadow: 0 8px 32px rgba(75,45,113,.08);
-  transform: translateY(-2px);
+  transform: translate3d(0, -2px, 0);
 }
 
 /* ── Table rows ── */
@@ -852,9 +852,9 @@ tbody tr {
 }
 tbody tr:hover {
   background: linear-gradient(90deg,#fcfaff,#f4effa) !important;
-  transform: translateX(3px);
+  transform: translate3d(3px, 0, 0);
 }
-@keyframes rowSlide { from{opacity:0;transform:translateX(-10px)} to{opacity:1;transform:translateX(0)} }
+@keyframes rowSlide { from{opacity:0;transform: translate3d(-10px, 0, 0)} to{opacity:1;transform: translate3d(0, 0, 0)} }
 tbody tr:nth-child(1){ animation-delay:.04s }
 tbody tr:nth-child(2){ animation-delay:.08s }
 tbody tr:nth-child(3){ animation-delay:.12s }
@@ -869,7 +869,7 @@ tbody tr:nth-child(8){ animation-delay:.32s }
   position: relative; overflow: hidden;
 }
 .det_btn:hover {
-  transform: translateY(-2px) scale(1.04);
+  transform: translate3d(0, -2px, 0) scale(1.04);
   box-shadow: 0 6px 16px rgba(75,45,113,.25);
 }
 
@@ -897,7 +897,7 @@ tbody tr:nth-child(8){ animation-delay:.32s }
   transition: left .4s;
 }
 .tbl_filter_btn:hover::after { left:100% }
-.tbl_filter_btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(75,45,113,.25) }
+.tbl_filter_btn:hover { transform: translate3d(0, -2px, 0); box-shadow: 0 6px 20px rgba(75,45,113,.25) }
 
 /* ── Live badge ── */
 .banner_tag::before { animation: live_p 1.4s ease infinite }
@@ -936,8 +936,8 @@ tbody tr:nth-child(8){ animation-delay:.32s }
   animation: capsuleReveal 1s cubic-bezier(.22, 1, .36, 1) both;
 }
 @keyframes capsuleReveal {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translate3d(0, 10px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
 }
 
 .donut_slice {
@@ -967,8 +967,8 @@ tbody tr:nth-child(8){ animation-delay:.32s }
 .mini_stat_row:nth-child(3) { animation-delay: 0.26s; }
 
 @keyframes miniRowIn {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translate3d(0, 15px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
 }
 
 /* Tooltip group reveal and hover scaling */
@@ -1004,7 +1004,7 @@ tbody tr:nth-child(8){ animation-delay:.32s }
 /* Tooltip alignment & arrow configurations */
 .cal_day_tooltip.align_center {
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate3d(-50%, 0, 0);
   animation: tooltipFadeInCenter 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 .cal_day_tooltip.align_center::after {
@@ -1012,7 +1012,7 @@ tbody tr:nth-child(8){ animation-delay:.32s }
   position: absolute;
   top: 100%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate3d(-50%, 0, 0);
   border-width: 6px;
   border-style: solid;
   border-color: rgba(28, 17, 41, 0.97) transparent transparent transparent;
@@ -1048,16 +1048,16 @@ tbody tr:nth-child(8){ animation-delay:.32s }
 }
 
 @keyframes tooltipFadeInCenter {
-  from { opacity: 0; transform: translateX(-50%) translateY(4px); }
-  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+  from { opacity: 0; transform: translate3d(-50%, 0, 0) translateY(4px); }
+  to { opacity: 1; transform: translate3d(-50%, 0, 0) translateY(0); }
 }
 @keyframes tooltipFadeInLeft {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translate3d(0, 4px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
 }
 @keyframes tooltipFadeInRight {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translate3d(0, 4px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
 }
 
 .cal_tooltip_header {
@@ -1180,5 +1180,5 @@ tbody tr:nth-child(8){ animation-delay:.32s }
   border-color: rgba(245, 158, 11, 0.15);
 }
 .comp_check_badge:hover {
-  transform: translateY(-1px);
+  transform: translate3d(0, -1px, 0);
 }

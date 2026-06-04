@@ -42,15 +42,16 @@
 ════════════════════════════════════ */
 .t_reveal {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translate3d(0, 40px, 0);
     transition:
         opacity 0.9s cubic-bezier(0.19, 1, 0.22, 1) var(--delay, 0ms),
         transform 0.9s cubic-bezier(0.19, 1, 0.22, 1) var(--delay, 0ms);
-}
+
+    will-change: transform, opacity;}
 
 .t_visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
 }
 
 /* ════════════════════════════════════
@@ -141,7 +142,7 @@
 
 /* Subtle Hospital Hover Lift */
 .t_card:hover {
-    transform: translateY(-8px);
+    transform: translate3d(0, -8px, 0);
     box-shadow: 0 25px 60px rgba(0, 129, 167, 0.08);
     /* Primary brand color shadow */
     border-color: rgba(0, 129, 167, 0.2);

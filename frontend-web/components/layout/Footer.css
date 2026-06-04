@@ -130,7 +130,7 @@
 
 .f_links li a:hover {
     color: #4B2D71;
-    transform: translateX(5px);
+    transform: translate3d(5px, 0, 0);
 }
 
 /* ════════════════════════════════════
@@ -163,7 +163,7 @@
 
 .f_contact_info li a:hover {
     color: var(--primary);
-    transform: translateX(3px);
+    transform: translate3d(3px, 0, 0);
 }
 
 .f_contact_info li.location_li {

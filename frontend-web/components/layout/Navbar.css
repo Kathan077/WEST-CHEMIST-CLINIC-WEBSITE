@@ -49,11 +49,11 @@
 @keyframes navbarFadeDown {
     from {
         opacity: 0;
-        transform: translateY(-18px);
+        transform: translate3d(0, -18px, 0);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translate3d(0, 0, 0);
     }
 }
 
@@ -156,7 +156,7 @@
     border-radius: 8px;
     background: var(--secondary, #5e35b1);
     opacity: 0;
-    transform: translateY(-50%) scale(0.84);
+    transform: translate3d(0, -50%, 0) scale(0.84);
     transition:
         opacity var(--dur-fast) var(--ease-smooth),
         transform var(--dur-fast) var(--ease-spring);
@@ -165,7 +165,7 @@
 
 .nav_link:hover::before {
     opacity: 0.12;
-    transform: translateY(-50%) scale(1.05);
+    transform: translate3d(0, -50%, 0) scale(1.05);
 }
 
 .nav_link:hover {
@@ -232,7 +232,7 @@
     border-radius: 0;
     opacity: 0;
     pointer-events: none;
-    transform: translateY(10px);
+    transform: translate3d(0, 10px, 0);
     transition: all 0.35s cubic-bezier(0.19, 1, 0.22, 1);
     z-index: 2000;
     scrollbar-width: thin; /* Firefox clean scrollbar */
@@ -254,14 +254,14 @@
 .nav_dropdown_container.force_close .nav_dropdown {
     opacity: 0 !important;
     pointer-events: none !important;
-    transform: translateY(10px) !important;
+    transform: translate3d(0, 10px, 0) !important;
     transition: none !important;
 }
 
 .nav_dropdown_container:hover .nav_dropdown {
     opacity: 1;
     pointer-events: all;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
 }
 
 .dropdown_inner {
@@ -324,13 +324,13 @@
 .dropdown_item:hover {
     background: #ffffff;
     color: var(--accent, #008473) !important;
-    transform: translateY(-4px);
+    transform: translate3d(0, -4px, 0);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
     border-color: var(--accent, #008473);
 }
 
 .dropdown_item:hover::after {
-    transform: translateX(4px);
+    transform: translate3d(4px, 0, 0);
 }
 
 /* ════════════════════════════════════
@@ -400,12 +400,12 @@
 .cta_button:not(.secondary):hover {
     background: #3d2880;
     box-shadow: 0 10px 36px rgba(45, 27, 105, 0.34), 0 2px 8px rgba(45, 27, 105, 0.14);
-    transform: translateY(-3px) scale(1.04);
+    transform: translate3d(0, -3px, 0) scale(1.04);
     letter-spacing: 0.05em;
 }
 
 .cta_button:not(.secondary):active {
-    transform: translateY(1px) scale(0.97);
+    transform: translate3d(0, 1px, 0) scale(0.97);
     box-shadow: 0 2px 6px rgba(45, 27, 105, 0.2);
 }
 
@@ -420,12 +420,12 @@
     border-color: var(--secondary, #5e35b1);
     color: var(--secondary, #5e35b1);
     box-shadow: 0 6px 20px rgba(94, 53, 177, 0.14);
-    transform: translateY(-3px) scale(1.03);
+    transform: translate3d(0, -3px, 0) scale(1.03);
     letter-spacing: 0.04em;
 }
 
 .cta_button.secondary:active {
-    transform: translateY(1px) scale(0.96);
+    transform: translate3d(0, 1px, 0) scale(0.96);
 }
 
 /* ════════════════════════════════════
@@ -674,11 +674,11 @@
     @keyframes slideInLink {
         from {
             opacity: 0;
-            transform: translateX(32px);
+            transform: translate3d(32px, 0, 0);
         }
         to {
             opacity: 1;
-            transform: translateX(0);
+            transform: translate3d(0, 0, 0);
         }
     }
 
@@ -860,7 +860,7 @@
     .dropdown_item:hover {
         background: rgba(94, 53, 177, 0.06);
         box-shadow: none;
-        transform: translateX(5px);
+        transform: translate3d(5px, 0, 0);
         border: none;
     }
 
@@ -1228,7 +1228,7 @@
 .track_btn_search:hover {
     background: #3d2880;
     box-shadow: 0 8px 24px rgba(45, 27, 105, 0.25);
-    transform: translateY(-2px);
+    transform: translate3d(0, -2px, 0);
 }
 
 .track_btn_search:disabled {

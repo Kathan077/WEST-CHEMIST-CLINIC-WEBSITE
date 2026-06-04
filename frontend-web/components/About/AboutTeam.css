@@ -27,7 +27,7 @@
     margin-bottom: 20px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    transform: translateY(20px);
+    transform: translate3d(0, 20px, 0);
     opacity: 0;
     transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -38,7 +38,7 @@
     color: #0f172a;
     margin-bottom: 12px;
     letter-spacing: -0.02em;
-    transform: translateY(30px);
+    transform: translate3d(0, 30px, 0);
     opacity: 0;
     transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
 }
@@ -46,7 +46,7 @@
 .med_team_header p {
     font-size: 1.15rem;
     color: #64748b;
-    transform: translateY(20px);
+    transform: translate3d(0, 20px, 0);
     opacity: 0;
     transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
 }
@@ -65,7 +65,7 @@
     background: transparent;
     border: none;
     opacity: 0;
-    transform: translateY(50px) scale(0.95);
+    transform: translate3d(0, 50px, 0) scale(0.95);
     transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -74,12 +74,12 @@
 .med_team_bg.med_animate .med_team_header h2,
 .med_team_bg.med_animate .med_team_header p {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
 }
 
 .med_team_bg.med_animate .med_team_card {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
 }
 
 .med_team_bg.med_animate .med_team_card:nth-child(1) {
@@ -117,7 +117,7 @@
 }
 
 .med_team_card:hover .med_t_img_box {
-    transform: translateY(-10px);
+    transform: translate3d(0, -10px, 0);
     box-shadow: 0 25px 40px -15px rgba(75, 45, 113, 0.2);
 }
 
@@ -162,20 +162,20 @@
 
 .med_t_socials a:hover {
     color: var(--primary);
-    transform: translateY(-3px) scale(1.1);
+    transform: translate3d(0, -3px, 0) scale(1.1);
 }
 
 /* Button Stagger */
 .med_team_action {
     text-align: center;
     opacity: 0;
-    transform: translateY(20px);
+    transform: translate3d(0, 20px, 0);
     transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.8s;
 }
 
 .med_team_bg.med_animate .med_team_action {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
 }
 
 @media (max-width: 900px) {

@@ -100,8 +100,8 @@ export default function HowItWorks() {
         const x = e.clientX - rect.left - rect.width / 2;
         const y = e.clientY - rect.top - rect.height / 2;
         
-        btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px) scale(1.05)`;
-        btn.querySelector('span').style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
+        btn.style.transform = `translate3d(${x * 0.3}px, ${y * 0.3}px, 0) scale(1.05)`;
+        btn.querySelector('span').style.transform = `translate3d(${x * 0.1}px, ${y * 0.1}px, 0)`;
     };
 
     const resetMagnetic = (e) => {

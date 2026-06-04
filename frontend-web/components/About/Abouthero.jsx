@@ -15,7 +15,7 @@ export default function AboutHero() {
 
             elements.forEach((el, index) => {
                 const multiplier = index % 2 === 0 ? 1 : -1;
-                el.style.transform = `translate(${x * multiplier}px, ${y * multiplier}px)`;
+                el.style.transform = `translate3d(${x * multiplier}px, ${y * multiplier}px, 0)`;
             });
         };
 

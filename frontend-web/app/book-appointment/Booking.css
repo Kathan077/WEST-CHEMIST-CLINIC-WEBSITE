@@ -27,8 +27,10 @@
 /* ── PAGE BASE ── */
 .bk_page {
     min-height: 100vh;
-    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
-    background-image: var(--accent-glow), linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+    background: 
+        radial-gradient(circle at 95% 15%, rgba(124, 77, 186, 0.10) 0%, transparent 40%),
+        radial-gradient(circle at -5% 85%, rgba(13, 148, 136, 0.08) 0%, transparent 45%),
+        linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
     padding: 24px 24px 60px;
     font-family: 'Plus Jakarta Sans', sans-serif;
     display: flex;
@@ -36,33 +38,6 @@
     align-items: flex-start;
     position: relative;
     overflow: hidden;
-}
-
-/* Cosmic ambient background blurs for premium feel */
-.bk_page::before {
-    content: '';
-    position: absolute;
-    top: 10%;
-    right: -5%;
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, rgba(124, 77, 186, 0.12), transparent 70%);
-    filter: blur(85px);
-    pointer-events: none;
-    z-index: 0;
-}
-
-.bk_page::after {
-    content: '';
-    position: absolute;
-    bottom: 10%;
-    left: -5%;
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, rgba(13, 148, 136, 0.1), transparent 70%);
-    filter: blur(85px);
-    pointer-events: none;
-    z-index: 0;
 }
 
 .bk_wrap {
@@ -80,12 +55,12 @@
 @keyframes wrapIn {
     from {
         opacity: 0;
-        transform: translateY(40px);
+        transform: translate3d(0, 40px, 0);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translate3d(0, 0, 0);
     }
 }
 
@@ -104,6 +79,8 @@
     flex-direction: column;
     gap: 36px;
     transition: all 0.3s ease;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
 }
 
 .bk_brand {
@@ -294,6 +271,8 @@
     box-shadow: 0 20px 40px -15px rgba(75, 45, 113, 0.08), 0 1px 3px rgba(0, 0, 0, 0.02);
     padding: 32px 36px;
     transition: all 0.4s ease;
+    will-change: transform, opacity;
+    transform: translate3d(0, 0, 0);
 }
 
 .bk_panel_head {
@@ -359,7 +338,7 @@
     position: absolute;
     left: 18px;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translate3d(0, -50%, 0);
     color: #94a3b8;
     pointer-events: none;
     display: flex;
@@ -370,7 +349,7 @@
 
 .bk_field_icon_wrapper:focus-within .bk_input_icon {
     color: var(--primary);
-    transform: translateY(-50%) scale(1.08);
+    transform: translate3d(0, -50%, 0) scale(1.08);
 }
 
 .bk_input {
@@ -399,7 +378,7 @@
     border-color: var(--primary-light);
     background: #ffffff;
     box-shadow: 0 8px 20px -8px rgba(75, 45, 113, 0.12);
-    transform: translateY(-1px);
+    transform: translate3d(0, -1px, 0);
 }
 
 .bk_input:focus {
@@ -407,7 +386,7 @@
     background: #ffffff;
     border-color: var(--primary);
     box-shadow: 0 0 0 5px var(--primary-glow), 0 12px 28px -10px rgba(75, 45, 113, 0.18);
-    transform: translateY(-2px);
+    transform: translate3d(0, -2px, 0);
 }
 
 /* Custom select dropdown styling */
@@ -476,7 +455,7 @@ select.bk_input {
 }
 
 .bk_btn_primary:hover:not(:disabled) {
-    transform: translateY(-3px);
+    transform: translate3d(0, -3px, 0);
     box-shadow: 0 16px 36px -8px rgba(75, 45, 113, 0.38);
     filter: brightness(1.05);
 }
@@ -486,7 +465,7 @@ select.bk_input {
 }
 
 .bk_btn_primary:active:not(:disabled) {
-    transform: translateY(-1px);
+    transform: translate3d(0, -1px, 0);
     box-shadow: 0 6px 14px rgba(75, 45, 113, 0.2);
 }
 
@@ -517,7 +496,7 @@ select.bk_input {
     background: #f8fafc;
     color: var(--text-main);
     border-color: #cbd5e1;
-    transform: translateY(-2px);
+    transform: translate3d(0, -2px, 0);
 }
 
 /* ── ID SELECTOR CARDS ── */
@@ -550,14 +529,14 @@ select.bk_input {
 .bk_id_card:hover {
     border-color: rgba(124, 77, 186, 0.45);
     background: #ffffff;
-    transform: translateY(-8px) scale(1.02);
+    transform: translate3d(0, -8px, 0) scale(1.02);
     box-shadow: 0 20px 40px -15px rgba(75, 45, 113, 0.12), 0 1px 3px rgba(0, 0, 0, 0.01);
 }
 
 .bk_id_card.selected {
     border-color: var(--secondary);
     background: #ffffff;
-    transform: translateY(-10px) scale(1.03);
+    transform: translate3d(0, -10px, 0) scale(1.03);
     box-shadow: 0 24px 48px -12px rgba(13, 148, 136, 0.2);
 }
 
@@ -641,7 +620,7 @@ select.bk_input {
 }
 
 .bk_upload:hover .bk_upload_icon {
-    transform: translateY(-4px);
+    transform: translate3d(0, -4px, 0);
 }
 
 .bk_upload_title {
@@ -692,19 +671,23 @@ select.bk_input {
     top: 0;
     left: 0;
     right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, transparent, rgba(13, 148, 136, 0.8), transparent);
-    box-shadow: 0 0 15px 3px rgba(13, 148, 136, 0.6);
-    z-index: 10;
+    height: 100%;
+    background: linear-gradient(to bottom, 
+        rgba(13, 148, 136, 0.85) 0%, 
+        rgba(13, 148, 136, 0.2) 2%, 
+        rgba(13, 148, 136, 0) 15%
+    );
     pointer-events: none;
+    z-index: 10;
+    transform: translate3d(0, -15%, 0);
+    will-change: transform, opacity;
     animation: sweep 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 @keyframes sweep {
-
     0%,
     100% {
-        top: 0%;
+        transform: translate3d(0, -15%, 0);
         opacity: 0;
     }
 
@@ -714,7 +697,7 @@ select.bk_input {
     }
 
     50% {
-        top: 100%;
+        transform: translate3d(0, 100%, 0);
         opacity: 1;
     }
 }
@@ -837,12 +820,12 @@ select.bk_input {
 
 @keyframes checkIn {
     from {
-        transform: translateX(-8px);
+        transform: translate3d(-8px, 0, 0);
         opacity: 0;
     }
 
     to {
-        transform: translateX(0);
+        transform: translate3d(0, 0, 0);
         opacity: 1;
     }
 }
@@ -1005,7 +988,7 @@ select.bk_input {
 .bk_serv_card:hover {
     border-color: rgba(75, 45, 113, 0.2);
     box-shadow: 0 20px 48px -15px rgba(75, 45, 113, 0.12);
-    transform: translateY(-2px);
+    transform: translate3d(0, -2px, 0);
 }
 
 /* Premium gradient ambient stripe inside summary card */
@@ -1041,7 +1024,7 @@ select.bk_input {
 
 .bk_serv_more:hover {
     color: var(--secondary-dark);
-    transform: translateX(2px);
+    transform: translate3d(2px, 0, 0);
 }
 
 .bk_summary_item {
@@ -1063,7 +1046,7 @@ select.bk_input {
     background: #ffffff;
     border-color: var(--primary-light);
     box-shadow: 0 8px 20px -8px rgba(75, 45, 113, 0.1);
-    transform: translateY(-1px);
+    transform: translate3d(0, -1px, 0);
 }
 
 .bk_summary_item strong {
@@ -1104,12 +1087,12 @@ select.bk_input {
 
 .bk_btn_serv_next.active:hover {
     background-position: right center;
-    transform: translateY(-3px) scale(1.02);
+    transform: translate3d(0, -3px, 0) scale(1.02);
     box-shadow: 0 16px 36px -8px rgba(75, 45, 113, 0.45);
 }
 
 .bk_btn_serv_next.active:hover .bk_btn_arrow {
-    transform: translateX(4px);
+    transform: translate3d(4px, 0, 0);
 }
 
 @keyframes shimmertxt {
@@ -1313,7 +1296,7 @@ select.bk_input {
     background: var(--primary-glow);
     border-color: rgba(124, 77, 186, 0.3);
     color: var(--primary);
-    transform: translateY(-2px);
+    transform: translate3d(0, -2px, 0);
     box-shadow: 0 6px 12px -8px rgba(75, 45, 113, 0.15);
 }
 
@@ -1419,12 +1402,12 @@ select.bk_input {
 @keyframes ticketUp {
     from {
         opacity: 0;
-        transform: translateY(24px);
+        transform: translate3d(0, 24px, 0);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translate3d(0, 0, 0);
     }
 }
 
@@ -1634,12 +1617,12 @@ select.bk_input {
 @keyframes fadeUp {
     from {
         opacity: 0;
-        transform: translateY(24px);
+        transform: translate3d(0, 24px, 0);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translate3d(0, 0, 0);
     }
 }
 

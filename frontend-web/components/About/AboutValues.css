@@ -167,7 +167,7 @@
 }
 
 .med_why_item:hover {
-    transform: translateY(-8px) scale(1.02) !important;
+    transform: translate3d(0, -8px, 0) scale(1.02) !important;
     box-shadow: 0 25px 50px -15px rgba(75, 45, 113, 0.15);
     border: 1px solid rgba(75, 45, 113, 0.1);
 }
@@ -291,12 +291,12 @@
     .med_w_top_right,
     .med_w_bot_left,
     .med_w_bot_right {
-        transform: translateY(30px) scale(0.95);
+        transform: translate3d(0, 30px, 0) scale(0.95);
         transition-delay: 0s;
     }
 
     .med_why_item.med_animate {
-        transform: translateY(0) scale(1);
+        transform: translate3d(0, 0, 0) scale(1);
     }
 
     .med_why_icon {

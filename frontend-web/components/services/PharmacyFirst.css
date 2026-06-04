@@ -48,14 +48,14 @@
 
 .pf_item {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translate3d(0, 30px, 0);
     transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     transition-delay: var(--delay);
 }
 
 .pf_item.pf_visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
 }
 
 .pf_card {
@@ -71,7 +71,7 @@
 }
 
 .pf_card:hover {
-    transform: translateY(-10px);
+    transform: translate3d(0, -10px, 0);
     box-shadow: 0 20px 40px rgba(75, 45, 113, 0.08);
     border-color: rgba(75, 45, 113, 0.1);
 }

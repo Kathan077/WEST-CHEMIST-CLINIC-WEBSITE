@@ -45,13 +45,13 @@
 
 .ps_card {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translate3d(0, 30px, 0);
     transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .ps_card.ps_revealed {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
     transition-delay: var(--delay);
 }
 
@@ -143,7 +143,7 @@
 
 .ps_btn_book:hover {
     opacity: 0.9;
-    transform: translateY(-3px);
+    transform: translate3d(0, -3px, 0);
 }
 
 .ps_line {

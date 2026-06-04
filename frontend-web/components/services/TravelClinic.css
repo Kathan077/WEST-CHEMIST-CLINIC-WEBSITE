@@ -68,7 +68,7 @@
 
 .tc_btn:hover {
     background: var(--accent);
-    transform: translateY(-5px);
+    transform: translate3d(0, -5px, 0);
     box-shadow: 0 20px 45px rgba(0, 132, 115, 0.3);
 }
 
@@ -77,7 +77,7 @@
 }
 
 .tc_btn:hover svg {
-    transform: translateX(5px);
+    transform: translate3d(5px, 0, 0);
 }
 
 /* ─── Right List Box ─── */
@@ -107,13 +107,13 @@
     align-items: center;
     gap: 12px;
     opacity: 0;
-    transform: translateX(20px);
+    transform: translate3d(20px, 0, 0);
     transition: all 0.6s ease;
 }
 
 .tc_vax_item.tc_visible {
     opacity: 1;
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
     transition-delay: var(--delay);
 }
 

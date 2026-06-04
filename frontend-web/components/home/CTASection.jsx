@@ -34,12 +34,12 @@ export default function CTASection() {
         const x = e.clientX - rect.left - rect.width / 2;
         const y = e.clientY - rect.top - rect.height / 2;
         
-        btn.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
+        btn.style.transform = `translate3d(${x * 0.15}px, ${y * 0.15}px, 0)`;
     };
 
     const handleLeave = (e) => {
         const btn = e.currentTarget;
-        btn.style.transform = 'translate(0px, 0px)';
+        btn.style.transform = 'translate3d(0px, 0px, 0)';
     };
 
     return (
@@ -63,7 +63,7 @@ export default function CTASection() {
                             onMouseMove={handleMouse}
                             onMouseLeave={handleLeave}
                         >
-                            <span>Book Free Consultation</span>
+                            <span>Book Now</span>
                             <div className="cta_btn_shine"></div>
                         </Link>
                     </div>

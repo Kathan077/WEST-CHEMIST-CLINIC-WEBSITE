@@ -80,18 +80,18 @@
 
     /* Scroll reveal defaults */
     opacity: 0;
-    transform: translateY(60px) rotateX(5deg);
+    transform: translate3d(0, 60px, 0) rotateX(5deg);
     transform-origin: center bottom;
 }
 
 .pro_reveal_active {
     opacity: 1;
-    transform: translateY(0) rotateX(0deg);
+    transform: translate3d(0, 0, 0) rotateX(0deg);
 }
 
 /* Hover Physics */
 .pro_grid_card:hover {
-    transform: translateY(-12px);
+    transform: translate3d(0, -12px, 0);
     box-shadow: 0 30px 60px rgba(15, 23, 42, 0.08), 0 10px 20px rgba(15, 23, 42, 0.03);
     border-color: rgba(0, 132, 115, 0.4);
 }
@@ -241,11 +241,11 @@
     background: var(--accent);
     color: #ffffff;
     box-shadow: 0 10px 20px rgba(0, 132, 115, 0.3);
-    transform: translateY(-2px);
+    transform: translate3d(0, -2px, 0);
 }
 
 .pro_btn_solid:hover svg {
-    transform: translateX(4px);
+    transform: translate3d(4px, 0, 0);
 }
 
 /* ─── Responsive Grid ─── */

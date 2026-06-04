@@ -62,7 +62,7 @@
 }
 
 .wlb_bento_item:hover {
-    transform: translateY(-8px) scale(1.02);
+    transform: translate3d(0, -8px, 0) scale(1.02);
     z-index: 2;
     box-shadow: 0 30px 60px rgba(15, 23, 42, 0.15);
 }
@@ -133,13 +133,14 @@
 /* Animations */
 .wlb_reveal {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translate3d(0, 40px, 0);
     transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
-}
+
+    will-change: transform, opacity;}
 
 .wlb_reveal_active {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
 }
 
 /* Responsive */

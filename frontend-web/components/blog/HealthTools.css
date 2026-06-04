@@ -42,7 +42,7 @@
 }
 
 .ht_card:hover {
-    transform: translateY(-8px);
+    transform: translate3d(0, -8px, 0);
     box-shadow: 0 20px 50px rgba(75, 45, 113, 0.08);
     border-color: rgba(75, 45, 113, 0.1);
 }

@@ -29,7 +29,9 @@
     will-change: transform;
     filter: blur(80px);
     /* Enhanced softness */
-}
+
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;}
 
 /* Primary — Purple Accent (Brand: --primary) */
 .blob-1 {
@@ -140,12 +142,13 @@
             rgba(0, 132, 115, 0.2) 50%,
             transparent 100%);
     animation: hudScan 15s infinite linear;
-    will-change: top, opacity;
-}
+    will-change: transform, opacity;
+
+    transform: translate3d(0, 0, 0);}
 
 @keyframes hudScan {
     0% {
-        top: 0;
+        transform: translate3d(0, 0, 0);
         opacity: 0;
     }
 
@@ -155,7 +158,7 @@
     }
 
     100% {
-        top: 100vh;
+        transform: translate3d(0, 100vh, 0);
         opacity: 0;
     }
 }
@@ -221,7 +224,8 @@
     .hud-scan {
         animation-duration: 20s;
         /* Slower on mobile */
-    }
+    
+    transform: translate3d(0, 0, 0);}
 
     .ecg-container {
         bottom: 10%;

@@ -234,7 +234,7 @@
 .adm_stat_card:nth-child(4) { animation-delay: .18s }
 
 .adm_stat_card:hover {
-  transform: translateY(-5px);
+  transform: translate3d(0, -5px, 0);
   box-shadow: 0 16px 32px rgba(75, 45, 113, 0.08), 0 4px 16px rgba(0, 0, 0, 0.02);
 }
 .adm_stat_card.s-blue:hover { border-color: rgba(75, 45, 113, 0.3); }
@@ -291,8 +291,8 @@
 }
 
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(14px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translate3d(0, 14px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
 }
 
 /* ═══════════ CONTENT GRID ═══════════ */
@@ -329,7 +329,7 @@
   position: absolute;
   left: 16px;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translate3d(0, -50%, 0);
   color: var(--t3);
   pointer-events: none;
 }
@@ -439,12 +439,12 @@
 }
 .adm_row:hover {
   background: linear-gradient(90deg, rgba(75, 45, 113, 0.015) 0%, rgba(32, 107, 94, 0.015) 100%);
-  transform: translateY(-1px);
+  transform: translate3d(0, -1px, 0);
   box-shadow: 0 4px 16px rgba(75, 45, 113, 0.04);
 }
 @keyframes rowIn {
-  from { opacity: 0; transform: translateX(-6px); }
-  to   { opacity: 1; transform: translateX(0); }
+  from { opacity: 0; transform: translate3d(-6px, 0, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
 }
 
 .adm_td {
@@ -634,11 +634,11 @@
 }
 .adm_action_btn:active { transform: scale(.96); }
 .adm_action_btn.approve { background: #f0fdf4; color: #16a34a; border-color: rgba(22, 163, 74, 0.2); }
-.adm_action_btn.approve:hover { background: #16a34a; color: #fff; border-color: #16a34a; box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25); transform: translateY(-1px); }
+.adm_action_btn.approve:hover { background: #16a34a; color: #fff; border-color: #16a34a; box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25); transform: translate3d(0, -1px, 0); }
 .adm_action_btn.reject  { background: #fdf2f2; color: #de2828; border-color: rgba(222, 40, 40, 0.2); }
-.adm_action_btn.reject:hover  { background: #de2828; color: #fff; border-color: #de2828; box-shadow: 0 4px 12px rgba(222, 40, 40, 0.25); transform: translateY(-1px); }
+.adm_action_btn.reject:hover  { background: #de2828; color: #fff; border-color: #de2828; box-shadow: 0 4px 12px rgba(222, 40, 40, 0.25); transform: translate3d(0, -1px, 0); }
 .adm_action_btn.reschedule { background: #faf5ff; color: #7c3aed; border-color: rgba(124, 58, 237, 0.2); }
-.adm_action_btn.reschedule:hover { background: #7c3aed; color: #fff; border-color: #7c3aed; box-shadow: 0 4px 12px rgba(124, 58, 237, 0.25); transform: translateY(-1px); }
+.adm_action_btn.reschedule:hover { background: #7c3aed; color: #fff; border-color: #7c3aed; box-shadow: 0 4px 12px rgba(124, 58, 237, 0.25); transform: translate3d(0, -1px, 0); }
 
 /* ── Empty / Loading ── */
 .adm_empty {
@@ -720,7 +720,7 @@
   background:linear-gradient(135deg,var(--blue),var(--purple));
   color:#fff; box-shadow:0 4px 14px rgba(79,114,250,.3);
 }
-.adm_modal_btn.confirm_btn:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(79,114,250,.4); }
+.adm_modal_btn.confirm_btn:hover { transform: translate3d(0, -2px, 0); box-shadow:0 6px 20px rgba(79,114,250,.4); }
 
 /* ── Toast ── */
 .adm_toast {
@@ -734,7 +734,7 @@
 .adm_toast.success { border-left:4px solid var(--green); }
 .adm_toast.error   { border-left:4px solid var(--red); }
 .adm_toast.info    { border-left:4px solid var(--blue); }
-@keyframes toastIn  { from{opacity:0;transform:translateX(30px)} to{opacity:1;transform:translateX(0)} }
+@keyframes toastIn  { from{opacity:0;transform: translate3d(30px, 0, 0)} to{opacity:1;transform: translate3d(0, 0, 0)} }
 
 /* ── Live dot ── */
 .adm_live_dot {
@@ -768,7 +768,7 @@
 }
 .adm_row.clickable_row:hover {
   background: #f8fafc;
-  transform: translateY(-1px);
+  transform: translate3d(0, -1px, 0);
   box-shadow: 0 4px 12px rgba(30, 19, 43, 0.03);
 }
 

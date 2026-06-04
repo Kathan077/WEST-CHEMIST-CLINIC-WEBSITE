@@ -85,15 +85,16 @@
 ════════════════════════════════════ */
 .cta_reveal {
     opacity: 0;
-    transform: translateY(50px);
+    transform: translate3d(0, 50px, 0);
     transition:
         opacity 1s cubic-bezier(0.19, 1, 0.22, 1) var(--delay, 0ms),
         transform 1s cubic-bezier(0.19, 1, 0.22, 1) var(--delay, 0ms);
-}
+
+    will-change: transform, opacity;}
 
 .cta_visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
 }
 
 /* ════════════════════════════════════
@@ -146,14 +147,15 @@
 .cta_btn_shine {
     position: absolute;
     top: 0;
-    left: -150%;
+    left: 0;
     width: 50%;
     height: 100%;
     background: linear-gradient(to right,
             rgba(255, 255, 255, 0) 0%,
             rgba(255, 255, 255, 0.3) 50%,
             rgba(255, 255, 255, 0) 100%);
-    transform: skewX(-25deg);
+    transform: translate3d(-150%, 0, 0) skewX(-25deg);
+    will-change: transform;
     z-index: 1;
     transition: none;
 }
@@ -164,11 +166,11 @@
 
 @keyframes shineSweep {
     0% {
-        left: -100%;
+        transform: translate3d(-150%, 0, 0) skewX(-25deg);
     }
 
     100% {
-        left: 200%;
+        transform: translate3d(250%, 0, 0) skewX(-25deg);
     }
 }
 

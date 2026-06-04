@@ -90,15 +90,16 @@
 ════════════════════════════════════ */
 .ss_reveal {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translate3d(0, 40px, 0);
     transition:
         opacity 0.8s cubic-bezier(0.2, 1, 0.3, 1) var(--delay, 0s),
         transform 0.8s cubic-bezier(0.2, 1, 0.3, 1) var(--delay, 0s);
-}
+
+    will-change: transform, opacity;}
 
 .ss_visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
 }
 
 /* ════════════════════════════════════
@@ -153,7 +154,7 @@
 }
 
 .ss_card:hover {
-    transform: translateY(-8px);
+    transform: translate3d(0, -8px, 0);
 }
 
 .ss_card:hover::before {
@@ -283,7 +284,7 @@
     background: var(--scolor);
     border-color: var(--scolor);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
-    transform: translateY(-1px);
+    transform: translate3d(0, -1px, 0);
 }
 
 /* Subtle mouse glare */
@@ -329,7 +330,7 @@
 }
 
 .ss_global_btn:hover {
-    transform: translateY(-4px);
+    transform: translate3d(0, -4px, 0);
     background: #19584d;
     box-shadow: 0 12px 30px rgba(32, 107, 94, 0.35);
 }
@@ -339,6 +340,6 @@
 }
 
 .ss_global_btn:hover svg {
-    transform: translateX(4px);
+    transform: translate3d(4px, 0, 0);
 }
 

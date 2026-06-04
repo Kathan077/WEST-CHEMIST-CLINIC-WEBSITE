@@ -165,7 +165,7 @@
 
 .vacc_btn_cta_primary:hover {
     background: var(--highlight-purple);
-    transform: translateY(-4px) scale(1.03);
+    transform: translate3d(0, -4px, 0) scale(1.03);
     box-shadow: 0 16px 36px rgba(75, 45, 113, 0.35);
 }
 
@@ -176,7 +176,7 @@
 }
 
 .vacc_btn_cta_primary:hover .arrow_icon {
-    transform: translateX(4px);
+    transform: translate3d(4px, 0, 0);
 }
 
 .vacc_btn_cta_secondary {
@@ -220,7 +220,7 @@
 .vacc_btn_cta_secondary:hover {
     background: rgba(75, 45, 113, 0.05);
     border-color: var(--primary);
-    transform: translateY(-4px) scale(1.03);
+    transform: translate3d(0, -4px, 0) scale(1.03);
 }
 
 /* --------------------------------------------------------------------------
@@ -248,7 +248,7 @@
 }
 
 .vacc_hero_info_card:hover {
-    transform: translateY(-4px);
+    transform: translate3d(0, -4px, 0);
     box-shadow: 0 12px 36px rgba(0, 0, 0, 0.05);
 }
 

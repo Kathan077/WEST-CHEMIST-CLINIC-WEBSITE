@@ -41,7 +41,7 @@
 
 @keyframes particleRise {
     0% {
-        transform: translateY(0) scale(1);
+        transform: translate3d(0, 0, 0) scale(1);
         opacity: var(--op);
     }
 
@@ -50,7 +50,7 @@
     }
 
     100% {
-        transform: translateY(-110vh) scale(0.3);
+        transform: translate3d(0, -110vh, 0) scale(0.3);
         opacity: 0;
     }
 }
@@ -217,12 +217,12 @@
 @keyframes badgeDrop {
     from {
         opacity: 0;
-        transform: translateY(-20px) scale(0.9);
+        transform: translate3d(0, -20px, 0) scale(0.9);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0) scale(1);
+        transform: translate3d(0, 0, 0) scale(1);
     }
 }
 
@@ -284,12 +284,12 @@
 @keyframes wordUp {
     from {
         opacity: 0;
-        transform: translateY(60%) rotate(3deg);
+        transform: translate3d(0, 60%, 0) rotate(3deg);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0) rotate(0deg);
+        transform: translate3d(0, 0, 0) rotate(0deg);
     }
 }
 
@@ -331,12 +331,12 @@
 @keyframes fadeUp {
     from {
         opacity: 0;
-        transform: translateY(22px);
+        transform: translate3d(0, 22px, 0);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translate3d(0, 0, 0);
     }
 }
 
@@ -424,14 +424,14 @@
 }
 
 .hero_btn.primary_btn:hover {
-    transform: translateY(-5px) scale(1.05);
+    transform: translate3d(0, -5px, 0) scale(1.05);
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35), 0 4px 14px rgba(255, 255, 255, 0.08);
     letter-spacing: 0.05em;
     gap: 16px;
 }
 
 .hero_btn.primary_btn:active {
-    transform: translateY(1px) scale(0.97);
+    transform: translate3d(0, 1px, 0) scale(0.97);
 }
 
 .hero_btn.outline_btn {
@@ -445,13 +445,13 @@
 .hero_btn.outline_btn:hover {
     background: rgba(255, 255, 255, 0.18);
     border-color: rgba(255, 255, 255, 0.65);
-    transform: translateY(-4px) scale(1.04);
+    transform: translate3d(0, -4px, 0) scale(1.04);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
     letter-spacing: 0.04em;
 }
 
 .hero_btn.outline_btn:active {
-    transform: translateY(1px) scale(0.97);
+    transform: translate3d(0, 1px, 0) scale(0.97);
 }
 
 /* Arrow micro-animation */
@@ -460,7 +460,7 @@
 }
 
 .hero_btn.primary_btn:hover .btn_arrow {
-    transform: translateX(5px);
+    transform: translate3d(5px, 0, 0);
 }
 
 /* ════════════════════════════════════
@@ -470,7 +470,7 @@
     position: absolute;
     bottom: 72px;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
     z-index: 20;
     display: flex;
     align-items: center;
@@ -489,12 +489,12 @@
 @keyframes statsRise {
     from {
         opacity: 0;
-        transform: translateX(-50%) translateY(24px);
+        transform: translate3d(-50%, 0, 0) translateY(24px);
     }
 
     to {
         opacity: 1;
-        transform: translateX(-50%) translateY(0);
+        transform: translate3d(-50%, 0, 0) translateY(0);
     }
 }
 
@@ -533,7 +533,7 @@
 .slider_btn {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translate3d(0, -50%, 0);
     z-index: 20;
     width: 54px;
     height: 54px;
@@ -558,12 +558,12 @@
 .slider_btn:hover {
     background: rgba(255, 255, 255, 0.2);
     border-color: rgba(255, 255, 255, 0.55);
-    transform: translateY(-50%) scale(1.12);
+    transform: translate3d(0, -50%, 0) scale(1.12);
     box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3);
 }
 
 .slider_btn:active {
-    transform: translateY(-50%) scale(0.93);
+    transform: translate3d(0, -50%, 0) scale(0.93);
 }
 
 .btn_prev {
@@ -581,7 +581,7 @@
     position: absolute;
     bottom: 42px;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
     display: flex;
     gap: 7px;
     z-index: 20;
@@ -625,15 +625,18 @@
     animation:
         progressRun 6s linear forwards,
         gradientShift 2.5s linear infinite;
-}
+
+    transform: scaleX(0);
+    transform-origin: left center;
+    will-change: transform;}
 
 @keyframes progressRun {
     from {
-        width: 0%;
+        transform: scaleX(0);
     }
 
     to {
-        width: 100%;
+        transform: scaleX(1);
     }
 }
 

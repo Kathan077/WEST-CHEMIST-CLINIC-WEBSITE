@@ -58,8 +58,8 @@ export default function WeightLossCTA() {
                     </h2>
                     
                     <div className="wl_actions wl_reveal" style={{ '--delay': '150ms' }}>
-                        <Link href="/book-appointment" className="wl_btn wl_btn_solid">
-                            Book Free Consultation
+<Link href="/book-appointment" className="wl_btn wl_btn_solid">
+                            Book Now
                         </Link>
                     </div>
 

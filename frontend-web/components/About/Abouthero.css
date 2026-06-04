@@ -77,7 +77,7 @@
     background: rgba(75, 45, 113, 0.05);
     border: 1px solid rgba(75, 45, 113, 0.1);
     border-radius: 100px;
-    transform: translateY(100%);
+    transform: translate3d(0, 100%, 0);
     animation: medGodSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
@@ -114,9 +114,10 @@
     display: inline-block;
     margin-right: 0.25em;
     opacity: 0;
-    transform: translateY(40px) rotate(3deg);
+    transform: translate3d(0, 40px, 0) rotate(3deg);
     animation: medWordSpring 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-}
+
+    will-change: transform, opacity;}
 
 .med_word_reveal:nth-child(1) {
     animation-delay: 0.1s;
@@ -147,12 +148,12 @@
 @keyframes medWordSpring {
     0% {
         opacity: 0;
-        transform: translateY(40px) rotate(3deg);
+        transform: translate3d(0, 40px, 0) rotate(3deg);
     }
 
     100% {
         opacity: 1;
-        transform: translateY(0) rotate(0);
+        transform: translate3d(0, 0, 0) rotate(0);
     }
 }
 
@@ -173,7 +174,7 @@
     line-height: 1.6;
     margin-bottom: 40px;
     opacity: 0;
-    transform: translateY(20px);
+    transform: translate3d(0, 20px, 0);
     animation: medGodSlideUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
 }
 
@@ -219,7 +220,7 @@
 }
 
 .med_btn_primary:hover {
-    transform: translateY(-5px);
+    transform: translate3d(0, -5px, 0);
     box-shadow: 0 20px 40px -10px rgba(75, 45, 113, 0.6);
 }
 
@@ -333,12 +334,12 @@
 @keyframes medGodSlideUp {
     0% {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translate3d(0, 30px, 0);
     }
 
     100% {
         opacity: 1;
-        transform: translateY(0);
+        transform: translate3d(0, 0, 0);
     }
 }
 

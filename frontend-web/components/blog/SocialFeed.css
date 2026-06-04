@@ -41,7 +41,7 @@
     background: var(--primary);
     border-color: var(--primary);
     color: #ffffff;
-    transform: translateY(-2px);
+    transform: translate3d(0, -2px, 0);
 }
 
 .sf_grid {

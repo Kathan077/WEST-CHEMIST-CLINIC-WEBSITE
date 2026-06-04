@@ -42,7 +42,7 @@
 }
 
 .ea_card:hover {
-    transform: translateY(-10px);
+    transform: translate3d(0, -10px, 0);
     box-shadow: 0 30px 60px rgba(75, 45, 113, 0.08);
     border-color: rgba(75, 45, 113, 0.1);
 }

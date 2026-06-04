@@ -79,7 +79,7 @@
 
 .br_pro_card:hover {
     background: #ffffff;
-    transform: translateY(-10px);
+    transform: translate3d(0, -10px, 0);
     box-shadow: 0 40px 80px rgba(45, 27, 105, 0.08);
 }
 
@@ -289,7 +289,7 @@
 }
 
 .br_address_card:hover {
-    transform: translateY(-5px);
+    transform: translate3d(0, -5px, 0);
 }
 
 .br_address_icon {
@@ -378,7 +378,7 @@
 
 .br_btn_primary:hover {
     background: var(--accent);
-    transform: translateY(-3px);
+    transform: translate3d(0, -3px, 0);
     box-shadow: 0 15px 35px rgba(0, 132, 115, 0.25);
 }
 
@@ -390,7 +390,7 @@
 
 .br_btn_secondary:hover {
     background: rgba(45, 27, 105, 0.05);
-    transform: translateY(-3px);
+    transform: translate3d(0, -3px, 0);
 }
 
 .br_btn_primary svg,
@@ -400,20 +400,20 @@
 
 .br_btn_primary:hover svg,
 .br_btn_secondary:hover svg {
-    transform: translateX(5px);
+    transform: translate3d(5px, 0, 0);
 }
 
 /* ─── Reveal Animations ─── */
 .reveal_on_scroll {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translate3d(0, 40px, 0);
     transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
                 transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reveal_on_scroll.reveal_active {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
 }
 
 /* =========================================

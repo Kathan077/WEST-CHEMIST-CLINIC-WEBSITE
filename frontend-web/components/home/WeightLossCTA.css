@@ -23,15 +23,16 @@
 ════════════════════════════════════ */
 .wl_reveal {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translate3d(0, 40px, 0);
     transition:
         opacity 0.8s cubic-bezier(0.19, 1, 0.22, 1) var(--delay, 0ms),
         transform 0.8s cubic-bezier(0.19, 1, 0.22, 1) var(--delay, 0ms);
-}
+
+    will-change: transform, opacity;}
 
 .wl_visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
 }
 
 /* ════════════════════════════════════
@@ -81,7 +82,7 @@
 }
 
 .wl_btn_solid:hover {
-    transform: translateY(-4px);
+    transform: translate3d(0, -4px, 0);
     box-shadow: 0 10px 25px rgba(0, 129, 167, 0.3);
     background: #00607a;
     border-color: #00607a;
@@ -94,7 +95,7 @@
 }
 
 .wl_btn_outline:hover {
-    transform: translateY(-4px);
+    transform: translate3d(0, -4px, 0);
     border-color: var(--primary);
     background: rgba(75, 45, 113, 0.03);
 }
@@ -137,7 +138,7 @@
 }
 
 .wl_list li:hover {
-    transform: translateX(5px);
+    transform: translate3d(5px, 0, 0);
     color: var(--primary);
 }
 

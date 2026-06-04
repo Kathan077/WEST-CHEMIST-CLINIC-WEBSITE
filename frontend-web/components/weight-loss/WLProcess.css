@@ -51,7 +51,7 @@
 
 .wlc_step:hover {
     background: #ffffff;
-    transform: translateY(-10px);
+    transform: translate3d(0, -10px, 0);
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.05);
 }
 
@@ -125,13 +125,14 @@
 /* ─── Animations ─── */
 .wlc_reveal {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translate3d(0, 40px, 0);
     transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
-}
+
+    will-change: transform, opacity;}
 
 .wlc_reveal_active {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
 }
 
 /* ─── Responsive ─── */
@@ -155,7 +156,7 @@
     }
     
     .wlc_step:hover {
-        transform: translateY(-5px) scale(1.01);
+        transform: translate3d(0, -5px, 0) scale(1.01);
         box-shadow: 0 25px 50px rgba(0, 0, 0, 0.06);
     }
     
