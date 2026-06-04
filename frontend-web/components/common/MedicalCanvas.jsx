@@ -57,7 +57,7 @@ function drawPill(ctx, x, y, sz, rot, alpha) {
   const w = sz * 2.2, h = sz * 0.8;
   ctx.save();
   ctx.globalAlpha = alpha;
-  ctx.translate3d(x, y, 0); ctx.rotate(rot);
+  ctx.translate(x, y); ctx.rotate(rot);
   ctx.strokeStyle = `rgba(${c[0]},${c[1]},${c[2]},1)`;
   ctx.lineWidth = 1.2;
   ctx.beginPath(); ctx.roundRect(-w/2, -h/2, w, h, h/2); ctx.stroke();
@@ -70,7 +70,7 @@ function drawHex(ctx, x, y, sz, rot, alpha) {
   const c = CLR.symbol;
   ctx.save();
   ctx.globalAlpha = alpha;
-  ctx.translate3d(x, y, 0); ctx.rotate(rot);
+  ctx.translate(x, y); ctx.rotate(rot);
   ctx.strokeStyle = `rgba(${c[0]},${c[1]},${c[2]},1)`;
   ctx.lineWidth = 1;
   ctx.beginPath();
