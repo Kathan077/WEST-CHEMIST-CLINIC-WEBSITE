@@ -42,6 +42,14 @@ app.get('/health', (req, res) => {
   });
 });
 
+// Root Endpoint (Handles pings/health checks from Render load balancer)
+app.get('/', (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'West Chemist Clinic Backend API is running'
+  });
+});
+
 // API Routes mounting
 app.use('/api/patients', patientRoutes);
 app.use('/api/verifications', verificationRoutes);
