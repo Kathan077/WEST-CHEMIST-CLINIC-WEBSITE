@@ -7,350 +7,300 @@ import './ServiceDetail.css';
 // Comprehensive data mapper for all services
 const serviceData = {
     "blood-testing": {
-        title: "Blood Testing",
-        cat: "Diagnostic",
+        title: "Private Blood Testing",
+        cat: "Diagnostic & Screening",
         img: "https://images.unsplash.com/photo-1579154236594-c199f3768fb9?w=1200&q=80",
-        desc: "Our private blood testing service provides comprehensive health insights with rapid results. We offer a wide range of tests including full blood count, diabetes screening, and hormone profiles.",
-        price: "From £49",
+        desc: "Our advanced private blood testing service offers comprehensive, clinician-led diagnostic screenings with rapid, confidential reporting. From full blood counts and kidney function profiles to hormone panels and metabolic tracking, we provide the deep biological insights needed to optimize your health.",
         duration: "15-20 Mins",
-        features: ["Certified Clinicians", "Rapid Result Turnaround", "Confidential Reporting", "GP Consultation Included"]
+        features: ["GPhC Registered Pharmacist Oversight", "ISO-Accredited Laboratory Analysis", "Comprehensive Health Marker Panels", "Confidential Digital Results Report", "Post-Test Clinical Guidance"]
     },
     "earwax-removal": {
-        title: "Earwax Removal",
-        cat: "Clinical",
+        title: "Earwax Removal (Microsuction)",
+        cat: "Clinical Ear Care",
         img: "https://images.unsplash.com/photo-1559839734-2b71f1536783?w=1200&q=80",
-        desc: "Experience relief with our safe and effective microsuction earwax removal service. Our specialist practitioners use the latest technology to clear your ears gently and professionally.",
-        price: "£60 (Both Ears)",
+        desc: "Regain auditory clarity with our state-of-the-art microsuction earwax removal service. Widely recognized as the safest and most effective method, microsuction uses gentle suction under high-definition visualization to clear blockages without water or mess. Ideal for resolving discomfort, hearing loss, and tinnitus caused by impacted cerumen.",
         duration: "30 Mins",
-        features: ["Microsuction Technology", "Specialist Practitioners", "Immediate Relief", "Pre-Treatment Consultation"]
+        features: ["High-Definition Video Otoscopy", "Gentle, Water-Free Microsuction", "Performed by Accredited Clinicians", "Immediate Pressure & Tinnitus Relief", "Comprehensive Ear Health Check"]
     },
     "discharge-medicines-service": {
-        title: "Discharge Medicines Service",
-        cat: "Advanced NHS",
+        title: "Discharge Medicines Service (DMS)",
+        cat: "NHS Clinical Integration",
         img: "https://plus.unsplash.com/premium_photo-1661633534346-601931818296?w=1200&q=80",
-        desc: "Specialised support to help you manage your new medications after hospital discharge. We ensure a smooth transition and reduce the risk of readmission.",
-        price: "NHS Funded",
+        desc: "A specialized NHS clinical service designed to support patients transitioning from hospital care back to the community. Our pharmacists perform a rigorous medication reconciliation to resolve discrepancies, educate you on new therapeutic regimens, and coordinate directly with your GP to prevent adverse drug events and reduce readmission rates.",
         duration: "20 Mins",
-        features: ["Medication Reconciliation", "Usage Education", "Safe Transitions", "GP Liaison"]
+        features: ["Comprehensive Medication Reconciliation", "Post-Hospital Transition Support", "Discrepancy & Side-Effect Identification", "Direct GP & Care Team Liaison", "One-on-One Patient Education"]
     },
     "new-medicine-service": {
-        title: "New Medicine Service",
-        cat: "Advanced NHS",
+        title: "New Medicine Service (NMS)",
+        cat: "NHS Advanced Care",
         img: "https://images.unsplash.com/photo-1550572017-ed200f5e6399?w=1200&q=80",
-        desc: "Support for patients starting new medications for long-term conditions. We help you understand your prescription and manage any potential side effects.",
-        price: "NHS Funded",
+        desc: "Get the most out of your newly prescribed therapy for chronic conditions. This structured NHS service provides expert clinical consultation over several weeks for conditions like asthma, COPD, type 2 diabetes, hypertension, and anticoagulation therapy, helping you manage side effects, master administration techniques, and build confidence.",
         duration: "15 Mins",
-        features: ["Clinical Support", "Side-effect Management", "Technique Training", "Follow-up Reviews"]
+        features: ["Structured Pharmacist-Led Consultations", "Targeted Side-Effect Management", "Device Technique & Inhaler Training", "Improved Medication Adherence", "Direct Integration with NHS Care Pathways"]
     },
     "travel-clinic": {
-        title: "Travel Clinic",
-        cat: "Specialist",
+        title: "Specialist Travel Clinic",
+        cat: "Travel Health & Vaccinations",
         img: "https://images.unsplash.com/photo-1500835595300-478db374780d?w=1200&q=80",
-        desc: "Comprehensive travel health consultations including vaccinations, malaria prevention, and expert advice for your destination.",
-        price: "Consultation £20",
+        desc: "Embark on international travel with complete peace of mind. Our specialist travel clinic provides destination-specific risk assessments, individualized vaccination protocols, malaria prophylaxis, and certified health advice tailored to your medical history and itinerary.",
         duration: "30 Mins",
-        features: ["Destination Specific Advice", "Full Core Vaccination Range", "Malaria Prophylaxis", "Certified Yellow Fever Center"]
+        features: ["Pre-Travel Destination Risk Assessment", "Comprehensive Vaccine Portfolio", "Malaria Prophylaxis Prescriptions", "Certified Yellow Fever Vaccination Centre", "Tailored Health & Hygiene Advice"]
     },
     "cryotherapy": {
-        title: "Cryotherapy",
-        cat: "Clinical",
+        title: "Cryotherapy Treatment",
+        cat: "Clinical Dermatology",
         img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1200&q=80",
-        desc: "Safe and effective freezing treatment for skin lesions, warts, and verrucae using medical-grade liquid nitrogen technology.",
-        price: "From £50",
+        desc: "Remove benign skin lesions safely and effectively with our advanced cryotherapy service. Utilizing clinical-grade liquid nitrogen or nitrous oxide, we precisely freeze target tissues (such as warts, verrucae, skin tags, and solar keratoses), initiating a natural shedding process that preserves surrounding healthy skin.",
         duration: "15 Mins",
-        features: ["Precise Application", "Minimal Discomfort", "Scar Mitigation", "Clinic Grade Tech"]
+        features: ["Precise Cryo-Pen Technology", "Effective for Warts, Verrucae & Tags", "Dermatological Lesion Assessment", "Minimal Discomfort & Scarring Risk", "Post-Treatment Care Protocol"]
     },
     "microneedling": {
-        title: "Microneedling",
-        cat: "Aesthetic",
+        title: "Medical-Grade Microneedling",
+        cat: "Clinical Aesthetics",
         img: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=1200&q=80",
-        desc: "Advanced skin rejuvenation treatment that stimulates collagen production to treat acne scars, fine lines, and skin texture.",
-        price: "£150 / Session",
+        desc: "Revitalize your skin's texture and tone with our premium medical-grade microneedling service. Utilizing sterile, automated micro-needling technology, this treatment stimulates the body's natural collagen and elastin synthesis. Highly effective for reducing acne scarring, fine lines, hyperpigmentation, and enlarged pores.",
         duration: "45 Mins",
-        features: ["Collagen Induction", "Medical Sterile Pens", "Topical Numbing", "Post-Care Included"]
+        features: ["Sterile Automated Microneedling Pens", "Collagen Induction Therapy", "Customized Active Serum Infusions", "Topical Anaesthesia for Comfort", "Post-Treatment Skin Recovery Kit"]
     },
     "strep-a-test-&-treat": {
         title: "Strep A Test & Treat",
-        cat: "Diagnostic",
+        cat: "Acute Care Diagnostics",
         img: "https://plus.unsplash.com/premium_photo-1664303017917-71feb142f30c?w=1200&q=80",
-        desc: "Rapid point-of-care testing for Group A Streptococcus with immediate antibiotic prescription if required.",
-        price: "£25 (Test)",
+        desc: "Determine the cause of severe throat infections rapidly with our point-of-care Strep A diagnostics. We conduct a rapid antigen swab test to detect Group A Streptococcus in minutes. If positive, our qualified prescribing pharmacists can issue appropriate antibiotic therapy immediately, saving you a visit to the GP.",
         duration: "10 Mins",
-        features: ["Rapid Results", "Clinical Assessment", "Immediate Treatment", "No Appointment Needed"]
+        features: ["Rapid Antigen Throat Swab Test", "Results in Less Than 10 Minutes", "Clinical Sore Throat Scoring (FeverPAIN)", "Immediate Prescribing & Dispensing", "Professional Self-Care Guidance"]
     },
     "dispensing-medicines": {
-        title: "Dispensing Medicines",
-        cat: "Essential Care",
+        title: "Prescription Dispensing Service",
+        cat: "Essential Clinical Care",
         img: "https://plus.unsplash.com/premium_photo-1663040149075-8178a9c4038a?w=1200&q=80",
-        desc: "Safe and accurate dispensing of all NHS and private prescriptions with expert pharmacist review.",
-        price: "Prescription Cost",
+        desc: "Enjoy reliable, accurate, and rapid dispensing of your NHS and private prescriptions. Every prescription undergoes a thorough clinical check by our registered pharmacists to ensure safety, identify potential drug interactions, and provide you with clear guidance on dosage and administration.",
         duration: "Variable",
-        features: ["Clinical Review", "Electronic Transfer", "Delivery Options", "Compliance Checks"]
+        features: ["Accurate Electronic NHS Prescription Service (EPS)", "Thorough Pharmacist Safety Reviews", "Private Prescription Fulfillment", "Compliance & Dosette Box Preparation", "Home Delivery & Repeat Reminders"]
     },
     "blood-pressure": {
-        title: "Blood Pressure Check",
-        cat: "NHS Service",
+        title: "Clinical Blood Pressure Screening",
+        cat: "Cardiovascular NHS Care",
         img: "https://images.unsplash.com/photo-1628177142898-93e36e4e3a50?w=1200&q=80",
-        desc: "Free blood pressure checks for eligible patients. Monitoring your blood pressure is a vital step in preventing strokes and heart disease.",
-        price: "Free NHS",
+        desc: "Identify and monitor cardiovascular risks with our professional blood pressure screening service. High blood pressure (hypertension) often has no symptoms but is a major cause of stroke and heart disease. We provide accurate measurements, risk explanation, and direct referral pathways if intervention is required.",
         duration: "10 Mins",
-        features: ["Immediate Results", "Healthy Heart Advice", "GP Referral if needed", "High-Grade Monitors"]
+        features: ["ISO-Validated Sphygmomanometers", "Immediate, Clear Results Interpretation", "Personalized Heart Health & Lifestyle Advice", "Direct GP Referrals for Elevated Readings", "Ambulatory Blood Pressure Monitoring (ABPM)"]
     },
     "urinary-tract-infection-service": {
         title: "UTI Treatment (Pharmacy First)",
-        cat: "NHS Clinical",
+        cat: "NHS Pharmacy First",
         img: "https://images.unsplash.com/photo-1576091160550-217359f4bd08?w=1200&q=80",
-        desc: "Rapid consultation and treatment for uncomplicated Urinary Tract Infections (UTIs) in women aged 16-64 without needing a GP appointment.",
-        price: "NHS Funded",
+        desc: "Access prompt assessment and effective treatment for uncomplicated urinary tract infections (UTIs). Under the NHS Pharmacy First scheme, women aged 16-64 experiencing UTI symptoms can receive a private clinical consultation and, if indicated, a course of prescription antibiotics directly from our pharmacist.",
         duration: "15 Mins",
-        features: ["Private Consultation", "Immediate Prescription", "Self-Care Advice", "Rapid Relief"]
+        features: ["Private, Confidential Consultation", "Rapid Symptomatic Assessment", "Prescription Antibiotics (if appropriate)", "NHS Pharmacy First Fully Funded", "Urinary Health Education"]
     },
     "shingles-service": {
-        title: "Shingles Treatment",
-        cat: "NHS Clinical",
+        title: "Shingles Treatment Service",
+        cat: "NHS Pharmacy First",
         img: "https://images.unsplash.com/photo-1584308919139-332c34f370d5?w=1200&q=80",
-        desc: "Expert assessment and treatment for Shingles. Early intervention is key to managing symptoms and preventing complications.",
-        price: "NHS Funded",
+        desc: "Prompt clinical intervention for shingles (herpes zoster). Under the NHS Pharmacy First service, patients aged 18 and over presenting with shingles symptoms can be assessed immediately. If appropriate, antiviral medication can be prescribed to reduce the severity, duration, and risk of post-herpetic neuralgia.",
         duration: "15 Mins",
-        features: ["Clinical Diagnosis", "Antiviral Treatment", "Pain Management Advice", "Follow-up Support"]
+        features: ["Rapid Antiviral Prescribing", "Pain Management & Relief Advice", "Prevention of Neuralgic Complications", "NHS Pharmacy First Fully Funded", "Ongoing Care & Follow-Up Support"]
     },
     "sinusitis-service": {
-        title: "Sinusitis Service",
-        cat: "NHS Clinical",
+        title: "Sinusitis Treatment Service",
+        cat: "NHS Pharmacy First",
         img: "https://images.unsplash.com/photo-1559839734-2b71f1536783?w=1200&q=80",
-        desc: "Professional consultation for acute sinusitis symptoms. Get the right treatment, including antibiotics if clinically appropriate.",
-        price: "NHS Funded",
+        desc: "Professional assessment and relief from acute sinusitis symptoms. For individuals aged 12 and over, our prescribing clinical pharmacists can evaluate nasal congestion, facial pain, and pressure to determine the appropriate treatment, which may include nasal sprays, pain relief, or antibiotics if clinically indicated.",
         duration: "15 Mins",
-        features: ["Respiratory Assessment", "Effective Treatment", "Congestion Advice", "Rapid Booking"]
+        features: ["Comprehensive Nasal & Sinus Evaluation", "Prescription Antibiotics & Sprays", "Symptom Management Solutions", "NHS Pharmacy First Fully Funded", "Guidance on Complication Signs"]
     },
     "sore-throat-service": {
-        title: "Sore Throat Service",
-        cat: "NHS Clinical",
+        title: "Sore Throat Treatment Service",
+        cat: "NHS Pharmacy First",
         img: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=1200&q=80",
-        desc: "Clinical assessment of sore throat symptoms to determine if antibiotics are required or if self-care is appropriate.",
-        price: "NHS Funded",
+        desc: "Fast relief and clinical diagnostic evaluation for acute sore throats. Using the FeverPAIN or Centor clinical scoring criteria, we assess children and adults aged 5 and over. Our clinical pharmacists can advise on pain management or prescribe antibiotics if a bacterial infection is highly likely.",
         duration: "10 Mins",
-        features: ["FeverPAIN Assessment", "Throat Examination", "Immediate Guidance", "Clinical Precision"]
+        features: ["FeverPAIN Clinical Swab & Scoring", "Targeted Symptom Relief Advice", "Antibiotic Prescribing for Bacterial Cases", "NHS Pharmacy First Fully Funded", "Prevention of Unnecessary Antibiotic Use"]
     },
     "otitis-media-service": {
-        title: "Ear Infection (Otitis Media)",
-        cat: "NHS Clinical",
+        title: "Acute Ear Infection (Otitis Media)",
+        cat: "NHS Pharmacy First",
         img: "https://images.unsplash.com/photo-1559839734-2b71f1536783?w=1200&q=80",
-        desc: "Specialist consultation for children with acute ear infections. We provide expert care and treatment without the wait.",
-        price: "NHS Funded",
+        desc: "Clinical otoscopic examination and treatment for acute middle ear infections in children aged 1 to 17. Our trained pharmacists evaluate ear pain, fever, and fluid build-up to provide clinical management, pain relief options, and prescription antibiotics when necessary under NHS Pharmacy First.",
         duration: "20 Mins",
-        features: ["Expert Assessment", "Antibiotic Treatment", "Pain Relief Advice", "Pediatric Focused"]
+        features: ["Accredited Otoscopic Ear Examination", "Pediatric-Focused Clinical Care", "Antibiotic Treatment (when indicated)", "NHS Pharmacy First Fully Funded", "Safety-Netting & Red-Flag Guidance"]
     },
     "flu-vaccination": {
-        title: "Flu Vaccination",
-        cat: "NHS & Private",
+        title: "Influenza Vaccination Service",
+        cat: "Immunization Care",
         img: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=1200&q=80",
-        desc: "Annual flu protection for individuals and families. Free NHS vaccines available for eligible groups.",
-        price: "NHS / £15 Private",
+        desc: "Protect yourself, your family, and your workforce against seasonal influenza. We offer both NHS-funded vaccines for eligible vulnerable groups and a rapid private vaccination service. Safeguard your winter health and prevent viral transmission with our professional vaccination service.",
         duration: "10 Mins",
-        features: ["Certified Vaccinators", "Rapid Appointment", "Winter Immunity", "Safe Environment"]
+        features: ["Certified Clinical Immunizers", "Latest Seasonal Quadrivalent Vaccines", "NHS and Private Options Available", "Corporate Flu Vaccination Programs", "Safe, Hygienic Clinic Environment"]
     },
     "heart-check": {
-        title: "Heart Health Check",
-        cat: "Private Diagnostic",
+        title: "Cardiovascular Health Check",
+        cat: "Private Health Screening",
         img: "https://images.unsplash.com/photo-1576091160550-217359f4bd08?w=1200&q=80",
-        desc: "A comprehensive assessment of your cardiovascular health, including ECG, blood pressure, and cholesterol screening.",
-        price: "£85",
+        desc: "Gain a complete understanding of your cardiovascular health with our multi-marker screening. This premium assessment includes a lipid panel (total cholesterol, HDL, LDL, triglycerides), blood glucose test, blood pressure evaluation, and body composition analysis to calculate your Q-Risk score and optimize heart longevity.",
         duration: "40 Mins",
-        features: ["Full Lipid Profile", "ECG Monitoring", "Pulse Accuracy", "Expert Lifestyle Advice"]
+        features: ["Point-of-Care Lipid & Glucose Panel", "Cardiovascular Q-Risk Assessment", "Comprehensive Clinical Report", "Expert Cardiovascular Lifestyle Coaching", "Physician Referral Support"]
     },
     "aesthetics": {
-        title: "Aesthetics Clinic",
-        cat: "Aesthetic",
+        title: "Advanced Medical Aesthetics",
+        cat: "Non-Surgical Rejuvenation",
         img: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=1200&q=80",
-        desc: "Experience premium facial rejuvenation and aesthetic treatments delivered by qualified clinical professionals.",
-        price: "Consultation Free",
+        desc: "Enhance your natural features with our bespoke medical aesthetic treatments. Performed exclusively by qualified, registered clinical professionals in a sterile environment, we offer customized treatment plans utilizing premium dermal fillers, skin boosters, and anti-aging injections.",
         duration: "30-60 Mins",
-        features: ["Dermal Fillers", "Skin Revitalization", "Expert Consultation", "Sterile Environment"]
+        features: ["Clinically Qualified Aesthetic Practitioners", "Premium, Approved Product Range", "Sterile, Medical-Grade Environment", "Bespoke Facial Rejuvenation Plans", "Comprehensive Post-Treatment Support"]
     },
     "travel-vaccinations": {
-        title: "Travel Vaccinations",
-        cat: "Specialist Clinic",
+        title: "Comprehensive Travel Vaccinations",
+        cat: "Travel Immunization",
         img: "https://images.unsplash.com/photo-1500835595300-478db374780d?w=1200&q=80",
-        desc: "Protect yourself globally with our comprehensive range of travel vaccinations. From Typhoid to Yellow Fever, we provide expert clinical protection for your journey.",
-        price: "Consultation £20",
+        desc: "Protect yourself against global vaccine-preventable diseases. Our travel health experts review your vaccination history and destination requirements to administer necessary vaccines, including Hepatitis, Typhoid, Tetanus, Rabies, Meningitis, and Yellow Fever, ensuring your immunization records are up to date.",
         duration: "20-40 Mins",
-        features: ["Certified Yellow Fever Center", "Full Vaccine Stock", "Destination Health Maps", "Certificate Issuance"]
+        features: ["All Major Travel Vaccines In Stock", "Certified Yellow Fever Centre", "Official Vaccine Passport Documentation", "Same-Day Clinic Appointments", "Travel Health Risk Consulting"]
     },
     "dtp-vaccine": {
-        title: "Diphtheria / Tetanus / Polio",
-        cat: "Travel Vaccine",
+        title: "Diphtheria, Tetanus & Polio Vaccine",
+        cat: "Travel & Routine Immunization",
         img: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=1200&q=80",
-        desc: "Essential 3-in-1 protection against Diphtheria, Tetanus, and Polio. Recommended for most international travelers to regions with varying healthcare standards.",
-        price: "£45",
+        desc: "Ensure complete protection against three highly serious bacterial and viral infections. This single combined injection booster is recommended every 10 years or prior to traveling to countries with limited public sanitation and healthcare infrastructure.",
         duration: "15 Mins",
-        features: ["3-in-1 Combined Protection", "10-Year Immunity", "Quick Single Dose", "Travel Record Inclusion"]
+        features: ["3-in-1 Combined Booster Formulation", "Provides Up to 10 Years of Immunity", "Fast & Virtually Painless Administration", "Included in Official Travel Records", "Clinical Eligibility Screening"]
     },
     "typhoid-injection": {
-        title: "Typhoid (Injection)",
-        cat: "Travel Vaccine",
+        title: "Typhoid Injection Vaccine",
+        cat: "Travel Immunization",
         img: "https://images.unsplash.com/photo-1584308919139-332c34f370d5?w=1200&q=80",
-        desc: "Injected protection against Salmonella Typhi, critical for travel to regions with limited sanitation and hygiene infrastructure.",
-        price: "£35",
+        desc: "A single-dose injectable vaccine providing critical protection against Salmonella enterica serovar Typhi. Highly recommended for travelers visiting regions with poor sanitation, including parts of South Asia, Africa, and Central and South America.",
         duration: "15 Mins",
-        features: ["Effective Single Injection", "3-Year Protection", "Rapid Immunity Setup", "Professional Administration"]
+        features: ["Single Injection for Easy Setup", "Provides 3 Years of Active Protection", "Rapid Antibody Response Formulation", "Highly Recommended for High-Risk Regions", "Pharmacist Administered"]
     },
     "typhoid-oral": {
-        title: "Typhoid (Oral)",
-        cat: "Travel Vaccine",
+        title: "Typhoid Oral Vaccine",
+        cat: "Travel Immunization",
         img: "https://images.unsplash.com/photo-1550572017-ed200f5e6399?w=1200&q=80",
-        desc: "Oral course of Typhoid vaccination. A great alternative for those who prefer not to have injections while gaining full protection.",
-        price: "£40",
+        desc: "An alternative, needle-free typhoid vaccine consisting of a course of oral capsules. This live attenuated vaccine stimulates mucosal immunity in the gut, offering excellent protection against typhoid fever for travelers who prefer oral administration.",
         duration: "10 Mins",
-        features: ["No-Needle Alternative", "Course of 3 Capsules", "Temperature Controlled", "Easy Self-Administration"]
+        features: ["No-Needle Oral Capsule Course", "Stimulates Localized Gut Immunity", "Protects for Up to 3 Years", "Convenient Self-Administration Schedule", "Full Clinical Guidance Provided"]
     },
     "hepatitis-a-typhoid-combined": {
-        title: "Hep A & Typhoid Combined",
-        cat: "Travel Vaccine",
+        title: "Hepatitis A & Typhoid Combined",
+        cat: "Travel Immunization",
         img: "https://images.unsplash.com/photo-1579154236594-c199f3768fb9?w=1200&q=80",
-        desc: "Efficient dual-protection vaccine covering both Hepatitis A and Typhoid in one single administration.",
-        price: "£90",
+        desc: "Streamline your pre-travel preparations with this highly efficient dual-action vaccine. Protecting against both Hepatitis A and Typhoid in a single injection, it is the ideal choice for travelers heading to tropical destinations on short notice.",
         duration: "20 Mins",
-        features: ["Dual Infection Coverage", "Single Injection Efficiency", "Reduced Clinic Visits", "High Immunity Response"]
+        features: ["Dual Disease Protection in One Shot", "Reduces Clinic Visits & Injections", "Rapid Protection Set-Up", "Long-Term Hepatitis A Booster Path", "Certified Medical Preparation"]
     },
     "hepatitis-a-vaccine": {
-        title: "Hepatitis A",
-        cat: "Travel Vaccine",
+        title: "Hepatitis A Vaccine",
+        cat: "Travel Immunization",
         img: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=1200&q=80",
-        desc: "Protects against Hepatitis A, a liver infection commonly spread through contaminated food and water in many travel destinations.",
-        price: "£55",
+        desc: "Prevent Hepatitis A, a highly contagious viral liver infection transmitted via contaminated food, water, or contact. A single dose provides robust short-term protection, while a subsequent booster dose 6 to 12 months later grants lifetime immunity.",
         duration: "15 Mins",
-        features: ["Long-term Liver Protection", "2-Dose Program for Life", "High Success Rate", "Travel Essentials"]
+        features: ["Highly Effective Injected Immunization", "2-Dose Schedule for Lifetime Protection", "Essential for High-Risk Travel Zones", "Minimal Post-Vaccine Reactivity", "Comprehensive Vaccine Counseling"]
     },
     "hepatitis-b-vaccine": {
-        title: "Hepatitis B",
-        cat: "Travel Vaccine",
+        title: "Hepatitis B Vaccine",
+        cat: "Travel & Occupational Immunization",
         img: "https://images.unsplash.com/photo-1559839734-2b71f1536783?w=1200&q=80",
-        desc: "Critical protection against Hepatitis B, recommended for long-stay travelers or those potentially exposed to blood/body fluid contact.",
-        price: "£45",
+        desc: "Immunize against Hepatitis B, a blood-borne viral infection that causes chronic liver disease and liver cancer. Recommended for healthcare workers, individuals handling medical waste, long-term travelers, and those undergoing medical procedures abroad.",
         duration: "15 Mins",
-        features: ["3-Dose Standard Course", "Lifetime Immunity Potency", "Professional Shielding", "Clinical Assessment Included"]
+        features: ["3-Dose Standard Immunization Course", "Provides Lifelong Immunity Profile", "Essential for Medical & Travel Careers", "Pre-Vaccination Immunity Status Checks", "Certified Pharmacist Administration"]
     },
     "twinrix-vaccine": {
-        title: "Twinrix (Hep A & B Combined)",
-        cat: "Travel Vaccine",
+        title: "Twinrix (Hepatitis A & B Combined)",
+        cat: "Travel Immunization",
         img: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=1200&q=80",
-        desc: "Maximum efficiency vaccine providing simultaneous protection against both Hepatitis A and Hepatitis B infections.",
-        price: "£80",
+        desc: "Achieve complete protection against both Hepatitis A and Hepatitis B. This combined vaccine protocol is highly efficient, utilizing a 3-dose schedule to build comprehensive, long-lasting immunity against both viral pathogens.",
         duration: "20 Mins",
-        features: ["Total Hepatitis Shield", "Accelerated Dosing Available", "Comprehensive Testing", "Cost Effective Combination"]
+        features: ["Combined Hep A and Hep B Protection", "Efficient 3-Dose Schedule", "Accelerated Dosing Available for Travel", "Reduces Total Required Injections", "Ideal for Medical and Frequent Travelers"]
     },
     "cholera-vaccine": {
-        title: "Cholera (Dukoral)",
-        cat: "Travel Vaccine",
+        title: "Cholera Vaccine (Oral Dukoral)",
+        cat: "Travel Immunization",
         img: "https://images.unsplash.com/photo-1576091160550-217359f4bd08?w=1200&q=80",
-        desc: "Oral drinkable vaccine protecting against Cholera and ETEC (Traveler's Diarrhea) in high-risk environments.",
-        price: "£30 / Dose",
+        desc: "An oral, drinkable vaccine designed to prevent cholera, a severe diarrheal disease transmitted via contaminated water. The vaccine also provides partial cross-protection against traveler's diarrhea caused by Enterotoxigenic E. coli (ETEC).",
         duration: "10 Mins",
-        features: ["Drinkable Fluid Suspension", "Protects Against Diarrhea", "2-Dose Protocol", "Immunity for 2 Years"]
+        features: ["Easy-to-Take Oral Suspension", "Dual Action: Cholera & ETEC Defense", "2-Dose Protocol for Adults", "Provides Up to 2 Years of Protection", "Ideal for Aid Workers and Backpackers"]
     },
     "rabies-vaccine": {
-        title: "Rabies Pre-Exposure",
-        cat: "Travel Vaccine",
+        title: "Rabies Pre-Exposure Prophylaxis",
+        cat: "Travel Immunization",
         img: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=1200&q=80",
-        desc: "Vital preventative protection against Rabies, highly recommended for travel to remote areas with limited access to emergency healthcare.",
-        price: "£70 / Dose",
+        desc: "Build protective antibody levels against Rabies prior to travel. Essential for travelers visiting countries where rabies is endemic, especially those participating in outdoor activities, working with animals, or traveling to remote regions far from medical care.",
         duration: "20 Mins",
-        features: ["3-Dose Pre-Travel Course", "Life Saving Prevention", "WHO Approved Dosing", "International Safety Standard"]
+        features: ["3-Dose Pre-Exposure Vaccination Course", "Crucial for Remote & Wildlife Travel", "Simplifies Post-Bite Medical Care", "WHO-Recommended Immunization Protocol", "Professional Clinical Administration"]
     },
     "meningitis-acwy": {
-        title: "Meningitis ACWY",
-        cat: "Travel Vaccine",
+        title: "Meningitis ACWY Vaccine",
+        cat: "Travel & Hajj/Umrah Certification",
         img: "https://images.unsplash.com/photo-1550572017-ed200f5e6399?w=1200&q=80",
-        desc: "Mandatory for Hajj and Umrah pilgrims, and recommended for travel to the 'Meningitis Belt' in sub-Saharan Africa.",
-        price: "£60",
+        desc: "Protects against four strains of meningococcal bacteria (A, C, W, and Y) which cause life-threatening meningitis and septicemia. This vaccine is a mandatory entry requirement for pilgrims traveling to Saudi Arabia for Hajj or Umrah, and a certificate of vaccination is issued.",
         duration: "20 Mins",
-        features: ["Certificate Included", "Hajj/Umrah Approved", "Quadrilateral Shielding", "5-Year Protection"]
+        features: ["Official Hajj & Umrah Certificate Issued", "Protects Against 4 Deadly Meningococcal Strains", "Mandatory for Pilgrims & Overseas Students", "Provides 5 Years of Active Protection", "Pharmacist Administered"]
     },
     "meningitis-menveo": {
-        title: "Meningitis Menveo",
-        cat: "Travel Vaccine",
+        title: "Meningitis Menveo Vaccine",
+        cat: "Travel Immunization",
         img: "https://images.unsplash.com/photo-1579154236594-c199f3768fb9?w=1200&q=80",
-        desc: "Specialized Meningitis ACWY protection specifically formulated for pilgrims and high-risk student travelers.",
-        price: "£65",
+        desc: "An advanced meningococcal ACWY conjugate vaccine, Menveo is formulated to trigger a highly robust immune response in adolescents and adults. Highly recommended for students entering university, high-risk healthcare workers, and international travelers.",
         duration: "20 Mins",
-        features: ["Premium Vaccine Grade", "Visa Documentation Ready", "Advanced Immunity Profile", "GPhC Administered"]
+        features: ["High-Potency Conjugate Formulation", "Approved for Pilgrimage & Visa Records", "Comprehensive Meningococcal Strain Coverage", "Fast-Acting Immune Activation", "Official Certificate Provided"]
     },
     "japanese-encephalitis": {
-        title: "Japanese Encephalitis",
-        cat: "Travel Vaccine",
+        title: "Japanese Encephalitis Vaccine",
+        cat: "Travel Immunization",
         img: "https://images.unsplash.com/photo-1584308919139-332c34f370d5?w=1200&q=80",
-        desc: "Protects against mosquito-borne brain inflammation common in rural parts of Asia and the Pacific Islands.",
-        price: "£95",
+        desc: "Protect yourself against Japanese Encephalitis, a serious viral infection of the brain spread by infected mosquitoes in rural and agricultural regions of Asia and the Western Pacific. This 2-dose vaccine is essential for long-term travelers and outdoor adventurers.",
         duration: "20 Mins",
-        features: ["2-Dose Immunization", "Essential for Rural Asia", "Safe and Effective", "Detailed Health Advice"]
+        features: ["2-Dose Immunization Course", "Essential for Rural & Outdoor Asian Travel", "Highly Effective Viral Brain Shield", "Detailed Mosquito Avoidance Counseling", "Clinical Health Assessment"]
     },
     "tick-borne-encephalitis": {
-        title: "Tick-Borne Encephalitis",
-        cat: "Travel Vaccine",
+        title: "Tick-Borne Encephalitis Vaccine",
+        cat: "Travel Immunization",
         img: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=1200&q=80",
-        desc: "Ensures protection for outdoor travelers visiting forested areas in Eastern and Central Europe where disease-carrying ticks are prevalent.",
-        price: "£85",
+        desc: "Provides critical defense against Tick-Borne Encephalitis (TBE), a viral infection of the central nervous system transmitted by ticks in forested and rural areas of Central, Eastern, and Northern Europe, as well as Northern Asia.",
         duration: "20 Mins",
-        features: ["Outdoor Adventure Safety", "Course of 2-3 Doses", "European Regional Shield", "Clinical Expertise"]
+        features: ["Crucial for Hiking & Forest Activities", "Course of 2 to 3 Injections", "Provides Multi-Year Central Nervous System Shielding", "Tick Avoidance Clinical Guidance", "Certified Clinical Delivery"]
     },
     "chickenpox-vaccine": {
-        title: "Chickenpox Vaccine",
-        cat: "Routine Vaccine",
+        title: "Chickenpox (Varicella) Vaccine",
+        cat: "Routine Immunization",
         img: "https://images.unsplash.com/photo-1584308919139-332c34f370d5?w=1200&q=80",
-        desc: "Comprehensive immunity against the varicella-zoster virus, preventing painful Chickenpox infections for adults and children.",
-        price: "£65",
+        desc: "Prevent varicella-zoster infection (chickenpox) in children and adults. Chickenpox can lead to severe complications, secondary bacterial skin infections, and increases the lifetime risk of shingles. Two doses provide long-term, highly effective immunity.",
         duration: "15 Mins",
-        features: ["2-Dose Course", "Lifetime Protection", "Prevents Shingles Risk", "Safe for Children"]
+        features: ["2-Dose Immunization Schedule", "Provides Long-Term Active Immunity", "Protects Adults & Vulnerable Children", "Reduces Risk of Shingles Later in Life", "Pre-Vaccine Suitability Consultation"]
     },
     "chikungunya-vaccine": {
         title: "Chikungunya Vaccine",
-        cat: "Travel Vaccine",
+        cat: "Travel Immunization",
         img: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=1200&q=80",
-        desc: "Advanced protection against the mosquito-borne Chikungunya virus, critical for travel to affected tropical and subtropical regions.",
-        price: "£90",
+        desc: "Safeguard against the Chikungunya virus, a mosquito-borne illness that causes severe, debilitating joint pain and fever. This advanced, recently approved vaccine is recommended for travelers visiting active transmission areas in tropical and subtropical regions.",
         duration: "15 Mins",
-        features: ["Single Dose", "Mosquito Disease Defense", "Rapid Immunity", "Specialist Administration"]
+        features: ["Advanced Mosquito-Borne Disease Shield", "Single-Dose Injection Protocol", "Rapid Antibody Development", "Comprehensive Tropical Disease Consultation", "Administered by Travel Clinic Specialists"]
     },
     "hpv-vaccine": {
-        title: "HPV Vaccine",
-        cat: "Specialist Vaccine",
+        title: "Human Papillomavirus (HPV) Vaccine",
+        cat: "Specialist Immunization",
         img: "https://images.unsplash.com/photo-1579154236594-c199f3768fb9?w=1200&q=80",
-        desc: "Next-generation Gardasil 9 protection against Human Papillomavirus, significantly reducing the risk of cervical and other associated cancers.",
-        price: "£160 / Dose",
+        desc: "Utilizing the premium Gardasil 9 vaccine, we provide comprehensive protection against nine strains of HPV. This vaccination is highly effective in preventing HPV-associated cancers, including cervical, throat, and penile cancers, as well as genital warts.",
         duration: "20 Mins",
-        features: ["Gardasil 9 Premium", "Gender Neutral Protection", "Course of 2-3 Doses", "Cancer Prevention"]
+        features: ["Gardasil 9 Premium Protection", "Substantially Lowers Cancer Risks", "Multi-Dose Schedule for Full Protection", "Gender-Neutral Clinical Care", "Accredited Pharmacist Administration"]
     },
-    // --- Pro Level Weight Loss Services ---
     "wegovy": {
-        title: "Wegovy Injections",
+        title: "Wegovy Weight Management",
         cat: "Medical Weight Loss",
         img: "/brain/a9794728-9bd2-4101-a344-91ef761459ce/glp1_pen_premium_1777977535256.png",
-        desc: "Wegovy® (semaglutide) is an FDA/MHRA-approved weekly injection trusted globally for effective, clinical weight management. Designed to regulate your appetite and digestion, our program couples this highly effective medication with continuous doctor-led support to ensure safe and sustainable fat loss. Experience premium metabolic care delivered exclusively at our flagship clinics.",
-        price: "Consultation Required",
+        desc: "Wegovy® (semaglutide) is an MHRA-approved weekly injection for effective, clinical weight management. Designed to mimic the GLP-1 hormone, it regulates your appetite, reduces cravings, and delays stomach emptying. Our program combines this highly effective medication with continuous clinician support to ensure safe, sustainable weight loss.",
         duration: "30 Mins",
-        features: [
-            "Once-Weekly Injection Protocol",
-            "Appetite & Craving Regulation",
-            "Ongoing Doctor-Led Titration",
-            "Full Clinical Monitoring Program",
-            "Comprehensive Metabolic Reset"
-        ]
+        features: ["Once-Weekly Injectable Medication", "Clinically Proven GLP-1 Hormone Analog", "Appetite Regulation & Craving Reduction", "Comprehensive Clinical Consultation Required", "Tailored Support & Titration Plan"]
     },
     "mounjaro": {
-        title: "Mounjaro Injections",
+        title: "Mounjaro Weight Management",
         cat: "Advanced Medical Weight Loss",
         img: "/brain/a9794728-9bd2-4101-a344-91ef761459ce/mounjaro_pen_premium_1777977877135.png",
-        desc: "Mounjaro® (tirzepatide) represents the absolute pinnacle of modern metabolic science. As a dual-acting GIP and GLP-1 receptor agonist, it offers unprecedented, industry-leading efficacy in weight reduction. Under our strict, premium clinical supervision, patients receive custom titration schedules to maximize results while minimizing side effects. Your God-level physical transformation begins here.",
-        price: "Consultation Required",
+        desc: "Mounjaro® (tirzepatide) represents the latest innovation in metabolic science. Acting as a dual GIP and GLP-1 receptor agonist, it offers advanced efficacy in weight reduction. Under strict clinical supervision, our program provides personalized dosage schedules and tracking to maximize weight loss outcomes.",
         duration: "45 Mins",
-        features: [
-            "Next-Gen Dual Hormone Therapy",
-            "Market-Leading Weight Reduction",
-            "Advanced Clinical Titration Schedule",
-            "VIP Direct-to-Patient Pharmacy Care",
-            "Comprehensive Biological Reset"
-        ]
+        features: ["Innovative Dual Receptor Agonist (GIP & GLP-1)", "Advanced Weight Reduction Efficacy", "Personalized Clinical Titration Schedules", "Direct Professional Prescribing & Dispensing", "Continuous Progress Monitoring & Guidance"]
     }
 };
 
@@ -362,9 +312,8 @@ export default function ServiceDetail() {
         cat: "Clinical",
         img: "https://images.unsplash.com/photo-1584308919139-332c34f370d5?w=1200&q=80",
         desc: "Comprehensive pharmaceutical care and consultation provided by our expert medical team.",
-        price: "Consultation Required",
         duration: "15-30 Mins",
-        features: ["GPhC Certified Staff", "Private Consulting Room", "Professional Advice", "Same-Day Availability"]
+        features: ["GPHC Certified Staff", "Private Consulting Room", "Professional Advice", "Same-Day Availability"]
     };
 
     return (
@@ -393,7 +342,7 @@ export default function ServiceDetail() {
                                 <div className="sd_benefit_card">
                                     <div className="sd_benefit_icon">✦</div>
                                     <h3>Clinical Excellence</h3>
-                                    <p>Delivered by GPhC registered pharmacists with years of specialized clinical experience.</p>
+                                    <p>Delivered by GPHC registered pharmacists with years of specialized clinical experience.</p>
                                 </div>
                                 <div className="sd_benefit_card">
                                     <div className="sd_benefit_icon">✦</div>
@@ -419,7 +368,7 @@ export default function ServiceDetail() {
                             <div className="sd_booking_card">
                                 <div className="sd_card_header">
                                     <span className="sd_price_label">Premium Clinical Care</span>
-                                    <h3 className="sd_card_price">{service.price}</h3>
+                                    <h3 className="sd_card_service_title">{service.title}</h3>
                                 </div>
                                 <div className="sd_card_meta">
                                     <div className="sd_meta_item">

@@ -193,12 +193,12 @@
     margin-bottom: 10px;
 }
 
-.sd_card_price {
-    font-size: 3.8rem;
-    /* Massive price */
+.sd_card_service_title {
+    font-size: 2.2rem;
     font-weight: 950;
     color: var(--primary);
-    line-height: 1;
+    line-height: 1.25;
+    margin-top: 5px;
 }
 
 .sd_card_meta {
@@ -283,8 +283,8 @@
         border-radius: 32px;
     }
 
-    .sd_card_price {
-        font-size: 3rem;
+    .sd_card_service_title {
+        font-size: 1.8rem;
     }
 }
 
@@ -353,8 +353,8 @@
         border-radius: 24px;
     }
 
-    .sd_card_price {
-        font-size: 2.5rem;
+    .sd_card_service_title {
+        font-size: 1.6rem;
     }
 
     .sd_book_btn {

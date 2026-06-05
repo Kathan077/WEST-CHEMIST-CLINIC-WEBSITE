@@ -25,7 +25,7 @@
     position: relative;
     width: 100%;
     transform-style: preserve-3d;
-    cursor: crosshair;
+    cursor: default;
 }
 
 /* Base Card Styles */

@@ -10,7 +10,8 @@ const services = [
         title: 'Weight Loss',
         img: '/images/e0dc23d6-3cb0-4a6a-9076-058313605f8d.png',
         color: 'var(--primary)',
-        desc: 'Personalised medical weight loss programs.'
+        desc: 'Personalised medical weight loss programs.',
+        link: '/weight-loss'
     },
     {
         id: 'pharmacy-first',
@@ -24,28 +25,32 @@ const services = [
         title: 'Ear Microsuction',
         img: '/images/0a198cad-eabf-40b6-81dc-45dbd61ed432.png',
         color: 'var(--accent)',
-        desc: 'Safe and effective ear wax removal.'
+        desc: 'Safe and effective ear wax removal.',
+        link: '/services/earwax-removal'
     },
     {
         id: 'vaccinations',
         title: 'Vaccinations',
         img: '/images/8df30593-83e5-4551-ab3b-4b82c1684d55.png',
         color: 'var(--highlight-purple)',
-        desc: 'Comprehensive immunisation services.'
+        desc: 'Comprehensive immunisation services.',
+        link: '/vaccination'
     },
     {
         id: 'travel-clinic',
         title: 'Travel Clinic',
         img: '/images/0a198cad-eabf-40b6-81dc-45dbd61ed432.png',
         color: 'var(--primary)',
-        desc: 'Essential vaccines for worry-free travel.'
+        desc: 'Essential vaccines for worry-free travel.',
+        link: '/services/travel-vaccinations'
     },
     {
         id: 'health-checks',
         title: 'Health Checks',
         img: '/images/8df30593-83e5-4551-ab3b-4b82c1684d55.png',
         color: 'var(--accent)',
-        desc: 'Comprehensive blood pressure and health screenings.'
+        desc: 'Comprehensive blood pressure and health screenings.',
+        link: '/services/blood-pressure'
     }
 ];
 
@@ -132,7 +137,7 @@ export default function ServicesSection() {
                                     <p className="ss_card_desc">{service.desc}</p>
                                     
                                     <div className="ss_actions">
-                                        <Link href={`/services/${service.id}`} className="ss_btn ss_btn_outline">
+                                        <Link href={service.link || `/services/${service.id}`} className="ss_btn ss_btn_outline">
                                             <span>MORE INFO</span>
                                         </Link>
                                         <Link href="/book-appointment" className="ss_btn ss_btn_solid">

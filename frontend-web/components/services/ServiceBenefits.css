@@ -80,9 +80,12 @@
 }
 
 .sb_icon {
-    font-size: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
     margin-bottom: 30px;
-    filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.1));
+    filter: drop-shadow(0 10px 10px rgba(0, 132, 115, 0.08));
     transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 

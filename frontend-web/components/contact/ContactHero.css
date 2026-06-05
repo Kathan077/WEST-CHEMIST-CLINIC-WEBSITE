@@ -34,7 +34,7 @@
     left: 20%;
     width: 500px;
     height: 500px;
-    background: radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
+    background: radial-gradient(circle, rgba(0, 132, 115, 0.12) 0%, rgba(255, 255, 255, 0) 70%);
 }
 
 .orb2 {
@@ -42,7 +42,7 @@
     right: 10%;
     width: 600px;
     height: 600px;
-    background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+    background: radial-gradient(circle, rgba(75, 45, 113, 0.08) 0%, rgba(255, 255, 255, 0) 70%);
     animation-delay: -5s;
 }
 
@@ -81,7 +81,7 @@
     font-weight: 800;
     line-height: 1.1;
     letter-spacing: -0.02em;
-    background: linear-gradient(to right, #0f172a, #334155);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;

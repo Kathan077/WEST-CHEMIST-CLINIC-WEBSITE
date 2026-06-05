@@ -44,20 +44,8 @@ export default function ContactHero() {
         initial="hidden"
         animate="visible"
       >
-        <motion.div variants={itemVariants} className="badge">
-          Let's Connect
-        </motion.div>
-        
         <motion.h1 variants={itemVariants} className="title">
-          We're Here to 
-          <br />
-          <span style={{ 
-            background: "linear-gradient(135deg, #38bdf8 0%, #818cf8 100%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent"
-          }}>
-            Support Your Health
-          </span>
+          Contact Us
         </motion.h1>
         
         <motion.p variants={itemVariants} className="subtitle">

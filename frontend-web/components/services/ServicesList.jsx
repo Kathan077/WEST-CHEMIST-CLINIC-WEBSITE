@@ -9,28 +9,32 @@ const coreServices = [
         tag: "Specialised Clinic",
         img: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80",
         desc: "Clinically proven medical weight loss programs including Wegovy and Mounjaro, with full clinical support.",
-        color: "var(--primary)"
+        color: "var(--primary)",
+        link: "/weight-loss"
     },
     {
         title: "Vaccinations & Travel",
         tag: "Global Health",
         img: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&q=80",
         desc: "Comprehensive travel vaccinations and seasonal immunisations for your family's protection.",
-        color: "var(--secondary)"
+        color: "var(--secondary)",
+        link: "/vaccination"
     },
     {
         title: "Ear Microsuction",
         tag: "Advanced Care",
         img: "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=800&q=80",
         desc: "Safe, painless, and effective earwax removal using the latest microsuction technology.",
-        color: "var(--accent)"
+        color: "var(--accent)",
+        link: "/services/earwax-removal"
     },
     {
         title: "Health Screenings",
         tag: "Prevention",
         img: "https://images.unsplash.com/photo-1505751172107-160bf2a35368?w=800&q=80",
         desc: "Detailed health checks including cholesterol, glucose, and full cardiovascular risk assessments.",
-        color: "var(--highlight-purple)"
+        color: "var(--highlight-purple)",
+        link: "/services/heart-check"
     }
 ];
 
@@ -84,7 +88,7 @@ export default function ServicesList() {
                                     </div>
                                     <div className="sl_actions">
                                         <Link href="/book-appointment" className="sl_btn_primary">Book Appointment</Link>
-                                        <button className="sl_btn_secondary">View Details</button>
+                                        <Link href={service.link} className="sl_btn_secondary">View Details</Link>
                                     </div>
                                 </div>
                             </div>

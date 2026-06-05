@@ -16,8 +16,8 @@ const faqs = [
         answer: "No. Our clinic operates a fully comprehensive service. Our specialist pharmacists are authorized to clinically assess your needs and prescribe the necessary vaccines directly during your consultation."
     },
     {
-        question: "Is there an assessment fee?",
-        answer: "Our standard clinical travel consultation has a small fee which is often fully deductible against the cost of any vaccines you proceed with during the appointment."
+        question: "How does the travel consultation work?",
+        answer: "During your consultation, our specialist pharmacist will review your medical history, immunization records, and travel itinerary to create a personalized travel health plan tailored to your destination."
     }
 ];
 

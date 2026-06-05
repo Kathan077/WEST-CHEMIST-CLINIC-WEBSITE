@@ -48,8 +48,12 @@
 }
 
 .ht_icon_shell {
-    font-size: 2.8rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
     margin-bottom: 25px;
+    height: 48px;
 }
 
 .ht_card_title {
@@ -62,7 +66,7 @@
 .ht_card_desc {
     color: #64748b;
     line-height: 1.6;
-    margin-bottom: 30px;
+    margin-bottom: 0;
 }
 
 .ht_launch_btn {

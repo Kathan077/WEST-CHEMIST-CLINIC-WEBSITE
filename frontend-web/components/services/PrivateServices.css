@@ -131,7 +131,7 @@
 }
 
 .ps_btn_book {
-    background: var(--bg);
+    background: var(--primary);
     color: #ffffff;
     border: none;
 }
@@ -142,7 +142,7 @@
 }
 
 .ps_btn_book:hover {
-    opacity: 0.9;
+    background: var(--accent);
     transform: translate3d(0, -3px, 0);
 }
 

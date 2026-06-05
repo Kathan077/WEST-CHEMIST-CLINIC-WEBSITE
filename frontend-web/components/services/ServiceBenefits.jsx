@@ -6,22 +6,38 @@ const benefits = [
     {
         title: "Qualified Pharmacists",
         desc: "Our team consists of highly trained healthcare professionals ready to provide expert advice.",
-        icon: "👨‍⚕️"
-    },
-    {
-        title: "No Appointment Needed",
-        desc: "Visit our Pharmacy First clinic during opening hours for immediate assessment.",
-        icon: "⚡"
+        icon: (
+            <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M4.5 16.5c-1.5 1.26-2.5 3-2.5 5h20c0-2-1-3.74-2.5-5" />
+                <circle cx="12" cy="7" r="4" />
+                <path d="M12 11v6" />
+                <path d="M9 14h6" />
+            </svg>
+        )
     },
     {
         title: "Digital Scripts",
         desc: "Seamless integration with your NHS records for fast and accurate medication management.",
-        icon: "📱"
+        icon: (
+            <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                <polyline points="14 2 14 8 20 8" />
+                <line x1="16" y1="13" x2="8" y2="13" />
+                <line x1="16" y1="17" x2="8" y2="17" />
+                <polyline points="10 9 9 9 8 9" />
+            </svg>
+        )
     },
     {
         title: "Private Consultation",
         desc: "Discuss your health in complete confidence in our dedicated private consultation rooms.",
-        icon: "🔒"
+        icon: (
+            <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                <circle cx="12" cy="11" r="2" />
+                <path d="M12 13v3" />
+            </svg>
+        )
     }
 ];
 
