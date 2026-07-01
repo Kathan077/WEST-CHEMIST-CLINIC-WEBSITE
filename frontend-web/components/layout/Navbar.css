@@ -94,7 +94,7 @@
 }
 
 .logo_img {
-    height: 160px;
+    height: 48px;
     width: auto;
     object-fit: contain;
     display: block;
@@ -992,7 +992,7 @@
     }
 
     .logo_img {
-        height: 150px;
+        height: 42px;
     }
 
     .navbar.scrolled .logo_img {
@@ -1018,7 +1018,7 @@
     }
 
     .logo_img {
-        height: 130px;
+        height: 38px;
     }
 
   
@@ -1080,7 +1080,7 @@
     }
 
     .logo_img {
-        height: 130px;
+        height: 36px;
     }
 
   
@@ -1119,7 +1119,7 @@
     }
 
     .logo_img {
-        height: 120px;
+        height: 34px;
     }
 
   

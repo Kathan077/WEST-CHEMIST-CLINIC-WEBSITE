@@ -21,6 +21,9 @@
   --purple-light:#f4effa;
   --teal:        #008473; /* Website Teal */
   --teal-light:  #eaf6f5;
+  --lavender:    #7859a3; /* Lavender Accent */
+  --pine:        #206b5e; /* Pine Green */
+  --sage:        #779c8c; /* Sage Green */
   --t1:          #1e132b; /* Deep Purple-Black */
   --t2:          #3a4754;
   --t3:          #64748b;
@@ -59,10 +62,10 @@
 }
 .adm_logo_icon {
   width:40px; height:40px; border-radius:12px;
-  background: linear-gradient(135deg, var(--blue), var(--green));
+  background: linear-gradient(135deg, #4b2d71 0%, #206b5e 100%);
   display:flex; align-items:center; justify-content:center;
   color:#fff; font-weight:800; font-size:1rem;
-  box-shadow: 0 4px 12px rgba(75, 45, 113, 0.35);
+  box-shadow: 0 4px 12px rgba(75, 45, 113, 0.25);
   flex-shrink:0;
 }
 .adm_logo_text { font-size:1.05rem; font-weight:800; color:var(--t1); line-height:1.2; }
@@ -458,6 +461,7 @@
   height: 36px;
   border-radius: 50%;
   color: #fff;
+  background: linear-gradient(135deg, #4b2d71 0%, #7859a3 100%);
   display: flex;
   align-items: center;
   justify-content: center;

@@ -31,7 +31,7 @@ html, body { margin: 0 !important; padding: 0 !important; }
 .sb_logo{display:flex;align-items:center;gap:12px;padding:28px 22px 24px;border-bottom:1px solid var(--border)}
 .sb_logo_mark{
   width:42px;height:42px;border-radius:14px;
-  background:var(--g1);display:flex;align-items:center;justify-content:center;
+  background: linear-gradient(135deg, #4b2d71 0%, #7859a3 50%, #008473 100%);display:flex;align-items:center;justify-content:center;
   color:#fff;font-weight:900;font-size:1.1rem;
   box-shadow:0 4px 14px rgba(75,45,113,.35);flex-shrink:0;
 }
