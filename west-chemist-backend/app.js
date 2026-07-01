@@ -11,6 +11,7 @@ const adminRoutes = require('./routes/adminRoutes');
 const serviceRoutes = require('./routes/serviceRoutes');
 const contentRoutes = require('./routes/contentRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
+const blogRoutes = require('./routes/blogRoutes');
 
 // Initialize Express App
 const app = express();
@@ -81,6 +82,7 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/services', serviceRoutes);
 app.use('/api/contents', contentRoutes);
 app.use('/api/categories', categoryRoutes);
+app.use('/api/blogs', blogRoutes);
 
 // Fallback 404 handler for unmatched routes
 app.use((req, res, next) => {

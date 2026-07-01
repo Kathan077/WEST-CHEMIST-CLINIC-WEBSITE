@@ -19,7 +19,8 @@ const ICONS = {
   logout:  "M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4 M16 17l5-5-5-5 M21 12H9",
   edit:    "M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7 M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z",
   plus:    "M12 5v14M5 12h14",
-  trash:   "M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+  trash:   "M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2",
+  doc:     "M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z M14 2v6h6 M16 13H8 M16 17H8 M10 9H8",
 };
 
 export default function AdminServicesPage() {
@@ -44,7 +45,8 @@ export default function AdminServicesPage() {
 
   // Selected Content Item for editing
   const [selectedContentKey, setSelectedContentKey] = useState('');
-  const [contentForm, setContentForm] = useState({ title: '', content: '', key: '', section: '', phone: '', email: '', address: '' });
+  const [contentForm, setContentForm] = useState({ title: '', content: '', key: '', section: '', phone: '', email: '', address: '', mon_fri: '', sat: '', sun: '', instagram_url: '' });
+  const [toolsList, setToolsList] = useState([]);
 
   // Modals & Forms for Services
   const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
@@ -139,8 +141,22 @@ export default function AdminServicesPage() {
         section: item.section || '',
         phone: item.metadata?.get ? item.metadata.get('phone') : (item.metadata?.phone || ''),
         email: item.metadata?.get ? item.metadata.get('email') : (item.metadata?.email || ''),
-        address: item.metadata?.get ? item.metadata.get('address') : (item.metadata?.address || '')
+        address: item.metadata?.get ? item.metadata.get('address') : (item.metadata?.address || ''),
+        mon_fri: item.metadata?.get ? item.metadata.get('mon_fri') : (item.metadata?.mon_fri || ''),
+        sat: item.metadata?.get ? item.metadata.get('sat') : (item.metadata?.sat || ''),
+        sun: item.metadata?.get ? item.metadata.get('sun') : (item.metadata?.sun || ''),
+        instagram_url: item.metadata?.get ? item.metadata.get('instagram_url') : (item.metadata?.instagram_url || '')
       });
+
+      if (key === 'health-tools-list') {
+        try {
+          const parsed = JSON.parse(item.content || '[]');
+          setToolsList(parsed);
+        } catch (err) {
+          console.error("Error parsing health tools JSON:", err);
+          setToolsList([]);
+        }
+      }
     }
   };
 
@@ -155,6 +171,17 @@ export default function AdminServicesPage() {
     if (contentForm.phone) metadata.phone = contentForm.phone;
     if (contentForm.email) metadata.email = contentForm.email;
     if (contentForm.address) metadata.address = contentForm.address;
+    if (contentForm.mon_fri) metadata.mon_fri = contentForm.mon_fri;
+    if (contentForm.sat) metadata.sat = contentForm.sat;
+    if (contentForm.sun) metadata.sun = contentForm.sun;
+    if (contentForm.instagram_url) metadata.instagram_url = contentForm.instagram_url;
+
+    let finalContent = contentForm.content;
+    if (selectedContentKey === 'clinic-hours') {
+      finalContent = `Mon - Fri: ${contentForm.mon_fri || ''}\nSaturday: ${contentForm.sat || ''}\nSunday: ${contentForm.sun || ''}`;
+    } else if (selectedContentKey === 'health-tools-list') {
+      finalContent = JSON.stringify(toolsList);
+    }
 
     try {
       const res = await fetch(`${API_URL}/api/contents/${item.key}`, {
@@ -165,7 +192,7 @@ export default function AdminServicesPage() {
         },
         body: JSON.stringify({
           title: contentForm.title,
-          content: contentForm.content,
+          content: finalContent,
           metadata: metadata
         })
       });
@@ -384,6 +411,7 @@ export default function AdminServicesPage() {
     { label: 'Patients',          path: '/admin/patients?view=patients',   icon: ICONS.users },
     { label: 'Compliance',        path: '/admin/compliance',               icon: ICONS.shield },
     { label: 'Services & Content', path: '/admin/services',                icon: ICONS.edit, active: true },
+    { label: 'Blog Manager',       path: '/admin/blog',                    icon: ICONS.doc },
   ];
 
   // Filtering local list
@@ -687,7 +715,7 @@ export default function AdminServicesPage() {
           <div className="cnt_layout">
             <div className="cnt_sidebar">
               <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.5px', padding: '4px 14px' }}>Pages / Sections</div>
-              {contents.map(c => (
+              {contents.filter(c => !['clinic-hours', 'health-tools-header', 'health-tools-list', 'social-feed-header'].includes(c.key)).map(c => (
                 <button
                   key={c.key}
                   className={`cnt_sidebar_btn ${selectedContentKey === c.key ? 'active' : ''}`}
@@ -719,16 +747,18 @@ export default function AdminServicesPage() {
                     />
                   </div>
 
-                  <div className="srv_form_group">
-                    <label className="srv_label">Main Body Text Content</label>
-                    <textarea
-                      className="srv_textarea"
-                      rows="8"
-                      value={contentForm.content}
-                      onChange={(e) => setContentForm({ ...contentForm, content: e.target.value })}
-                      required
-                    />
-                  </div>
+                  {selectedContentKey !== 'clinic-hours' && selectedContentKey !== 'health-tools-list' && (
+                    <div className="srv_form_group">
+                      <label className="srv_label">Main Body Text Content</label>
+                      <textarea
+                        className="srv_textarea"
+                        rows="8"
+                        value={contentForm.content}
+                        onChange={(e) => setContentForm({ ...contentForm, content: e.target.value })}
+                        required
+                      />
+                    </div>
+                  )}
 
                   {/* Render metadata fields specifically for contact details key */}
                   {selectedContentKey === 'contact_details' && (
@@ -760,6 +790,182 @@ export default function AdminServicesPage() {
                           onChange={(e) => setContentForm({ ...contentForm, address: e.target.value })}
                         />
                       </div>
+                    </div>
+                  )}
+
+                  {/* Render metadata fields specifically for clinic hours key */}
+                  {selectedContentKey === 'clinic-hours' && (
+                    <div className="srv_form_grid" style={{ marginTop: '16px', borderTop: '1px solid #f1f5f9', paddingTop: '16px' }}>
+                      <div className="srv_form_group">
+                        <label className="srv_label">Monday - Friday Hours</label>
+                        <input
+                          type="text"
+                          className="srv_input"
+                          value={contentForm.mon_fri || ''}
+                          onChange={(e) => setContentForm({ ...contentForm, mon_fri: e.target.value })}
+                          placeholder="e.g. 8:30 AM - 6:30 PM"
+                        />
+                      </div>
+                      <div className="srv_form_group">
+                        <label className="srv_label">Saturday Hours</label>
+                        <input
+                          type="text"
+                          className="srv_input"
+                          value={contentForm.sat || ''}
+                          onChange={(e) => setContentForm({ ...contentForm, sat: e.target.value })}
+                          placeholder="e.g. 9:00 AM - 2:00 PM"
+                        />
+                      </div>
+                      <div className="srv_form_group">
+                        <label className="srv_label">Sunday Hours</label>
+                        <input
+                          type="text"
+                          className="srv_input"
+                          value={contentForm.sun || ''}
+                          onChange={(e) => setContentForm({ ...contentForm, sun: e.target.value })}
+                          placeholder="e.g. 9:00 AM - 12:00 PM"
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Render metadata fields specifically for social feed key */}
+                  {selectedContentKey === 'social-feed-header' && (
+                    <div className="srv_form_grid" style={{ marginTop: '16px', borderTop: '1px solid #f1f5f9', paddingTop: '16px' }}>
+                      <div className="srv_form_group full">
+                        <label className="srv_label">Instagram Profile Link URL</label>
+                        <input
+                          type="text"
+                          className="srv_input"
+                          value={contentForm.instagram_url || ''}
+                          onChange={(e) => setContentForm({ ...contentForm, instagram_url: e.target.value })}
+                          placeholder="e.g. https://instagram.com/westchemistclinic"
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Render dynamic health tools list editor */}
+                  {selectedContentKey === 'health-tools-list' && (
+                    <div style={{ marginTop: '16px', borderTop: '1px solid #f1f5f9', paddingTop: '16px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                      <label className="srv_label" style={{ fontSize: '1rem', fontWeight: 800 }}>Manage Wellbeing Tools</label>
+                      
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                        {toolsList.map((tool, idx) => (
+                          <div 
+                            key={idx} 
+                            style={{ 
+                              background: '#f8fafc', 
+                              border: '1px solid #e2e8f0', 
+                              borderRadius: '12px', 
+                              padding: '16px', 
+                              display: 'flex', 
+                              flexDirection: 'column', 
+                              gap: '12px',
+                              position: 'relative'
+                            }}
+                          >
+                            <button
+                              type="button"
+                              onClick={() => setToolsList(toolsList.filter((_, i) => i !== idx))}
+                              style={{ 
+                                position: 'absolute', 
+                                top: '12px', 
+                                right: '12px', 
+                                background: 'rgba(239, 68, 68, 0.08)', 
+                                border: 'none', 
+                                color: '#ef4444', 
+                                padding: '4px 8px', 
+                                borderRadius: '6px', 
+                                fontSize: '.75rem', 
+                                fontWeight: '700',
+                                cursor: 'pointer'
+                              }}
+                            >
+                              Remove
+                            </button>
+
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                              <div className="srv_form_group">
+                                <label className="srv_label">Tool Name</label>
+                                <input
+                                  type="text"
+                                  className="srv_input"
+                                  value={tool.title || ''}
+                                  onChange={(e) => {
+                                    const updated = [...toolsList];
+                                    updated[idx].title = e.target.value;
+                                    setToolsList(updated);
+                                  }}
+                                  placeholder="e.g. BMI Calculator"
+                                  required
+                                />
+                              </div>
+
+                              <div className="srv_form_group">
+                                <label className="srv_label">Tool Icon Category</label>
+                                <select
+                                  className="srv_input"
+                                  value={tool.icon || 'activity'}
+                                  onChange={(e) => {
+                                    const updated = [...toolsList];
+                                    updated[idx].icon = e.target.value;
+                                    setToolsList(updated);
+                                  }}
+                                  style={{ padding: '8px 12px' }}
+                                >
+                                  <option value="calculator">Calculator 🧮</option>
+                                  <option value="droplet">Droplet 🩸</option>
+                                  <option value="heart">Heart ❤️</option>
+                                  <option value="search">Search 🔍</option>
+                                  <option value="activity">Pulse Activity 📈</option>
+                                  <option value="thermometer">Thermometer 🌡️</option>
+                                  <option value="shield">Shield 🛡️</option>
+                                  <option value="clipboard">Clipboard 📋</option>
+                                </select>
+                              </div>
+                            </div>
+
+                            <div className="srv_form_group full" style={{ margin: 0 }}>
+                              <label className="srv_label">Brief Description</label>
+                              <input
+                                type="text"
+                                className="srv_input"
+                                value={tool.desc || ''}
+                                onChange={(e) => {
+                                  const updated = [...toolsList];
+                                  updated[idx].desc = e.target.value;
+                                  setToolsList(updated);
+                                }}
+                                placeholder="e.g. Check your Body Mass Index in seconds."
+                                required
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => setToolsList([...toolsList, { title: '', icon: 'activity', desc: '' }])}
+                        style={{
+                          background: 'transparent',
+                          border: '1.5px dashed var(--purple)',
+                          color: 'var(--purple)',
+                          padding: '10px',
+                          borderRadius: '8px',
+                          fontWeight: '700',
+                          fontSize: '.85rem',
+                          cursor: 'pointer',
+                          textAlign: 'center',
+                          marginTop: '8px',
+                          transition: 'all 0.2s'
+                        }}
+                        onMouseEnter={(e) => { e.target.style.background = 'rgba(75, 45, 113, 0.05)' }}
+                        onMouseLeave={(e) => { e.target.style.background = 'transparent' }}
+                      >
+                        ➕ Add New Interactive Tool
+                      </button>
                     </div>
                   )}
 

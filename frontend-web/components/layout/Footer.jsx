@@ -1,15 +1,36 @@
 "use client";
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { API_URL } from '@/config';
 import './Footer.css';
 
 export default function Footer() {
-    const pathname = usePathname();
-    const isAdmin = pathname && pathname.startsWith('/admin');
+    const [hours, setHours] = useState({
+        mon_fri: '8:30 AM - 6:30 PM',
+        sat: '9:00 AM - 2:00 PM',
+        sun: '9:00 AM - 12:00 PM'
+    });
 
-    if (isAdmin) return null;
+    useEffect(() => {
+        const fetchHours = async () => {
+            try {
+                const res = await fetch(`${API_URL}/api/contents/clinic-hours`);
+                const data = await res.json();
+                if (data.success && data.data && data.data.metadata) {
+                    setHours({
+                        mon_fri: data.data.metadata.mon_fri || '8:30 AM - 6:30 PM',
+                        sat: data.data.metadata.sat || '9:00 AM - 2:00 PM',
+                        sun: data.data.metadata.sun || '9:00 AM - 12:00 PM'
+                    });
+                }
+            } catch (err) {
+                console.error("Error fetching opening hours:", err);
+            }
+        };
+        fetchHours();
+    }, []);
 
     return (
         <footer className="footer_sec">
@@ -81,15 +102,15 @@ export default function Footer() {
                         <div className="f_hours">
                             <div className="hour_row">
                                 <span className="day">Mon - Fri</span>
-                                <span className="time">8:30 AM - 6:30 PM</span>
+                                <span className="time">{hours.mon_fri}</span>
                             </div>
                             <div className="hour_row">
                                 <span className="day">Saturday</span>
-                                <span className="time">9:00 AM - 2:00 PM</span>
+                                <span className="time">{hours.sat}</span>
                             </div>
                             <div className="hour_row">
                                 <span className="day">Sunday</span>
-                                <span className="time">9:00 AM - 12:00 PM</span>
+                                <span className="time">{hours.sun}</span>
                             </div>
                         </div>
                     </div>

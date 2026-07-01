@@ -41,6 +41,7 @@ const ICONS = {
   logout:    "M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9",
   shield:    "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10",
   edit:      "M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z",
+  doc:       "M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z M14 2v6h6 M16 13H8 M16 17H8 M10 9H8",
 };
 
 /* ─── Toast Component ─── */
@@ -659,6 +660,7 @@ export default function AdminAppointmentsPage() {
     { label: 'Patients',          path: '/admin/patients?view=patients',   icon: ICONS.users },
     { label: 'Compliance',        path: '/admin/compliance',               icon: ICONS.shield },
     { label: 'Services & Content', path: '/admin/services',                icon: ICONS.edit },
+    { label: 'Blog Manager',       path: '/admin/blog',                    icon: ICONS.doc },
   ];
 
   return (

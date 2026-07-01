@@ -20,6 +20,7 @@ const ICONS = {
   logout:  "M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4 M16 17l5-5-5-5 M21 12H9",
   refresh: "M23 4v6h-6 M1 20v-6h6 M3.51 9a9 9 0 0114.85-3.36L23 10 M1 14l4.64 4.36A9 9 0 0020.49 15",
   check:   "M20 6L9 17l-5-5",
+  doc:     "M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z M14 2v6h6 M16 13H8 M16 17H8 M10 9H8",
 };
 
 const renderCheckStatus = (status) => {
@@ -138,6 +139,7 @@ export default function AdminCompliancePage() {
     { label: 'Patients',     path: '/admin/patients?view=patients',   icon: ICONS.users },
     { label: 'Compliance',   path: '/admin/compliance',               icon: ICONS.shield, active: true },
     { label: 'Services & Content', path: '/admin/services',           icon: ICONS.edit },
+    { label: 'Blog Manager', path: '/admin/blog',                       icon: ICONS.doc },
   ];
 
   const hr = new Date().getHours();

@@ -8,9 +8,6 @@ import { API_URL } from '../../config';
 import './Navbar.css';
 
 const Navbar = () => {
-    const pathname = usePathname();
-    const isAdmin = pathname && pathname.startsWith('/admin');
-
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [dropdownForceClose, setDropdownForceClose] = useState(false);
@@ -27,7 +24,6 @@ const Navbar = () => {
     const [activeCategory, setActiveCategory] = useState(null);
 
     useEffect(() => {
-        if (isAdmin) return;
         const fetchNavData = async () => {
             try {
                 const [catRes, srvRes] = await Promise.all([
@@ -48,7 +44,7 @@ const Navbar = () => {
             }
         };
         fetchNavData();
-    }, [isAdmin]);
+    }, []);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -83,7 +79,7 @@ const Navbar = () => {
         setIsOpen(!isOpen);
     };
 
-    if (isAdmin) return null;
+
 
     return (
         <>

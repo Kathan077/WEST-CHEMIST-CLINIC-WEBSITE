@@ -1,6 +1,7 @@
 const Service = require('../models/Service');
 const PageContent = require('../models/PageContent');
 const Category = require('../models/Category');
+const Blog = require('../models/Blog');
 
 const defaultServices = [
   {
@@ -645,8 +646,192 @@ const seedServicesAndPages = async () => {
       await PageContent.insertMany(defaultPages);
       console.log(`💎 [Database Seeding] Successfully seeded ${defaultPages.length} default page contents.`);
     }
+
+    // Ensure clinic-hours document exists
+    let clinicHours = await PageContent.findOne({ key: 'clinic-hours' });
+    if (!clinicHours) {
+      await PageContent.create({
+        key: 'clinic-hours',
+        title: 'Clinic Opening Hours',
+        content: 'Mon - Fri: 8:30 AM - 6:30 PM\nSaturday: 9:00 AM - 2:00 PM\nSunday: 9:00 AM - 12:00 PM',
+        section: 'general',
+        metadata: {
+          mon_fri: '8:30 AM - 6:30 PM',
+          sat: '9:00 AM - 2:00 PM',
+          sun: '9:00 AM - 12:00 PM'
+        }
+      });
+      console.log("💎 [Database Migration] Created default 'clinic-hours' page content.");
+    }
+
+    // Ensure health-tools-header exists
+    let toolsHeader = await PageContent.findOne({ key: 'health-tools-header' });
+    if (!toolsHeader) {
+      await PageContent.create({
+        key: 'health-tools-header',
+        title: 'Interactive Health Tools',
+        content: 'Free tools to help you monitor and understand your wellbeing.',
+        section: 'blog'
+      });
+      console.log("💎 [Database Migration] Created default 'health-tools-header' page content.");
+    }
+
+    // Ensure health-tools-list exists
+    let toolsList = await PageContent.findOne({ key: 'health-tools-list' });
+    if (!toolsList) {
+      await PageContent.create({
+        key: 'health-tools-list',
+        title: 'Interactive Health Tools List',
+        content: JSON.stringify([
+          { title: "BMI Calculator", icon: "calculator", desc: "Check your Body Mass Index in seconds." },
+          { title: "Diabetes Risk", icon: "droplet", desc: "Take a simple test to assess your risk factor." },
+          { title: "Heart Age", icon: "heart", desc: "Evaluate your cardiovascular health profile." },
+          { title: "Symptom Checker", icon: "search", desc: "Get instant guidance on common symptoms." }
+        ]),
+        section: 'blog'
+      });
+      console.log("💎 [Database Migration] Created default 'health-tools-list' page content.");
+    }
+
+    // Ensure social-feed-header exists
+    let socialHeader = await PageContent.findOne({ key: 'social-feed-header' });
+    if (!socialHeader) {
+      await PageContent.create({
+        key: 'social-feed-header',
+        title: 'Health Tips on Social',
+        content: 'Follow us @westchemistclinic for daily medical insights.',
+        section: 'blog',
+        metadata: {
+          instagram_url: 'https://instagram.com/westchemistclinic'
+        }
+      });
+      console.log("💎 [Database Migration] Created default 'social-feed-header' page content.");
+    }
+
+    // Seed default blogs if not already present
+    const defaultBlogs = [
+      {
+        title: "5 Essential Travel Vaccinations for Your Next Adventure",
+        subject: "Travel Health",
+        slug: "essential-travel-vaccinations",
+        description: `<p>Planning an international trip is an exciting venture, but amidst booking flights and packing bags, health preparations are often overlooked. Travel vaccinations are crucial to protecting yourself from serious infectious diseases that may not exist in your home country but are common in other parts of the world.</p>
+<h3>Why are travel vaccines important?</h3>
+<p>When you travel abroad, you may be exposed to pathogens your body has never encountered before. Vaccines stimulate your immune system to produce antibodies, providing immunity without causing the disease itself. Without these updates, you risk contracting preventable illnesses like Hepatitis A, Typhoid, or Yellow Fever.</p>
+<h3>Top 5 travel vaccinations to consider:</h3>
+<ul>
+  <li><strong>Hepatitis A:</strong> Transmitted through contaminated food and water. Essential for travel to most developing countries.</li>
+  <li><strong>Typhoid:</strong> A bacterial infection also spread via contaminated food and water, highly recommended for parts of Asia, Africa, and South America.</li>
+  <li><strong>Yellow Fever:</strong> A mosquito-borne viral disease. Some countries in Africa and South America require proof of vaccination (an ICVP certificate) for entry.</li>
+  <li><strong>Tetanus, Diphtheria, and Polio (DTP):</strong> Often given as a combined booster. Ensure your routine childhood immunizations are up-to-date.</li>
+  <li><strong>Rabies:</strong> A fatal viral infection transmitted via animal bites. Recommended for long-term travelers, outdoor explorers, and those visiting remote areas.</li>
+</ul>
+<h3>When should you get vaccinated?</h3>
+<p>Most vaccines require <strong>4 to 6 weeks</strong> to become fully effective. Some require multiple doses spaced weeks apart. Therefore, it is highly recommended to consult our travel clinic specialists at West Chemist Clinic at least a month before your departure date.</p>`,
+        images: ["https://images.unsplash.com/photo-1500835595300-478db374780d?w=800&q=80"],
+        date: new Date()
+      },
+      {
+        title: "Understanding Hypertension: Symptoms, Prevention, and Management",
+        subject: "General Health",
+        slug: "understanding-hypertension-guide",
+        description: `<p>Hypertension, commonly known as high blood pressure, is often called the "silent killer" because it rarely presents obvious symptoms until it has caused significant damage to the cardiovascular system. Regular monitoring and proactive lifestyle choices are key to preventing life-threatening events like strokes and heart attacks.</p>
+<h3>What do the numbers mean?</h3>
+<p>Blood pressure is measured in millimeters of mercury (mmHg) and written as two numbers:</p>
+<ul>
+  <li><strong>Systolic pressure (the top number):</strong> The pressure in your arteries when your heart beats.</li>
+  <li><strong>Diastolic pressure (the bottom number):</strong> The pressure in your arteries when your heart rests between beats.</li>
+</ul>
+<p>A reading of 120/80 mmHg is considered normal. Readings consistently at or above 140/90 mmHg indicate hypertension.</p>
+<h3>Key risk factors</h3>
+<p>While age and genetics play a role, lifestyle factors are primary drivers. These include high salt consumption, lack of physical activity, excessive alcohol intake, smoking, and chronic stress.</p>
+<h3>How to manage and prevent high blood pressure</h3>
+<p>Fortunately, hypertension is highly manageable. Here are clinical recommendations:</p>
+<ol>
+  <li><strong>Adopt a DASH diet:</strong> Focus on whole grains, fruits, vegetables, and low-fat dairy while minimizing sodium intake.</li>
+  <li><strong>Exercise regularly:</strong> Aim for at least 150 minutes of moderate-intensity aerobic exercise per week.</li>
+  <li><strong>Monitor at home:</strong> Keep track of your blood pressure using a validated home monitor or visit West Chemist Clinic for a professional screening.</li>
+</ol>
+<p>If lifestyle modifications are insufficient, our prescribing pharmacists can guide you on appropriate antihypertensive medications to keep your cardiovascular health on track.</p>`,
+        images: ["https://images.unsplash.com/photo-1628177142898-93e36e4e3a50?w=800&q=80"],
+        date: new Date(Date.now() - 24 * 60 * 60 * 1000) // 1 day ago
+      },
+      {
+        title: "The Science of Medical Weight Loss: Is Wegovy Right for You?",
+        subject: "Weight Loss",
+        slug: "science-of-medical-weight-loss-wegovy",
+        description: `<p>Achieving sustainable weight loss can be an uphill battle, especially when addressing obesity as a complex, biological condition rather than a simple failure of willpower. Over recent years, medical weight loss programs utilizing Wegovy (semaglutide) have emerged as highly effective, clinically-proven solutions.</p>
+<h3>How does Wegovy work?</h3>
+<p>Wegovy® is an FDA and MHRA-approved weekly self-injectable medication. It mimics a naturally occurring hormone in the body called GLP-1 (glucagon-like peptide-1). GLP-1 plays a key role in appetite regulation by:</p>
+<ul>
+  <li>Slowing stomach emptying, which helps you feel full for longer.</li>
+  <li>Signaling the brain's satiety centers to reduce overall hunger and food cravings.</li>
+  <li>Improving insulin response to regulate blood sugar levels.</li>
+</ul>
+<h3>Clinical efficacy</h3>
+<p>Clinical trials have shown that when combined with a reduced-calorie diet and increased physical activity, participants lost an average of 15% of their body weight over a 68-week period. This significant weight reduction can dramatically lower risks for type 2 diabetes, high blood pressure, and joint pain.</p>
+<h3>Are you a candidate?</h3>
+<p>Wegovy is typically recommended for adults with a Body Mass Index (BMI) of 30 or higher (obese), or 27 or higher (overweight) with at least one weight-related medical condition such as hypertension or high cholesterol. Visit our weight management clinic at West Chemist Clinic for a comprehensive assessment to discuss a tailored treatment plan.</p>`,
+        images: ["https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=800&q=80"],
+        date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000) // 2 days ago
+      },
+      {
+        title: "Ear Microsuction vs. Syringing: Why Microsuction is the Safer Choice",
+        subject: "Clinical ear care",
+        slug: "ear-microsuction-vs-syringing",
+        description: `<p>Earwax (cerumen) is a natural substance that protects the ear canal. However, when it builds up and becomes impacted, it can cause hearing loss, discomfort, dizziness, and tinnitus. If you have a blockage, it's essential to clear it using a safe, clinical method rather than resorting to cotton buds.</p>
+<h3>What is traditional ear syringing?</h3>
+<p>Traditional ear syringing involves pumping water into the ear canal to flush out the wax. While it was standard practice for decades, it carries risks, including ear infections, eardrum perforation, and pushing the wax deeper if not done carefully.</p>
+<h3>Why microsuction is the gold standard</h3>
+<p>Microsuction is a modern, water-free alternative. During the procedure, our clinician uses a high-definition microscope or video otoscope to look directly inside your ear. A gentle, clinical-grade suction device is then used to carefully lift and extract the wax.</p>
+<h3>Benefits of microsuction:</h3>
+<ol>
+  <li><strong>Water-free:</strong> Reduces the risk of ear infection and is suitable for individuals with previous eardrum perforations.</li>
+  <li><strong>High precision:</strong> The clinician maintains a direct line of sight throughout, ensuring safety.</li>
+  <li><strong>Immediate relief:</strong> Blockages are resolved quickly, restoring normal hearing and relieving ear pressure instantly.</li>
+</ol>
+<p>At West Chemist Clinic, our accredited pharmacists perform gentle microsuction earwax removal in our dedicated clinical rooms. Book your consultation today to regain clear hearing.</p>`,
+        images: ["https://images.unsplash.com/photo-1559839734-2b71f1536783?w=800&q=80"],
+        date: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000) // 3 days ago
+      },
+      {
+        title: "Winter Wellness: How to Boost Your Immune System for the Cold Season",
+        subject: "Wellness",
+        slug: "winter-wellness-immune-boost-tips",
+        description: `<p>As the winter months roll in, our bodies face increased exposure to seasonal viruses like the common cold and influenza. While no single supplement can guarantee immunity, a holistic approach to wellness can support your body's natural defense systems and keep you feeling healthy all season long.</p>
+<h3>1. Focus on key vitamins and minerals</h3>
+<p>Maintaining balanced nutrition is vital. Ensure your diet contains sufficient quantities of:</p>
+<ul>
+  <li><strong>Vitamin D:</strong> Since sunlight exposure is limited during winter, the NHS recommends taking a daily 10mcg Vitamin D supplement to support bones, muscles, and immune health.</li>
+  <li><strong>Vitamin C:</strong> A powerful antioxidant found in citrus fruits, bell peppers, and leafy greens that supports cellular function.</li>
+  <li><strong>Zinc:</strong> Crucial for immune cell development and wound healing, found in seeds, nuts, and legumes.</li>
+</ul>
+<h3>2. Stay hydrated and active</h3>
+<p>It is easy to forget to drink water when it is cold, but hydration is essential for lymphatic circulation. Additionally, moderate physical activity improves circulation, allowing immune cells to move more efficiently throughout the body.</p>
+<h3>3. Prioritize quality sleep</h3>
+<p>During sleep, your body releases cytokines, which are proteins that help target infection and inflammation. A consistent 7 to 8 hours of sleep per night is foundational to physical wellness.</p>
+<h3>4. Protect yourself with vaccinations</h3>
+<p>The most effective shield against seasonal viruses is vaccination. Getting your annual flu vaccine dramatically reduces your risk of catching and spreading the virus. Drop by West Chemist Clinic to receive your quick and convenient flu shot.</p>`,
+        images: ["https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=800&q=80"],
+        date: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000) // 4 days ago
+      }
+    ];
+
+    // Ensure subjects exist in Categories as well and seed blogs individually if not exists
+    for (const blog of defaultBlogs) {
+      const exists = await Blog.findOne({ slug: blog.slug });
+      if (!exists) {
+        const catSlug = blog.subject.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+        const catExists = await Category.findOne({ name: blog.subject });
+        if (!catExists) {
+          await Category.create({ name: blog.subject, slug: catSlug });
+          console.log("💎 [Database Migration] Seeded missing blog category: " + blog.subject);
+        }
+        await Blog.create(blog);
+        console.log("💎 [Database Seeding] Successfully seeded default blog: " + blog.title);
+      }
+    }
   } catch (error) {
-    console.error(`⚠️ [Database Seeding] Failed to seed/migrate data: ${error.message}`);
+    console.error("⚠️ [Database Seeding] Failed to seed/migrate data: " + error.message);
   }
 };
 
