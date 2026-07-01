@@ -74,18 +74,17 @@
 }
 
 .wl_btn_solid {
-    background: #0081a7;
-    /* Theme blue/primary */
+    background: var(--primary);
     color: #fff;
-    border: 2px solid #0081a7;
-    box-shadow: 0 4px 15px rgba(0, 129, 167, 0.2);
+    border: 2px solid var(--primary);
+    box-shadow: 0 4px 15px rgba(75, 45, 113, 0.25);
 }
 
 .wl_btn_solid:hover {
     transform: translate3d(0, -4px, 0);
-    box-shadow: 0 10px 25px rgba(0, 129, 167, 0.3);
-    background: #00607a;
-    border-color: #00607a;
+    box-shadow: 0 10px 25px rgba(75, 45, 113, 0.35);
+    background: #341e54;
+    border-color: #341e54;
 }
 
 .wl_btn_outline {
@@ -216,15 +215,13 @@
 .red_badge {
     width: 150px;
     height: 150px;
-    background: #e62031;
-    /* Bright red */
+    background: var(--primary);
     color: #fff;
     border: 6px solid #fff;
     right: -20px;
     bottom: 50px;
     animation: float1 6s ease-in-out infinite alternate;
     transform: translateZ(80px);
-    /* Huge 3D pop */
 }
 
 .red_badge_lg {

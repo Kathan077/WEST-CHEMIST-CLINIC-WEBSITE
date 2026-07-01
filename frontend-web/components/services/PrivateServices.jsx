@@ -21,14 +21,14 @@ const privateServices = [
     { 
         title: "Ear Wax Removal", 
         cat: "Clinical", 
-        color: "#FF6B35",
+        color: "#206B5E",
         img: "https://images.unsplash.com/photo-1559839734-2b71f1536783?w=600&q=80",
         desc: "Safe and effective microsuction ear wax removal for clear hearing." 
     },
     { 
         title: "Cryotherapy", 
         cat: "Clinical", 
-        color: "#2D5A27",
+        color: "#7859A3",
         img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=600&q=80",
         desc: "Precise cryotherapy treatment for skin lesions and viral warts." 
     },

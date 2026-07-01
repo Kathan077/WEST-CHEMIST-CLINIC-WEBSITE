@@ -21,14 +21,14 @@ const allServices = [
     { 
         title: "Infected Insect Bites", 
         cat: "Pharmacy First", 
-        color: "#FF6B35",
+        color: "#206B5E",
         img: "https://plus.unsplash.com/premium_photo-1661266858277-226e6d15a51a?w=600&q=80",
         desc: "Fast treatment for infected insect bites and stings." 
     },
     { 
         title: "Shingles Treatment", 
         cat: "Pharmacy First", 
-        color: "#2D5A27",
+        color: "#7859A3",
         img: "https://images.unsplash.com/photo-1550572017-ed200f5e6399?w=600&q=80",
         desc: "Early antiviral treatment for shingles to reduce severity." 
     },
@@ -49,14 +49,14 @@ const allServices = [
     { 
         title: "UTI Treatment", 
         cat: "Pharmacy First", 
-        color: "#FF6B35",
+        color: "#206B5E",
         img: "https://images.unsplash.com/photo-1587854692152-cbe660dbbb88?w=600&q=80",
         desc: "Urinary tract infection assessment and antibiotic prescribing." 
     },
     { 
         title: "Blood Pressure Testing", 
         cat: "NHS Service", 
-        color: "#2D5A27",
+        color: "#7859A3",
         img: "https://images.unsplash.com/photo-1579154236594-c199f3768fb9?w=600&q=80",
         desc: "Free NHS blood pressure checks and hypertension monitoring." 
     },
@@ -77,14 +77,14 @@ const allServices = [
     { 
         title: "Covid Vaccination", 
         cat: "NHS & Private", 
-        color: "#FF6B35",
+        color: "#206B5E",
         img: "https://plus.unsplash.com/premium_photo-1661633465809-562725a3818e?w=600&q=80",
         desc: "NHS and private Covid-19 vaccinations and boosters." 
     },
     { 
         title: "Meningitis B Vaccination", 
         cat: "NHS & Private", 
-        color: "#2D5A27",
+        color: "#7859A3",
         img: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=600&q=80",
         desc: "NHS and private Meningitis B vaccination for eligible patients." 
     }
