@@ -1,7 +1,7 @@
 "use client";
 
 import { API_URL } from '@/config';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Navbar from '../../components/layout/Navbar';
 import Footer from '../../components/layout/Footer';
@@ -126,7 +126,7 @@ const isSlotInPast = (slotTime, selectedDateStr) => {
     return todayLocal.getTime() > slotDateTime.getTime();
 };
 
-export default function BookingPage() {
+function BookingPageInner() {
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -1195,5 +1195,13 @@ export default function BookingPage() {
             </div>
 
         </>
+    );
+}
+
+export default function BookingPage() {
+    return (
+        <Suspense fallback={<div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f8fafc' }}><div style={{ color: '#4B2D71', fontWeight: 700, fontSize: '1.2rem' }}>Loading booking...</div></div>}>
+            <BookingPageInner />
+        </Suspense>
     );
 }
