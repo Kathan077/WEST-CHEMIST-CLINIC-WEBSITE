@@ -48,7 +48,12 @@ const AboutBranches = () => {
                         </p>
 
                         <div className="br_address_card">
-                            <div className="br_address_icon">📍</div>
+                            <div className="br_address_icon">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                    <circle cx="12" cy="10" r="3"/>
+                                </svg>
+                            </div>
                             <div className="br_address_content">
                                 <h3>Northampton Clinic</h3>
                                 <p>4 Kingsley Park Terrace, Northampton NN2 7HG</p>

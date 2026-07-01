@@ -171,3 +171,27 @@
         margin-top: 0;
     }
 }
+
+@media (max-width: 425px) {
+    .med_mission_bg {
+        padding: 0 20px 60px;
+    }
+    .med_card {
+        padding: 35px 25px;
+    }
+    .med_card h3 {
+        font-size: 1.4rem;
+    }
+    .med_card p {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 320px) {
+    .med_card {
+        padding: 30px 20px;
+    }
+    .med_card h3 {
+        font-size: 1.3rem;
+    }
+}

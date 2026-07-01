@@ -115,6 +115,7 @@ export default function Hero() {
                 let cls = 'hero_slide';
                 if (isActive) cls += ` slide_in_${dir}`;
                 else if (isPrev) cls += ` slide_out_${dir}`;
+                else cls += ' slide_hidden';
                 return (
                     <div key={slide.id} className={cls} aria-hidden={!isActive}>
                         <img

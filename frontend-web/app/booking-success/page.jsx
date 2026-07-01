@@ -339,7 +339,16 @@ function BookingSuccessContent() {
                                     <div className="bk_ticket_row"><span>Patient</span><strong>{fullName}</strong></div>
                                     <div className="bk_ticket_row"><span>Mobile</span><strong>{mobile}</strong></div>
                                     <div className="bk_ticket_row"><span>Service Type</span><strong>{service}</strong></div>
-                                    <div className="bk_ticket_row"><span>Clinic Branch</span><strong>{clinic}</strong></div>
+                                    <div className="bk_ticket_row">
+                                        <span>Clinic Branch</span>
+                                        <strong style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ flexShrink: 0 }}>
+                                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                                                <circle cx="12" cy="10" r="3" />
+                                            </svg>
+                                            {clinic}
+                                        </strong>
+                                    </div>
                                 </div>
 
                                 <div className="bk_ticket_divider" />

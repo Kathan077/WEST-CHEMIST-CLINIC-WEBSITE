@@ -1,11 +1,47 @@
 "use client";
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import { API_URL } from '@/config';
 import './Abouthero.css';
 
 export default function AboutHero() {
     const heroRef = useRef(null);
+    const [heroData, setHeroData] = useState({
+        title: 'About West Chemist Clinic',
+        content: 'By providing world-class medical facilities, experts, and innovation — making world-class healthcare accessible.'
+    });
+    const [stats, setStats] = useState([
+        { title: '1946+', content: 'Patients Helped' },
+        { title: '1451+', content: 'Specialists' },
+        { title: '15+', content: 'Years Experience' },
+        { title: '1500+', content: 'Successful Surgeries' }
+    ]);
+
+    useEffect(() => {
+        // Fetch dynamic content from backend
+        fetch(`${API_URL}/api/about`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.success && data.data) {
+                    const heroItem = data.data.find(item => item.type === 'hero');
+                    if (heroItem) {
+                        setHeroData({
+                            title: heroItem.title,
+                            content: heroItem.content
+                        });
+                    }
+                    const statItems = data.data.filter(item => item.type === 'stat');
+                    if (statItems.length > 0) {
+                        setStats(statItems.map(s => ({
+                            title: s.title,
+                            content: s.content
+                        })));
+                    }
+                }
+            })
+            .catch(err => console.error('Error fetching about hero content:', err));
+    }, []);
 
     useEffect(() => {
         const handleMouseMove = (e) => {
@@ -24,9 +60,13 @@ export default function AboutHero() {
         return () => window.removeEventListener('mousemove', handleMouseMove);
     }, []);
 
+    // Split title into words for animated reveal
+    const titleWords = heroData.title.split(' ');
+    const firstThree = titleWords.slice(0, 3);
+    const restOfWords = titleWords.slice(3);
+
     return (
         <section className="med_hero" ref={heroRef}>
-            
             {/* Animated Background Mesh */}
             <div className="med_hero_bg_glow"></div>
             <div className="med_hero_bg_glow med_glow_secondary"></div>
@@ -40,16 +80,17 @@ export default function AboutHero() {
                 </div>
 
                 <h1 className="med_h_title">
-                    <span className="med_word_reveal">About</span> 
-                    <span className="med_word_reveal">West</span> 
-                    <span className="med_word_reveal">Chemist</span> 
-                    <br/>
-                    <span className="med_word_reveal med_gradient_text">Clinic</span>
+                    {firstThree.map((word, idx) => (
+                        <span key={idx} className="med_word_reveal">{word} </span>
+                    ))}
+                    {restOfWords.length > 0 && <br />}
+                    {restOfWords.map((word, idx) => (
+                        <span key={idx} className="med_word_reveal med_gradient_text">{word} </span>
+                    ))}
                 </h1>
                 
-                <p className="med_h_desc">
-                    By providing world-class medical facilities, experts, and<br/>
-                    innovation — making world-class healthcare accessible.
+                <p className="med_h_desc" style={{ whiteSpace: 'pre-wrap' }}>
+                    {heroData.content}
                 </p>
                 
                 <div className="med_h_actions">
@@ -61,33 +102,56 @@ export default function AboutHero() {
             </div>
 
             {/* Parallax Floating Stats */}
-            <div className="med_float_stat med_stat_left">
-                <div className="med_stat_inner">
-                    <h3>1946+</h3>
-                    <span>Patients Helped</span>
+            {stats[0] && (
+                <div className="med_float_stat med_stat_left">
+                    <div className="med_stat_inner">
+                        <h3>{stats[0].title}</h3>
+                        <span>{stats[0].content}</span>
+                    </div>
                 </div>
-            </div>
+            )}
             
-            <div className="med_float_stat med_stat_right">
-                <div className="med_stat_inner">
-                    <h3>1451+</h3>
-                    <span>Specialists</span>
+            {stats[1] && (
+                <div className="med_float_stat med_stat_right">
+                    <div className="med_stat_inner">
+                        <h3>{stats[1].title}</h3>
+                        <span>{stats[1].content}</span>
+                    </div>
                 </div>
-            </div>
+            )}
             
-            <div className="med_float_stat med_stat_bottom_left">
-                <div className="med_stat_inner">
-                    <h3>2000+</h3>
-                    <span>Years Experience</span>
+            {stats[2] && (
+                <div className="med_float_stat med_stat_bottom_left">
+                    <div className="med_stat_inner">
+                        <h3>{stats[2].title}</h3>
+                        <span>{stats[2].content}</span>
+                    </div>
                 </div>
-            </div>
+            )}
 
-            <div className="med_float_stat med_stat_bottom_right">
-                <div className="med_stat_inner">
-                    <h3>1500+</h3>
-                    <span>Successful Surgeries</span>
+            {stats[3] && (
+                <div className="med_float_stat med_stat_bottom_right">
+                    <div className="med_stat_inner">
+                        <h3>{stats[3].title}</h3>
+                        <span>{stats[3].content}</span>
+                    </div>
                 </div>
-            </div>
+            )}
+
+            {/* Display extra stats if there are more than 4, positioned beautifully */}
+            {stats.slice(4).map((stat, index) => (
+                <div key={index} className="med_float_stat" style={{
+                    position: 'absolute',
+                    top: `${40 + (index * 15)}%`,
+                    left: `${index % 2 === 0 ? 5 : 85}%`,
+                    zIndex: 15
+                }}>
+                    <div className="med_stat_inner">
+                        <h3>{stat.title}</h3>
+                        <span>{stat.content}</span>
+                    </div>
+                </div>
+            ))}
         </section>
     );
 }

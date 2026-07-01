@@ -384,7 +384,13 @@ function TrackBookingContent() {
 
                                             <div className="bk_ticket_row">
                                                 <span>Location Branch</span>
-                                                <strong>{apt.clinic}</strong>
+                                                <strong style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ flexShrink: 0 }}>
+                                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                                                        <circle cx="12" cy="10" r="3" />
+                                                    </svg>
+                                                    {apt.clinic}
+                                                </strong>
                                             </div>
                                         </div>
 

@@ -374,3 +374,28 @@
     }
 }
 
+@media (max-width: 425px) {
+    .med_hero {
+        padding: 80px 20px 60px;
+        min-height: auto;
+    }
+    .med_h_title {
+        font-size: 2.2rem;
+    }
+    .med_h_desc {
+        font-size: 1rem;
+        margin-bottom: 25px;
+    }
+    .med_btn_primary {
+        padding: 14px 30px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+@media (max-width: 320px) {
+    .med_h_title {
+        font-size: 1.8rem;
+    }
+}
+

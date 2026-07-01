@@ -177,3 +177,24 @@
     }
 }
 
+@media (max-width: 425px) {
+    .med_faq_bg {
+        padding: 60px 20px;
+    }
+    .med_faq_header h2 {
+        font-size: 1.8rem;
+    }
+    .med_faq_q h3 {
+        font-size: 1rem;
+    }
+    .med_faq_a_inner p {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 320px) {
+    .med_faq_header h2 {
+        font-size: 1.6rem;
+    }
+}
+

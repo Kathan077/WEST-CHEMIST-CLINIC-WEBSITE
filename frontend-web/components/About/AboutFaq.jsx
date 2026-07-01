@@ -1,44 +1,70 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
+import { API_URL } from '@/config';
 import './AboutFaq.css';
 
-const faqs = [
+const DEFAULT_FAQS = [
     {
-        id: 1,
+        _id: 'default-faq-1',
         question: "How do I book an appointment online?",
         answer: "You can easily book an appointment through our online patient portal by selecting your preferred doctor and available time slot."
     },
     {
-        id: 2,
+        _id: 'default-faq-2',
         question: "Can I access my medical records digitally?",
         answer: "Yes, all patients can securely access their medical history, prescriptions, and reports through our online patient portal."
     },
     {
-        id: 3,
+        _id: 'default-faq-3',
         question: "Do you accept health insurance?",
         answer: "We accept most major health insurance plans. Please contact our billing department or check our insurance page for a full list of providers."
     },
     {
-        id: 4,
+        _id: 'default-faq-4',
         question: "Are online consultations available?",
         answer: "Yes, we offer secure telehealth consultations for non-emergency medical advice and follow-ups with our specialists."
     },
     {
-        id: 5,
+        _id: 'default-faq-5',
         question: "How secure is my medical data?",
         answer: "Your privacy is our priority. We use industry-standard encryption and fully comply with HIPAA regulations to ensure your data is safe."
     },
     {
-        id: 6,
+        _id: 'default-faq-6',
         question: "What if I need to reschedule or cancel my appointment?",
         answer: "You can reschedule or cancel your appointment via the patient portal or by calling our clinic directly at least 24 hours in advance."
     }
 ];
 
 export default function AboutFaq() {
-    const [openId, setOpenId] = useState(2); // ID 2 is open by default in screenshot
+    const [faqs, setFaqs] = useState(DEFAULT_FAQS);
+    const [openId, setOpenId] = useState('default-faq-2'); // ID 2 is open by default in screenshot
     const sectionRef = useRef(null);
+
+    useEffect(() => {
+        // Fetch FAQs from backend API
+        fetch(`${API_URL}/api/about`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.success && data.data) {
+                    const faqItems = data.data.filter(item => item.type === 'faq');
+                    if (faqItems.length > 0) {
+                        const formatted = faqItems.map(item => ({
+                            _id: item._id,
+                            question: item.title,
+                            answer: item.content
+                        }));
+                        setFaqs(formatted);
+                        // Open first FAQ by default when loaded
+                        if (formatted.length > 0) {
+                            setOpenId(formatted[0]._id);
+                        }
+                    }
+                }
+            })
+            .catch(err => console.error('Error fetching about FAQs:', err));
+    }, []);
 
     useEffect(() => {
         const observer = new IntersectionObserver((entries) => {
@@ -50,7 +76,7 @@ export default function AboutFaq() {
 
         if (sectionRef.current) observer.observe(sectionRef.current);
         return () => observer?.disconnect();
-    }, []);
+    }, [faqs]);
 
     const toggleFaq = (id) => {
         setOpenId(openId === id ? null : id);
@@ -67,13 +93,13 @@ export default function AboutFaq() {
 
                 <div className="med_faq_list">
                     {faqs.map((faq, index) => {
-                        const isOpen = openId === faq.id;
+                        const isOpen = openId === faq._id;
                         return (
                             <div 
-                                key={faq.id} 
+                                key={faq._id} 
                                 className={`med_faq_item ${isOpen ? 'open' : ''}`}
                                 style={{ animationDelay: `${0.2 + (index * 0.1)}s` }}
-                                onClick={() => toggleFaq(faq.id)}
+                                onClick={() => toggleFaq(faq._id)}
                             >
                                 <div className="med_faq_q">
                                     <h3>{faq.question}</h3>

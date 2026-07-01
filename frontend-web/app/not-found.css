@@ -1,0 +1,196 @@
+/* ============================================================
+   NOT-FOUND.CSS — PREMIUM 404 PAGE ✦ West Chemist Clinic
+   ============================================================ */
+
+.nf_container {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 24px;
+    background: radial-gradient(circle at top, rgba(75, 45, 113, 0.05) 0%, transparent 60%);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Floating Elements Background */
+.nf_bg_shapes {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.nf_shape {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.15;
+}
+
+.nf_shape_1 {
+    top: 10%;
+    left: 15%;
+    width: 300px;
+    height: 300px;
+    background: var(--primary);
+    animation: nfFloatShape 8s ease-in-out infinite alternate;
+}
+
+.nf_shape_2 {
+    bottom: 10%;
+    right: 15%;
+    width: 250px;
+    height: 250px;
+    background: var(--accent);
+    animation: nfFloatShape 10s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes nfFloatShape {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(30px, -30px) scale(1.1); }
+}
+
+/* 404 Illustration / Icon */
+.nf_art_box {
+    position: relative;
+    z-index: 2;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nf_number {
+    font-size: clamp(6rem, 12vw, 10rem);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.05em;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--highlight-purple) 50%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0;
+    animation: nfPulse 3s ease-in-out infinite alternate;
+}
+
+.nf_pill_icon {
+    width: 60px;
+    height: 60px;
+    color: var(--accent);
+    background: rgba(0, 132, 115, 0.06);
+    border: 2px solid rgba(0, 132, 115, 0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+    margin-bottom: 25px;
+    box-shadow: 0 10px 25px rgba(0, 132, 115, 0.08);
+    animation: nfFloat 4s ease-in-out infinite;
+}
+
+@keyframes nfFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-8px) rotate(5deg); }
+}
+
+@keyframes nfPulse {
+    0% { transform: scale(1); filter: drop-shadow(0 4px 10px rgba(75, 45, 113, 0.15)); }
+    100% { transform: scale(1.03); filter: drop-shadow(0 15px 30px rgba(75, 45, 113, 0.25)); }
+}
+
+/* Content */
+.nf_content {
+    position: relative;
+    z-index: 2;
+    max-width: 540px;
+}
+
+.nf_title {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+}
+
+.nf_desc {
+    font-size: 1.1rem;
+    color: rgba(15, 23, 42, 0.7);
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+
+/* Actions */
+.nf_actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.nf_btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 28px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    border-radius: 9999px;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    cursor: pointer;
+}
+
+.nf_btn_primary {
+    background: var(--primary);
+    color: #fff;
+    border: 2px solid var(--primary);
+    box-shadow: 0 4px 15px rgba(75, 45, 113, 0.2);
+}
+
+.nf_btn_primary:hover {
+    background: #3c235b;
+    border-color: #3c235b;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(75, 45, 113, 0.3);
+}
+
+.nf_btn_secondary {
+    background: transparent;
+    color: var(--primary);
+    border: 2px solid rgba(75, 45, 113, 0.2);
+}
+
+.nf_btn_secondary:hover {
+    border-color: var(--primary);
+    background: rgba(75, 45, 113, 0.03);
+    transform: translateY(-3px);
+}
+
+/* Icon hover */
+.nf_btn svg {
+    transition: transform 0.3s ease;
+}
+
+.nf_btn:hover svg {
+    transform: translateX(4px);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .nf_actions {
+        flex-direction: column;
+        width: 100%;
+        max-width: 280px;
+        margin: 0 auto;
+    }
+
+    .nf_btn {
+        width: 100%;
+    }
+}
