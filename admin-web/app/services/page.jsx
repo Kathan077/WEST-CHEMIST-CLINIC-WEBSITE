@@ -379,11 +379,11 @@ export default function AdminServicesPage() {
   const pendingCount = appts.filter(a => ['pending', 'confirmed'].includes(a.status)).length;
 
   const nav = [
-    { label: 'Dashboard',         path: '/admin/patients',     icon: ICONS.home },
-    { label: 'Appointments',      path: '/admin/appointments', icon: ICONS.cal, badge: pendingCount || null },
-    { label: 'Patients',          path: '/admin/patients',     icon: ICONS.users },
-    { label: 'Compliance',        path: '/admin/compliance',   icon: ICONS.shield },
-    { label: 'Services & Content', path: '/admin/services',    icon: ICONS.edit, active: true },
+    { label: 'Dashboard',         path: '/admin/patients',                 icon: ICONS.home },
+    { label: 'Appointments',      path: '/admin/appointments',             icon: ICONS.cal, badge: pendingCount || null },
+    { label: 'Patients',          path: '/admin/patients?view=patients',   icon: ICONS.users },
+    { label: 'Compliance',        path: '/admin/compliance',               icon: ICONS.shield },
+    { label: 'Services & Content', path: '/admin/services',                icon: ICONS.edit, active: true },
   ];
 
   // Filtering local list

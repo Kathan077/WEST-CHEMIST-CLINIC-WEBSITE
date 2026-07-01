@@ -133,11 +133,11 @@ export default function AdminCompliancePage() {
   }, [search, verifications]);
 
   const nav = [
-    { label: 'Dashboard',    path: '/admin/patients',     icon: ICONS.home },
-    { label: 'Appointments', path: '/admin/appointments', icon: ICONS.cal },
-    { label: 'Patients',     path: '/admin/patients',     icon: ICONS.users },
-    { label: 'Compliance',   path: '/admin/compliance',   icon: ICONS.shield, active: true },
-    { label: 'Services & Content', path: '/admin/services', icon: ICONS.edit },
+    { label: 'Dashboard',    path: '/admin/patients',                 icon: ICONS.home },
+    { label: 'Appointments', path: '/admin/appointments',             icon: ICONS.cal },
+    { label: 'Patients',     path: '/admin/patients?view=patients',   icon: ICONS.users },
+    { label: 'Compliance',   path: '/admin/compliance',               icon: ICONS.shield, active: true },
+    { label: 'Services & Content', path: '/admin/services',           icon: ICONS.edit },
   ];
 
   const hr = new Date().getHours();

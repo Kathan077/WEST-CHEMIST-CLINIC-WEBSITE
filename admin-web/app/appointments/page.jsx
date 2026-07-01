@@ -4,6 +4,7 @@ import { API_URL } from '@/config';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import './appointments.css';
+import '../patients/dashboard.css';
 
 const SLOTS = [
   "09:00 AM","09:30 AM","10:00 AM","10:30 AM",
@@ -29,7 +30,8 @@ const Icon = ({ d, size = 16 }) => (
 );
 
 const ICONS = {
-  calendar:  "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z",
+  home:      "M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z M9 22V12h6v10",
+  cal:       "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z",
   users:     "M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75",
   check:     "M20 6L9 17l-5-5",
   x:         "M18 6L6 18M6 6l12 12",
@@ -37,7 +39,6 @@ const ICONS = {
   search:    "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0",
   refresh:   "M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15",
   logout:    "M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9",
-  hospital:  "M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9zM9 22V12h6v10",
   shield:    "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10",
   edit:      "M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z",
 };
@@ -653,11 +654,11 @@ export default function AdminAppointmentsPage() {
   };
 
   const navItems = [
-    { label: 'Dashboard',    path: '/admin/patients',     icon: ICONS.hospital  },
-    { label: 'Appointments', path: '/admin/appointments', icon: ICONS.calendar, active: true, badge: stats.pending || null },
-    { label: 'Patients',     path: '/admin/patients',     icon: ICONS.users     },
-    { label: 'Compliance',   path: '/admin/compliance',   icon: ICONS.shield    },
-    { label: 'Services & Content', path: '/admin/services', icon: ICONS.edit      },
+    { label: 'Dashboard',         path: '/admin/patients',                 icon: ICONS.home },
+    { label: 'Appointments',      path: '/admin/appointments',             icon: ICONS.cal, active: true, badge: stats.pending || null },
+    { label: 'Patients',          path: '/admin/patients?view=patients',   icon: ICONS.users },
+    { label: 'Compliance',        path: '/admin/compliance',               icon: ICONS.shield },
+    { label: 'Services & Content', path: '/admin/services',                icon: ICONS.edit },
   ];
 
   return (
@@ -702,56 +703,62 @@ export default function AdminAppointmentsPage() {
         />
       )}
 
-      {/* ════ SIDEBAR ════ */}
-      <aside className="adm_sidebar">
+      {/* ══ SIDEBAR ══ */}
+      <aside className="dash_sb">
         {!isMobile && (
-          <div className="adm_logo">
-            <div className="adm_logo_icon">W</div>
-            <div className="adm_logo_text">
-              WEST<br /><span>CHEMIST</span>
+          <div className="sb_logo">
+            <div className="sb_logo_mark">W</div>
+            <div className="sb_logo_name">
+              West Chemist
+              <small>Admin Portal</small>
             </div>
           </div>
         )}
 
-        <nav className="adm_nav">
-          {navItems.map(item => (
-            <a
-              key={item.label}
-              href={item.path}
-              className={`adm_nav_item ${item.active ? 'active' : ''}`}
-            >
-              <svg className="adm_nav_icon" width="18" height="18" viewBox="0 0 24 24"
-                fill="none" stroke="currentColor" strokeWidth="2"
-                strokeLinecap="round" strokeLinejoin="round">
-                <path d={item.icon} />
-              </svg>
-              <span>{item.label}</span>
-              {item.badge ? <span className="adm_nav_badge">{item.badge}</span> : null}
-            </a>
-          ))}
-        </nav>
+        <div style={{ flex: 1, overflowY: 'auto' }}>
+          {!isMobile && <div className="sb_section"><div className="sb_section_label">General</div></div>}
+          <div style={{ padding: '0 14px' }}>
+            {navItems.map(n => (
+              <a key={n.label} href={n.path} className={`sb_link${n.active ? ' active' : ''}`}>
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d={n.icon} />
+                </svg>
+                <span>{n.label}</span>
+                {n.badge ? <span className="sb_badge">{n.badge}</span> : null}
+              </a>
+            ))}
+          </div>
 
-        <div className="adm_sidebar_footer">
-          <div className="adm_user_card">
-            {!isMobile && (
-              <div className="adm_user_avatar">
-                {(adminUser?.username || 'A')[0].toUpperCase()}
-              </div>
-            )}
-            {!isMobile && (
-              <div className="adm_user_info">
-                <div className="adm_user_name">{adminUser?.username || 'Admin'}</div>
-                <div className="adm_user_role">Administrator</div>
-              </div>
-            )}
-            <button className="adm_logout_btn" onClick={handleLogout} title="Sign Out">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          {!isMobile && <div className="sb_section" style={{ marginTop: 8 }}><div className="sb_section_label">Settings</div></div>}
+          <div style={{ padding: '0 14px' }}>
+            <a className="sb_link" href="#" onClick={e => { e.preventDefault(); handleLogout(); }}>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d={ICONS.logout} />
               </svg>
-            </button>
+              <span>Log Out</span>
+            </a>
           </div>
         </div>
+
+        {!isMobile && (
+          <div className="sb_foot">
+            <div className="sb_user">
+              <div className="sb_av">{(adminUser?.username || 'A')[0].toUpperCase()}</div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div className="sb_uname">{adminUser?.username || 'Admin'}</div>
+                <div className="sb_urole">Administrator</div>
+              </div>
+              <button className="sb_logout" onClick={handleLogout} title="Sign Out">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d={ICONS.logout} />
+                </svg>
+              </button>
+            </div>
+          </div>
+        )}
       </aside>
 
       {/* ════ MAIN ════ */}

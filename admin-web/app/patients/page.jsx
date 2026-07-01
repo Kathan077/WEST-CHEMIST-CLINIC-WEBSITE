@@ -410,6 +410,31 @@ export default function AdminPatientsPage() {
   const [selectedYear, setSelectedYear] = useState(2026);
   const [isMobile, setIsMobile] = useState(false);
 
+  const [currentView, setCurrentView] = useState('dashboard');
+
+  useEffect(() => {
+    const handleUrlChange = () => {
+      const params = new URLSearchParams(window.location.search);
+      const viewParam = params.get('view') || 'dashboard';
+      setCurrentView(viewParam);
+      if (viewParam === 'patients') {
+        setTimeout(() => {
+          const el = document.querySelector('.dash_table_section');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 150);
+      }
+    };
+    handleUrlChange();
+    // Listen for custom/popstate navigation changes
+    window.addEventListener('popstate', handleUrlChange);
+    // Periodically poll for URL query updates (since Next.js client routing doesn't always fire popstate on pushState)
+    const checkInterval = setInterval(handleUrlChange, 200);
+    return () => {
+      window.removeEventListener('popstate', handleUrlChange);
+      clearInterval(checkInterval);
+    };
+  }, []);
+
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 600);
     checkMobile();
@@ -452,11 +477,11 @@ export default function AdminPatientsPage() {
   const approved = appts.filter(a => a.status === 'approved').length;
 
   const nav = [
-    {label:'Dashboard',    path:'/admin/patients',     icon:ICONS.home,   active:true},
-    {label:'Appointments', path:'/admin/appointments', icon:ICONS.cal,    badge:pending||null},
-    {label:'Patients',     path:'/admin/patients',     icon:ICONS.users},
-    {label:'Compliance',   path:'/admin/compliance',   icon:ICONS.shield},
-    {label:'Services & Content', path:'/admin/services', icon:ICONS.edit},
+    {label:'Dashboard',    path:'/admin/patients',                   icon:ICONS.home,   active: currentView === 'dashboard'},
+    {label:'Appointments', path:'/admin/appointments',               icon:ICONS.cal,    badge:pending||null},
+    {label:'Patients',     path:'/admin/patients?view=patients',     icon:ICONS.users,  active: currentView === 'patients'},
+    {label:'Compliance',   path:'/admin/compliance',                 icon:ICONS.shield},
+    {label:'Services & Content', path:'/admin/services',             icon:ICONS.edit},
   ];
 
   // Helper for trend calculations (last 30 days vs 30 days before that)
