@@ -1,75 +1,116 @@
 "use client";
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { API_URL } from '@/config';
 import './NHSServices.css';
 
 const allServices = [
     { 
-        title: "Discharge Medicines Service", 
-        cat: "Advanced NHS", 
-        color: "#4B2D71", // Purple
-        img: "https://plus.unsplash.com/premium_photo-1661633534346-601931818296?w=600&q=80",
-        desc: "Coordinating your medication after hospital discharge." 
-    },
-    { 
-        title: "Dispensing Appliances", 
-        cat: "Essential Care", 
-        color: "#008473", // Teal
-        img: "https://images.unsplash.com/photo-1587854692152-cbe660dbbb88?w=600&q=80",
-        desc: "Supply and maintenance of essential medical appliances." 
-    },
-    { 
-        title: "Dispensing Medicines", 
-        cat: "Essential Care", 
-        color: "#FF6B35", // Orange
-        img: "https://plus.unsplash.com/premium_photo-1663040149075-8178a9c4038a?w=600&q=80",
-        desc: "Safe and accurate dispensing of prescriptions." 
-    },
-    { 
-        title: "Disposal of Unwanted Medicines", 
-        cat: "Essential Care", 
-        color: "#2D5A27", // Dark Green
-        img: "https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?w=600&q=80",
-        desc: "Safe disposal of unwanted or expired medication." 
-    },
-    { 
-        title: "Public Health Promotion", 
-        cat: "Essential Care", 
+        title: "Ear Ache Treatment", 
+        cat: "Pharmacy First", 
         color: "#4B2D71",
-        img: "https://plus.unsplash.com/premium_photo-1661266858277-226e6d15a51a?w=600&q=80",
-        desc: "Advice on healthy lifestyles and minor ailment management." 
+        img: "https://images.unsplash.com/photo-1559839734-2b71f1536783?w=600&q=80",
+        desc: "Treatment and advice for ear ache in children aged 1–17 years." 
     },
     { 
-        title: "Repeat Dispensing", 
-        cat: "Essential Care", 
+        title: "Impetigo Treatment", 
+        cat: "Pharmacy First", 
+        color: "#008473",
+        img: "https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?w=600&q=80",
+        desc: "Clinically assessed and treated impetigo without a GP visit." 
+    },
+    { 
+        title: "Infected Insect Bites", 
+        cat: "Pharmacy First", 
+        color: "#FF6B35",
+        img: "https://plus.unsplash.com/premium_photo-1661266858277-226e6d15a51a?w=600&q=80",
+        desc: "Fast treatment for infected insect bites and stings." 
+    },
+    { 
+        title: "Shingles Treatment", 
+        cat: "Pharmacy First", 
+        color: "#2D5A27",
+        img: "https://images.unsplash.com/photo-1550572017-ed200f5e6399?w=600&q=80",
+        desc: "Early antiviral treatment for shingles to reduce severity." 
+    },
+    { 
+        title: "Sinusitis Treatment", 
+        cat: "Pharmacy First", 
+        color: "#4B2D71",
+        img: "https://plus.unsplash.com/premium_photo-1663040149075-8178a9c4038a?w=600&q=80",
+        desc: "Assessment and treatment of acute sinusitis symptoms." 
+    },
+    { 
+        title: "Sore Throat Treatment", 
+        cat: "Pharmacy First", 
         color: "#008473",
         img: "https://plus.unsplash.com/premium_photo-1661339116345-217646ba4c81?w=600&q=80",
-        desc: "Management of your recurring prescriptions." 
+        desc: "Rapid strep testing and treatment for sore throats." 
     },
     { 
-        title: "Support for Self Care", 
-        cat: "Essential Care", 
+        title: "UTI Treatment", 
+        cat: "Pharmacy First", 
+        color: "#FF6B35",
+        img: "https://images.unsplash.com/photo-1587854692152-cbe660dbbb88?w=600&q=80",
+        desc: "Urinary tract infection assessment and antibiotic prescribing." 
+    },
+    { 
+        title: "Blood Pressure Testing", 
+        cat: "NHS Service", 
+        color: "#2D5A27",
+        img: "https://images.unsplash.com/photo-1579154236594-c199f3768fb9?w=600&q=80",
+        desc: "Free NHS blood pressure checks and hypertension monitoring." 
+    },
+    { 
+        title: "Contraception Service", 
+        cat: "NHS Service", 
+        color: "#4B2D71",
+        img: "https://plus.unsplash.com/premium_photo-1661633534346-601931818296?w=600&q=80",
+        desc: "Contraception and emergency contraception advice and supply." 
+    },
+    { 
+        title: "Flu Vaccination", 
+        cat: "NHS & Private", 
+        color: "#008473",
+        img: "https://plus.unsplash.com/premium_photo-1663040228302-3c87f0b8307d?w=600&q=80",
+        desc: "NHS and private seasonal flu vaccinations for all eligible patients." 
+    },
+    { 
+        title: "Covid Vaccination", 
+        cat: "NHS & Private", 
         color: "#FF6B35",
         img: "https://plus.unsplash.com/premium_photo-1661633465809-562725a3818e?w=600&q=80",
-        desc: "Guidelines for managing your health independently." 
+        desc: "NHS and private Covid-19 vaccinations and boosters." 
     },
     { 
-        title: "Signposting Service", 
-        cat: "Essential Care", 
+        title: "Meningitis B Vaccination", 
+        cat: "NHS & Private", 
         color: "#2D5A27",
-        img: "https://plus.unsplash.com/premium_photo-1663040228302-3c87f0b8307d?w=600&q=80",
-        desc: "Directing you to the most appropriate healthcare provider." 
-    },
-    { 
-        title: "New Medicine Service", 
-        cat: "Advanced NHS", 
-        color: "#4B2D71",
-        img: "https://images.unsplash.com/photo-1550572017-ed200f5e6399?w=600&q=80",
-        desc: "Support and advice for newly prescribed medications." 
+        img: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=600&q=80",
+        desc: "NHS and private Meningitis B vaccination for eligible patients." 
     }
 ];
 
 export default function NHSServices() {
     const gridRef = useRef(null);
+    const [services, setServices] = useState(allServices);
+
+    useEffect(() => {
+        const fetchServices = async () => {
+            try {
+                const res = await fetch(`${API_URL}/api/services`);
+                const json = await res.json();
+                if (res.ok && json.success && json.data.length > 0) {
+                    const nhs = json.data.filter(s => s.parentCategory === 'NHS Services (Pharmacy First)');
+                    if (nhs.length > 0) {
+                        setServices(nhs);
+                    }
+                }
+            } catch (err) {
+                console.error("Failed to fetch NHS services: ", err);
+            }
+        };
+        fetchServices();
+    }, []);
 
     useEffect(() => {
         const observer = new IntersectionObserver((entries) => {
@@ -80,11 +121,13 @@ export default function NHSServices() {
             });
         }, { threshold: 0.1 });
 
-        const items = gridRef.current.querySelectorAll('.ns_card');
-        items.forEach(item => observer.observe(item));
+        const items = gridRef.current?.querySelectorAll('.ns_card');
+        if (items) {
+            items.forEach(item => observer.observe(item));
+        }
 
         return () => observer.disconnect();
-    }, []);
+    }, [services]);
 
     return (
         <section className="ns_section">
@@ -92,11 +135,11 @@ export default function NHSServices() {
                 <div className="ns_header">
                     <span className="ns_eyebrow">Professional Pharma Care</span>
                     <h2 className="ns_title">NHS Pharmacy Services</h2>
-                    <p className="ns_desc">Explore our 9 essential clinical services designed to support your health and wellbeing within the NHS framework.</p>
+                    <p className="ns_desc">Explore our NHS Pharmacy First services, vaccination programmes, blood pressure checks, and contraception services — all available without a GP referral.</p>
                 </div>
 
                 <div className="ns_grid" ref={gridRef}>
-                    {allServices.map((s, idx) => (
+                    {services.map((s, idx) => (
                         <div 
                             className="ns_card" 
                             key={idx}
@@ -114,13 +157,13 @@ export default function NHSServices() {
                                 <div className="ns_actions">
                                     <button 
                                         className="ns_btn_view"
-                                        onClick={() => window.location.href = `/services/${s.title.toLowerCase().replace(/\s+/g, '-')}`}
+                                        onClick={() => window.location.href = `/services/${s.slug || s.title.toLowerCase().replace(/\s+/g, '-')}`}
                                     >
                                         View
                                     </button>
                                     <button 
                                         className="ns_btn_book"
-                                        onClick={() => window.location.href = '/book-appointment'}
+                                        onClick={() => window.location.href = `/book-appointment?service=${encodeURIComponent(s.title)}`}
                                     >
                                         Book Now
                                     </button>

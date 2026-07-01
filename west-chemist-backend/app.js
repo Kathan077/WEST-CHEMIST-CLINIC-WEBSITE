@@ -8,6 +8,9 @@ const patientRoutes = require('./routes/patientRoutes');
 const verificationRoutes = require('./routes/verificationRoutes');
 const appointmentRoutes = require('./routes/appointmentRoutes');
 const adminRoutes = require('./routes/adminRoutes');
+const serviceRoutes = require('./routes/serviceRoutes');
+const contentRoutes = require('./routes/contentRoutes');
+const categoryRoutes = require('./routes/categoryRoutes');
 
 // Initialize Express App
 const app = express();
@@ -73,6 +76,9 @@ app.use('/api/patients', patientRoutes);
 app.use('/api/verifications', verificationRoutes);
 app.use('/api/appointments', appointmentRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/services', serviceRoutes);
+app.use('/api/contents', contentRoutes);
+app.use('/api/categories', categoryRoutes);
 
 // Fallback 404 handler for unmatched routes
 app.use((req, res, next) => {

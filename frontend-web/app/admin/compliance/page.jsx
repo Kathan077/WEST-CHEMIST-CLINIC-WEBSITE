@@ -15,6 +15,7 @@ const ICONS = {
   cal:     "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z",
   users:   "M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2 M23 21v-2a4 4 0 00-3-3.87 M16 3.13a4 4 0 010 7.75",
   shield:  "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10",
+  edit:    "M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z",
   search:  "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0",
   logout:  "M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4 M16 17l5-5-5-5 M21 12H9",
   refresh: "M23 4v6h-6 M1 20v-6h6 M3.51 9a9 9 0 0114.85-3.36L23 10 M1 14l4.64 4.36A9 9 0 0020.49 15",
@@ -47,6 +48,14 @@ export default function AdminCompliancePage() {
   const [search, setSearch] = useState('');
   const [adminUser, setAdminUser] = useState(null);
   const [stats, setStats] = useState({ passed: 0, pending: 0, rejected: 0, total: 0 });
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 600);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const logout = () => {
     localStorage.removeItem('adminToken');
@@ -128,6 +137,7 @@ export default function AdminCompliancePage() {
     { label: 'Appointments', path: '/admin/appointments', icon: ICONS.cal },
     { label: 'Patients',     path: '/admin/patients',     icon: ICONS.users },
     { label: 'Compliance',   path: '/admin/compliance',   icon: ICONS.shield, active: true },
+    { label: 'Services & Content', path: '/admin/services', icon: ICONS.edit },
   ];
 
   const hr = new Date().getHours();
@@ -137,16 +147,18 @@ export default function AdminCompliancePage() {
     <div className="dash">
       {/* ══ SIDEBAR ══ */}
       <aside className="dash_sb">
-        <div className="sb_logo">
-          <div className="sb_logo_mark">W</div>
-          <div className="sb_logo_name">
-            West Chemist
-            <small>Admin Portal</small>
+        {!isMobile && (
+          <div className="sb_logo">
+            <div className="sb_logo_mark">W</div>
+            <div className="sb_logo_name">
+              West Chemist
+              <small>Admin Portal</small>
+            </div>
           </div>
-        </div>
+        )}
 
         <div style={{ flex: 1, overflowY: 'auto' }}>
-          <div className="sb_section"><div className="sb_section_label">General</div></div>
+          {!isMobile && <div className="sb_section"><div className="sb_section_label">General</div></div>}
           <div style={{ padding: '0 14px' }}>
             {nav.map(n => (
               <a key={n.label} href={n.path} className={`sb_link${n.active ? ' active' : ''}`}>
@@ -156,7 +168,7 @@ export default function AdminCompliancePage() {
             ))}
           </div>
 
-          <div className="sb_section" style={{ marginTop: 8 }}><div className="sb_section_label">Settings</div></div>
+          {!isMobile && <div className="sb_section" style={{ marginTop: 8 }}><div className="sb_section_label">Settings</div></div>}
           <div style={{ padding: '0 14px' }}>
             <a className="sb_link" href="#" onClick={e => { e.preventDefault(); logout(); }}>
               <I d={ICONS.logout} /><span>Log Out</span>
@@ -164,16 +176,18 @@ export default function AdminCompliancePage() {
           </div>
         </div>
 
-        <div className="sb_foot">
-          <div className="sb_user">
-            <div className="sb_av">{(adminUser?.username || 'A')[0].toUpperCase()}</div>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div className="sb_uname">{adminUser?.username || 'Admin'}</div>
-              <div className="sb_urole">Administrator</div>
+        {!isMobile && (
+          <div className="sb_foot">
+            <div className="sb_user">
+              <div className="sb_av">{(adminUser?.username || 'A')[0].toUpperCase()}</div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div className="sb_uname">{adminUser?.username || 'Admin'}</div>
+                <div className="sb_urole">Administrator</div>
+              </div>
+              <button className="sb_logout" onClick={logout} title="Sign Out"><I d={ICONS.logout} s={14} /></button>
             </div>
-            <button className="sb_logout" onClick={logout} title="Sign Out"><I d={ICONS.logout} s={14} /></button>
           </div>
-        </div>
+        )}
       </aside>
 
       {/* ══ MAIN ══ */}

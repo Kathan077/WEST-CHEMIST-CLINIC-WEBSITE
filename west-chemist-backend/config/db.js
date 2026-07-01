@@ -10,6 +10,10 @@ const connectDB = async () => {
     // Seed default administrator if DB is empty
     const { seedDefaultAdmin } = require('../controllers/adminController');
     await seedDefaultAdmin();
+
+    // Seed default services and page content if DB is empty
+    const seedServicesAndPages = require('./seedData');
+    await seedServicesAndPages();
   } catch (error) {
     console.error(`❌ Database connection error: ${error.message}`);
     process.exit(1); // Exit process with failure

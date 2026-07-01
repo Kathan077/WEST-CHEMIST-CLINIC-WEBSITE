@@ -87,7 +87,7 @@ export default function ServicesList() {
                                         </div>
                                     </div>
                                     <div className="sl_actions">
-                                        <Link href="/book-appointment" className="sl_btn_primary">Book Appointment</Link>
+                                        <Link href={`/book-appointment?service=${encodeURIComponent(service.title)}`} className="sl_btn_primary">Book Appointment</Link>
                                         <Link href={service.link} className="sl_btn_secondary">View Details</Link>
                                     </div>
                                 </div>

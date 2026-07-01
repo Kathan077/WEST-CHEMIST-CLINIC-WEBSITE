@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from 'react';
+import Link from 'next/link';
 import './Abouthero.css';
 
 export default function AboutHero() {
@@ -52,10 +53,10 @@ export default function AboutHero() {
                 </p>
                 
                 <div className="med_h_actions">
-                    <button className="med_btn_primary">
+                    <Link href="/book-appointment" className="med_btn_primary">
                         <span className="med_btn_text">Book an Appointment</span>
                         <div className="med_btn_hover_wave"></div>
-                    </button>
+                    </Link>
                 </div>
             </div>
 

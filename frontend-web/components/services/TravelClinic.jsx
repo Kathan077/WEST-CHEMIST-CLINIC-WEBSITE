@@ -1,25 +1,55 @@
 "use client";
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { API_URL } from '@/config';
 import './TravelClinic.css';
 
 const vaccines = [
-    "Diphtheria/Tetanus/Polio",
-    "Typhoid",
-    "Typhoid Oral",
-    "Hepatitis A & Typhoid Combined",
+    "Chikungunya",
+    "Cholera",
+    "Dengue Fever",
+    "DTP (Diphtheria/Tetanus/Polio)",
+    "MMR",
     "Hepatitis A",
     "Hepatitis B",
-    "Twinrix (Hepatitis A&B)",
-    "Cholera",
-    "Rabies",
-    "Meningitis ACWY with Certificate",
-    "Meningitis Menveo with Certificate",
     "Japanese Encephalitis",
-    "Tick-Borne Encephalitis"
+    "Meningitis ACWY",
+    "Meningitis B",
+    "Rabies",
+    "Tick-Borne Encephalitis",
+    "Typhoid",
+    "Yellow Fever",
+    "Malaria Tablets"
 ];
 
 export default function TravelClinic() {
     const listRef = useRef(null);
+    const [dynamicVaccines, setDynamicVaccines] = useState([]);
+
+    useEffect(() => {
+        const fetchVaccines = async () => {
+            try {
+                const res = await fetch(`${API_URL}/api/services`);
+                const json = await res.json();
+                if (res.ok && json.success && json.data.length > 0) {
+                    const travelSrvs = json.data.filter(s => s.parentCategory === 'Travel Clinic');
+                    if (travelSrvs.length > 0) {
+                        const filtered = travelSrvs
+                            .map(s => s.title)
+                            .filter(title => {
+                                const t = title.toLowerCase();
+                                return t !== 'travel clinic' && t !== 'comprehensive travel vaccinations' && t !== 'travel clinic service';
+                            });
+                        setDynamicVaccines(filtered);
+                    }
+                }
+            } catch (err) {
+                console.error("Failed to fetch Travel Clinic vaccines dynamically: ", err);
+            }
+        };
+        fetchVaccines();
+    }, []);
+
+    const activeVaccines = dynamicVaccines.length > 0 ? dynamicVaccines : vaccines;
 
     useEffect(() => {
         const observer = new IntersectionObserver((entries) => {
@@ -30,11 +60,13 @@ export default function TravelClinic() {
             });
         }, { threshold: 0.1 });
 
-        const items = listRef.current.querySelectorAll('.tc_vax_item');
-        items.forEach(item => observer.observe(item));
+        const items = listRef.current?.querySelectorAll('.tc_vax_item');
+        if (items) {
+            items.forEach(item => observer.observe(item));
+        }
 
         return () => observer.disconnect();
-    }, []);
+    }, [activeVaccines]);
 
     return (
         <section className="tc_section">
@@ -49,7 +81,7 @@ export default function TravelClinic() {
                             Our experts provide personalised advice and essential immunisations 
                             for global destinations.
                         </p>
-                        <button className="tc_btn">
+                        <button className="tc_btn" onClick={() => window.location.href = '/book-appointment?service=Travel%20Clinic'}>
                             Start Now
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                         </button>
@@ -59,7 +91,7 @@ export default function TravelClinic() {
                     <div className="tc_list_box">
                         <h3 className="tc_list_title">Available Vaccinations</h3>
                         <div className="tc_vax_grid" ref={listRef}>
-                            {vaccines.map((v, idx) => (
+                            {activeVaccines.map((v, idx) => (
                                 <div className="tc_vax_item" key={idx} style={{ '--delay': `${idx * 0.05}s` }}>
                                     <div className="tc_check">
                                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>

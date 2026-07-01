@@ -537,6 +537,14 @@ export default function AdminAppointmentsPage() {
   const [modalAppt,    setModalAppt]     = useState(null);
   const [viewingAppt,  setViewingAppt]   = useState(null);
   const [spinning,     setSpinning]      = useState(false);
+  const [isMobile,     setIsMobile]      = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 600);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const showToast = (message, type = 'success') => {
     setToast({ message, type, id: Date.now() });
@@ -647,7 +655,9 @@ export default function AdminAppointmentsPage() {
   const navItems = [
     { label: 'Dashboard',    path: '/admin/patients',     icon: ICONS.hospital  },
     { label: 'Appointments', path: '/admin/appointments', icon: ICONS.calendar, active: true, badge: stats.pending || null },
+    { label: 'Patients',     path: '/admin/patients',     icon: ICONS.users     },
     { label: 'Compliance',   path: '/admin/compliance',   icon: ICONS.shield    },
+    { label: 'Services & Content', path: '/admin/services', icon: ICONS.edit      },
   ];
 
   return (
@@ -694,12 +704,14 @@ export default function AdminAppointmentsPage() {
 
       {/* ════ SIDEBAR ════ */}
       <aside className="adm_sidebar">
-        <div className="adm_logo">
-          <div className="adm_logo_icon">W</div>
-          <div className="adm_logo_text">
-            WEST<br /><span>CHEMIST</span>
+        {!isMobile && (
+          <div className="adm_logo">
+            <div className="adm_logo_icon">W</div>
+            <div className="adm_logo_text">
+              WEST<br /><span>CHEMIST</span>
+            </div>
           </div>
-        </div>
+        )}
 
         <nav className="adm_nav">
           {navItems.map(item => (
@@ -721,13 +733,17 @@ export default function AdminAppointmentsPage() {
 
         <div className="adm_sidebar_footer">
           <div className="adm_user_card">
-            <div className="adm_user_avatar">
-              {(adminUser?.username || 'A')[0].toUpperCase()}
-            </div>
-            <div className="adm_user_info">
-              <div className="adm_user_name">{adminUser?.username || 'Admin'}</div>
-              <div className="adm_user_role">Administrator</div>
-            </div>
+            {!isMobile && (
+              <div className="adm_user_avatar">
+                {(adminUser?.username || 'A')[0].toUpperCase()}
+              </div>
+            )}
+            {!isMobile && (
+              <div className="adm_user_info">
+                <div className="adm_user_name">{adminUser?.username || 'Admin'}</div>
+                <div className="adm_user_role">Administrator</div>
+              </div>
+            )}
             <button className="adm_logout_btn" onClick={handleLogout} title="Sign Out">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -935,54 +951,56 @@ export default function AdminAppointmentsPage() {
 
                   {/* Date & Time */}
                   <div className="adm_td">
-                    <div className="adm_datetime">
-                      {new Date(appt.date).toLocaleDateString('en-GB', {
-                        weekday: 'short', day: 'numeric', month: 'short', year: 'numeric'
-                      })}
-                    </div>
-                    <div className="adm_time">
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ marginRight: 4, verticalAlign: 'middle', opacity: 0.7 }}>
-                        <circle cx="12" cy="12" r="10" />
-                        <polyline points="12 6 12 12 16 14" />
-                      </svg>
-                      <span style={{ verticalAlign: 'middle' }}>{appt.time}</span>
-                    </div>
-                    <div style={{ marginTop: 6 }}>
-                      <span className={isVirtual ? 'clinic_virtual' : 'clinic_physical'}>
-                        {isVirtual ? (
-                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ marginRight: 4, verticalAlign: 'middle' }}>
-                            <path d="M23 7l-7 5 7 5V7z" />
-                            <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
-                          </svg>
-                        ) : (
-                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ marginRight: 4, verticalAlign: 'middle' }}>
-                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                            <circle cx="12" cy="10" r="3" />
-                          </svg>
-                        )}
-                        <span style={{ verticalAlign: 'middle' }}>{displayClinic}</span>
-                      </span>
-                    </div>
-                    {appt.isRescheduleRequested && appt.rescheduledDate && (
-                      <div style={{
-                        marginTop: 6,
-                        fontSize: '0.75rem',
-                        fontWeight: '700',
-                        color: '#5e35b1',
-                        background: 'rgba(94, 53, 177, 0.08)',
-                        padding: '3px 8px',
-                        borderRadius: '6px',
-                        display: 'inline-block',
-                        border: '1px solid rgba(94, 53, 177, 0.15)'
-                      }}>
-                        🔄 Reschedule: {new Date(appt.rescheduledDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })} @ {appt.rescheduledTime}
+                    <div className="adm_datetime_wrapper">
+                      <div className="adm_datetime">
+                        {new Date(appt.date).toLocaleDateString('en-GB', {
+                          weekday: 'short', day: 'numeric', month: 'short', year: 'numeric'
+                        })}
                       </div>
-                    )}
-                    {!appt.isRescheduleRequested && appt.rescheduledDate && (
-                      <div className="adm_was_scheduled">
-                        Was: {appt.rescheduledDate} {appt.rescheduledTime}
+                      <div className="adm_time">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ marginRight: 4, verticalAlign: 'middle', opacity: 0.7 }}>
+                          <circle cx="12" cy="12" r="10" />
+                          <polyline points="12 6 12 12 16 14" />
+                        </svg>
+                        <span style={{ verticalAlign: 'middle' }}>{appt.time}</span>
                       </div>
-                    )}
+                      <div style={{ marginTop: 6 }}>
+                        <span className={isVirtual ? 'clinic_virtual' : 'clinic_physical'}>
+                          {isVirtual ? (
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ marginRight: 4, verticalAlign: 'middle' }}>
+                              <path d="M23 7l-7 5 7 5V7z" />
+                              <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+                            </svg>
+                          ) : (
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ marginRight: 4, verticalAlign: 'middle' }}>
+                              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                              <circle cx="12" cy="10" r="3" />
+                            </svg>
+                          )}
+                          <span style={{ verticalAlign: 'middle' }}>{displayClinic}</span>
+                        </span>
+                      </div>
+                      {appt.isRescheduleRequested && appt.rescheduledDate && (
+                        <div style={{
+                          marginTop: 6,
+                          fontSize: '0.75rem',
+                          fontWeight: '700',
+                          color: '#5e35b1',
+                          background: 'rgba(94, 53, 177, 0.08)',
+                          padding: '3px 8px',
+                          borderRadius: '6px',
+                          display: 'inline-block',
+                          border: '1px solid rgba(94, 53, 177, 0.15)'
+                        }}>
+                          🔄 Reschedule: {new Date(appt.rescheduledDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })} @ {appt.rescheduledTime}
+                        </div>
+                      )}
+                      {!appt.isRescheduleRequested && appt.rescheduledDate && (
+                        <div className="adm_was_scheduled">
+                          Was: {appt.rescheduledDate} {appt.rescheduledTime}
+                        </div>
+                      )}
+                    </div>
                   </div>
 
                   {/* Status */}

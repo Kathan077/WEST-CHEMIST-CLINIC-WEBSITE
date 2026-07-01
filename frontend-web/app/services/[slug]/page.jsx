@@ -1,8 +1,9 @@
 "use client";
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import './ServiceDetail.css';
+import { API_URL } from '@/config';
 
 // Comprehensive data mapper for all services
 const serviceData = {
@@ -307,14 +308,57 @@ const serviceData = {
 export default function ServiceDetail() {
     const params = useParams();
     const slug = params.slug;
-    const service = serviceData[slug] || {
-        title: slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '),
-        cat: "Clinical",
-        img: "https://images.unsplash.com/photo-1584308919139-332c34f370d5?w=1200&q=80",
-        desc: "Comprehensive pharmaceutical care and consultation provided by our expert medical team.",
-        duration: "15-30 Mins",
-        features: ["GPHC Certified Staff", "Private Consulting Room", "Professional Advice", "Same-Day Availability"]
-    };
+
+    const [service, setService] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchService = async () => {
+            try {
+                const res = await fetch(`${API_URL}/api/services/${slug}`);
+                const json = await res.json();
+                if (res.ok && json.success && json.data) {
+                    setService(json.data);
+                } else {
+                    setService(serviceData[slug] || null);
+                }
+            } catch (err) {
+                console.error("Error fetching service: ", err);
+                setService(serviceData[slug] || null);
+            } finally {
+                setLoading(false);
+            }
+        };
+        if (slug) {
+            fetchService();
+        }
+    }, [slug]);
+
+    if (loading) {
+        return (
+            <div style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--t3)', fontFamily: 'inherit' }}>
+                <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontSize: '1.5rem', fontWeight: 700, color: '#4B2D71', marginBottom: '12px' }}>Loading service...</div>
+                    <p>Fetching clinical details and credentials...</p>
+                </div>
+            </div>
+        );
+    }
+
+    if (!service) {
+        return (
+            <div style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--t3)', fontFamily: 'inherit' }}>
+                <div style={{ textAlign: 'center', padding: '24px', maxWidth: '400px' }}>
+                    <div style={{ fontSize: '3rem', marginBottom: '16px' }}>🔍</div>
+                    <div style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--t1)', marginBottom: '12px' }}>Service Not Found</div>
+                    <p style={{ marginBottom: '24px' }}>The requested clinical service does not exist or has been moved.</p>
+                    <Link href="/" style={{ background: '#4B2D71', color: 'white', padding: '10px 20px', borderRadius: '8px', textDecoration: 'none', fontWeight: 700 }}>
+                        Return to Homepage
+                    </Link>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="sd_page">
@@ -376,7 +420,7 @@ export default function ServiceDetail() {
                                         <span>Consultation: {service.duration}</span>
                                     </div>
                                 </div>
-                                <Link href="/book-appointment" className="sd_book_btn">
+                                <Link href={`/book-appointment?service=${encodeURIComponent(service.title)}`} className="sd_book_btn">
                                     Book Your Appointment
                                 </Link>
                                 <div className="sd_card_footer">

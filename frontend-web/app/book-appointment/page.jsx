@@ -2,7 +2,7 @@
 
 import { API_URL } from '@/config';
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Navbar from '../../components/layout/Navbar';
 import Footer from '../../components/layout/Footer';
 import './Booking.css';
@@ -13,14 +13,69 @@ const CLINICS = [
 ];
 
 const SERVICES = [
-    { group: "NHS Services", items: ["Blood Pressure Check", "UTI Treatment (Pharmacy First)", "Shingles Treatment", "Sinusitis Service", "Sore Throat Service", "Ear Infection (Otitis Media)", "Flu Vaccination", "New Medicine Service", "Discharge Medicines Service"] },
-    { group: "Private Clinical", items: ["Earwax Removal", "Heart Health Check", "Strep A Test & Treat", "Cryotherapy", "Blood Testing", "Dispensing Medicines"] },
-    { group: "Weight Management", items: ["Wegovy Weight Loss", "Mounjaro Injections"] },
-    { group: "Aesthetics", items: ["Aesthetics Clinic", "Microneedling"] },
-    { group: "Travel Vaccines", items: ["Travel Clinic", "Diphtheria / Tetanus / Polio", "Typhoid (Injection)", "Typhoid (Oral)", "Hep A & Typhoid Combined", "Hepatitis A", "Hepatitis B", "Twinrix (Hep A & B Combined)", "Cholera (Dukoral)", "Rabies Pre-Exposure", "Meningitis ACWY", "Meningitis Menveo", "Japanese Encephalitis", "Tick-Borne Encephalitis"] },
-    { group: "Routine Vaccines", items: ["Chickenpox Vaccine", "Chikungunya Vaccine", "HPV Vaccine"] }
+    { 
+        group: "Private Services", 
+        items: [
+            "Period Delay Service",
+            "Weight Loss Management",
+            "Ear Wax Removal",
+            "Cryotherapy",
+            "Travel Clinic"
+        ] 
+    },
+    { 
+        group: "NHS Services — Pharmacy First", 
+        items: [
+            "Ear Ache Treatment (Age 1-17)",
+            "Impetigo Treatment",
+            "Infected Insect Bites Treatment",
+            "Shingles Treatment",
+            "Sinusitis Treatment",
+            "Sore Throat Treatment",
+            "Urinary Tract Infection (UTI) Treatment"
+        ] 
+    },
+    { 
+        group: "NHS Services — Clinical", 
+        items: [
+            "Blood Pressure Testing",
+            "Contraception Service",
+            "Emergency Contraception Service"
+        ] 
+    },
+    { 
+        group: "NHS & Private Vaccinations", 
+        items: [
+            "Seasonal Flu Vaccination (NHS)",
+            "Seasonal Flu Vaccination (Private)",
+            "Covid Vaccination (NHS)",
+            "Covid Vaccination (Private)",
+            "Meningitis B Vaccination (NHS)",
+            "Meningitis B Vaccination (Private)"
+        ] 
+    },
+    { 
+        group: "Travel Clinic — Vaccines & Tablets", 
+        items: [
+            "Chikungunya",
+            "Cholera",
+            "Dengue Fever",
+            "DTP (Diphtheria / Tetanus / Polio)",
+            "MMR",
+            "Hepatitis A",
+            "Hepatitis B",
+            "Japanese Encephalitis",
+            "Meningitis ACWY",
+            "Meningitis B",
+            "Rabies",
+            "Tick-Borne Encephalitis",
+            "Typhoid",
+            "Yellow Fever",
+            "Malaria Tablets"
+        ] 
+    }
 ];
-
+    
 const TIMES = ["09:00 AM", "09:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "01:00 PM", "01:30 PM", "02:00 PM", "02:30 PM", "03:00 PM", "04:00 PM"];
 
 const STEPS = [
@@ -73,6 +128,7 @@ const isSlotInPast = (slotTime, selectedDateStr) => {
 
 export default function BookingPage() {
     const router = useRouter();
+    const searchParams = useSearchParams();
 
     // ── Session Storage key ──
     const SESSION_KEY = 'wcc_booking_session';
@@ -100,9 +156,45 @@ export default function BookingPage() {
     const [availableSlots, setAvailableSlots] = useState([]);
     const [loading, setLoading] = useState(false);
     const [apiError, setApiError] = useState('');
+    const [dynamicServices, setDynamicServices] = useState(SERVICES);
 
-    // ── Restore session AFTER mount (client-only, avoids hydration mismatch) ──
     useEffect(() => {
+        const fetchServices = async () => {
+            try {
+                const res = await fetch(`${API_URL}/api/services`);
+                const json = await res.json();
+                if (res.ok && json.success && json.data.length > 0) {
+                    const groups = {};
+                    json.data.forEach(s => {
+                        const cat = s.parentCategory || s.cat || "General Service";
+                        if (!groups[cat]) {
+                            groups[cat] = [];
+                        }
+                        groups[cat].push(s.title);
+                    });
+                    const formatted = Object.keys(groups).map(g => ({
+                        group: g,
+                        items: groups[g]
+                    }));
+                    setDynamicServices(formatted);
+                }
+            } catch (err) {
+                console.error("Failed to load dynamic booking services: ", err);
+            }
+        };
+        fetchServices();
+    }, []);
+
+    // ── Auto-fill service from URL param OR restore session ──
+    useEffect(() => {
+        const preService = searchParams.get('service');
+        if (preService) {
+            // Coming from a service detail page — clear stale session so pre-fill wins
+            clearSession();
+            setFormData(prev => ({ ...prev, service: preService }));
+            return;
+        }
+        // Restore saved session (client-only, avoids hydration mismatch)
         try {
             const raw = sessionStorage.getItem(SESSION_KEY);
             if (raw) {
@@ -590,7 +682,7 @@ export default function BookingPage() {
                                         <div className="bk_field_icon_wrapper">
                                             <select className="bk_input" name="service" value={formData.service} onChange={handle}>
                                                 <option value="">Select healthcare appointment type...</option>
-                                                {SERVICES.map(g => (
+                                                {dynamicServices.map(g => (
                                                     <optgroup key={g.group} label={`── ${g.group}`}>
                                                         {g.items.map(s => <option key={s}>{s}</option>)}
                                                     </optgroup>

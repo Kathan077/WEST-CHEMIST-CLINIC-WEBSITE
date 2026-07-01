@@ -378,3 +378,28 @@
         justify-content: center;
     }
 }
+
+@media (max-width: 450px) {
+    .right_panel {
+        padding: 24px 16px !important;
+    }
+    .logo_section {
+        margin-bottom: 24px !important;
+    }
+    .logo_text {
+        font-size: 1.5rem !important;
+    }
+    .input_field {
+        padding: 12px !important;
+        font-size: 0.9rem !important;
+    }
+    .login_button {
+        margin-top: 20px !important;
+        padding: 12px 20px !important;
+    }
+    .forgot_link, .signup_container {
+        font-size: 0.85rem !important;
+        margin-top: 16px !important;
+    }
+}
+
