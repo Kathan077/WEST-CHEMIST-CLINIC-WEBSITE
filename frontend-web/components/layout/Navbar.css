@@ -1048,7 +1048,7 @@
 @media (max-width: 768px) {
     .navbar {
         height: 68px;
-        padding: 0 24px;
+        padding: 0 20px;
     }
 
     .navbar.scrolled {
@@ -1056,11 +1056,11 @@
     }
 
     .logo_img {
-        height: 160px;
+        height: 52px;
     }
 
     .navbar.scrolled .logo_img {
-        height: 150px;
+        height: 44px;
     }
 
     .nav_links {
@@ -1073,19 +1073,21 @@
 ════════════════════════════════════ */
 @media (max-width: 480px) {
     .navbar {
-        height: 64px;
-        padding: 0 18px;
+        height: 62px;
+        padding: 0 16px;
     }
 
     .navbar.scrolled {
-        height: 54px;
+        height: 52px;
     }
 
     .logo_img {
-        height: 140px;
+        height: 46px;
     }
 
-
+    .navbar.scrolled .logo_img {
+        height: 38px;
+    }
 
     .nav_links {
         width: min(300px, 85vw);
@@ -1131,9 +1133,9 @@
 }
 
 /* ════════════════════════════════════
-   375px — iPhone SE
+   425px — iPhone Pro / Galaxy A
 ════════════════════════════════════ */
-@media (max-width: 375px) {
+@media (max-width: 425px) {
     .navbar {
         height: 60px;
         padding: 0 14px;
@@ -1144,37 +1146,39 @@
     }
 
     .logo_img {
-        height: 120px;
+        height: 42px;
     }
 
-
+    .navbar.scrolled .logo_img {
+        height: 36px;
+    }
 
     .nav_links {
-        width: 88vw;
+        width: 90vw;
     }
 
     .nav_link {
-        font-size: 0.9rem;
-        padding: 11px 14px;
-    }
-
-    .mobile_cta_container .cta_button {
-        font-size: 0.875rem;
-        padding: 11px 14px;
+        font-size: 0.925rem;
+        padding: 12px 14px;
     }
 
     .menu_toggle {
         width: 38px;
         height: 38px;
     }
+
+    .mobile_cta_container .cta_button {
+        font-size: 0.875rem;
+        padding: 11px 14px;
+    }
 }
 
 /* ════════════════════════════════════
-   320px — Galaxy S8
+   375px — iPhone SE
 ════════════════════════════════════ */
-@media (max-width: 320px) {
+@media (max-width: 375px) {
     .navbar {
-        height: 56px;
+        height: 58px;
         padding: 0 12px;
     }
 
@@ -1183,7 +1187,52 @@
     }
 
     .logo_img {
-        height: 120px;
+        height: 38px;
+    }
+
+    .navbar.scrolled .logo_img {
+        height: 32px;
+    }
+
+    .nav_links {
+        width: 92vw;
+    }
+
+    .nav_link {
+        font-size: 0.9rem;
+        padding: 11px 12px;
+    }
+
+    .mobile_cta_container .cta_button {
+        font-size: 0.85rem;
+        padding: 10px 12px;
+    }
+
+    .menu_toggle {
+        width: 36px;
+        height: 36px;
+    }
+}
+
+/* ════════════════════════════════════
+   320px — Galaxy S8
+════════════════════════════════════ */
+@media (max-width: 320px) {
+    .navbar {
+        height: 54px;
+        padding: 0 10px;
+    }
+
+    .navbar.scrolled {
+        height: 46px;
+    }
+
+    .logo_img {
+        height: 34px;
+    }
+
+    .navbar.scrolled .logo_img {
+        height: 28px;
     }
 
 

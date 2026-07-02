@@ -179,9 +179,10 @@ const seedAboutDataIfEmpty = async () => {
 // @access  Public
 const getAboutItems = async (req, res) => {
   try {
-    await seedAboutDataIfEmpty();
+    // await seedAboutDataIfEmpty();
 
-    // Auto-migrate old brain paths
+    // Auto-migrate old brain paths disabled to keep admin custom images
+    /*
     const oldFlagshipPath = '/brain/a9794728-9bd2-4101-a344-91ef761459ce/clinic_branch_flagship_1777976049702.png';
     const oldVirtualPath = '/brain/a9794728-9bd2-4101-a344-91ef761459ce/clinic_branch_secondary_1777976804540.png';
 
@@ -212,6 +213,7 @@ const getAboutItems = async (req, res) => {
         await b.save();
       }
     }
+    */
 
     const items = await AboutItem.find();
     res.status(200).json({

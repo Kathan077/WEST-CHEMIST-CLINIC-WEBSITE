@@ -144,10 +144,14 @@ export default function NHSServices() {
                             className="ns_card" 
                             key={idx}
                             style={{ 
-                                '--bg': s.color,
+                                '--bg': idx % 2 === 0 ? '#008473' : '#4B2D71',
                                 '--delay': `${idx * 0.1}s`
                             }}
                         >
+                            <div className="ns_card_bottom">
+                                <img src={s.img} alt={s.title} className="ns_image" />
+                                <div className="ns_image_gradient" />
+                            </div>
                             <div className="ns_card_top">
                                 <div className="ns_meta">
                                     <span className="ns_cat">{s.cat}</span>
@@ -168,10 +172,6 @@ export default function NHSServices() {
                                         Book Now
                                     </button>
                                 </div>
-                            </div>
-                            <div className="ns_card_bottom">
-                                <img src={s.img} alt={s.title} className="ns_image" />
-                                <div className="ns_image_gradient" />
                             </div>
                         </div>
                     ))}

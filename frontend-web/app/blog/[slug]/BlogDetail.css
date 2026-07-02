@@ -95,6 +95,7 @@
     display: grid;
     grid-template-columns: 1fr 380px;
     gap: 60px;
+    align-items: start;
 }
 
 .bd_content_col {
@@ -238,6 +239,8 @@
     flex-direction: column;
     gap: 30px;
     align-self: start;
+    position: sticky;
+    top: 100px;
 }
 
 .bd_booking_card {
@@ -249,8 +252,6 @@
     display: flex;
     flex-direction: column;
     gap: 24px;
-    position: sticky;
-    top: calc(50vh - 220px);
 }
 
 .bd_card_header {

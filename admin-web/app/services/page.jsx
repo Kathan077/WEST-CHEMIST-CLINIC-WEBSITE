@@ -21,6 +21,7 @@ const ICONS = {
   plus:    "M12 5v14M5 12h14",
   trash:   "M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2",
   doc:     "M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z M14 2v6h6 M16 13H8 M16 17H8 M10 9H8",
+  info:    "M12 16v-4 M12 8h.01 M12 2a10 10 0 1010 10A10 10 0 0012 2z",
 };
 
 export default function AdminServicesPage() {
@@ -412,6 +413,7 @@ export default function AdminServicesPage() {
     { label: 'Compliance',        path: '/admin/compliance',               icon: ICONS.shield },
     { label: 'Services & Content', path: '/admin/services',                icon: ICONS.edit, active: true },
     { label: 'Blog Manager',       path: '/admin/blog',                    icon: ICONS.doc },
+    { label: 'About Page',        path: '/admin/about',                    icon: ICONS.info },
   ];
 
   // Filtering local list

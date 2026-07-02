@@ -921,9 +921,616 @@
   .preview_layout_grid {
     grid-template-columns: 1fr;
   }
-  
   .preview_booking_card {
     position: static;
     transform: none;
+  }
+  .editor_workspace {
+    grid-template-columns: 1fr;
+    padding: 24px;
+    gap: 24px;
+  }
+  .preview_pane {
+    border-left: none;
+    border-top: 1.5px solid var(--border);
+    padding-left: 0;
+    padding-top: 24px;
+    margin-top: 0;
+  }
+  .blog_mgr_container {
+    padding: 24px 28px 28px;
+  }
+  .blog_tabs_row {
+    padding: 0 28px;
+  }
+}
+
+/* ── 768px — Tablets ── */
+@media (max-width: 768px) {
+  .blog_tabs_row {
+    padding: 0 16px;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .blog_tabs_row::-webkit-scrollbar {
+    display: none;
+  }
+  .blog_tab_btn {
+    padding: 13px 16px 11px;
+    font-size: .88rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .blog_mgr_container {
+    padding: 18px 16px 24px;
+    gap: 18px;
+  }
+
+  .blog_toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 14px 16px;
+    gap: 12px;
+  }
+  .blog_search_box {
+    max-width: 100%;
+  }
+  .create_blog_btn {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .blog_grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .editor_workspace {
+    padding: 18px 16px;
+    gap: 20px;
+    border-radius: 12px;
+  }
+  .editor_toolbar {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .toolbar_btn {
+    padding: 5px 10px;
+    font-size: .72rem;
+  }
+  .editor_content_editable {
+    min-height: 220px;
+    max-height: 380px;
+  }
+  .form_action_bar {
+    flex-direction: column-reverse;
+    gap: 10px;
+  }
+  .form_btn_cancel,
+  .form_btn_save {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .preview_pane {
+    max-height: none;
+  }
+  .preview_main_img_box {
+    height: 200px;
+  }
+  .preview_article_title {
+    font-size: 1.25rem;
+  }
+
+  .adm_modal {
+    width: 95%;
+    padding: 20px;
+  }
+}
+
+/* ── 600px — Large Phones ── */
+@media (max-width: 600px) {
+  .blog_grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .blog_card_img_container {
+    height: 160px;
+  }
+  .blog_card_content {
+    padding: 16px;
+  }
+  .blog_card_title {
+    font-size: .95rem;
+    height: auto;
+    -webkit-line-clamp: 3;
+  }
+  .blog_card_desc {
+    font-size: .8rem;
+    height: auto;
+    -webkit-line-clamp: 2;
+  }
+  .blog_card_actions {
+    gap: 8px;
+    padding-top: 12px;
+  }
+  .blog_btn_edit,
+  .blog_btn_delete {
+    padding: 7px 10px;
+    font-size: .74rem;
+  }
+
+  .editor_pane_title {
+    font-size: 1rem;
+  }
+  .editor_title_bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding-bottom: 14px;
+  }
+  .editor_back_btn {
+    font-size: .82rem;
+  }
+
+  .external_image_input_row {
+    flex-direction: column;
+  }
+  .add_url_btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .preview_main_img_box {
+    height: 175px;
+    border-radius: 10px;
+  }
+}
+
+/* ── 480px — Small Phones ── */
+@media (max-width: 480px) {
+  .blog_tabs_row {
+    padding: 0 12px;
+  }
+  .blog_tab_btn {
+    padding: 12px 14px 10px;
+    font-size: .86rem;
+    gap: 6px;
+  }
+  .blog_tab_btn svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .blog_mgr_container {
+    padding: 14px 12px 20px;
+    gap: 14px;
+  }
+
+  .blog_toolbar {
+    padding: 12px;
+    border-radius: 10px;
+  }
+  .blog_search_input {
+    padding: 9px 12px 9px 38px;
+    font-size: .82rem;
+    border-radius: 10px;
+  }
+  .create_blog_btn {
+    padding: 10px 16px;
+    font-size: .8rem;
+    border-radius: 10px;
+  }
+
+  .editor_workspace {
+    padding: 14px 12px;
+    gap: 16px;
+    border-radius: 10px;
+  }
+  .form_input, .form_select {
+    padding: 10px 12px;
+    font-size: .82rem;
+    border-radius: 8px;
+  }
+  .editor_toolbar {
+    padding: 5px;
+    gap: 3px;
+  }
+  .toolbar_btn {
+    padding: 5px 8px;
+    font-size: .7rem;
+    border-radius: 5px;
+  }
+  .editor_content_editable {
+    min-height: 200px;
+    padding: 12px;
+    font-size: .86rem;
+  }
+
+  .uploader_dropzone {
+    padding: 18px 12px;
+  }
+  .uploader_text {
+    font-size: .75rem;
+  }
+  .photo_previews_grid {
+    grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+    gap: 8px;
+  }
+  .photo_preview_wrapper {
+    width: 64px;
+    height: 64px;
+  }
+
+  .form_btn_cancel,
+  .form_btn_save {
+    padding: 10px 18px;
+    font-size: .82rem;
+    border-radius: 10px;
+  }
+
+  .preview_article_title {
+    font-size: 1.1rem;
+  }
+  .preview_article_body {
+    font-size: .84rem;
+    line-height: 1.6;
+  }
+  .preview_main_img_box {
+    height: 155px;
+  }
+  .preview_book_btn {
+    font-size: .74rem;
+    padding: 9px;
+  }
+
+  .adm_modal {
+    padding: 18px 16px;
+    border-radius: 14px;
+  }
+}
+
+/* ── 425px — iPhone Pro / Galaxy ── */
+@media (max-width: 425px) {
+  .blog_tab_btn {
+    padding: 11px 12px 9px;
+    font-size: .85rem;
+    gap: 5px;
+  }
+
+  .blog_mgr_container {
+    padding: 12px 10px 18px;
+    gap: 12px;
+  }
+
+  .blog_card_img_container {
+    height: 145px;
+  }
+  .blog_card_content {
+    padding: 14px;
+  }
+  .blog_card_title {
+    font-size: .9rem;
+  }
+  .blog_card_desc {
+    font-size: .78rem;
+  }
+  .blog_card_url {
+    font-size: .66rem;
+  }
+
+  .editor_workspace {
+    padding: 12px 10px;
+  }
+  .editor_pane_title {
+    font-size: .95rem;
+  }
+  .form_label {
+    font-size: .8rem;
+  }
+  .form_input, .form_select {
+    font-size: .8rem;
+  }
+
+  .preview_main_img_box {
+    height: 140px;
+    border-radius: 8px;
+  }
+  .preview_thumbnail_box {
+    width: 48px;
+    height: 48px;
+  }
+  .preview_article_title {
+    font-size: 1rem;
+  }
+  .preview_card_title {
+    font-size: .95rem !important;
+  }
+  .preview_booking_card {
+    padding: 14px;
+    gap: 12px;
+    border-radius: 14px;
+  }
+  .preview_book_btn {
+    font-size: .72rem;
+    padding: 8px;
+  }
+  .preview_trust_badge {
+    font-size: .58rem;
+  }
+
+  .adm_modal {
+    width: 97%;
+    padding: 16px 14px;
+  }
+}
+
+/* ── 375px — iPhone SE / Standard ── */
+@media (max-width: 375px) {
+  .blog_tabs_row {
+    padding: 0 8px;
+  }
+  .blog_tab_btn {
+    padding: 10px 10px 8px;
+    font-size: .84rem;
+    gap: 4px;
+  }
+  .blog_tab_btn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .blog_mgr_container {
+    padding: 10px 8px 16px;
+    gap: 10px;
+  }
+
+  .blog_toolbar {
+    padding: 10px;
+    gap: 10px;
+    border-radius: 8px;
+  }
+  .blog_search_input {
+    padding: 8px 10px 8px 34px;
+    font-size: .78rem;
+  }
+  .create_blog_btn {
+    padding: 9px 14px;
+    font-size: .76rem;
+    gap: 6px;
+  }
+
+  .blog_card_img_container {
+    height: 130px;
+  }
+  .blog_card_content {
+    padding: 12px;
+  }
+  .blog_card_title {
+    font-size: .86rem;
+    height: auto;
+  }
+  .blog_card_desc {
+    font-size: .76rem;
+    height: auto;
+  }
+  .blog_btn_edit,
+  .blog_btn_delete {
+    padding: 6px 8px;
+    font-size: .7rem;
+    gap: 4px;
+  }
+  .blog_btn_edit svg,
+  .blog_btn_delete svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .editor_workspace {
+    padding: 10px 8px;
+    gap: 14px;
+  }
+  .editor_pane_title {
+    font-size: .88rem;
+  }
+  .form_input, .form_select {
+    padding: 9px 10px;
+    font-size: .78rem;
+    border-radius: 8px;
+  }
+  .toolbar_btn {
+    padding: 4px 7px;
+    font-size: .66rem;
+  }
+  .editor_content_editable {
+    min-height: 180px;
+    padding: 10px;
+    font-size: .82rem;
+    border-radius: 0 0 8px 8px;
+  }
+  .form_btn_cancel,
+  .form_btn_save {
+    padding: 9px 14px;
+    font-size: .78rem;
+  }
+
+  .preview_main_img_box {
+    height: 120px;
+  }
+  .preview_article_title {
+    font-size: .95rem;
+  }
+  .preview_article_body {
+    font-size: .8rem;
+  }
+  .preview_booking_card {
+    padding: 12px;
+    gap: 10px;
+    border-radius: 12px;
+  }
+  .preview_book_btn {
+    font-size: .7rem;
+    padding: 7px;
+  }
+
+  .adm_modal {
+    width: 98%;
+    padding: 14px 12px;
+    border-radius: 12px;
+  }
+}
+
+/* ── 320px — Smallest Supported Size (Galaxy S5, iPhone 4) ── */
+@media (max-width: 320px) {
+  .blog_tabs_row {
+    padding: 0 6px;
+  }
+  .blog_tab_btn {
+    padding: 9px 8px 7px;
+    font-size: .82rem;
+    gap: 4px;
+  }
+  .blog_tab_btn svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  .blog_mgr_container {
+    padding: 8px 6px 14px;
+    gap: 8px;
+  }
+
+  .blog_toolbar {
+    padding: 8px;
+    gap: 8px;
+  }
+  .blog_search_input {
+    font-size: .74rem;
+    padding: 7px 8px 7px 30px;
+    border-radius: 8px;
+  }
+  .create_blog_btn {
+    padding: 8px 12px;
+    font-size: .72rem;
+    border-radius: 8px;
+  }
+
+  .blog_card_img_container {
+    height: 115px;
+  }
+  .blog_card_content {
+    padding: 10px;
+  }
+  .blog_card_title {
+    font-size: .82rem;
+  }
+  .blog_card_desc {
+    font-size: .72rem;
+  }
+  .blog_card_badge {
+    font-size: .62rem;
+    padding: 3px 8px;
+    top: 8px;
+    left: 8px;
+  }
+  .blog_btn_edit,
+  .blog_btn_delete {
+    padding: 5px 7px;
+    font-size: .65rem;
+    border-radius: 6px;
+  }
+
+  .editor_workspace {
+    padding: 8px 6px;
+    gap: 12px;
+  }
+  .editor_pane_title {
+    font-size: .82rem;
+  }
+  .form_label {
+    font-size: .74rem;
+  }
+  .form_input, .form_select {
+    padding: 8px 10px;
+    font-size: .74rem;
+  }
+  .editor_toolbar {
+    flex-wrap: wrap;
+    gap: 2px;
+    padding: 4px;
+  }
+  .toolbar_btn {
+    padding: 3px 6px;
+    font-size: .62rem;
+    border-radius: 4px;
+  }
+  .editor_content_editable {
+    min-height: 160px;
+    padding: 8px;
+    font-size: .78rem;
+  }
+  .form_btn_cancel,
+  .form_btn_save {
+    padding: 8px 12px;
+    font-size: .74rem;
+    border-radius: 8px;
+  }
+
+  .preview_main_img_box {
+    height: 100px;
+    border-radius: 8px;
+  }
+  .preview_thumbnail_box {
+    width: 40px;
+    height: 40px;
+  }
+  .preview_article_title {
+    font-size: .88rem;
+  }
+  .preview_article_body {
+    font-size: .76rem;
+    line-height: 1.55;
+  }
+  .preview_booking_card {
+    padding: 10px;
+    gap: 8px;
+    border-radius: 10px;
+  }
+  .preview_card_title {
+    font-size: .82rem !important;
+  }
+  .preview_book_btn {
+    font-size: .65rem;
+    padding: 6px;
+    border-radius: 6px;
+  }
+  .preview_trust_badge {
+    font-size: .54rem;
+    padding: 2px 6px;
+  }
+  .preview_card_hint {
+    font-size: .6rem;
+  }
+
+  .adm_modal {
+    width: 99%;
+    padding: 12px 10px;
+    border-radius: 10px;
+    max-width: 100%;
+  }
+  .uploader_dropzone {
+    padding: 14px 8px;
+  }
+  .photo_previews_grid {
+    grid-template-columns: repeat(auto-fill, minmax(54px, 1fr));
+    gap: 6px;
+  }
+  .photo_preview_wrapper {
+    width: 54px;
+    height: 54px;
   }
 }

@@ -1,5 +1,17 @@
 /* Custom Styles for Services & Content Manager Dashboard */
 
+/* ── Aligns page layout margins with Patients/Appointments Dashboards ── */
+.dash_main > .tabs_container,
+.dash_main > .srv_toolbar,
+.dash_main > .srv_cat_tabs,
+.dash_main > .srv_grid,
+.dash_main > .cat_layout,
+.dash_main > .cnt_layout {
+    padding-left: 36px !important;
+    padding-right: 36px !important;
+    box-sizing: border-box !important;
+}
+
 .tabs_container {
     display: flex;
     gap: 16px;
@@ -645,5 +657,333 @@
 .cat_action_btn.delete:hover {
     background-color: #fef2f2;
     border-color: #fca5a5;
+}
+
+/* ============================================================
+   PRO-LEVEL RESPONSIVE SYSTEM ✦ WEST CHEMIST SERVICES
+   ============================================================ */
+
+/* ── 1024px — Desktop & Small Laptops ── */
+@media (max-width: 1024px) {
+    .cnt_layout {
+        grid-template-columns: 200px 1fr;
+        gap: 16px;
+    }
+    .srv_grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 16px;
+    }
+}
+
+/* ── 900px — Tablets Landscape ── */
+@media (max-width: 900px) {
+    .cnt_layout {
+        grid-template-columns: 1fr;
+    }
+    .cnt_sidebar {
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 6px;
+        align-self: stretch;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+    }
+    .cnt_sidebar::-webkit-scrollbar {
+        display: none;
+    }
+    .cnt_sidebar_btn {
+        white-space: nowrap;
+        padding: 8px 16px;
+    }
+}
+
+/* ── 768px — Tablets Portrait ── */
+@media (max-width: 768px) {
+    /* Adjust page layout padding for tablet screens */
+    .dash_main > .tabs_container,
+    .dash_main > .srv_toolbar,
+    .dash_main > .srv_cat_tabs,
+    .dash_main > .srv_grid,
+    .dash_main > .cat_layout,
+    .dash_main > .cnt_layout {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+    }
+
+    .tabs_container {
+        overflow-x: auto;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+        white-space: nowrap;
+        gap: 8px;
+    }
+    .tabs_container::-webkit-scrollbar {
+        display: none;
+    }
+    .tab_btn {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+        flex-shrink: 0;
+    }
+
+    .srv_cat_tabs {
+        overflow-x: auto;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+        white-space: nowrap;
+        flex-wrap: nowrap;
+        padding-bottom: 4px;
+        gap: 8px;
+    }
+    .srv_cat_tabs::-webkit-scrollbar {
+        display: none;
+    }
+    .srv_cat_tab {
+        padding: 8px 16px;
+        font-size: 0.82rem;
+        flex-shrink: 0;
+    }
+
+    .srv_toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+    .srv_search_filters {
+        max-width: 100%;
+        width: 100%;
+    }
+    .srv_add_btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .srv_modal {
+        max-height: 90vh;
+    }
+    .srv_form_grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    .srv_form_group.full {
+        grid-column: span 1;
+    }
+
+    /* Table to Card Layout for Category list */
+    .cat_table, 
+    .cat_table thead, 
+    .cat_table tbody, 
+    .cat_table th, 
+    .cat_table td, 
+    .cat_table tr {
+        display: block;
+    }
+    .cat_table thead {
+        display: none;
+    }
+    .cat_table tr {
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 12px;
+        margin-bottom: 12px;
+        background: #ffffff;
+    }
+    .cat_table td {
+        padding: 6px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #f1f5f9;
+    }
+    .cat_table td:last-child {
+        border-bottom: none;
+        padding-top: 10px;
+        justify-content: flex-end;
+    }
+    .cat_table td:nth-of-type(1)::before { content: "Category Name"; font-weight: 700; color: #475569; font-size: 0.78rem; }
+    .cat_table td:nth-of-type(2)::before { content: "Code/Slug"; font-weight: 700; color: #475569; font-size: 0.78rem; }
+    .cat_table td:nth-of-type(3)::before { content: "Status"; font-weight: 700; color: #475569; font-size: 0.78rem; }
+}
+
+/* ── 600px — Large Mobile Screens ── */
+@media (max-width: 600px) {
+    .srv_grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    .srv_card_banner {
+        height: 90px;
+        padding: 12px;
+    }
+    .srv_card_title {
+        font-size: 1rem;
+    }
+    .srv_card_desc {
+        font-size: 0.8rem;
+        -webkit-line-clamp: 2;
+    }
+    .srv_card_actions {
+        padding: 10px 12px;
+        gap: 6px;
+    }
+    .srv_action_btn {
+        font-size: 0.8rem;
+        padding: 6px;
+    }
+
+    .cnt_form_panel {
+        padding: 16px;
+    }
+    .cnt_form_title {
+        font-size: 1.1rem;
+    }
+    .cnt_form_sub {
+        font-size: 0.8rem;
+        margin-bottom: 16px;
+    }
+}
+
+/* ── 480px — Small Mobile Screens ── */
+@media (max-width: 480px) {
+    .srv_search_filters {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .srv_search_input, .srv_select {
+        width: 100%;
+    }
+    .srv_modal {
+        width: 95%;
+        border-radius: 12px;
+    }
+    .srv_modal_header {
+        padding: 16px;
+    }
+    .srv_modal_title {
+        font-size: 1.1rem;
+    }
+    .srv_modal_body {
+        padding: 16px;
+    }
+    .srv_modal_footer {
+        padding: 12px 16px;
+    }
+    .srv_input, .srv_textarea {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+    .srv_label {
+        font-size: 0.8rem;
+    }
+}
+
+/* ── 425px — iPhone Pro / Galaxy A ── */
+@media (max-width: 425px) {
+    /* Adjust page layout padding for mobile screens */
+    .dash_main > .tabs_container,
+    .dash_main > .srv_toolbar,
+    .dash_main > .srv_cat_tabs,
+    .dash_main > .srv_grid,
+    .dash_main > .cat_layout,
+    .dash_main > .cnt_layout {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+    }
+
+    .tabs_container {
+        margin-bottom: 16px;
+    }
+    .tab_btn {
+        padding: 6px 12px;
+        font-size: 0.85rem;
+    }
+    .srv_cat_tab {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+    .srv_add_btn {
+        font-size: 0.85rem;
+        padding: 8px 16px;
+    }
+    .cat_list_card, .cat_form_card {
+        padding: 16px;
+    }
+}
+
+/* ── 375px — Compact Phones (iPhone SE) ── */
+@media (max-width: 375px) {
+    .tab_btn {
+        font-size: 0.82rem;
+        padding: 5px 10px;
+    }
+    .srv_cat_tab {
+        font-size: 0.78rem;
+        padding: 5px 10px;
+    }
+    .srv_card_banner {
+        height: 80px;
+    }
+    .srv_card_title {
+        font-size: 0.95rem;
+    }
+    .srv_card_desc {
+        font-size: 0.78rem;
+    }
+    .srv_action_btn {
+        font-size: 0.75rem;
+        gap: 4px;
+    }
+}
+
+/* ── 320px — Smallest Target Phones ── */
+@media (max-width: 320px) {
+    /* Adjust page layout padding for micro screens */
+    .dash_main > .tabs_container,
+    .dash_main > .srv_toolbar,
+    .dash_main > .srv_cat_tabs,
+    .dash_main > .srv_grid,
+    .dash_main > .cat_layout,
+    .dash_main > .cnt_layout {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+    }
+
+    .tab_btn {
+        font-size: 0.78rem;
+        padding: 4px 8px;
+    }
+    .srv_cat_tab {
+        font-size: 0.75rem;
+        padding: 4px 8px;
+    }
+    .srv_card_banner {
+        height: 70px;
+    }
+    .srv_card_title {
+        font-size: 0.9rem;
+    }
+    .srv_card_desc {
+        -webkit-line-clamp: 2;
+    }
+    .srv_modal {
+        width: 98%;
+        max-height: 95vh;
+    }
+    .srv_modal_header {
+        padding: 12px;
+    }
+    .srv_modal_body {
+        padding: 12px;
+    }
+    .srv_form_group {
+        margin-bottom: 12px;
+    }
+    .cnt_toast {
+        bottom: 70px;
+        right: 12px;
+        left: 12px;
+        padding: 8px 16px;
+        font-size: 0.8rem;
+    }
 }
 

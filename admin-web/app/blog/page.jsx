@@ -31,7 +31,8 @@ const ICONS = {
   clock:   "M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z M12 6v6l4 2",
   tool:    "M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z",
   share:   "M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8 M16 6l-4-4-4 4 M12 2v13",
-  globe:   "M12 2a10 10 0 100 20 10 10 0 000-20z M2 12h20 M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+  globe:   "M12 2a10 10 0 100 20 10 10 0 000-20z M2 12h20 M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z",
+  info:    "M12 16v-4 M12 8h.01 M12 2a10 10 0 1010 10A10 10 0 0012 2z",
 };
 
 const WELLBEING_ICONS = {
@@ -288,6 +289,7 @@ export default function BlogManagerPage() {
     {label:'Compliance',   path:'/admin/compliance',                 icon:ICONS.shield},
     {label:'Services & Content', path:'/admin/services',             icon:ICONS.edit},
     {label:'Blog Manager', path:'/admin/blog',                       icon:ICONS.doc, active: true},
+    {label:'About Page',   path:'/admin/about',                      icon:ICONS.info},
   ];
 
   // Core States

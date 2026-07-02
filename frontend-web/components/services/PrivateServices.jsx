@@ -120,7 +120,6 @@ export default function PrivateServices() {
                                         Book Now
                                     </button>
                                 </div>
-                                <div className="ps_line" />
                             </div>
                         </div>
                     ))}

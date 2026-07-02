@@ -1185,76 +1185,151 @@ tbody tr:nth-child(8){ animation-delay:.32s }
 
 /* ── Pro-level mobile styling (320px - 425px) ── */
 @media (max-width: 600px) {
-  /* Hide sidebar details, convert to horizontal bottom nav */
+  /* Convert fixed sidebar → horizontal bottom nav bar */
   .dash_sb {
     position: fixed !important;
     bottom: 0 !important;
     left: 0 !important;
     right: 0 !important;
+    top: auto !important;
     width: 100% !important;
     height: 60px !important;
-    min-height: auto !important;
+    min-height: 60px !important;
+    max-height: 60px !important;
     z-index: 1000 !important;
     flex-direction: row !important;
+    align-items: stretch !important;
+    justify-content: center !important;
     border-right: none !important;
     border-top: 1px solid var(--border) !important;
-    background: var(--card) !important;
-    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.05) !important;
+    background: #ffffff !important;
+    box-shadow: 0 -2px 20px rgba(75, 45, 113, 0.08) !important;
     padding: 0 !important;
-    top: auto !important;
+    overflow: hidden !important;
   }
+
+  /* ── Hide logo, section labels, footer ── */
   .dash_sb .sb_logo,
   .dash_sb .sb_foot,
-  .dash_sb .sb_section {
+  .dash_sb .sb_section,
+  .dash_sb .sb_section_label {
     display: none !important;
   }
+
+  /* ── The scrollable flex:1 wrapper → full-width row ── */
   .dash_sb > div:not(.sb_logo):not(.sb_foot) {
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
-    justify-content: space-around !important;
+    justify-content: center !important;
     width: 100% !important;
     height: 100% !important;
-    padding: 0 10px !important;
-  }
-  .dash_sb div[style*="padding: 0 14px"],
-  .dash_sb div[style*="padding:0 14px"] {
-    display: flex !important;
-    flex-direction: row !important;
+    overflow: visible !important;
     padding: 0 !important;
     margin: 0 !important;
+    gap: 0 !important;
   }
-  .dash_sb div[style*="padding: 0 14px"]:first-of-type,
-  .dash_sb div[style*="padding:0 14px"]:first-of-type {
-    flex: 1 !important;
-    justify-content: space-around !important;
-  }
-  .dash_sb div[style*="padding: 0 14px"]:last-of-type,
-  .dash_sb div[style*="padding:0 14px"]:last-of-type {
-    padding: 0 16px !important;
-  }
-  .dash_sb .sb_link {
-    padding: 8px !important;
-    margin: 0 !important;
+
+  /* ── Nav links row (General section) ── */
+  .dash_sb > div:not(.sb_logo):not(.sb_foot) > div:not(:last-child):not(.sb_section) {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
     justify-content: center !important;
-    border-radius: 8px !important;
-    position: relative !important;
+    height: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    gap: 0 !important;
+    flex: 1 !important;
   }
+
+  /* ── Logout link row (Settings section) ── */
+  .dash_sb > div:not(.sb_logo):not(.sb_foot) > div:last-child {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    gap: 0 !important;
+    flex-shrink: 0 !important;
+    border-left: 1px solid var(--border) !important;
+  }
+
+  /* ── Every sb_link → fixed-size icon tab ──
+     Fixed width prevents ANY position shift
+     when navigating between pages             */
+  .dash_sb .sb_link {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 52px !important;
+    min-width: 52px !important;
+    max-width: 52px !important;
+    height: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    border-bottom: 3px solid transparent !important;
+    color: var(--t4) !important;
+    background: transparent !important;
+    text-decoration: none !important;
+    transition:
+      color 0.18s ease,
+      border-color 0.18s ease,
+      background 0.18s ease !important;
+    position: relative !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* ── Active tab: purple underline indicator ── */
+  .dash_sb .sb_link.active {
+    color: var(--purple) !important;
+    border-bottom-color: var(--purple) !important;
+    background: rgba(75, 45, 113, 0.05) !important;
+  }
+
+  .dash_sb .sb_link.active::before {
+    display: none !important;
+  }
+
+  /* ── Hover state ── */
+  .dash_sb .sb_link:hover {
+    color: var(--purple) !important;
+    background: rgba(75, 45, 113, 0.04) !important;
+    transform: none !important;
+    padding-left: 0 !important;
+  }
+
+  /* ── Hide text labels, show icons only ── */
   .dash_sb .sb_link span {
     display: none !important;
   }
+
+  /* ── Icon sizing ── */
   .dash_sb .sb_link svg {
-    width: 20px !important;
-    height: 20px !important;
+    width: 21px !important;
+    height: 21px !important;
+    opacity: 1 !important;
+    flex-shrink: 0 !important;
+    display: block !important;
   }
+
+  /* ── Notification badge ── */
   .dash_sb .sb_badge {
     position: absolute !important;
-    top: 2px !important;
-    right: 2px !important;
-    font-size: 0.6rem !important;
-    padding: 2px 5px !important;
+    top: 8px !important;
+    right: 6px !important;
+    font-size: 0.5rem !important;
+    padding: 1px 4px !important;
     margin: 0 !important;
+    min-width: 14px !important;
+    text-align: center !important;
+    animation: none !important;
   }
+
 
   /* Main content shifts */
   .dash_main {
@@ -1469,3 +1544,318 @@ tbody tr:nth-child(8){ animation-delay:.32s }
   }
 }
 
+/* ─────────────────────────────────────────────
+   CORE OVERFLOW GUARD — prevents any horizontal
+   bleed on all screens
+───────────────────────────────────────────── */
+.dash_main {
+  overflow-x: hidden;
+  min-width: 0;
+  width: 100%;
+}
+
+.dash,
+.dash_main,
+.blog_mgr_container,
+.blog_toolbar,
+.blog_grid,
+.blog_card,
+.blog_card_content,
+.blog_card_title,
+.blog_card_desc,
+.editor_workspace {
+  word-break: break-word;
+  overflow-wrap: break-word;
+  min-width: 0;
+}
+
+/* ─────────────────────────────────────────────
+   425px — iPhone Pro / Galaxy A series
+───────────────────────────────────────────── */
+@media (max-width: 425px) {
+  .dash_main {
+    margin-left: 0 !important;
+    margin-bottom: 58px !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+  }
+  .dash_hdr {
+    padding: 14px 14px 8px !important;
+  }
+  .dash_hdr_left h2 {
+    font-size: 1.1rem !important;
+  }
+  .dash_hdr_left p {
+    font-size: 0.72rem !important;
+  }
+  .hdr_search,
+  .hdr_btn,
+  .hdr_av_name,
+  .hdr_av_role {
+    display: none !important;
+  }
+  .dash_banner {
+    margin: 10px 10px 0 !important;
+    padding: 18px 14px !important;
+    border-radius: 14px !important;
+  }
+  .banner_h1 {
+    font-size: 1.1rem !important;
+  }
+  .dash_stats {
+    padding: 12px 10px !important;
+    gap: 10px !important;
+  }
+  .stat_card {
+    padding: 14px 16px !important;
+    min-height: 110px !important;
+  }
+  .stat_num {
+    font-size: 1.35rem !important;
+  }
+  .dash_grid {
+    padding: 0 10px 10px !important;
+    gap: 12px !important;
+  }
+  .dash_bottom_grid {
+    padding: 0 10px 80px !important;
+    gap: 12px !important;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   375px — iPhone SE / standard small phones
+───────────────────────────────────────────── */
+@media (max-width: 375px) {
+  .dash_main {
+    margin-left: 0 !important;
+    margin-bottom: 56px !important;
+    padding: 0 !important;
+    overflow-x: hidden !important;
+  }
+  .dash_sb {
+    height: 56px !important;
+  }
+  .dash_sb .sb_link svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+  .dash_hdr {
+    padding: 12px 12px 6px !important;
+    gap: 6px !important;
+  }
+  .dash_hdr_left h2 {
+    font-size: 1rem !important;
+  }
+  .dash_hdr_left p {
+    font-size: 0.68rem !important;
+  }
+  .dash_banner {
+    margin: 8px 8px 0 !important;
+    padding: 16px 12px !important;
+    border-radius: 12px !important;
+  }
+  .banner_h1 {
+    font-size: 1rem !important;
+  }
+  .banner_sub {
+    font-size: 0.7rem !important;
+  }
+  .banner_tag {
+    font-size: 0.62rem !important;
+    padding: 4px 10px !important;
+  }
+  .dash_stats {
+    padding: 10px 8px !important;
+    gap: 8px !important;
+  }
+  .stat_card {
+    padding: 12px 14px !important;
+    min-height: 100px !important;
+    border-radius: 14px !important;
+  }
+  .stat_num {
+    font-size: 1.2rem !important;
+  }
+  .stat_lbl {
+    font-size: 0.7rem !important;
+  }
+  .stat_icon_box {
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 10px !important;
+  }
+  .stat_icon_box svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+  .dash_grid {
+    padding: 0 8px 8px !important;
+    gap: 10px !important;
+  }
+  .panel_hdr {
+    padding: 14px 16px 0 !important;
+  }
+  .panel_title {
+    font-size: 0.84rem !important;
+  }
+  .dash_bottom_grid {
+    padding: 0 8px 80px !important;
+    gap: 10px !important;
+  }
+  .tbl_toolbar {
+    padding: 10px 0 !important;
+    gap: 8px !important;
+  }
+  .tbl_search input {
+    font-size: 0.78rem !important;
+    padding: 8px 12px 8px 36px !important;
+  }
+  .tbl_filter_btn {
+    padding: 9px 14px !important;
+    font-size: 0.76rem !important;
+  }
+  td, th {
+    padding: 10px 12px !important;
+    font-size: 0.78rem !important;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   320px — Galaxy S5, iPhone 4, smallest targets
+───────────────────────────────────────────── */
+@media (max-width: 320px) {
+  .dash_main {
+    margin-left: 0 !important;
+    margin-bottom: 52px !important;
+    overflow-x: hidden !important;
+    max-width: 320px !important;
+  }
+  .dash_sb {
+    height: 52px !important;
+  }
+  .dash_sb .sb_link {
+    padding: 6px !important;
+  }
+  .dash_sb .sb_link svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+  .dash_hdr {
+    padding: 10px 10px 6px !important;
+  }
+  .dash_hdr_left h2 {
+    font-size: 0.92rem !important;
+  }
+  .dash_hdr_left p {
+    font-size: 0.62rem !important;
+  }
+  .dash_banner {
+    margin: 6px 6px 0 !important;
+    padding: 14px 10px !important;
+    border-radius: 10px !important;
+  }
+  .banner_h1 {
+    font-size: 0.9rem !important;
+    letter-spacing: -0.01em !important;
+  }
+  .banner_sub {
+    display: none !important;
+  }
+  .banner_btns {
+    margin-top: 14px !important;
+    gap: 8px !important;
+  }
+  .banner_btn_p,
+  .banner_btn_s {
+    padding: 8px 12px !important;
+    font-size: 0.74rem !important;
+    border-radius: 8px !important;
+  }
+  .banner_stats {
+    gap: 8px !important;
+    margin-top: 16px !important;
+    padding-top: 14px !important;
+  }
+  .bstat_val {
+    font-size: 1rem !important;
+  }
+  .bstat_lbl {
+    font-size: 0.58rem !important;
+  }
+  .dash_stats {
+    padding: 8px 6px !important;
+    gap: 6px !important;
+  }
+  .stat_card {
+    padding: 10px 12px !important;
+    min-height: 90px !important;
+    border-radius: 12px !important;
+  }
+  .stat_num {
+    font-size: 1.1rem !important;
+  }
+  .stat_lbl {
+    font-size: 0.65rem !important;
+  }
+  .stat_icon_box {
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 8px !important;
+  }
+  .stat_icon_box svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+  .dash_grid {
+    padding: 0 6px 6px !important;
+    gap: 8px !important;
+  }
+  .panel_hdr {
+    padding: 12px 14px 0 !important;
+  }
+  .panel_title {
+    font-size: 0.78rem !important;
+  }
+  .dash_bottom_grid {
+    padding: 0 6px 72px !important;
+    gap: 8px !important;
+  }
+  .tbl_toolbar {
+    padding: 8px 0 !important;
+    gap: 6px !important;
+  }
+  .tbl_search input {
+    font-size: 0.72rem !important;
+    padding: 7px 10px 7px 32px !important;
+    border-radius: 8px !important;
+  }
+  .tbl_filter_btn {
+    padding: 8px 12px !important;
+    font-size: 0.72rem !important;
+    border-radius: 8px !important;
+  }
+  td, th {
+    padding: 8px 10px !important;
+    font-size: 0.72rem !important;
+  }
+  .det_btn {
+    padding: 6px 10px !important;
+    font-size: 0.68rem !important;
+    border-radius: 8px !important;
+  }
+  .badge {
+    font-size: 0.6rem !important;
+    padding: 3px 8px !important;
+  }
+  .dash_toast {
+    bottom: 60px !important;
+    right: 8px !important;
+    left: 8px !important;
+    min-width: auto !important;
+    font-size: 0.78rem !important;
+    padding: 10px 14px !important;
+    border-radius: 10px !important;
+  }
+}

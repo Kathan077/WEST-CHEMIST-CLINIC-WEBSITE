@@ -24,6 +24,7 @@ const ICONS = {
   refresh: "M23 4v6h-6 M1 20v-6h6 M3.51 9a9 9 0 0114.85-3.36L23 10 M1 14l4.64 4.36A9 9 0 0020.49 15",
   check:   "M20 6L9 17l-5-5",
   doc:     "M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z M14 2v6h6 M16 13H8 M16 17H8 M10 9H8",
+  info:    "M12 16v-4 M12 8h.01 M12 2a10 10 0 1010 10A10 10 0 0012 2z",
 };
 
 /* ─ Doctor Illustration SVG ─ */
@@ -484,6 +485,7 @@ export default function AdminPatientsPage() {
     {label:'Compliance',   path:'/admin/compliance',                 icon:ICONS.shield},
     {label:'Services & Content', path:'/admin/services',             icon:ICONS.edit},
     {label:'Blog Manager', path:'/admin/blog',                       icon:ICONS.doc},
+    {label:'About Page',   path:'/admin/about',                      icon:ICONS.info},
   ];
 
   // Helper for trend calculations (last 30 days vs 30 days before that)
