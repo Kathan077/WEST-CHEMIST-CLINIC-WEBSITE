@@ -775,7 +775,7 @@ textarea.bk_input {
 }
 
 .modal_btn.btn_confirm {
-  background: var(--purple-grad);
+  background: linear-gradient(135deg, var(--purple), var(--lavender));
   border: none;
   color: #ffffff;
 }

@@ -289,6 +289,7 @@ export default function BlogManagerPage() {
     {label:'Schedule Manager', path:'/admin/schedule',               icon:ICONS.cal},
     {label:'Compliance',   path:'/admin/compliance',                 icon:ICONS.shield},
     {label:'Services & Content', path:'/admin/services',             icon:ICONS.edit},
+    {label:'Homepage CMS', path:'/admin/homepage',                   icon:ICONS.globe},
     {label:'Blog Manager', path:'/admin/blog',                       icon:ICONS.doc, active: true},
     {label:'About Page',   path:'/admin/about',                      icon:ICONS.info},
   ];

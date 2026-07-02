@@ -1,11 +1,39 @@
 "use client";
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
+import { API_URL } from '@/config';
 import './CTASection.css';
+
+const DEFAULT_CTA = {
+    title: 'Ready to take the next step?',
+    ctaText: 'Book Now',
+    ctaUrl: '/book-appointment'
+};
 
 export default function CTASection() {
     const sectionRef = useRef(null);
+    const [ctaData, setCtaData] = useState(DEFAULT_CTA);
+
+    useEffect(() => {
+        const loadCMS = async () => {
+            try {
+                const res = await fetch(`${API_URL}/api/homepage`);
+                const json = await res.json();
+                if (json.success && json.data && json.data.footerCta) {
+                    const sec = json.data.footerCta;
+                    setCtaData({
+                        title: sec.title || DEFAULT_CTA.title,
+                        ctaText: sec.ctaText || DEFAULT_CTA.ctaText,
+                        ctaUrl: sec.ctaUrl || DEFAULT_CTA.ctaUrl
+                    });
+                }
+            } catch (err) {
+                console.error("Failed to load footerCta CMS details:", err);
+            }
+        };
+        loadCMS();
+    }, []);
 
     // Deep scroll reveal
     useEffect(() => {
@@ -25,7 +53,7 @@ export default function CTASection() {
         els.forEach((el) => io.observe(el));
 
         return () => io.disconnect();
-    }, []);
+    }, [ctaData]);
 
     // Magnetic button animation
     const handleMouse = (e) => {
@@ -45,25 +73,25 @@ export default function CTASection() {
     return (
         <section className="cta_mega_section" ref={sectionRef}>
             
-            {/* Background glowing orbs for "bada" premium feel */}
+            {/* Background glowing orbs */}
             <div className="cta_glow_blob blob_1"></div>
             <div className="cta_glow_blob blob_2"></div>
 
             <div className="cta_container">
                 
                 <h2 className="cta_title cta_reveal" style={{'--delay': '0ms'}}>
-                    Ready to take the next step?
+                    {ctaData.title}
                 </h2>
                 
                 <div className="cta_buttons_wrap">
                     <div className="cta_reveal" style={{'--delay': '150ms'}}>
                         <Link 
-                            href="/book-appointment" 
+                            href={ctaData.ctaUrl || "/book-appointment"} 
                             className="cta_btn cta_solid"
                             onMouseMove={handleMouse}
                             onMouseLeave={handleLeave}
                         >
-                            <span>Book Now</span>
+                            <span>{ctaData.ctaText}</span>
                             <div className="cta_btn_shine"></div>
                         </Link>
                     </div>

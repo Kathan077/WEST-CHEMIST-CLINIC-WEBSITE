@@ -27,7 +27,8 @@ const ICONS = {
   arrowL:  "M15 19l-7-7 7-7",
   arrowR:  "M9 5l7 7-7 7",
   upload:  "M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12",
-  download:"M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"
+  download:"M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3",
+  globe:   "M12 2a10 10 0 1010 10A10 10 0 0012 2zM2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
 };
 
 const STANDARD_HOURS = [
@@ -713,6 +714,7 @@ export default function SchedulePage() {
     {label:'Schedule Manager', path:'/admin/schedule',               icon:ICONS.cal, active: true},
     {label:'Compliance',   path:'/admin/compliance',                 icon:ICONS.shield},
     {label:'Services & Content', path:'/admin/services',             icon:ICONS.edit},
+    {label:'Homepage CMS', path:'/admin/homepage',                   icon:ICONS.globe},
     {label:'Blog Manager', path:'/admin/blog',                       icon:ICONS.doc},
     {label:'About Page',   path:'/admin/about',                      icon:ICONS.info},
   ];

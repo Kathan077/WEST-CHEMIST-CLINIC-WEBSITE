@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import Link from 'next/link';
+import { API_URL } from '@/config';
 import './Hero.css';
 
 // Fixed particle seed — same on server AND client (no Math.random at render time)
@@ -13,9 +14,9 @@ const PARTICLES = Array.from({ length: 18 }, (_, i) => ({
     op:    `${0.2 + (i % 5) * 0.1}`,
 }));
 
-const slides = [
+const DEFAULT_SLIDES = [
     {
-        id: 1,
+        id: "1",
         image: '/images/0a198cad-eabf-40b6-81dc-45dbd61ed432.png',
         fallback: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1400&q=90',
         badge:   '✦ Expert Healthcare',
@@ -23,10 +24,13 @@ const slides = [
         words2:  ['Our', 'Priority.'],
         desc:    'Expert pharmaceutical care and specialist health advice — all in one trusted clinic.',
         cta:     'Book an Appointment',
+        ctaUrl:  '/book-appointment',
+        secondaryCta: 'Our Services',
+        secondaryCtaUrl: '/services',
         overlay: ['rgba(15,4,40,0.70)', 'rgba(15,4,40,0.20)'],
     },
     {
-        id: 2,
+        id: "2",
         image: '/images/8df30593-83e5-4551-ab3b-4b82c1684d55.png',
         fallback: 'https://images.unsplash.com/photo-1631815587646-b85a1bb027e1?w=1400&q=90',
         badge:   '✈ Travel Vaccinations',
@@ -34,10 +38,13 @@ const slides = [
         words2:  ['Starts', 'Here.'],
         desc:    'Walk in for specialist travel vaccination advice and protect yourself before your next trip.',
         cta:     'Explore Vaccines',
+        ctaUrl:  '/services',
+        secondaryCta: 'Our Services',
+        secondaryCtaUrl: '/services',
         overlay: ['rgba(4,25,20,0.70)', 'rgba(4,25,20,0.20)'],
     },
     {
-        id: 3,
+        id: "3",
         image: '/images/e0dc23d6-3cb0-4a6a-9076-058313605f8d.png',
         fallback: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=1400&q=90',
         badge:   '⚡ Weight Loss Programs',
@@ -45,13 +52,24 @@ const slides = [
         words2:  ['Life', 'Today.'],
         desc:    'Personalised medically-guided weight loss programs designed to give you lasting results.',
         cta:     'Get Started',
+        ctaUrl:  '/services',
+        secondaryCta: 'Our Services',
+        secondaryCtaUrl: '/services',
         overlay: ['rgba(4,12,40,0.70)', 'rgba(4,12,40,0.20)'],
     },
+];
+
+const DEFAULT_STATS = [
+    { number: '2K+', label: 'Happy Patients' },
+    { number: '15+', label: 'Years Experience' },
+    { number: '98%', label: 'Satisfaction' }
 ];
 
 const DURATION = 6000;
 
 export default function Hero() {
+    const [slides, setSlides]       = useState(DEFAULT_SLIDES);
+    const [stats, setStats]         = useState(DEFAULT_STATS);
     const [active, setActive]       = useState(0);
     const [prev, setPrev]           = useState(null);
     const [dir, setDir]             = useState('next');
@@ -69,8 +87,8 @@ export default function Hero() {
         setTimeout(() => { setPrev(null); setAnimating(false); }, 1000);
     }, [active, animating]);
 
-    const next = useCallback(() => goTo((active + 1) % slides.length, 'next'), [active, goTo]);
-    const prev2 = useCallback(() => goTo((active - 1 + slides.length) % slides.length, 'prev'), [active, goTo]);
+    const next = useCallback(() => goTo((active + 1) % slides.length, 'next'), [active, goTo, slides.length]);
+    const prev2 = useCallback(() => goTo((active - 1 + slides.length) % slides.length, 'prev'), [active, goTo, slides.length]);
 
     const resetTimer = useCallback(() => {
         clearInterval(timer.current);
@@ -81,6 +99,26 @@ export default function Hero() {
         timer.current = setInterval(next, DURATION);
         return () => clearInterval(timer.current);
     }, [next]);
+
+    useEffect(() => {
+        const loadCMS = async () => {
+            try {
+                const res = await fetch(`${API_URL}/api/homepage`);
+                const json = await res.json();
+                if (json.success && json.data) {
+                    if (json.data.heroSlides && json.data.heroSlides.length > 0) {
+                        setSlides(json.data.heroSlides);
+                    }
+                    if (json.data.heroStats && json.data.heroStats.length > 0) {
+                        setStats(json.data.heroStats);
+                    }
+                }
+            } catch (err) {
+                console.error("Failed to load hero CMS data:", err);
+            }
+        };
+        loadCMS();
+    }, []);
 
     // Touch swipe
     const touchX = useRef(null);
@@ -117,7 +155,7 @@ export default function Hero() {
                 else if (isPrev) cls += ` slide_out_${dir}`;
                 else cls += ' slide_hidden';
                 return (
-                    <div key={slide.id} className={cls} aria-hidden={!isActive}>
+                    <div key={slide._id || slide.id} className={cls} aria-hidden={!isActive}>
                         <img
                             src={slide.image}
                             alt=""
@@ -126,60 +164,62 @@ export default function Hero() {
                         />
                         <div
                             className="slide_overlay"
-                            style={{ background: `linear-gradient(110deg, ${slide.overlay[0]} 0%, ${slide.overlay[1]} 100%)` }}
+                            style={{ background: `linear-gradient(110deg, ${slide.overlay?.[0] || 'rgba(15,4,40,0.70)'} 0%, ${slide.overlay?.[1] || 'rgba(15,4,40,0.20)'} 100%)` }}
                         />
                     </div>
                 );
             })}
 
             {/* ── CENTERED CONTENT (outside slides so it animates independently) ── */}
-            <div className="hero_content" key={key}>
-                <div className="c_badge">
-                    <span className="badge_dot" />
-                    {slides[active].badge}
+            {slides[active] && (
+                <div className="hero_content" key={key}>
+                    <div className="c_badge">
+                        <span className="badge_dot" />
+                        {slides[active].badge}
+                    </div>
+
+                    <h1 className="c_title">
+                        <span className="title_row">
+                            {slides[active].words1?.map((w, i) => (
+                                <span key={i} className="word_wrap">
+                                    <span className="word" style={{ '--wi': i }}>{w}</span>
+                                </span>
+                            ))}
+                        </span>
+                        <span className="title_row accent_row">
+                            {slides[active].words2?.map((w, i) => (
+                                <span key={i} className="word_wrap">
+                                    <span className="word accent_word" style={{ '--wi': (slides[active].words1?.length || 0) + i }}>{w}</span>
+                                </span>
+                            ))}
+                        </span>
+                    </h1>
+
+                    <p className="c_desc">{slides[active].desc}</p>
+
+                    <div className="c_cta">
+                        <Link href={slides[active].ctaUrl || "/book-appointment"} className="hero_btn primary_btn">
+                            <span>{slides[active].cta}</span>
+                            <svg className="btn_arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"/>
+                                <polyline points="12 5 19 12 12 19"/>
+                            </svg>
+                        </Link>
+                        <Link href={slides[active].secondaryCtaUrl || "/services"} className="hero_btn outline_btn">
+                            <span>{slides[active].secondaryCta || "Our Services"}</span>
+                        </Link>
+                    </div>
                 </div>
-
-                <h1 className="c_title">
-                    <span className="title_row">
-                        {slides[active].words1.map((w, i) => (
-                            <span key={i} className="word_wrap">
-                                <span className="word" style={{ '--wi': i }}>{w}</span>
-                            </span>
-                        ))}
-                    </span>
-                    <span className="title_row accent_row">
-                        {slides[active].words2.map((w, i) => (
-                            <span key={i} className="word_wrap">
-                                <span className="word accent_word" style={{ '--wi': slides[active].words1.length + i }}>{w}</span>
-                            </span>
-                        ))}
-                    </span>
-                </h1>
-
-                <p className="c_desc">{slides[active].desc}</p>
-
-                <div className="c_cta">
-                    <Link href="/book-appointment" className="hero_btn primary_btn">
-                        <span>{slides[active].cta}</span>
-                        <svg className="btn_arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                            <line x1="5" y1="12" x2="19" y2="12"/>
-                            <polyline points="12 5 19 12 12 19"/>
-                        </svg>
-                    </Link>
-                    <Link href="/services" className="hero_btn outline_btn">
-                        <span>Our Services</span>
-                    </Link>
-                </div>
-            </div>
+            )}
 
             {/* ── STATS ── */}
             <div className="hero_stats">
-                {[['2K+','Happy Patients'],['15+','Years Experience'],['98%','Satisfaction']].map(([n, l], i) => (
+                {stats.map((st, i) => (
                     <React.Fragment key={i}>
                         {i > 0 && <div className="stat_divider" />}
                         <div className="stat_item">
-                            <span className="stat_num">{n}</span>
-                            <span className="stat_label">{l}</span>
+                            <span className="stat_num">{st.number}</span>
+                            <span className="stat_label">{st.label}</span>
                         </div>
                     </React.Fragment>
                 ))}
@@ -193,13 +233,8 @@ export default function Hero() {
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
             </button>
 
-            {/* ── DOTS ── */}
-          
-
             {/* ── PROGRESS ── */}
             <div className="progress_bar"><div className="progress_fill" key={active} /></div>
-
-         
 
         </section>
     );

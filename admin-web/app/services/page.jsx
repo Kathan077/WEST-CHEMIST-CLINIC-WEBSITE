@@ -22,6 +22,7 @@ const ICONS = {
   trash:   "M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2",
   doc:     "M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z M14 2v6h6 M16 13H8 M16 17H8 M10 9H8",
   info:    "M12 16v-4 M12 8h.01 M12 2a10 10 0 1010 10A10 10 0 0012 2z",
+  globe:   "M12 2a10 10 0 1010 10A10 10 0 0012 2zM2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
 };
 
 export default function AdminServicesPage() {
@@ -413,6 +414,7 @@ export default function AdminServicesPage() {
     { label: 'Schedule Manager',  path: '/admin/schedule',                 icon: ICONS.cal },
     { label: 'Compliance',        path: '/admin/compliance',               icon: ICONS.shield },
     { label: 'Services & Content', path: '/admin/services',                icon: ICONS.edit, active: true },
+    { label: 'Homepage CMS',      path: '/admin/homepage',                 icon: ICONS.globe },
     { label: 'Blog Manager',       path: '/admin/blog',                    icon: ICONS.doc },
     { label: 'About Page',        path: '/admin/about',                    icon: ICONS.info },
   ];
