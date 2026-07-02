@@ -1,5 +1,10 @@
 const nodemailer = require('nodemailer');
 
+const getFrontendUrl = () => {
+  // Use FRONTEND_URL from environment or fallback to production URL
+  return (process.env.FRONTEND_URL || 'https://west-chemist-clinic-website.vercel.app').replace(/\/$/, '');
+};
+
 // Create the nodemailer transport based on environment variables
 const createTransporter = () => {
   // If SMTP configs are generic placeholder values, log it and return null for mock behavior
@@ -333,7 +338,7 @@ const sendRescheduleNotice = async (appointment, patient) => {
       </p>
       
       <div style="text-align: center; margin: 24px 0;">
-        <a href="http://localhost:3000/track-booking?mobile=${encodeURIComponent(patient.mobile)}" style="background-color: #0d9488; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block;">
+        <a href="${getFrontendUrl()}/track-booking?mobile=${encodeURIComponent(patient.mobile)}" style="background-color: #0d9488; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block;">
           Reschedule My Appointment
         </a>
       </div>
