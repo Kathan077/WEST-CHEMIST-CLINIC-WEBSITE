@@ -983,38 +983,38 @@ export default function AdminPatientsPage() {
                 <MiniCal appts={appts} holidays={holidays} onToggleHoliday={toggleHoliday} />
                 
                 {/* Bulk holiday range editor */}
-                <div style={{ padding: '16px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0', marginTop: '12px' }}>
-                  <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#334155', display: 'block', marginBottom: '10px' }}>Bulk Holiday Selection</span>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '12px' }}>
-                    <div>
-                      <label style={{ fontSize: '0.65rem', fontWeight: 700, color: '#64748b', display: 'block', marginBottom: '4px' }}>Start Date</label>
+                <div className="bulk_holiday_panel">
+                  <span className="bulk_holiday_title">Bulk Holiday Selection</span>
+                  <div className="bulk_holiday_grid">
+                    <div className="bulk_holiday_field">
+                      <label className="bulk_holiday_label">Start Date</label>
                       <input 
                         type="date" 
                         value={bulkStart} 
                         onChange={e => setBulkStart(e.target.value)} 
-                        style={{ width: '100%', padding: '6px 8px', fontSize: '0.75rem', borderRadius: '6px', border: '1px solid #cbd5e1', outline: 'none' }} 
+                        className="bulk_holiday_input"
                       />
                     </div>
-                    <div>
-                      <label style={{ fontSize: '0.65rem', fontWeight: 700, color: '#64748b', display: 'block', marginBottom: '4px' }}>End Date</label>
+                    <div className="bulk_holiday_field">
+                      <label className="bulk_holiday_label">End Date</label>
                       <input 
                         type="date" 
                         value={bulkEnd} 
                         onChange={e => setBulkEnd(e.target.value)} 
-                        style={{ width: '100%', padding: '6px 8px', fontSize: '0.75rem', borderRadius: '6px', border: '1px solid #cbd5e1', outline: 'none' }} 
+                        className="bulk_holiday_input"
                       />
                     </div>
                   </div>
-                  <div style={{ display: 'flex', gap: '8px' }}>
+                  <div className="bulk_holiday_actions">
                     <button 
                       onClick={() => handleBulkHolidayOverride('block')} 
-                      style={{ flex: 1, padding: '8px', background: '#ef4444', color: '#fff', border: 'none', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 700, cursor: 'pointer' }}
+                      className="bulk_holiday_btn btn_block"
                     >
                       Block Range
                     </button>
                     <button 
                       onClick={() => handleBulkHolidayOverride('unblock')} 
-                      style={{ flex: 1, padding: '8px', background: '#cbd5e1', color: '#334155', border: 'none', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 700, cursor: 'pointer' }}
+                      className="bulk_holiday_btn btn_unblock"
                     >
                       Unblock Range
                     </button>

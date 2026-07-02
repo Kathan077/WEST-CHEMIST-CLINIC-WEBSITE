@@ -1,15 +1,28 @@
 'use client';
 
 import { API_URL } from '@/config';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../patients/dashboard.css';
 import '../services/services.css';
+import './homepage.css';
 
 /* ── SVG Icons ── */
-const I = ({ d, s = 16 }) => (
-  <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor"
-    strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={d} /></svg>
-);
+const I = ({ d, s = 16 }) => {
+  if (Array.isArray(d)) {
+    return (
+      <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        {d.map((path, idx) => <path key={idx} d={path} />)}
+      </svg>
+    );
+  }
+  return (
+    <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d={d} />
+    </svg>
+  );
+};
 
 const ICONS = {
   home:    "M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z M9 22V12h6v10",
@@ -19,11 +32,151 @@ const ICONS = {
   logout:  "M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4 M16 17l5-5-5-5 M21 12H9",
   edit:    "M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7 M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z",
   plus:    "M12 5v14M5 12h14",
-  trash:   "M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2",
+  trash:   "M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2",
   doc:     "M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z M14 2v6h6 M16 13H8 M16 17H8 M10 9H8",
   info:    "M12 16v-4 M12 8h.01 M12 2a10 10 0 1010 10A10 10 0 0012 2z",
-  globe:   "M12 2a10 10 0 1010 10A10 10 0 0012 2zM2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+  globe:   "M12 2a10 10 0 1010 10A10 10 0 0012 2zM2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z",
+  clock:   "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
 };
+
+/* ── Icon Picker Library ── */
+const IP = (paths, vb = '0 0 24 24') => ({ paths: Array.isArray(paths) ? paths : [paths], vb });
+const ICON_PICKER_LIBRARY = [
+  { key: 'heart',       label: 'Heart',        cat: 'Health', ...IP('M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z') },
+  { key: 'activity',    label: 'Activity',     cat: 'Health', ...IP('M22 12h-4l-3 9L9 3l-3 9H2') },
+  { key: 'stethoscope', label: 'Stethoscope',  cat: 'Health', ...IP(['M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3', 'M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4']) },
+  { key: 'thermometer', label: 'Thermometer',  cat: 'Health', ...IP('M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z') },
+  { key: 'droplet',     label: 'Droplet',      cat: 'Health', ...IP('M12 22a7 7 0 0 0 7-7c0-4.3-7-13-7-13s-7 8.7-7 13a7 7 0 0 0 7 7z') },
+  { key: 'eye',         label: 'Eye',          cat: 'Health', ...IP(['M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z','M12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z']) },
+  { key: 'shield',      label: 'Shield',       cat: 'Medical', ...IP('M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z') },
+  { key: 'scale',       label: 'BMI Scale',    cat: 'Medical', ...IP(['M12 3a1 1 0 0 1 1 1v7.5a.5.5 0 0 1-1 0V4a1 1 0 0 1-1-1Z','M3 14a9 9 0 1 0 18 0']) },
+  { key: 'dumbbell',    label: 'Dumbbell',     cat: 'Fitness', ...IP(['M14.4 14.4 9.6 9.6','M18.657 5.343a4 4 0 0 1 0 5.657l-1.414 1.414a4 4 0 0 1-5.657-5.657l1.414-1.414a4 4 0 0 1 5.657 0Z','M5.343 18.657a4 4 0 0 1 0-5.657l1.414-1.414a4 4 0 0 1 5.657 5.657l-1.414 1.414a4 4 0 0 1-5.657 0Z']) },
+  { key: 'moon',        label: 'Sleep',        cat: 'Fitness', ...IP('M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z') },
+  { key: 'sun',         label: 'Wellness',     cat: 'Fitness', ...IP(['M12 2v2','M12 20v2','m4.93 4.93-1.41 1.41','m16.95 16.95-1.41 1.41','M2 12h2','M20 12h2','m6.34 17.66-1.41 1.41','m19.07 4.93-1.41 1.41','M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Z']) },
+  { key: 'flame',       label: 'Calories',     cat: 'Fitness', ...IP('M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z') },
+  { key: 'apple',       label: 'Nutrition',    cat: 'Food', ...IP(['M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06Z','M10 2c1 .5 2 2 2 5']) },
+  { key: 'leaf',        label: 'Organic',      cat: 'Food', ...IP('M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12') },
+  { key: 'calculator',  label: 'Calculator',   cat: 'Tools', ...IP(['M5 3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5Z','M8 7h8','M8 11h8','M8 15h5']) }
+];
+
+const PickerIcon = ({ item, size = 18 }) => (
+  <svg viewBox={item.vb} width={size} height={size} fill="none"
+    stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    {item.paths.map((p, i) => <path key={i} d={p} />)}
+  </svg>
+);
+
+function IconPickerPanel({ selectedKey, onSelect }) {
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState('');
+  const [cat, setCat] = useState('All');
+  const panelRef = useRef(null);
+  const searchRef = useRef(null);
+
+  const cats = ['All', ...Array.from(new Set(ICON_PICKER_LIBRARY.map(i => i.cat)))];
+  const selected = ICON_PICKER_LIBRARY.find(i => i.key === selectedKey) || ICON_PICKER_LIBRARY[0];
+
+  const filtered = ICON_PICKER_LIBRARY.filter(i => {
+    const matchCat = cat === 'All' || i.cat === cat;
+    const matchQ   = !query || i.label.toLowerCase().includes(query.toLowerCase()) || i.key.toLowerCase().includes(query.toLowerCase());
+    return matchCat && matchQ;
+  });
+
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e) => {
+      if (panelRef.current && !panelRef.current.contains(e.target)) setOpen(false);
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [open]);
+
+  useEffect(() => {
+    if (open && searchRef.current) searchRef.current.focus();
+  }, [open]);
+
+  return (
+    <div style={{ position: 'relative', display: 'inline-block' }} ref={panelRef}>
+      <button
+        type="button"
+        onClick={() => setOpen(v => !v)}
+        style={{
+          display: 'inline-flex', alignItems: 'center', gap: '10px',
+          padding: '10px 16px', background: '#ffffff',
+          border: '1px solid var(--border)', borderRadius: '10px',
+          cursor: 'pointer', outline: 'none', transition: 'border-color .15s',
+          color: 'var(--t1)', fontSize: '0.83rem', fontWeight: '600', fontFamily: 'var(--f)'
+        }}
+      >
+        <span style={{ color: 'var(--purple)', display: 'flex' }}>
+          <PickerIcon item={selected} size={18} />
+        </span>
+        <span>{selected.label}</span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.4, marginLeft: 2 }}>
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </button>
+
+      {open && (
+        <div className="icon_picker_panel_wrap" style={{ position: 'absolute', top: 'calc(100% + 8px)', left: 0, zIndex: 9999 }}>
+          <div style={{ padding: '12px 12px 0', borderBottom: '1px solid #f1f5f9' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '7px 12px', marginBottom: '10px' }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+              <input
+                ref={searchRef}
+                type="text"
+                placeholder="Search icons…"
+                value={query}
+                onChange={e => setQuery(e.target.value)}
+                style={{ flex: 1, border: 'none', background: 'transparent', outline: 'none', fontSize: '0.82rem', color: 'var(--t1)', fontFamily: 'var(--f)' }}
+              />
+              {query && (
+                <button type="button" onClick={() => setQuery('')} style={{ border: 'none', background: 'none', cursor: 'pointer', color: '#94a3b8', padding: 0, lineHeight: 1 }}>✕</button>
+              )}
+            </div>
+            <div style={{ display: 'flex', gap: '6px', overflowX: 'auto', paddingBottom: '10px' }}>
+              {cats.map(c => (
+                <button key={c} type="button" onClick={() => setCat(c)}
+                  style={{ flexShrink: 0, padding: '4px 12px', borderRadius: '20px', border: '1px solid', fontSize: '0.74rem', fontWeight: '700', cursor: 'pointer', outline: 'none', fontFamily: 'var(--f)', transition: 'all .15s',
+                    background: cat === c ? 'var(--purple)' : 'transparent',
+                    borderColor: cat === c ? 'var(--purple)' : '#e2e8f0',
+                    color: cat === c ? '#fff' : 'var(--t3)'
+                  }}>{c}</button>
+              ))}
+            </div>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '4px', padding: '10px', maxHeight: '200px', overflowY: 'auto' }}>
+            {filtered.length === 0 && (
+              <div style={{ gridColumn: '1/-1', textAlign: 'center', padding: '32px 0', color: '#94a3b8', fontSize: '0.8rem' }}>No icons found</div>
+            )}
+            {filtered.map(item => {
+              const isSel = selectedKey === item.key;
+              return (
+                <button key={item.key} type="button" title={item.label}
+                  onClick={() => { onSelect(item.key); setOpen(false); }}
+                  style={{
+                    display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+                    gap: '4px', padding: '8px 4px', borderRadius: '8px', cursor: 'pointer', outline: 'none',
+                    border: isSel ? '2px solid var(--purple)' : '2px solid transparent',
+                    background: isSel ? 'rgba(75,45,113,0.07)' : 'transparent',
+                    color: isSel ? 'var(--purple)' : '#475569',
+                    transition: 'all .12s',
+                  }}
+                >
+                  <PickerIcon item={item} size={18} />
+                  <span style={{ fontSize: '0.58rem', fontWeight: '600', textAlign: 'center', lineHeight: 1.2, color: isSel ? 'var(--purple)' : '#94a3b8' }}>
+                    {item.label}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function HomepageCMSPage() {
   const [loading, setLoading] = useState(true);
@@ -31,9 +184,9 @@ export default function HomepageCMSPage() {
   const [adminUser, setAdminUser] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
   
-  // Tabs: 'hero' | 'about' | 'services' | 'how' | 'testimonials' | 'ctas' | 'seo'
+  // Tabs: 'hero' | 'about' | 'services' | 'hours' | 'tools' | 'social' | 'how' | 'testimonials' | 'ctas' | 'seo'
   const [activeTab, setActiveTab] = useState('hero');
-
+  
   // Full Homepage Configuration State
   const [cmsData, setCmsData] = useState({
     heroSlides: [],
@@ -46,6 +199,17 @@ export default function HomepageCMSPage() {
     footerCta: { title: '', ctaText: '', ctaUrl: '' },
     seoSettings: { metaTitle: '', metaDescription: '', metaKeywords: '', canonicalUrl: '', ogTitle: '', ogDescription: '', ogImage: '' }
   });
+
+  // Hours settings state
+  const [hoursForm, setHoursForm] = useState({ mon_fri: '', sat: '', sun: '' });
+  // Tools list state
+  const [toolsHeader, setToolsHeader] = useState({ title: '', content: '' });
+  const [toolsList, setToolsList] = useState([]);
+  // Social settings state
+  const [socialForm, setSocialForm] = useState({ title: '', content: '', instagram_url: '' });
+  const [socialImages, setSocialImages] = useState([]);
+  const [uploadingSocial, setUploadingSocial] = useState(false);
+  const [extSocialUrl, setExtSocialUrl] = useState('');
 
   // Custom Modal dialogs
   const [modalConfig, setModalConfig] = useState(null);
@@ -99,12 +263,63 @@ export default function HomepageCMSPage() {
     }
 
     try {
-      const res = await fetch(`${API_URL}/api/homepage`);
-      const resJson = await res.json();
+      const [resCms, hoursRes, toolsHdrRes, toolsListRes, socialRes] = await Promise.all([
+        fetch(`${API_URL}/api/homepage`),
+        fetch(`${API_URL}/api/contents/clinic-hours`),
+        fetch(`${API_URL}/api/contents/health-tools-header`),
+        fetch(`${API_URL}/api/contents/health-tools-list`),
+        fetch(`${API_URL}/api/contents/social-feed-header`)
+      ]);
+
+      const resJson = await resCms.json();
+      const hoursJson = await hoursRes.json();
+      const toolsHdrJson = await toolsHdrRes.json();
+      const toolsListJson = await toolsListRes.json();
+      const socialJson = await socialRes.json();
+
       if (resJson.success && resJson.data) {
         setCmsData(resJson.data);
       } else {
         triggerAlert('Failed to load Homepage CMS payload.');
+      }
+
+      if (hoursJson.success && hoursJson.data) {
+        const meta = hoursJson.data.metadata || {};
+        setHoursForm({
+          mon_fri: meta.mon_fri || '',
+          sat: meta.sat || '',
+          sun: meta.sun || ''
+        });
+      }
+      if (toolsHdrJson.success && toolsHdrJson.data) {
+        setToolsHeader({
+          title: toolsHdrJson.data.title || '',
+          content: toolsHdrJson.data.content || ''
+        });
+      }
+      if (toolsListJson.success && toolsListJson.data) {
+        try {
+          const parsed = JSON.parse(toolsListJson.data.content || '[]');
+          setToolsList(parsed);
+        } catch (e) {
+          console.error(e);
+        }
+      }
+      if (socialJson.success && socialJson.data) {
+        setSocialForm({
+          title: socialJson.data.title || '',
+          content: socialJson.data.content || '',
+          instagram_url: socialJson.data.metadata?.instagram_url || ''
+        });
+        const imgs = [];
+        let i = 0;
+        while (true) {
+          const url = socialJson.data.metadata?.[`social_img_${i}`];
+          if (url === undefined) break;
+          if (url.trim()) imgs.push(url.trim());
+          i++;
+        }
+        setSocialImages(imgs);
       }
     } catch (err) {
       console.error(err);
@@ -125,20 +340,64 @@ export default function HomepageCMSPage() {
     setPublishing(true);
     const token = localStorage.getItem('adminToken');
     try {
-      const res = await fetch(`${API_URL}/api/homepage`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify(cmsData)
+      const finalHoursContent = `Mon - Fri: ${hoursForm.mon_fri}\nSaturday: ${hoursForm.sat}\nSunday: ${hoursForm.sun}`;
+      const socialMetadata = { instagram_url: socialForm.instagram_url };
+      socialImages.filter(Boolean).forEach((url, i) => {
+        if (url.trim()) socialMetadata[`social_img_${i}`] = url.trim();
       });
-      const data = await res.json();
-      if (data.success) {
-        showToast('Homepage contents successfully published live!');
+
+      const [resCms, resHours, resToolsHdr, resToolsList, resSocial] = await Promise.all([
+        fetch(`${API_URL}/api/homepage`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+          body: JSON.stringify(cmsData)
+        }),
+        fetch(`${API_URL}/api/contents/clinic-hours`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+          body: JSON.stringify({
+            title: 'Clinic Opening Hours',
+            content: finalHoursContent,
+            metadata: {
+              mon_fri: hoursForm.mon_fri,
+              sat: hoursForm.sat,
+              sun: hoursForm.sun
+            }
+          })
+        }),
+        fetch(`${API_URL}/api/contents/health-tools-header`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+          body: JSON.stringify({
+            title: toolsHeader.title,
+            content: toolsHeader.content
+          })
+        }),
+        fetch(`${API_URL}/api/contents/health-tools-list`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+          body: JSON.stringify({
+            title: 'Interactive Health Tools List',
+            content: JSON.stringify(toolsList)
+          })
+        }),
+        fetch(`${API_URL}/api/contents/social-feed-header`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+          body: JSON.stringify({
+            title: socialForm.title,
+            content: socialForm.content,
+            metadata: socialMetadata
+          })
+        })
+      ]);
+
+      const data = await resCms.json();
+      if (data.success && resHours.ok && resToolsHdr.ok && resToolsList.ok && resSocial.ok) {
+        showToast('All homepage configurations successfully published live!');
         setCmsData(data.data);
       } else {
-        triggerAlert(data.message || 'Failed to save changes.');
+        triggerAlert('Failed to publish some settings.');
       }
     } catch (err) {
       console.error(err);
@@ -175,7 +434,46 @@ export default function HomepageCMSPage() {
     }
   };
 
-  // Helper helpers to modify nested arrays/objects safely
+  // Social gallery handlers
+  const handleSocialImageUpload = async (e) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    const formData = new FormData();
+    for (let i = 0; i < files.length; i++) {
+      formData.append('files', files[i]);
+    }
+
+    setUploadingSocial(true);
+    try {
+      const res = await fetch(`${API_URL}/api/blogs/upload`, {
+        method: 'POST',
+        body: formData
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSocialImages(prev => [...prev.filter(Boolean), ...data.urls]);
+        showToast('Social gallery images uploaded successfully!');
+      } else {
+        showToast(data.message || 'File upload failed', 'error');
+      }
+    } catch (err) {
+      console.error(err);
+      showToast('Network error during file upload', 'error');
+    } finally {
+      setUploadingSocial(false);
+      e.target.value = '';
+    }
+  };
+
+  const handleAddExtSocialUrl = () => {
+    if (!extSocialUrl) return;
+    setSocialImages(prev => [...prev.filter(Boolean), extSocialUrl.trim()]);
+    setExtSocialUrl('');
+    showToast('External social image added!');
+  };
+
+  // Modify states
   const updateSlide = (idx, field, value) => {
     setCmsData(prev => {
       const slides = [...prev.heroSlides];
@@ -326,39 +624,50 @@ export default function HomepageCMSPage() {
 
   return (
     <div className="dash">
-      {/* Sidebar navigation */}
-      <div className="dash_sb">
-        <div className="sb_logo">
-          <div className="sb_logo_mark">W</div>
-          <div className="sb_logo_name">West Chemist <small>Superintendent Admin</small></div>
-        </div>
-        <div style={{padding:'0 14px', flexGrow: 1}}>
-          {nav.map(n => (
-            <a key={n.label} href={n.path} className={`sb_link${n.active?' active':''}`}>
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d={n.icon}/>
-              </svg>
-              <span>{n.label}</span>
-            </a>
-          ))}
-        </div>
-        <div className="sb_foot">
-          <div className="sb_user" style={{justifyContent:'space-between'}}>
-            <div style={{display:'flex', alignItems:'center', gap:'10px'}}>
-              <div className="sb_av">{adminUser ? adminUser.username.substring(0,2).toUpperCase() : 'AD'}</div>
-              <div className="sb_uname">{adminUser ? adminUser.username : 'Admin'}</div>
+      <aside className="dash_sb">
+        {!isMobile && (
+          <div className="sb_logo">
+            <div className="sb_logo_mark">W</div>
+            <div className="sb_logo_name">
+              West Chemist
+              <small>Admin Portal</small>
             </div>
-            <button onClick={logout} style={{background:'none', border:'none', color:'var(--t3)', cursor:'pointer', padding:'4px'}} title="Logout">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d={ICONS.logout}/>
-              </svg>
-            </button>
+          </div>
+        )}
+
+        <div style={{ flex: 1, overflowY: 'auto' }}>
+          {!isMobile && <div className="sb_section"><div className="sb_section_label">General</div></div>}
+          <div style={{ padding: '0 14px' }}>
+            {nav.map(n => (
+              <a key={n.label} href={n.path} className={`sb_link${n.active ? ' active' : ''}`}>
+                <I d={n.icon} />
+                <span>{n.label}</span>
+              </a>
+            ))}
+          </div>
+
+          {!isMobile && <div className="sb_section" style={{ marginTop: 8 }}><div className="sb_section_label">Settings</div></div>}
+          <div style={{ padding: '0 14px' }}>
+            <a className="sb_link" href="#" onClick={e => { e.preventDefault(); logout(); }}>
+              <I d={ICONS.logout} /><span>Log Out</span>
+            </a>
           </div>
         </div>
-      </div>
 
-      {/* Main Workspace */}
+        {!isMobile && (
+          <div className="sb_foot">
+            <div className="sb_user">
+              <div className="sb_av">{(adminUser?.username || 'A')[0].toUpperCase()}</div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div className="sb_uname">{adminUser?.username || 'Admin'}</div>
+                <div className="sb_urole">Administrator</div>
+              </div>
+              <button className="sb_logout" onClick={logout} title="Sign Out"><I d={ICONS.logout} s={14} /></button>
+            </div>
+          </div>
+        )}
+      </aside>
+
       <div className="dash_main">
         <header className="dash_hdr" style={{ paddingLeft: '36px', paddingRight: '36px' }}>
           <div className="dash_hdr_left">
@@ -369,7 +678,7 @@ export default function HomepageCMSPage() {
             <button className="bk_btn_secondary btn_reset" onClick={handleReSeed} disabled={loading || publishing} style={{ width: 'auto', padding: '10px 18px' }}>
               Reset to Defaults
             </button>
-            <button className="srv_add_btn" onClick={handlePublish} disabled={loading || publishing} style={{ width: 'auto', background: 'var(--purple-grad)' }}>
+            <button className="srv_add_btn" onClick={handlePublish} disabled={loading || publishing} style={{ width: 'auto' }}>
               {publishing ? 'Publishing...' : 'Publish Live Changes'}
             </button>
           </div>
@@ -382,22 +691,21 @@ export default function HomepageCMSPage() {
           </div>
         ) : (
           <div className="cnt_layout" style={{ paddingLeft: '36px', paddingRight: '36px', boxSizing: 'border-box' }}>
-            {/* Tabs Sidebar */}
             <div className="cnt_sidebar">
               <div style={{ fontSize: '0.72rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.5px', padding: '4px 14px' }}>Sections</div>
               <button className={`cnt_sidebar_btn ${activeTab === 'hero' ? 'active' : ''}`} onClick={() => setActiveTab('hero')}>Hero Slider & Stats</button>
               <button className={`cnt_sidebar_btn ${activeTab === 'about' ? 'active' : ''}`} onClick={() => setActiveTab('about')}>About Section</button>
               <button className={`cnt_sidebar_btn ${activeTab === 'services' ? 'active' : ''}`} onClick={() => setActiveTab('services')}>Services Intro</button>
+              <button className={`cnt_sidebar_btn ${activeTab === 'hours' ? 'active' : ''}`} onClick={() => setActiveTab('hours')}>Clinic Opening Hours</button>
+              <button className={`cnt_sidebar_btn ${activeTab === 'tools' ? 'active' : ''}`} onClick={() => setActiveTab('tools')}>Wellbeing Tools</button>
+              <button className={`cnt_sidebar_btn ${activeTab === 'social' ? 'active' : ''}`} onClick={() => setActiveTab('social')}>Social Feed settings</button>
               <button className={`cnt_sidebar_btn ${activeTab === 'how' ? 'active' : ''}`} onClick={() => setActiveTab('how')}>How It Works</button>
               <button className={`cnt_sidebar_btn ${activeTab === 'testimonials' ? 'active' : ''}`} onClick={() => setActiveTab('testimonials')}>Patient Testimonials</button>
               <button className={`cnt_sidebar_btn ${activeTab === 'ctas' ? 'active' : ''}`} onClick={() => setActiveTab('ctas')}>CTAs & Promotions</button>
               <button className={`cnt_sidebar_btn ${activeTab === 'seo' ? 'active' : ''}`} onClick={() => setActiveTab('seo')}>SEO Metadata</button>
             </div>
 
-            {/* Tab Forms */}
             <div className="cnt_form_panel">
-              
-              {/* TAB 1: Hero Slider */}
               {activeTab === 'hero' && (
                 <div>
                   <div className="cnt_form_title">Hero Slider Slides & Statistics</div>
@@ -469,7 +777,6 @@ export default function HomepageCMSPage() {
                 </div>
               )}
 
-              {/* TAB 2: About Section */}
               {activeTab === 'about' && (
                 <div>
                   <div className="cnt_form_title">About Section Info</div>
@@ -527,7 +834,6 @@ export default function HomepageCMSPage() {
                 </div>
               )}
 
-              {/* TAB 3: Services Intro */}
               {activeTab === 'services' && (
                 <div>
                   <div className="cnt_form_title">Services Section Header Info</div>
@@ -550,7 +856,289 @@ export default function HomepageCMSPage() {
                 </div>
               )}
 
-              {/* TAB 4: How It Works */}
+              {activeTab === 'hours' && (
+                <div>
+                  <div className="cnt_form_title">Clinic Opening Hours</div>
+                  <div className="cnt_form_sub">Configure hours displayed in the footer and contact sections of the website.</div>
+                  
+                  <div className="srv_form_grid">
+                    <div className="srv_form_group">
+                      <label className="srv_label">Monday - Friday Hours</label>
+                      <input
+                        type="text"
+                        className="srv_input"
+                        value={hoursForm.mon_fri}
+                        onChange={(e) => setHoursForm({ ...hoursForm, mon_fri: e.target.value })}
+                        placeholder="e.g. 8:30 AM - 6:30 PM"
+                      />
+                    </div>
+                    <div className="srv_form_group">
+                      <label className="srv_label">Saturday Hours</label>
+                      <input
+                        type="text"
+                        className="srv_input"
+                        value={hoursForm.sat}
+                        onChange={(e) => setHoursForm({ ...hoursForm, sat: e.target.value })}
+                        placeholder="e.g. 9:00 AM - 2:00 PM"
+                      />
+                    </div>
+                    <div className="srv_form_group full">
+                      <label className="srv_label">Sunday Hours</label>
+                      <input
+                        type="text"
+                        className="srv_input"
+                        value={hoursForm.sun}
+                        onChange={(e) => setHoursForm({ ...hoursForm, sun: e.target.value })}
+                        placeholder="e.g. 9:00 AM - 12:00 PM"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {activeTab === 'tools' && (
+                <div>
+                  <div className="cnt_form_title">Configure Wellbeing Tools Section</div>
+                  <div className="cnt_form_sub">Manage wellbeing tools displayed on the patient page.</div>
+
+                  <div className="srv_form_grid">
+                    <div className="srv_form_group">
+                      <label className="srv_label">Section Title Header</label>
+                      <input
+                        type="text"
+                        className="srv_input"
+                        value={toolsHeader.title}
+                        onChange={(e) => setToolsHeader({ ...toolsHeader, title: e.target.value })}
+                        placeholder="e.g. Interactive Health Tools"
+                      />
+                    </div>
+                    <div className="srv_form_group">
+                      <label className="srv_label">Section Subtitle Description</label>
+                      <input
+                        type="text"
+                        className="srv_input"
+                        value={toolsHeader.content}
+                        onChange={(e) => setToolsHeader({ ...toolsHeader, content: e.target.value })}
+                        placeholder="e.g. Free tools to help you monitor and understand your wellbeing."
+                      />
+                    </div>
+                  </div>
+
+                  <hr style={{ border: 'none', borderTop: '1px dashed var(--border)', margin: '20px 0 24px' }} />
+                  <label className="srv_label" style={{ fontSize: '0.9rem', fontWeight: 800, color: 'var(--t1)', marginBottom: '16px', display: 'block' }}>Manage Tool Cards</label>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                    {toolsList.map((tool, idx) => (
+                      <div 
+                        key={idx} 
+                        style={{ 
+                          background: '#fcfbfe', 
+                          border: '1px solid var(--border)', 
+                          borderRadius: '16px', 
+                          padding: '20px', 
+                          display: 'flex', 
+                          flexDirection: 'column', 
+                          gap: '16px',
+                          position: 'relative'
+                        }}
+                      >
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #f1f5f9', paddingBottom: '10px' }}>
+                          <span style={{ fontSize: '0.72rem', fontWeight: '800', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.8px' }}>
+                            Tool Card #{idx + 1}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => setToolsList(toolsList.filter((_, i) => i !== idx))}
+                            className="action_link_btn cancel"
+                            style={{ padding: '4px 10px', fontSize: '0.72rem' }}
+                          >
+                            Remove Card
+                          </button>
+                        </div>
+
+                        <div className="srv_form_grid">
+                          <div className="srv_form_group">
+                            <label className="srv_label">Tool Name</label>
+                            <input
+                              type="text"
+                              className="srv_input"
+                              value={tool.title || ''}
+                              onChange={(e) => {
+                                const updated = [...toolsList];
+                                updated[idx].title = e.target.value;
+                                setToolsList(updated);
+                              }}
+                              placeholder="e.g. BMI Calculator"
+                            />
+                          </div>
+                          <div className="srv_form_group">
+                            <label className="srv_label">Brief Description</label>
+                            <input
+                              type="text"
+                              className="srv_input"
+                              value={tool.desc || ''}
+                              onChange={(e) => {
+                                const updated = [...toolsList];
+                                updated[idx].desc = e.target.value;
+                                setToolsList(updated);
+                              }}
+                              placeholder="e.g. Check your BMI in seconds."
+                            />
+                          </div>
+                        </div>
+
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                          <label className="srv_label">Choose Icon</label>
+                          <IconPickerPanel
+                            selectedKey={tool.icon || 'heart'}
+                            onSelect={(key) => {
+                              const updated = [...toolsList];
+                              updated[idx].icon = key;
+                              setToolsList(updated);
+                            }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => setToolsList([...toolsList, { title: '', icon: 'heart', desc: '' }])}
+                    className="srv_add_btn"
+                    style={{ background: 'transparent', border: '1.5px dashed var(--purple)', color: 'var(--purple)', boxShadow: 'none', marginTop: '16px' }}
+                  >
+                    + Add New Interactive Tool
+                  </button>
+                </div>
+              )}
+
+              {activeTab === 'social' && (
+                <div>
+                  <div className="cnt_form_title">Configure Social Feed Section</div>
+                  <div className="cnt_form_sub">Manage social headlines, links, and grid gallery photo uploads.</div>
+
+                  <div className="srv_form_grid">
+                    <div className="srv_form_group">
+                      <label className="srv_label">Section Title Heading</label>
+                      <input
+                        type="text"
+                        className="srv_input"
+                        value={socialForm.title}
+                        onChange={(e) => setSocialForm({ ...socialForm, title: e.target.value })}
+                        placeholder="e.g. Health Tips on Social"
+                      />
+                    </div>
+                    <div className="srv_form_group">
+                      <label className="srv_label">Subtitle Description</label>
+                      <input
+                        type="text"
+                        className="srv_input"
+                        value={socialForm.content}
+                        onChange={(e) => setSocialForm({ ...socialForm, content: e.target.value })}
+                        placeholder="e.g. Follow us @westchemistclinic for daily medical insights."
+                      />
+                    </div>
+                    <div className="srv_form_group full">
+                      <label className="srv_label">Instagram Account Profile URL</label>
+                      <input
+                        type="url"
+                        className="srv_input"
+                        value={socialForm.instagram_url}
+                        onChange={(e) => setSocialForm({ ...socialForm, instagram_url: e.target.value })}
+                        placeholder="e.g. https://instagram.com/westchemistclinic"
+                      />
+                    </div>
+                  </div>
+
+                  <hr style={{ border: 'none', borderTop: '1px dashed var(--border)', margin: '20px 0' }} />
+                  <label className="srv_label" style={{ fontSize: '0.9rem', fontWeight: 800, color: 'var(--t1)', marginBottom: '6px', display: 'block' }}>Social Gallery Photos</label>
+                  <p style={{ fontSize: '0.8rem', color: 'var(--t3)', marginBottom: '16px' }}>Upload local images or paste external image links to build the homepage social grid.</p>
+
+                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap' }}>
+                    <div style={{ flex: 1, minWidth: '240px', display: 'flex', gap: '8px' }}>
+                      <input
+                        type="url"
+                        className="srv_input"
+                        style={{ margin: 0 }}
+                        value={extSocialUrl}
+                        onChange={(e) => setExtSocialUrl(e.target.value)}
+                        placeholder="Paste image URL (https://...)"
+                      />
+                      <button
+                        type="button"
+                        onClick={handleAddExtSocialUrl}
+                        className="srv_add_btn"
+                        style={{ padding: '0 16px', height: 'auto', alignSelf: 'stretch' }}
+                      >
+                        Add URL
+                      </button>
+                    </div>
+
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      <input
+                        type="file"
+                        multiple
+                        id="social-gallery-upload"
+                        onChange={handleSocialImageUpload}
+                        style={{ display: 'none' }}
+                        accept="image/*"
+                      />
+                      <label
+                        htmlFor="social-gallery-upload"
+                        className="srv_add_btn"
+                        style={{ background: 'transparent', border: '1.5px dashed var(--purple)', color: 'var(--purple)', boxShadow: 'none' }}
+                      >
+                        {uploadingSocial ? 'Uploading...' : '☁ Upload Local Photos'}
+                      </label>
+                    </div>
+                  </div>
+
+                  {socialImages.length === 0 ? (
+                    <div style={{ padding: '40px', border: '1.5px dashed var(--border)', borderRadius: '12px', background: '#fcfbfe', textAlign: 'center', color: 'var(--t3)', fontSize: '0.8rem' }}>
+                      No custom social photos uploaded yet. (Falls back to default placeholder images).
+                    </div>
+                  ) : (
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(110px, 1fr))', gap: '14px' }}>
+                      {socialImages.filter(Boolean).map((url, i) => (
+                        <div key={i} className="gallery_photo_card">
+                          <img
+                            src={url}
+                            alt={`Gallery image ${i + 1}`}
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            onError={(e) => { e.target.style.display = 'none'; }}
+                          />
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setSocialImages(socialImages.filter((_, idx) => idx !== i));
+                              showToast('Image removed from gallery');
+                            }}
+                            style={{
+                              position: 'absolute', top: '6px', right: '6px',
+                              background: 'rgba(239, 68, 68, 0.9)', color: '#fff',
+                              border: 'none', borderRadius: '50%', width: '22px', height: '22px',
+                              display: 'flex', alignItems: 'center', justifyContent: 'center',
+                              cursor: 'pointer', fontSize: '0.7rem'
+                            }}
+                            title="Delete Image"
+                          >
+                            ✕
+                          </button>
+                          <div style={{
+                            position: 'absolute', bottom: 0, left: 0, right: 0,
+                            background: 'rgba(75, 45, 113, 0.75)', color: '#fff',
+                            fontSize: '0.6rem', fontWeight: '800', textAlign: 'center', padding: '3px 0'
+                          }}>
+                            #{i + 1}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
               {activeTab === 'how' && (
                 <div>
                   <div className="cnt_form_title">How It Works / Steps Section</div>
@@ -582,7 +1170,7 @@ export default function HomepageCMSPage() {
                             <input type="text" className="srv_input" value={step.stepNumber} onChange={e => updateHowStep(stIdx, 'stepNumber', e.target.value)} />
                           </div>
                           <div className="srv_form_group">
-                            <label className="srv_label">Step Icon (search / cal / home)</label>
+                            <label className="srv_label">Step Icon (search / shield / cal)</label>
                             <input type="text" className="srv_input" value={step.icon} onChange={e => updateHowStep(stIdx, 'icon', e.target.value)} />
                           </div>
                           <div className="srv_form_group full">
@@ -600,7 +1188,6 @@ export default function HomepageCMSPage() {
                 </div>
               )}
 
-              {/* TAB 5: Patient Testimonials */}
               {activeTab === 'testimonials' && (
                 <div>
                   <div className="cnt_form_title">Patient Testimonials & Reviews</div>
@@ -625,7 +1212,7 @@ export default function HomepageCMSPage() {
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginTop: '12px' }}>
                     {cmsData.testimonials.reviews.map((rev, rIdx) => (
                       <div key={rIdx} style={{ background: '#f8fafc', padding: '16px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
-                        <div style={{ display: 'flex', justifyBetween: 'space-between', marginBottom: '8px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
                           <strong style={{ fontSize: '0.8rem', color: 'var(--purple)' }}>Review #{rIdx+1} Details</strong>
                           <button className="action_link_btn cancel" onClick={() => deleteReview(rIdx)} style={{ width: 'auto', padding: '2px 8px', fontSize: '0.75rem', marginLeft: 'auto' }}>
                             <I d={ICONS.trash} s={12} /> Delete Review
@@ -663,7 +1250,6 @@ export default function HomepageCMSPage() {
                 </div>
               )}
 
-              {/* TAB 6: CTAs */}
               {activeTab === 'ctas' && (
                 <div>
                   <div className="cnt_form_title">Guided Weight Loss CTA</div>
@@ -714,7 +1300,6 @@ export default function HomepageCMSPage() {
                 </div>
               )}
 
-              {/* TAB 7: SEO Settings */}
               {activeTab === 'seo' && (
                 <div>
                   <div className="cnt_form_title">Homepage SEO & Open Graph Tags</div>
@@ -758,14 +1343,12 @@ export default function HomepageCMSPage() {
         )}
       </div>
 
-      {/* ══ TOASTER NOTIFICATION ══ */}
       {toast && (
-        <div className={`cnt_toast ${toast.type}`}>
+        <div className="cnt_toast">
           <span>{toast.message}</span>
         </div>
       )}
 
-      {/* ══ CUSTOM POPUP MODAL ══ */}
       {modalConfig && (
         <div className="custom_modal_overlay">
           <div className="custom_modal_box">
@@ -776,7 +1359,7 @@ export default function HomepageCMSPage() {
                 </svg>
               ) : (
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ color: '#be123c' }}>
-                  <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
                 </svg>
               )}
             </div>

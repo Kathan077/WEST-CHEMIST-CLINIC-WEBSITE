@@ -255,7 +255,15 @@ function BookingPageInner() {
     firstDayIndex = firstDayIndex === 0 ? 6 : firstDayIndex - 1;
 
     const changeMonth = (dir) => {
-        setViewDate(new Date(viewDate.getFullYear(), viewDate.getMonth() + dir, 1));
+        const nextMonthDate = new Date(viewDate.getFullYear(), viewDate.getMonth() + dir, 1);
+        const today = new Date();
+        const minMonthDate = new Date(today.getFullYear(), today.getMonth(), 1);
+        const maxMonthDate = new Date(today.getFullYear(), today.getMonth() + 3, 1);
+
+        if (nextMonthDate < minMonthDate || nextMonthDate > maxMonthDate) {
+            return;
+        }
+        setViewDate(nextMonthDate);
     };
 
     const selectCalDate = (day) => {
@@ -276,7 +284,13 @@ function BookingPageInner() {
     const isPast = (day) => {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
-        return new Date(viewDate.getFullYear(), viewDate.getMonth(), day) < today;
+
+        const maxDate = new Date();
+        maxDate.setHours(23, 59, 59, 999);
+        maxDate.setMonth(maxDate.getMonth() + 3);
+
+        const currentCalDate = new Date(viewDate.getFullYear(), viewDate.getMonth(), day);
+        return currentCalDate < today || currentCalDate > maxDate;
     };
 
     const set = (k, v) => setFormData(p => ({ ...p, [k]: v }));

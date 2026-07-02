@@ -2754,5 +2754,99 @@ tbody tr:nth-child(8){ animation-delay:.32s }
   background: #fee2e2 !important;
 }
 
+/* Bulk Holiday Section Styling */
+.bulk_holiday_panel {
+  padding: 18px;
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  margin-top: 16px;
+  box-shadow: 0 4px 12px rgba(75, 45, 113, 0.02);
+}
+.bulk_holiday_title {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--t1);
+  display: block;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.bulk_holiday_grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.bulk_holiday_label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--t3);
+  display: block;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.bulk_holiday_input {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 0.8rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  outline: none;
+  background: #fcfbfe;
+  color: var(--t1);
+  font-family: var(--f);
+  transition: all 0.2s ease;
+}
+.bulk_holiday_input:focus {
+  border-color: var(--purple);
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(75, 45, 113, 0.08);
+}
+.bulk_holiday_actions {
+  display: flex;
+  gap: 10px;
+}
+.bulk_holiday_btn {
+  flex: 1;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  cursor: pointer;
+  font-family: var(--f);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bulk_holiday_btn.btn_block {
+  background: linear-gradient(135deg, var(--purple) 0%, var(--lavender) 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(75, 45, 113, 0.15);
+}
+.bulk_holiday_btn.btn_block:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(75, 45, 113, 0.22);
+}
+.bulk_holiday_btn.btn_unblock {
+  background: #f4effa;
+  border: 1px solid var(--border);
+  color: var(--purple);
+}
+.bulk_holiday_btn.btn_unblock:hover:not(:disabled) {
+  background: #eae1f4;
+  color: var(--purple);
+}
+.bulk_holiday_btn:disabled {
+  background: var(--border) !important;
+  color: var(--t4) !important;
+  cursor: not-allowed;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
 
 

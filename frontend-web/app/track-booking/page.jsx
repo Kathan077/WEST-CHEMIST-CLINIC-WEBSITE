@@ -34,7 +34,12 @@ const CustomRescheduleCalendar = ({ selectedDate, onChange, clinic }) => {
     const getDayStatus = (date) => {
         const today = new Date();
         today.setHours(0,0,0,0);
-        if (date < today) return 'past';
+
+        const maxDate = new Date();
+        maxDate.setHours(23, 59, 59, 999);
+        maxDate.setMonth(maxDate.getMonth() + 3);
+
+        if (date < today || date > maxDate) return 'past';
 
         const yyyy = date.getFullYear();
         const mm = String(date.getMonth() + 1).padStart(2, '0');
@@ -75,11 +80,19 @@ const CustomRescheduleCalendar = ({ selectedDate, onChange, clinic }) => {
     };
 
     const handlePrevMonth = () => {
-        setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1));
+        const today = new Date();
+        const minMonthDate = new Date(today.getFullYear(), today.getMonth(), 1);
+        const prevMonthDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1);
+        if (prevMonthDate < minMonthDate) return;
+        setCurrentMonth(prevMonthDate);
     };
 
     const handleNextMonth = () => {
-        setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1));
+        const today = new Date();
+        const maxMonthDate = new Date(today.getFullYear(), today.getMonth() + 3, 1);
+        const nextMonthDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1);
+        if (nextMonthDate > maxMonthDate) return;
+        setCurrentMonth(nextMonthDate);
     };
 
     // Render calendar days
