@@ -18,6 +18,13 @@ const scheduleRoutes = require('./routes/scheduleRoutes');
 // Initialize Express App
 const app = express();
 
+// Completely disable HTTP 304 Not Modified caching
+app.disable('etag');
+app.use((req, res, next) => {
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+  next();
+});
+
 // HTTP Request Logging
 if (process.env.NODE_ENV !== 'production') {
   app.use(morgan('dev'));
