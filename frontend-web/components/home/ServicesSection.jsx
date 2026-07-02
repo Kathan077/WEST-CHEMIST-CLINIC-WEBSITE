@@ -196,7 +196,7 @@ export default function ServicesSection() {
                             {/* Inner Wrap - used for 3D preservation */}
                             <div className="ss_card_inner">
                                 <div className="ss_img_wrapper">
-                                    <img src={service.img} alt={service.title} className="ss_img" loading="lazy" />
+                                    <img src={service.img || null} alt={service.title} className="ss_img" loading="lazy" />
                                     <div className="ss_img_shimmer" />
                                 </div>
                                 <div className="ss_content">

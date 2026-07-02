@@ -119,7 +119,7 @@ export default function WeightLossCTA() {
                 >
                     <div className="wl_image_inner">
                         <img 
-                            src={wlData.image} 
+                            src={wlData.image || null} 
                             alt="Weight Loss Consultation" 
                             className="wl_img" 
                         />

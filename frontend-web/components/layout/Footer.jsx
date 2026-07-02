@@ -39,7 +39,7 @@ export default function Footer() {
 
             <div className="footer_container">
                 <div className="footer_grid">
-                    
+
                     {/* COL 1: About & Logo */}
                     <div className="f_col">
                         <Link href="/" className="f_logo">
@@ -49,7 +49,7 @@ export default function Footer() {
                             Your trusted local pharmacy and healthcare provider in Northampton, United Kingdom.
                             Delivering clinical excellence, expert advice, and genuine care.
                         </p>
-                        
+
                         {/* Trust Badges */}
                         <div className="f_trust_badges">
                             <div className="trust_badge">✔ Quality Care Pharmacy</div>
@@ -74,23 +74,23 @@ export default function Footer() {
                         <h3 className="f_col_title">Contact Us</h3>
                         <ul className="f_contact_info">
                             <li>
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
                                 <a href="tel:+441604713297" style={{ transition: 'color 0.2s ease' }} className="f_link_item">+44 1604 713297</a>
                             </li>
                             <li>
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>
                                 <a href="mailto:info@westchemist.co.uk" style={{ transition: 'color 0.2s ease' }} className="f_link_item">info@westchemist.co.uk</a>
                             </li>
                             <li className="location_li">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                                <a 
-                                    href="https://maps.google.com/?q=4+Kingsley+Park+Terrace,+Northampton+NN2+7HG,+United+Kingdom" 
-                                    target="_blank" 
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
+                                <a
+                                    href="https://maps.google.com/?q=4+Kingsley+Park+Terrace,+Northampton+NN2+7HG,+United+Kingdom"
+                                    target="_blank"
                                     rel="noopener noreferrer"
                                     style={{ transition: 'color 0.2s ease' }}
                                     className="f_link_item"
                                 >
-                                    4 Kingsley Park Terrace<br/>Northampton NN2 7HG, UK
+                                    4 Kingsley Park Terrace<br />Northampton NN2 7HG, UK
                                 </a>
                             </li>
                         </ul>

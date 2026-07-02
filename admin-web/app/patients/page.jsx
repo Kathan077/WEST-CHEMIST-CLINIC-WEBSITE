@@ -427,6 +427,40 @@ export default function AdminPatientsPage() {
   const [bulkStart, setBulkStart] = useState('');
   const [bulkEnd, setBulkEnd] = useState('');
 
+  const CLINICS = [
+    "West Chemist — Northampton Clinic",
+    "West Chemist — Online Virtual Clinic"
+  ];
+  const [selectedBranch, setSelectedBranch] = useState("West Chemist — Northampton Clinic");
+
+  useEffect(() => {
+    const val = localStorage.getItem('adminSelectedBranch');
+    if (val && CLINICS.includes(val)) {
+      setSelectedBranch(val);
+    }
+  }, []);
+
+  const handleBranchChange = (branch) => {
+    setSelectedBranch(branch);
+    localStorage.setItem('adminSelectedBranch', branch);
+    window.dispatchEvent(new Event('adminBranchChanged'));
+  };
+
+  useEffect(() => {
+    const handleSync = () => {
+      const val = localStorage.getItem('adminSelectedBranch');
+      if (val && CLINICS.includes(val) && val !== selectedBranch) {
+        setSelectedBranch(val);
+      }
+    };
+    window.addEventListener('adminBranchChanged', handleSync);
+    window.addEventListener('storage', handleSync);
+    return () => {
+      window.removeEventListener('adminBranchChanged', handleSync);
+      window.removeEventListener('storage', handleSync);
+    };
+  }, [selectedBranch]);
+
 
   useEffect(() => {
 
@@ -605,9 +639,11 @@ export default function AdminPatientsPage() {
   }, [fetchData]);
 
 
+  const branchAppts = appts.filter(a => a.clinic === selectedBranch);
+
   useEffect(() => {
     const approvedPatientIds = new Set(
-      appts
+      branchAppts
         .filter(a => a.status === 'approved')
         .map(a => typeof a.patientId === 'object' && a.patientId ? a.patientId._id : a.patientId)
         .filter(Boolean)
@@ -617,12 +653,12 @@ export default function AdminPatientsPage() {
     setFiltered(!q ? approvedPatients : approvedPatients.filter(p =>
       p.fullName?.toLowerCase().includes(q) || p.mobile?.includes(q) || p.email?.toLowerCase().includes(q)
     ));
-  }, [search, patients, appts]);
+  }, [search, patients, branchAppts]);
 
   const logout = () => { localStorage.removeItem('adminToken'); localStorage.removeItem('adminUser'); window.location.replace('/admin'); };
 
-  const pending  = appts.filter(a => ['pending', 'confirmed'].includes(a.status)).length;
-  const approved = appts.filter(a => a.status === 'approved').length;
+  const pending  = branchAppts.filter(a => ['pending', 'confirmed'].includes(a.status)).length;
+  const approved = branchAppts.filter(a => a.status === 'approved').length;
 
   const nav = [
     {label:'Dashboard',    path:'/admin/patients',                   icon:ICONS.home,   active: currentView === 'dashboard'},
@@ -670,7 +706,7 @@ export default function AdminPatientsPage() {
 
   // Approved Patients set
   const approvedPatientIds = new Set(
-    appts
+    branchAppts
       .filter(a => a.status === 'approved')
       .map(a => typeof a.patientId === 'object' && a.patientId ? a.patientId._id : a.patientId)
       .filter(Boolean)
@@ -681,18 +717,18 @@ export default function AdminPatientsPage() {
   const patientsTrend = getTrend(approvedPatients);
   
   // Appointments Trend
-  const apptsTrend = getTrend(appts);
+  const apptsTrend = getTrend(branchAppts);
 
   // Pending Review Trend
   const pendingTrend = pending > 0 ? { text: `+${pending} new`, up: false } : { text: 'All clear', up: true };
 
   // Approved Today Stats & Trend
   const todayStr = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD local format
-  const approvedToday = appts.filter(a => a.status === 'approved' && a.date === todayStr).length;
+  const approvedToday = branchAppts.filter(a => a.status === 'approved' && a.date === todayStr).length;
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
   const yesterdayStr = yesterday.toLocaleDateString('en-CA');
-  const approvedYesterday = appts.filter(a => a.status === 'approved' && a.date === yesterdayStr).length;
+  const approvedYesterday = branchAppts.filter(a => a.status === 'approved' && a.date === yesterdayStr).length;
 
   let approvedTodayTrend = '+0%';
   let approvedTodayUp = true;
@@ -707,14 +743,14 @@ export default function AdminPatientsPage() {
 
   // Calculate dynamic targets (denominators)
   const patientsTarget = approvedPatients.length > 0 ? Math.ceil(approvedPatients.length / 50) * 50 : 100;
-  const apptsTarget = appts.length > 0 ? Math.ceil(appts.length / 50) * 50 : 150;
+  const apptsTarget = branchAppts.length > 0 ? Math.ceil(branchAppts.length / 50) * 50 : 150;
   const pendingTarget = pending > 0 ? Math.ceil(pending / 10) * 10 : 20;
-  const todayApptsTotal = appts.filter(a => a.date === todayStr).length;
+  const todayApptsTotal = branchAppts.filter(a => a.date === todayStr).length;
   const approvedTodayTarget = todayApptsTotal > 0 ? todayApptsTotal : 10;
 
   const stats = [
     {label:'Total Patients',    val:approvedPatients.length, total: patientsTarget, iconPath:ICONS.users,  cls:'c1', trend:patientsTrend.text, up:patientsTrend.up},
-    {label:'Appointments',      val:appts.length,    total: apptsTarget,    iconPath:ICONS.cal,    cls:'c2', trend:apptsTrend.text,  up:apptsTrend.up},
+    {label:'Appointments',      val:branchAppts.length,    total: apptsTarget,    iconPath:ICONS.cal,    cls:'c2', trend:apptsTrend.text,  up:apptsTrend.up},
     {label:'Pending',    val:pending,         total: pendingTarget,  iconPath:ICONS.shield, cls:'c3', trend:pendingTrend.text, up:pendingTrend.up},
     {label:'Approved Today',    val:approvedToday,   total: approvedTodayTarget, iconPath:ICONS.check,  cls:'c4', trend:approvedTodayTrend, up:approvedTodayUp},
   ];
@@ -730,19 +766,19 @@ export default function AdminPatientsPage() {
   thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
   const newPatientsCount = approvedPatients.filter(p => new Date(p.createdAt) >= thirtyDaysAgo).length;
   const oldPatientsCount = totalPatientsCount - newPatientsCount;
-  const rescheduledCount = appts.filter(a => a.status === 'rescheduled').length;
+  const rescheduledCount = branchAppts.filter(a => a.status === 'rescheduled').length;
 
   const getNewPatientsTrend = () => {
     const now = new Date();
     const thirtyDays = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
     const sixtyDays = new Date(now.getTime() - 60 * 24 * 60 * 60 * 1000);
     
-    const newThis = patients.filter(p => {
+    const newThis = approvedPatients.filter(p => {
       const d = new Date(p.createdAt);
       return d >= thirtyDays && d <= now;
     }).length;
     
-    const newPrev = patients.filter(p => {
+    const newPrev = approvedPatients.filter(p => {
       const d = new Date(p.createdAt);
       return d >= sixtyDays && d < thirtyDays;
     }).length;
@@ -759,12 +795,12 @@ export default function AdminPatientsPage() {
 
   const newPatientsTrend = getNewPatientsTrend();
   const oldPatientsTrend = { text: `• ${totalPatientsCount > 0 ? Math.round((oldPatientsCount / totalPatientsCount) * 100) : 0}% of total`, cls: 'neutral' };
-  const rescheduledTrend = { text: `• ${appts.length > 0 ? Math.round((rescheduledCount / appts.length) * 100) : 0}% of appts`, cls: 'neutral' };
+  const rescheduledTrend = { text: `• ${branchAppts.length > 0 ? Math.round((rescheduledCount / branchAppts.length) * 100) : 0}% of appts`, cls: 'neutral' };
 
   // Calculate calendar highlights for the current month
   const currentMonth = new Date().getMonth();
   const currentYear = new Date().getFullYear();
-  const calendarApptDays = appts
+  const calendarApptDays = branchAppts
     .filter(a => {
       if (!a.date) return false;
       const parts = a.date.split('-');
@@ -781,7 +817,7 @@ export default function AdminPatientsPage() {
     });
 
   // Calculate selected year's bookings count for the title
-  const activeYearBookings = appts.filter(appt => {
+  const activeYearBookings = branchAppts.filter(appt => {
     if (!appt.date) return false;
     const parts = appt.date.split('-');
     return parts.length >= 1 && parseInt(parts[0], 10) === selectedYear;
@@ -856,7 +892,27 @@ export default function AdminPatientsPage() {
               </>
             )}
           </div>
-          <div className="dash_hdr_right">
+          <div className="dash_hdr_right" style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+            <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--t3)' }}>Clinic Location:</span>
+            <select
+              value={selectedBranch}
+              onChange={(e) => handleBranchChange(e.target.value)}
+              style={{
+                fontSize: '0.82rem',
+                color: 'var(--t1)',
+                background: '#ffffff',
+                padding: '8px 12px',
+                borderRadius: '8px',
+                border: '1.5px solid var(--border)',
+                cursor: 'pointer',
+                fontWeight: '700',
+                outline: 'none',
+                boxShadow: 'var(--sh)'
+              }}
+            >
+              <option value="West Chemist — Northampton Clinic">Northampton Clinic</option>
+              <option value="West Chemist — Online Virtual Clinic">Online Virtual Clinic</option>
+            </select>
           </div>
         </header>
 
@@ -881,7 +937,7 @@ export default function AdminPatientsPage() {
             <div className="banner_stats">
               {[
                 {v:`${approvedPatients.length}+`, l:'Total Patients'},
-                {v:`${appts.length}+`, l:'Appointments'},
+                {v:`${branchAppts.length}+`, l:'Appointments'},
                 {v:`${pending}`, l:'Pending'},
                 {v:'100%', l:'GDPR Compliant'},
               ].map((s,i) => (
@@ -963,7 +1019,7 @@ export default function AdminPatientsPage() {
                 </div>
                 
                 <div className="chart_svg_wrap">
-                  <AreaChart appts={appts} selectedYear={selectedYear} />
+                  <AreaChart appts={branchAppts} selectedYear={selectedYear} />
                 </div>
                 
                 <div style={{ display: 'flex', justifySelf: 'stretch', justifyContent: 'space-between', marginTop: 10, padding: '0 10px' }}>
@@ -980,7 +1036,7 @@ export default function AdminPatientsPage() {
                 <span className="panel_title">Clinic Calendar</span>
               </div>
               <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '16px', justifyContent: 'center' }}>
-                <MiniCal appts={appts} holidays={holidays} onToggleHoliday={toggleHoliday} />
+                <MiniCal appts={branchAppts} holidays={holidays} onToggleHoliday={toggleHoliday} />
                 
                 {/* Bulk holiday range editor */}
                 <div className="bulk_holiday_panel">
@@ -1060,7 +1116,7 @@ export default function AdminPatientsPage() {
                   <span className={`mini_stat_trend ${rescheduledTrend.cls}`}>{rescheduledTrend.text}</span>
                 </div>
                 <div className="mini_progress_track">
-                  <div className="mini_progress_bar" style={{ width: `${appts.length > 0 ? (rescheduledCount / appts.length) * 100 : 0}%`, background: 'var(--purple)' }} />
+                  <div className="mini_progress_bar" style={{ width: `${branchAppts.length > 0 ? (rescheduledCount / branchAppts.length) * 100 : 0}%`, background: 'var(--purple)' }} />
                 </div>
               </div>
             </div>
@@ -1076,7 +1132,7 @@ export default function AdminPatientsPage() {
               <div>
                 <div style={{fontSize:'1rem',fontWeight:800,color:'var(--purple)'}}>Patient Management</div>
                 <div style={{fontSize:'.78rem',color:'#6b7280',marginTop:2}}>
-                  {filtered.length} of {patients.length} patients
+                  {filtered.length} of {approvedPatients.length} patients
                 </div>
               </div>
               <a href="/admin/appointments" style={{fontSize:'.78rem',fontWeight:600,color:'var(--pine)',textDecoration:'none'}}>View Appointments →</a>

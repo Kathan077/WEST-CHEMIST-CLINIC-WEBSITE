@@ -27,6 +27,32 @@
   box-shadow: 0 4px 12px rgba(75, 45, 113, 0.01);
 }
 
+.cnt_sidebar_title {
+  display: block;
+}
+
+@media (max-width: 900px) {
+  .cnt_sidebar {
+    flex-direction: row;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 8px;
+    gap: 8px;
+    border-radius: 12px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .cnt_sidebar::-webkit-scrollbar {
+    display: none;
+  }
+  .cnt_sidebar_btn {
+    flex-shrink: 0;
+  }
+  .cnt_sidebar_title {
+    display: none !important;
+  }
+}
+
 .cnt_sidebar_btn {
   text-align: left;
   background: none;
@@ -283,4 +309,29 @@
   color: #ffffff;
   border-color: var(--purple);
   box-shadow: 0 4px 12px rgba(75, 45, 113, 0.15);
+}
+
+.slide_config_card {
+  background: #f8fafc;
+  padding: 20px;
+  border-radius: 14px;
+  margin-bottom: 24px;
+  border: 1px solid #e2e8f0;
+}
+
+@media (max-width: 600px) {
+  .slide_config_card {
+    padding: 12px;
+    border-radius: 10px;
+  }
+  .cnt_form_panel {
+    padding: 16px;
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 400px) {
+  .icon_picker_panel_wrap {
+    width: calc(100vw - 32px);
+  }
 }

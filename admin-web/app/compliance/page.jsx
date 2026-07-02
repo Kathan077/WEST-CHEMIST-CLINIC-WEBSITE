@@ -53,6 +53,40 @@ export default function AdminCompliancePage() {
   const [stats, setStats] = useState({ passed: 0, pending: 0, rejected: 0, total: 0 });
   const [isMobile, setIsMobile] = useState(false);
 
+  const CLINICS = [
+    "West Chemist — Northampton Clinic",
+    "West Chemist — Online Virtual Clinic"
+  ];
+  const [selectedBranch, setSelectedBranch] = useState("West Chemist — Northampton Clinic");
+
+  useEffect(() => {
+    const val = localStorage.getItem('adminSelectedBranch');
+    if (val && CLINICS.includes(val)) {
+      setSelectedBranch(val);
+    }
+  }, []);
+
+  const handleBranchChange = (branch) => {
+    setSelectedBranch(branch);
+    localStorage.setItem('adminSelectedBranch', branch);
+    window.dispatchEvent(new Event('adminBranchChanged'));
+  };
+
+  useEffect(() => {
+    const handleSync = () => {
+      const val = localStorage.getItem('adminSelectedBranch');
+      if (val && CLINICS.includes(val) && val !== selectedBranch) {
+        setSelectedBranch(val);
+      }
+    };
+    window.addEventListener('adminBranchChanged', handleSync);
+    window.addEventListener('storage', handleSync);
+    return () => {
+      window.removeEventListener('adminBranchChanged', handleSync);
+      window.removeEventListener('storage', handleSync);
+    };
+  }, [selectedBranch]);
+
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 600);
     checkMobile();
@@ -79,16 +113,29 @@ export default function AdminCompliancePage() {
 
     const fetchPatientsAndVerifications = async () => {
       try {
-        const resPatients = await fetch(`${API_URL}/api/patients`, {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
+        const [resPatients, resAppts] = await Promise.all([
+          fetch(`${API_URL}/api/patients`, { headers: { 'Authorization': `Bearer ${token}` } }),
+          fetch(`${API_URL}/api/appointments/admin/all`, { headers: { 'Authorization': `Bearer ${token}` } })
+        ]);
         const dataPatients = await resPatients.json();
+        const dataAppts = await resAppts.json();
         
-        if (resPatients.ok && dataPatients.success) {
+        if (resPatients.ok && dataPatients.success && resAppts.ok && dataAppts.success) {
           const patientsList = dataPatients.data || [];
+          const apptsList = dataAppts.data || dataAppts.appointments || [];
+
+          // Find patients that have appointments at the selected branch
+          const branchPatientIds = new Set(
+            apptsList
+              .filter(a => a.clinic === selectedBranch)
+              .map(a => typeof a.patientId === 'object' && a.patientId ? a.patientId._id : a.patientId)
+              .filter(Boolean)
+          );
+
+          const filteredPatients = patientsList.filter(p => branchPatientIds.has(p._id));
           const tempVerifications = [];
 
-          for (const patient of patientsList) {
+          for (const patient of filteredPatients) {
             const resVer = await fetch(`${API_URL}/api/verifications/patient/${patient._id}`, {
               headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -123,7 +170,7 @@ export default function AdminCompliancePage() {
     };
 
     fetchPatientsAndVerifications();
-  }, []);
+  }, [selectedBranch]);
 
   useEffect(() => {
     const q = search.toLowerCase();
@@ -204,6 +251,28 @@ export default function AdminCompliancePage() {
           <div className="dash_hdr_left">
             <h2>{greet}, {adminUser?.username || 'Admin'} 👋</h2>
             <p>GPhC identity verification audits & document check logs.</p>
+          </div>
+          <div className="dash_hdr_right" style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+            <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--t3)' }}>Clinic Location:</span>
+            <select
+              value={selectedBranch}
+              onChange={(e) => handleBranchChange(e.target.value)}
+              style={{
+                fontSize: '0.82rem',
+                color: 'var(--t1)',
+                background: '#ffffff',
+                padding: '8px 12px',
+                borderRadius: '8px',
+                border: '1.5px solid var(--border)',
+                cursor: 'pointer',
+                fontWeight: '700',
+                outline: 'none',
+                boxShadow: 'var(--sh)'
+              }}
+            >
+              <option value="West Chemist — Northampton Clinic">Northampton Clinic</option>
+              <option value="West Chemist — Online Virtual Clinic">Online Virtual Clinic</option>
+            </select>
           </div>
         </header>
 

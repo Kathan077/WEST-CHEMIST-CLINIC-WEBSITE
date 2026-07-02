@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const heroSlideSchema = new mongoose.Schema({
   badge: { type: String, default: '' },
+  badgeIcon: { type: String, default: 'award' },
   words1: { type: [String], default: [] },
   words2: { type: [String], default: [] },
   desc: { type: String, default: '' },
@@ -95,6 +96,7 @@ const HomepageCMSSchema = new mongoose.Schema({
     metaDescription: { type: String, default: '' },
     metaKeywords: { type: String, default: '' },
     canonicalUrl: { type: String, default: '' },
+    logoUrl: { type: String, default: '' },
     ogTitle: { type: String, default: '' },
     ogDescription: { type: String, default: '' },
     ogImage: { type: String, default: '' }

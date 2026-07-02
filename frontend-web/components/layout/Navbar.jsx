@@ -11,7 +11,7 @@ const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [dropdownForceClose, setDropdownForceClose] = useState(false);
-    
+
     // Accordion toggles for mobile view
     const [mobileDropdowns, setMobileDropdowns] = useState({
         services: false,
@@ -32,7 +32,7 @@ const Navbar = () => {
                 ]);
                 const catJson = await catRes.json();
                 const srvJson = await srvRes.json();
-                
+
                 if (catJson.success && catJson.data) {
                     setCategories(catJson.data);
                 }
@@ -87,13 +87,10 @@ const Navbar = () => {
                 {/* Logo */}
                 <div className="logo_container">
                     <Link href="/" onClick={handleLinkClick}>
-                        <Image 
-                            src="/images/ddfd45c4-3070-498a-9e4e-68f1fb48ad3e.png" 
-                            alt="West Chemist Clinic Logo" 
-                            width={200} 
-                            height={60} 
+                        <img
+                            src="/images/ddfd45c4-3070-498a-9e4e-68f1fb48ad3e.png"
+                            alt="West Chemist Clinic Logo"
                             className="logo_img"
-                            priority
                         />
                     </Link>
                 </div>
@@ -112,7 +109,7 @@ const Navbar = () => {
 
                     <Link href="/" className="nav_link" onClick={handleLinkClick}>Home</Link>
                     <Link href="/about" className="nav_link" onClick={handleLinkClick}>About Us</Link>
-                    
+
                     <div className={`nav_dropdown_container ${dropdownForceClose ? 'force_close' : ''} ${mobileDropdowns.services ? 'mobile_open' : ''}`}>
                         <Link href="/services" className="nav_link" onClick={handleLinkClick}>
                             Services
@@ -124,7 +121,7 @@ const Navbar = () => {
                                 }
                             }}>
                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className={`dropdown_icon ${mobileDropdowns.services ? 'rotated' : ''}`}>
-                                    <path d="m6 9 6 6 6-6"/>
+                                    <path d="m6 9 6 6 6-6" />
                                 </svg>
                             </span>
                         </Link>
@@ -137,8 +134,8 @@ const Navbar = () => {
                                         const isExpanded = activeCategory === cat.name;
                                         return (
                                             <div className={`dropdown_group ${isExpanded ? 'expanded' : ''}`} key={cat._id}>
-                                                <div 
-                                                    className="group_title_toggle" 
+                                                <div
+                                                    className="group_title_toggle"
                                                     onClick={(e) => {
                                                         e.preventDefault();
                                                         e.stopPropagation();
@@ -147,7 +144,7 @@ const Navbar = () => {
                                                 >
                                                     <span className="group_title">{cat.name}</span>
                                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="category_chevron">
-                                                        <path d="m6 9 6 6 6-6"/>
+                                                        <path d="m6 9 6 6 6-6" />
                                                     </svg>
                                                 </div>
                                                 <div className="group_services_grid">
@@ -168,8 +165,8 @@ const Navbar = () => {
                                 ) : (
                                     <>
                                         <div className={`dropdown_group ${activeCategory === 'NHS Services (Pharmacy First)' ? 'expanded' : ''}`}>
-                                            <div 
-                                                className="group_title_toggle" 
+                                            <div
+                                                className="group_title_toggle"
                                                 onClick={(e) => {
                                                     e.preventDefault();
                                                     e.stopPropagation();
@@ -178,7 +175,7 @@ const Navbar = () => {
                                             >
                                                 <span className="group_title">NHS Services (Pharmacy First)</span>
                                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="category_chevron">
-                                                    <path d="m6 9 6 6 6-6"/>
+                                                    <path d="m6 9 6 6 6-6" />
                                                 </svg>
                                             </div>
                                             <div className="group_services_grid">
@@ -194,8 +191,8 @@ const Navbar = () => {
                                             </div>
                                         </div>
                                         <div className={`dropdown_group ${activeCategory === 'Private Services' ? 'expanded' : ''}`}>
-                                            <div 
-                                                className="group_title_toggle" 
+                                            <div
+                                                className="group_title_toggle"
                                                 onClick={(e) => {
                                                     e.preventDefault();
                                                     e.stopPropagation();
@@ -204,7 +201,7 @@ const Navbar = () => {
                                             >
                                                 <span className="group_title">Private Services</span>
                                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="category_chevron">
-                                                    <path d="m6 9 6 6 6-6"/>
+                                                    <path d="m6 9 6 6 6-6" />
                                                 </svg>
                                             </div>
                                             <div className="group_services_grid">
@@ -217,8 +214,8 @@ const Navbar = () => {
                                             </div>
                                         </div>
                                         <div className={`dropdown_group ${activeCategory === 'Travel Clinic' ? 'expanded' : ''}`}>
-                                            <div 
-                                                className="group_title_toggle" 
+                                            <div
+                                                className="group_title_toggle"
                                                 onClick={(e) => {
                                                     e.preventDefault();
                                                     e.stopPropagation();
@@ -227,7 +224,7 @@ const Navbar = () => {
                                             >
                                                 <span className="group_title">Travel Clinic</span>
                                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="category_chevron">
-                                                    <path d="m6 9 6 6 6-6"/>
+                                                    <path d="m6 9 6 6 6-6" />
                                                 </svg>
                                             </div>
                                             <div className="group_services_grid">
@@ -263,7 +260,7 @@ const Navbar = () => {
                                 }
                             }}>
                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className={`dropdown_icon ${mobileDropdowns.weightLoss ? 'rotated' : ''}`}>
-                                    <path d="m6 9 6 6 6-6"/>
+                                    <path d="m6 9 6 6 6-6" />
                                 </svg>
                             </span>
                         </Link>
@@ -292,7 +289,7 @@ const Navbar = () => {
                                 }
                             }}>
                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className={`dropdown_icon ${mobileDropdowns.vaccination ? 'rotated' : ''}`}>
-                                    <path d="m6 9 6 6 6-6"/>
+                                    <path d="m6 9 6 6 6-6" />
                                 </svg>
                             </span>
                         </Link>
@@ -321,7 +318,7 @@ const Navbar = () => {
                     <Link href="/contact" className="nav_link" onClick={handleLinkClick}>
                         Contact Us
                     </Link>
-                    
+
                     {/* Mobile CTAs inside menu */}
                     <div className="mobile_cta_container">
                         <Link href="/track-booking" className="cta_button secondary mobile_cta" onClick={handleLinkClick}>
@@ -334,14 +331,14 @@ const Navbar = () => {
                 </div>
 
                 <div className="nav_actions">
-                    
+
                     <Link href="/track-booking" className="cta_button secondary desktop_cta" onClick={handleLinkClick}>
                         Track Booking
                     </Link>
                     <Link href="/book-appointment" className="cta_button desktop_cta" onClick={handleLinkClick}>
                         Book Now
                     </Link>
-                    
+
                     <div className={`menu_toggle ${isOpen ? 'active' : ''}`} onClick={toggleMenu}>
                         <span></span>
                         <span></span>

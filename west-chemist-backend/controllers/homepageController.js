@@ -5,7 +5,8 @@ const DEFAULT_HOMEPAGE_CONTENT = {
   key: 'main',
   heroSlides: [
     {
-      badge: '✦ Expert Healthcare',
+      badge: 'Expert Healthcare',
+      badgeIcon: 'stethoscope',
       words1: ['Your', 'Health,'],
       words2: ['Our', 'Priority.'],
       desc: 'Expert pharmaceutical care and specialist health advice — all in one trusted clinic.',
@@ -18,7 +19,8 @@ const DEFAULT_HOMEPAGE_CONTENT = {
       overlay: ['rgba(15,4,40,0.70)', 'rgba(15,4,40,0.20)']
     },
     {
-      badge: '✈ Travel Vaccinations',
+      badge: 'Travel Vaccinations',
+      badgeIcon: 'globe',
       words1: ['Worry-Free', 'Travel'],
       words2: ['Starts', 'Here.'],
       desc: 'Walk in for specialist travel vaccination advice and protect yourself before your next trip.',
@@ -31,7 +33,8 @@ const DEFAULT_HOMEPAGE_CONTENT = {
       overlay: ['rgba(4,25,20,0.70)', 'rgba(4,25,20,0.20)']
     },
     {
-      badge: '⚡ Weight Loss Programs',
+      badge: 'Weight Loss Programs',
+      badgeIcon: 'flame',
       words1: ['Transform', 'Your'],
       words2: ['Life', 'Today.'],
       desc: 'Personalised medically-guided weight loss programs designed to give you lasting results.',
@@ -107,6 +110,7 @@ const DEFAULT_HOMEPAGE_CONTENT = {
     metaDescription: 'West Chemist Clinic offers expert pharmaceutical care, travel vaccinations, weight loss programs, and specialist health advice in WA.',
     metaKeywords: 'pharmacy, clinic, travel clinic, vaccinations, Northampton, weight loss, health check',
     canonicalUrl: 'http://localhost:3000/',
+    logoUrl: '/images/ddfd45c4-3070-498a-9e4e-68f1fb48ad3e.png',
     ogTitle: 'West Chemist Clinic — Expert Pharmaceutical & Health Services',
     ogDescription: 'West Chemist Clinic offers expert pharmaceutical care, travel vaccinations, weight loss programs, and specialist health advice in WA.',
     ogImage: '/images/0a198cad-eabf-40b6-81dc-45dbd61ed432.png'

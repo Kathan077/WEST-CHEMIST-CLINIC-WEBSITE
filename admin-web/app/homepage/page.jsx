@@ -36,28 +36,155 @@ const ICONS = {
   doc:     "M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z M14 2v6h6 M16 13H8 M16 17H8 M10 9H8",
   info:    "M12 16v-4 M12 8h.01 M12 2a10 10 0 1010 10A10 10 0 0012 2z",
   globe:   "M12 2a10 10 0 1010 10A10 10 0 0012 2zM2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z",
-  clock:   "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+  clock:   "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z",
+  upload:  "M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"
 };
 
 /* ── Icon Picker Library ── */
 const IP = (paths, vb = '0 0 24 24') => ({ paths: Array.isArray(paths) ? paths : [paths], vb });
 const ICON_PICKER_LIBRARY = [
+  // ─ Health ─
   { key: 'heart',       label: 'Heart',        cat: 'Health', ...IP('M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z') },
   { key: 'activity',    label: 'Activity',     cat: 'Health', ...IP('M22 12h-4l-3 9L9 3l-3 9H2') },
   { key: 'stethoscope', label: 'Stethoscope',  cat: 'Health', ...IP(['M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3', 'M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4']) },
   { key: 'thermometer', label: 'Thermometer',  cat: 'Health', ...IP('M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z') },
   { key: 'droplet',     label: 'Droplet',      cat: 'Health', ...IP('M12 22a7 7 0 0 0 7-7c0-4.3-7-13-7-13s-7 8.7-7 13a7 7 0 0 0 7 7z') },
   { key: 'eye',         label: 'Eye',          cat: 'Health', ...IP(['M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z','M12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z']) },
+  { key: 'brain',       label: 'Brain',        cat: 'Health', ...IP(['M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-1.07-4.73A3 3 0 0 1 3.34 9a2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.84-2.76Z','M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 1.07-4.73 3 3 0 0 0 2.13-5.27 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.84-2.76Z']) },
+  // ─ Medical ─
   { key: 'shield',      label: 'Shield',       cat: 'Medical', ...IP('M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z') },
+  { key: 'cross',       label: 'Med Cross',    cat: 'Medical', ...IP('M11 2a2 2 0 0 0-2 2v5H4a2 2 0 0 0-2 2v2c0 1.1.9 2 2 2h5v5c0 1.1.9 2 2 2h2a2 2 0 0 0 2-2v-5h5a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-5V4a2 2 0 0 0-2-2h-2z') },
+  { key: 'hospital',    label: 'Hospital',     cat: 'Medical', ...IP(['M12 6v4','M14 14h-4','M14 18h-4','M14 8h-4','M18 12h2a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2','M18 22V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v18']) },
+  { key: 'pill',        label: 'Pill',         cat: 'Medical', ...IP(['M10.5 20H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5','M2 12H10','M22 12H14','M13.5 4H20a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6.5']) },
+  { key: 'syringe',     label: 'Syringe',      cat: 'Medical', ...IP(['m18 2 4 4','m17 7 3-3','M19 9 8.7 19.3c-1 1-2.5 1-3.4 0l-.6-.6c-1-1-1-2.5 0-3.4L15 9']) },
   { key: 'scale',       label: 'BMI Scale',    cat: 'Medical', ...IP(['M12 3a1 1 0 0 1 1 1v7.5a.5.5 0 0 1-1 0V4a1 1 0 0 1-1-1Z','M3 14a9 9 0 1 0 18 0']) },
+  // ─ Awards & Trust ─
+  { key: 'award',       label: 'Award',        cat: 'Awards', ...IP(['M12 15a7 7 0 1 0 0-14 7 7 0 0 0 0 14Z','M8.21 13.89 7 23l5-3 5 3-1.21-9.12']) },
+  { key: 'medal',       label: 'Medal',        cat: 'Awards', ...IP(['M7.21 15 2.66 7.14a2 2 0 0 1 .13-2.2L4.4 3.8A2 2 0 0 1 6 3h12a2 2 0 0 1 1.6.8l1.6 1.14a2 2 0 0 1 .14 2.2L16.79 15','M11 12 5.12 2.2','M13 12l5.88-9.8','M8 7h8','M12 15v6','M9 18h6']) },
+  { key: 'star',        label: 'Star',         cat: 'Awards', ...IP('M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z') },
+  { key: 'trophy',      label: 'Trophy',       cat: 'Awards', ...IP(['M6 9H4.5a2.5 2.5 0 0 1 0-5H6','M18 9h1.5a2.5 2.5 0 0 0 0-5H18','M4 22h16','M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 19.75 7 21.24 7 22','M14 14.66V17c0 .55.47.98.97 1.21C16.15 19.75 17 21.24 17 22','M18 2H6v7a6 6 0 0 0 12 0V2Z']) },
+  { key: 'check_circle',label: 'Check OK',     cat: 'Awards', ...IP(['M22 11.08V12a10 10 0 1 1-5.93-9.14','M9 11l3 3L22 4']) },
+  { key: 'thumbsup',    label: 'Thumbs Up',    cat: 'Awards', ...IP('M7 10v12 M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z') },
+  // ─ Clock & Time ─
+  { key: 'clock',       label: 'Clock',        cat: 'Time', ...IP(['M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z','M12 6v6l4 2']) },
+  { key: 'calendar',    label: 'Calendar',     cat: 'Time', ...IP(['M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2z']) },
+  { key: 'timer',       label: 'Timer',        cat: 'Time', ...IP(['M10 2h4','M12 14l4-4','M4.6 11a8 8 0 1 0 16.4 4.7 8 8 0 0 0-16.4-4.7Z']) },
+  { key: 'sunrise',     label: 'Quick Service',cat: 'Time', ...IP(['M12 2v8','M4.93 10.93l1.41 1.41','M2 18h2','M20 18h2','M19.07 10.93l-1.41 1.41','M22 22H2','M16 6l-4 4-4-4','M12 18a6 6 0 0 0 0-12v0']) },
+  // ─ Fitness ─
   { key: 'dumbbell',    label: 'Dumbbell',     cat: 'Fitness', ...IP(['M14.4 14.4 9.6 9.6','M18.657 5.343a4 4 0 0 1 0 5.657l-1.414 1.414a4 4 0 0 1-5.657-5.657l1.414-1.414a4 4 0 0 1 5.657 0Z','M5.343 18.657a4 4 0 0 1 0-5.657l1.414-1.414a4 4 0 0 1 5.657 5.657l-1.414 1.414a4 4 0 0 1-5.657 0Z']) },
   { key: 'moon',        label: 'Sleep',        cat: 'Fitness', ...IP('M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z') },
   { key: 'sun',         label: 'Wellness',     cat: 'Fitness', ...IP(['M12 2v2','M12 20v2','m4.93 4.93-1.41 1.41','m16.95 16.95-1.41 1.41','M2 12h2','M20 12h2','m6.34 17.66-1.41 1.41','m19.07 4.93-1.41 1.41','M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Z']) },
   { key: 'flame',       label: 'Calories',     cat: 'Fitness', ...IP('M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z') },
+  // ─ Food ─
   { key: 'apple',       label: 'Nutrition',    cat: 'Food', ...IP(['M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06Z','M10 2c1 .5 2 2 2 5']) },
   { key: 'leaf',        label: 'Organic',      cat: 'Food', ...IP('M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12') },
-  { key: 'calculator',  label: 'Calculator',   cat: 'Tools', ...IP(['M5 3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5Z','M8 7h8','M8 11h8','M8 15h5']) }
+  // ─ Tools ─
+  { key: 'calculator',  label: 'Calculator',   cat: 'Tools', ...IP(['M5 3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5Z','M8 7h8','M8 11h8','M8 15h5']) },
+  { key: 'zap',         label: 'Quick',        cat: 'Tools', ...IP('M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z') },
+  { key: 'info',        label: 'Info',         cat: 'Tools', ...IP(['M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Z','M12 16v-4','M12 8h.01']) },
+  { key: 'globe',       label: 'Global',       cat: 'Tools', ...IP(['M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z','M2 12h20','M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z']) },
+  { key: 'users',       label: 'Team',         cat: 'Tools', ...IP(['M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2','M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z','M23 21v-2a4 4 0 0 0-3-3.87','M16 3.13a4 4 0 0 1 0 7.75']) },
+  { key: 'book',        label: 'Guide',        cat: 'Tools', ...IP(['M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20']) }
 ];
+
+/* ── Badge Picker Options ── */
+const BADGE_PICKER_OPTIONS = [
+  { label: '✦ Healthcare Excellence', value: '✦ Healthcare Excellence' },
+  { label: '✦ New Healthcare Feature', value: '✦ New Healthcare Feature' },
+  { label: '✦ Award-Winning Pharmacy', value: '✦ Award-Winning Pharmacy' },
+  { label: '✦ GPhC Regulated Service', value: '✦ GPhC Regulated Service' },
+  { label: '✦ NHS Partner Pharmacy', value: '✦ NHS Partner Pharmacy' },
+  { label: '✦ Trusted Clinical Care', value: '✦ Trusted Clinical Care' },
+  { label: '✦ Book Online Today', value: '✦ Book Online Today' },
+  { label: '✦ Same-Day Appointments', value: '✦ Same-Day Appointments' },
+  { label: '✦ Expert Health Advice', value: '✦ Expert Health Advice' },
+  { label: '✦ Safe & Confidential', value: '✦ Safe & Confidential' },
+  { label: '🏆 Award-Winning Care', value: '🏆 Award-Winning Care' },
+  { label: '💊 Prescription Services', value: '💊 Prescription Services' },
+  { label: '🩺 Clinical Excellence', value: '🩺 Clinical Excellence' },
+  { label: '⭐ 5-Star Rated Pharmacy', value: '⭐ 5-Star Rated Pharmacy' },
+  { label: '🔬 Evidence-Based Care', value: '🔬 Evidence-Based Care' },
+  { label: '🛡️ Patient Safety First', value: '🛡️ Patient Safety First' },
+  { label: '📅 Easy Online Booking', value: '📅 Easy Online Booking' },
+  { label: '🌟 Premium Health Service', value: '🌟 Premium Health Service' },
+];
+
+/* ── Badge Picker Panel Component ── */
+function BadgePickerPanel({ value, onChange }) {
+  const [open, setOpen] = React.useState(false);
+  const [customVal, setCustomVal] = React.useState(value || '');
+  const panelRef = React.useRef(null);
+
+  React.useEffect(() => { setCustomVal(value || ''); }, [value]);
+
+  React.useEffect(() => {
+    if (!open) return;
+    const handler = (e) => {
+      if (panelRef.current && !panelRef.current.contains(e.target)) setOpen(false);
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [open]);
+
+  return (
+    <div style={{ position: 'relative' }} ref={panelRef}>
+      <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+        <input
+          type="text"
+          className="srv_input"
+          value={customVal}
+          placeholder="e.g. ✦ Award-Winning Pharmacy"
+          onChange={e => { setCustomVal(e.target.value); onChange(e.target.value); }}
+          style={{ flex: 1 }}
+        />
+        <button
+          type="button"
+          onClick={() => setOpen(v => !v)}
+          title="Choose from badge presets"
+          style={{
+            padding: '10px 14px', background: 'var(--purple)', color: '#fff',
+            border: 'none', borderRadius: '10px', cursor: 'pointer', fontWeight: '700',
+            fontSize: '0.8rem', whiteSpace: 'nowrap', flexShrink: 0, fontFamily: 'var(--f)'
+          }}
+        >
+          🏷️ Presets
+        </button>
+      </div>
+      {open && (
+        <div style={{
+          position: 'absolute', top: 'calc(100% + 6px)', left: 0, right: 0, zIndex: 9999,
+          background: '#ffffff', border: '1.5px solid #e2e8f0', borderRadius: '14px',
+          boxShadow: '0 20px 60px rgba(0,0,0,0.14)', overflow: 'hidden',
+          animation: 'fadeUp .18s ease both'
+        }}>
+          <div style={{ padding: '10px', borderBottom: '1px solid #f1f5f9' }}>
+            <span style={{ fontSize: '0.7rem', fontWeight: '800', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.6px' }}>Badge Presets</span>
+          </div>
+          <div style={{ maxHeight: '240px', overflowY: 'auto', padding: '8px' }}>
+            {BADGE_PICKER_OPTIONS.map((opt, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => { onChange(opt.value); setCustomVal(opt.value); setOpen(false); }}
+                style={{
+                  display: 'block', width: '100%', textAlign: 'left', padding: '9px 12px',
+                  borderRadius: '8px', border: 'none', cursor: 'pointer', fontSize: '0.83rem',
+                  fontFamily: 'var(--f)', fontWeight: '600', transition: 'all .12s',
+                  background: value === opt.value ? 'rgba(75,45,113,0.08)' : 'transparent',
+                  color: value === opt.value ? 'var(--purple)' : 'var(--t1)'
+                }}
+                onMouseEnter={e => e.currentTarget.style.background = 'rgba(75,45,113,0.06)'}
+                onMouseLeave={e => e.currentTarget.style.background = value === opt.value ? 'rgba(75,45,113,0.08)' : 'transparent'}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 const PickerIcon = ({ item, size = 18 }) => (
   <svg viewBox={item.vb} width={size} height={size} fill="none"
@@ -183,8 +310,36 @@ export default function HomepageCMSPage() {
   const [publishing, setPublishing] = useState(false);
   const [adminUser, setAdminUser] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
-  
-  // Tabs: 'hero' | 'about' | 'services' | 'hours' | 'tools' | 'social' | 'how' | 'testimonials' | 'ctas' | 'seo'
+  const [uploadingSlideIdx, setUploadingSlideIdx] = useState(null);
+  const slideFileRefs = useRef({});
+
+  // Slide image upload handler
+  const handleSlideImageUpload = async (e, slideIdx) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+    const formData = new FormData();
+    formData.append('files', files[0]);
+    setUploadingSlideIdx(slideIdx);
+    try {
+      const res = await fetch(`${API_URL}/api/blogs/upload`, { method: 'POST', body: formData });
+      const data = await res.json();
+      if (data.success && data.urls && data.urls.length > 0) {
+        const url = data.urls[0].startsWith('http') ? data.urls[0] : `${API_URL}${data.urls[0]}`;
+        updateSlide(slideIdx, 'image', url);
+        showToast('Slide image uploaded successfully!');
+      } else {
+        showToast(data.message || 'Upload failed', 'error');
+      }
+    } catch (err) {
+      console.error(err);
+      showToast('Network error during image upload', 'error');
+    } finally {
+      setUploadingSlideIdx(null);
+      if (slideFileRefs.current[slideIdx]) slideFileRefs.current[slideIdx].value = '';
+    }
+  };
+
+  // Tabs: 'hero' | 'about' | 'services' | 'hours' | 'how' | 'testimonials' | 'seo'
   const [activeTab, setActiveTab] = useState('hero');
   
   // Full Homepage Configuration State
@@ -197,19 +352,28 @@ export default function HomepageCMSPage() {
     testimonials: { title: '', subtitle: '', desc: '', reviews: [] },
     appointmentCta: { title: '', subtitle: '', desc: '', image: '', ctaText: '', ctaUrl: '' },
     footerCta: { title: '', ctaText: '', ctaUrl: '' },
-    seoSettings: { metaTitle: '', metaDescription: '', metaKeywords: '', canonicalUrl: '', ogTitle: '', ogDescription: '', ogImage: '' }
+    seoSettings: { metaTitle: '', metaDescription: '', metaKeywords: '', canonicalUrl: '', logoUrl: '', ogTitle: '', ogDescription: '', ogImage: '' }
   });
+
+  const updateCmsState = (data) => {
+    setCmsData(prev => ({
+      ...prev,
+      ...data,
+      aboutSection: { ...prev.aboutSection, ...(data.aboutSection || {}) },
+      servicesSection: { ...prev.servicesSection, ...(data.servicesSection || {}) },
+      howItWorks: { ...prev.howItWorks, ...(data.howItWorks || {}) },
+      testimonials: { ...prev.testimonials, ...(data.testimonials || {}) },
+      appointmentCta: { ...prev.appointmentCta, ...(data.appointmentCta || {}) },
+      footerCta: { ...prev.footerCta, ...(data.footerCta || {}) },
+      seoSettings: { ...prev.seoSettings, ...(data.seoSettings || {}) }
+    }));
+  };
 
   // Hours settings state
   const [hoursForm, setHoursForm] = useState({ mon_fri: '', sat: '', sun: '' });
   // Tools list state
   const [toolsHeader, setToolsHeader] = useState({ title: '', content: '' });
   const [toolsList, setToolsList] = useState([]);
-  // Social settings state
-  const [socialForm, setSocialForm] = useState({ title: '', content: '', instagram_url: '' });
-  const [socialImages, setSocialImages] = useState([]);
-  const [uploadingSocial, setUploadingSocial] = useState(false);
-  const [extSocialUrl, setExtSocialUrl] = useState('');
 
   // Custom Modal dialogs
   const [modalConfig, setModalConfig] = useState(null);
@@ -263,22 +427,20 @@ export default function HomepageCMSPage() {
     }
 
     try {
-      const [resCms, hoursRes, toolsHdrRes, toolsListRes, socialRes] = await Promise.all([
+      const [resCms, hoursRes, toolsHdrRes, toolsListRes] = await Promise.all([
         fetch(`${API_URL}/api/homepage`),
         fetch(`${API_URL}/api/contents/clinic-hours`),
         fetch(`${API_URL}/api/contents/health-tools-header`),
-        fetch(`${API_URL}/api/contents/health-tools-list`),
-        fetch(`${API_URL}/api/contents/social-feed-header`)
+        fetch(`${API_URL}/api/contents/health-tools-list`)
       ]);
 
       const resJson = await resCms.json();
       const hoursJson = await hoursRes.json();
       const toolsHdrJson = await toolsHdrRes.json();
       const toolsListJson = await toolsListRes.json();
-      const socialJson = await socialRes.json();
 
       if (resJson.success && resJson.data) {
-        setCmsData(resJson.data);
+        updateCmsState(resJson.data);
       } else {
         triggerAlert('Failed to load Homepage CMS payload.');
       }
@@ -305,22 +467,6 @@ export default function HomepageCMSPage() {
           console.error(e);
         }
       }
-      if (socialJson.success && socialJson.data) {
-        setSocialForm({
-          title: socialJson.data.title || '',
-          content: socialJson.data.content || '',
-          instagram_url: socialJson.data.metadata?.instagram_url || ''
-        });
-        const imgs = [];
-        let i = 0;
-        while (true) {
-          const url = socialJson.data.metadata?.[`social_img_${i}`];
-          if (url === undefined) break;
-          if (url.trim()) imgs.push(url.trim());
-          i++;
-        }
-        setSocialImages(imgs);
-      }
     } catch (err) {
       console.error(err);
       triggerAlert('Failed to establish connection to database.');
@@ -341,12 +487,8 @@ export default function HomepageCMSPage() {
     const token = localStorage.getItem('adminToken');
     try {
       const finalHoursContent = `Mon - Fri: ${hoursForm.mon_fri}\nSaturday: ${hoursForm.sat}\nSunday: ${hoursForm.sun}`;
-      const socialMetadata = { instagram_url: socialForm.instagram_url };
-      socialImages.filter(Boolean).forEach((url, i) => {
-        if (url.trim()) socialMetadata[`social_img_${i}`] = url.trim();
-      });
 
-      const [resCms, resHours, resToolsHdr, resToolsList, resSocial] = await Promise.all([
+      const [resCms, resHours, resToolsHdr, resToolsList] = await Promise.all([
         fetch(`${API_URL}/api/homepage`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
@@ -380,22 +522,13 @@ export default function HomepageCMSPage() {
             title: 'Interactive Health Tools List',
             content: JSON.stringify(toolsList)
           })
-        }),
-        fetch(`${API_URL}/api/contents/social-feed-header`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-          body: JSON.stringify({
-            title: socialForm.title,
-            content: socialForm.content,
-            metadata: socialMetadata
-          })
         })
       ]);
 
       const data = await resCms.json();
-      if (data.success && resHours.ok && resToolsHdr.ok && resToolsList.ok && resSocial.ok) {
+      if (data.success && resHours.ok && resToolsHdr.ok && resToolsList.ok) {
         showToast('All homepage configurations successfully published live!');
-        setCmsData(data.data);
+        updateCmsState(data.data);
       } else {
         triggerAlert('Failed to publish some settings.');
       }
@@ -422,7 +555,7 @@ export default function HomepageCMSPage() {
       const data = await res.json();
       if (data.success) {
         showToast('Homepage CMS re-seeded successfully.');
-        setCmsData(data.data);
+        updateCmsState(data.data);
       } else {
         triggerAlert('Seeding failed: ' + data.message);
       }
@@ -434,44 +567,7 @@ export default function HomepageCMSPage() {
     }
   };
 
-  // Social gallery handlers
-  const handleSocialImageUpload = async (e) => {
-    const files = e.target.files;
-    if (!files || files.length === 0) return;
 
-    const formData = new FormData();
-    for (let i = 0; i < files.length; i++) {
-      formData.append('files', files[i]);
-    }
-
-    setUploadingSocial(true);
-    try {
-      const res = await fetch(`${API_URL}/api/blogs/upload`, {
-        method: 'POST',
-        body: formData
-      });
-      const data = await res.json();
-      if (data.success) {
-        setSocialImages(prev => [...prev.filter(Boolean), ...data.urls]);
-        showToast('Social gallery images uploaded successfully!');
-      } else {
-        showToast(data.message || 'File upload failed', 'error');
-      }
-    } catch (err) {
-      console.error(err);
-      showToast('Network error during file upload', 'error');
-    } finally {
-      setUploadingSocial(false);
-      e.target.value = '';
-    }
-  };
-
-  const handleAddExtSocialUrl = () => {
-    if (!extSocialUrl) return;
-    setSocialImages(prev => [...prev.filter(Boolean), extSocialUrl.trim()]);
-    setExtSocialUrl('');
-    showToast('External social image added!');
-  };
 
   // Modify states
   const updateSlide = (idx, field, value) => {
@@ -486,7 +582,8 @@ export default function HomepageCMSPage() {
     setCmsData(prev => ({
       ...prev,
       heroSlides: [...prev.heroSlides, {
-        badge: '✦ New Healthcare Feature',
+        badge: 'New Healthcare Feature',
+        badgeIcon: 'award',
         words1: ['Your', 'Heading'],
         words2: ['Text', 'Here'],
         desc: 'New slide description details.',
@@ -669,7 +766,7 @@ export default function HomepageCMSPage() {
       </aside>
 
       <div className="dash_main">
-        <header className="dash_hdr" style={{ paddingLeft: '36px', paddingRight: '36px' }}>
+        <header className="dash_hdr" style={{ paddingLeft: isMobile ? '16px' : '36px', paddingRight: isMobile ? '16px' : '36px' }}>
           <div className="dash_hdr_left">
             <h2>Homepage CMS Manager</h2>
             <p>Edit every text, slider, badge, image, and SEO field on the clinic home page dynamically.</p>
@@ -690,18 +787,15 @@ export default function HomepageCMSPage() {
             <span>Loading Homepage configurations...</span>
           </div>
         ) : (
-          <div className="cnt_layout" style={{ paddingLeft: '36px', paddingRight: '36px', boxSizing: 'border-box' }}>
+          <div className="cnt_layout" style={{ paddingLeft: isMobile ? '16px' : '36px', paddingRight: isMobile ? '16px' : '36px', boxSizing: 'border-box' }}>
             <div className="cnt_sidebar">
-              <div style={{ fontSize: '0.72rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.5px', padding: '4px 14px' }}>Sections</div>
+              <div className="cnt_sidebar_title" style={{ fontSize: '0.72rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.5px', padding: '4px 14px' }}>Sections</div>
               <button className={`cnt_sidebar_btn ${activeTab === 'hero' ? 'active' : ''}`} onClick={() => setActiveTab('hero')}>Hero Slider & Stats</button>
               <button className={`cnt_sidebar_btn ${activeTab === 'about' ? 'active' : ''}`} onClick={() => setActiveTab('about')}>About Section</button>
               <button className={`cnt_sidebar_btn ${activeTab === 'services' ? 'active' : ''}`} onClick={() => setActiveTab('services')}>Services Intro</button>
               <button className={`cnt_sidebar_btn ${activeTab === 'hours' ? 'active' : ''}`} onClick={() => setActiveTab('hours')}>Clinic Opening Hours</button>
-              <button className={`cnt_sidebar_btn ${activeTab === 'tools' ? 'active' : ''}`} onClick={() => setActiveTab('tools')}>Wellbeing Tools</button>
-              <button className={`cnt_sidebar_btn ${activeTab === 'social' ? 'active' : ''}`} onClick={() => setActiveTab('social')}>Social Feed settings</button>
               <button className={`cnt_sidebar_btn ${activeTab === 'how' ? 'active' : ''}`} onClick={() => setActiveTab('how')}>How It Works</button>
               <button className={`cnt_sidebar_btn ${activeTab === 'testimonials' ? 'active' : ''}`} onClick={() => setActiveTab('testimonials')}>Patient Testimonials</button>
-              <button className={`cnt_sidebar_btn ${activeTab === 'ctas' ? 'active' : ''}`} onClick={() => setActiveTab('ctas')}>CTAs & Promotions</button>
               <button className={`cnt_sidebar_btn ${activeTab === 'seo' ? 'active' : ''}`} onClick={() => setActiveTab('seo')}>SEO Metadata</button>
             </div>
 
@@ -712,7 +806,7 @@ export default function HomepageCMSPage() {
                   <div className="cnt_form_sub">Update background images, title word groupings, and slider CTAs.</div>
                   
                   {cmsData.heroSlides.map((slide, sIdx) => (
-                    <div key={sIdx} style={{ background: '#f8fafc', padding: '20px', borderRadius: '14px', marginBottom: '24px', border: '1px solid #e2e8f0' }}>
+                    <div key={sIdx} className="slide_config_card">
                       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '14px' }}>
                         <strong style={{ color: 'var(--purple)' }}>Slide #{sIdx + 1} Configuration</strong>
                         <button className="action_link_btn cancel" onClick={() => deleteSlide(sIdx)} style={{ width: 'auto', padding: '4px 10px', fontSize: '0.78rem' }}>
@@ -721,13 +815,87 @@ export default function HomepageCMSPage() {
                       </div>
 
                       <div className="srv_form_grid">
-                        <div className="srv_form_group">
-                          <label className="srv_label">Top Badge Label</label>
-                          <input type="text" className="srv_input" value={slide.badge} onChange={e => updateSlide(sIdx, 'badge', e.target.value)} />
+                        <div className="srv_form_group full" style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', background: 'rgba(75, 45, 113, 0.03)', padding: '16px', borderRadius: '12px', border: '1px solid var(--border)' }}>
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', minWidth: '150px' }}>
+                            <label className="srv_label" style={{ marginBottom: 0 }}>Choose Badge Icon</label>
+                            <IconPickerPanel
+                              selectedKey={slide.badgeIcon || 'award'}
+                              onSelect={val => updateSlide(sIdx, 'badgeIcon', val)}
+                            />
+                          </div>
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', flex: 1, minWidth: '240px' }}>
+                            <label className="srv_label" style={{ marginBottom: 0 }}>Badge Text Label</label>
+                            <input
+                              type="text"
+                              className="srv_input"
+                              value={slide.badge || ''}
+                              placeholder="e.g. Expert Healthcare"
+                              onChange={e => updateSlide(sIdx, 'badge', e.target.value)}
+                              style={{ margin: 0 }}
+                            />
+                          </div>
                         </div>
-                        <div className="srv_form_group">
-                          <label className="srv_label">Slide Image Link</label>
-                          <input type="text" className="srv_input" value={slide.image} onChange={e => updateSlide(sIdx, 'image', e.target.value)} />
+                        <div className="srv_form_group full">
+                          <label className="srv_label">Slide Background Image</label>
+                          {/* Current preview */}
+                          {slide.image && (
+                            <div style={{ marginBottom: '10px', borderRadius: '10px', overflow: 'hidden', height: '100px', background: '#f1f5f9', position: 'relative' }}>
+                              <img
+                                src={slide.image}
+                                alt="slide preview"
+                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                onError={e => e.target.style.opacity = 0.2}
+                              />
+                            </div>
+                          )}
+                          {/* Drag & Drop / Click to Upload */}
+                          <div
+                            onClick={() => slideFileRefs.current[sIdx]?.click()}
+                            onDragOver={e => { e.preventDefault(); e.currentTarget.style.borderColor = 'var(--purple)'; }}
+                            onDragLeave={e => { e.currentTarget.style.borderColor = '#e2e8f0'; }}
+                            onDrop={async e => {
+                              e.preventDefault();
+                              e.currentTarget.style.borderColor = '#e2e8f0';
+                              const file = e.dataTransfer.files[0];
+                              if (file && file.type.startsWith('image/')) {
+                                const fakeEvent = { target: { files: [file] } };
+                                await handleSlideImageUpload(fakeEvent, sIdx);
+                              }
+                            }}
+                            style={{
+                              border: '2px dashed #e2e8f0', borderRadius: '10px', padding: '16px',
+                              textAlign: 'center', cursor: 'pointer', marginBottom: '10px',
+                              background: '#f8fafc', transition: 'border-color .15s'
+                            }}
+                          >
+                            <input
+                              type="file"
+                              accept="image/png,image/jpeg,image/jpg,image/webp"
+                              ref={el => slideFileRefs.current[sIdx] = el}
+                              style={{ display: 'none' }}
+                              onChange={e => handleSlideImageUpload(e, sIdx)}
+                            />
+                            <div style={{ color: 'var(--purple)', marginBottom: '6px', display: 'flex', justifyContent: 'center' }}>
+                              <I d={ICONS.upload} s={22} />
+                            </div>
+                            <span style={{ fontSize: '0.82rem', fontWeight: '700', color: 'var(--t2)' }}>
+                              {uploadingSlideIdx === sIdx ? 'Uploading...' : 'Click or Drag & Drop to upload image'}
+                            </span>
+                            <br />
+                            <span style={{ fontSize: '0.74rem', color: 'var(--t3)' }}>PNG, JPEG, WEBP — Max 10MB</span>
+                          </div>
+                          {/* Or paste URL */}
+                          <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                            <span style={{ fontSize: '0.76rem', color: 'var(--t3)', flexShrink: 0 }}>Or URL:</span>
+                            <input
+                              type="text"
+                              className="srv_input"
+                              style={{ flex: 1 }}
+                              value={slide.image}
+                              placeholder="https://example.com/image.jpg or /images/photo.jpg"
+                              onChange={e => updateSlide(sIdx, 'image', e.target.value)}
+                            />
+                          </div>
                         </div>
                         <div className="srv_form_group">
                           <label className="srv_label">Primary Heading Rows (Words Row 1 - Comma-Separated)</label>
@@ -816,8 +984,10 @@ export default function HomepageCMSPage() {
                         <strong style={{ fontSize: '0.8rem', color: 'var(--purple)', display: 'block', marginBottom: '8px' }}>Feature #{fIdx+1} Details</strong>
                         <div className="srv_form_grid">
                           <div className="srv_form_group">
-                            <label className="srv_label">Feature Icon (award / shield / clock)</label>
-                            <input type="text" className="srv_input" value={feat.icon} onChange={e => updateAboutFeature(fIdx, 'icon', e.target.value)} />
+                            <label className="srv_label">Feature Icon</label>
+                            <div style={{ marginTop: '4px' }}>
+                              <IconPickerPanel selectedKey={feat.icon} onSelect={val => updateAboutFeature(fIdx, 'icon', val)} />
+                            </div>
                           </div>
                           <div className="srv_form_group">
                             <label className="srv_label">Feature Title</label>
@@ -896,248 +1066,9 @@ export default function HomepageCMSPage() {
                 </div>
               )}
 
-              {activeTab === 'tools' && (
-                <div>
-                  <div className="cnt_form_title">Configure Wellbeing Tools Section</div>
-                  <div className="cnt_form_sub">Manage wellbeing tools displayed on the patient page.</div>
 
-                  <div className="srv_form_grid">
-                    <div className="srv_form_group">
-                      <label className="srv_label">Section Title Header</label>
-                      <input
-                        type="text"
-                        className="srv_input"
-                        value={toolsHeader.title}
-                        onChange={(e) => setToolsHeader({ ...toolsHeader, title: e.target.value })}
-                        placeholder="e.g. Interactive Health Tools"
-                      />
-                    </div>
-                    <div className="srv_form_group">
-                      <label className="srv_label">Section Subtitle Description</label>
-                      <input
-                        type="text"
-                        className="srv_input"
-                        value={toolsHeader.content}
-                        onChange={(e) => setToolsHeader({ ...toolsHeader, content: e.target.value })}
-                        placeholder="e.g. Free tools to help you monitor and understand your wellbeing."
-                      />
-                    </div>
-                  </div>
 
-                  <hr style={{ border: 'none', borderTop: '1px dashed var(--border)', margin: '20px 0 24px' }} />
-                  <label className="srv_label" style={{ fontSize: '0.9rem', fontWeight: 800, color: 'var(--t1)', marginBottom: '16px', display: 'block' }}>Manage Tool Cards</label>
 
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                    {toolsList.map((tool, idx) => (
-                      <div 
-                        key={idx} 
-                        style={{ 
-                          background: '#fcfbfe', 
-                          border: '1px solid var(--border)', 
-                          borderRadius: '16px', 
-                          padding: '20px', 
-                          display: 'flex', 
-                          flexDirection: 'column', 
-                          gap: '16px',
-                          position: 'relative'
-                        }}
-                      >
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #f1f5f9', paddingBottom: '10px' }}>
-                          <span style={{ fontSize: '0.72rem', fontWeight: '800', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.8px' }}>
-                            Tool Card #{idx + 1}
-                          </span>
-                          <button
-                            type="button"
-                            onClick={() => setToolsList(toolsList.filter((_, i) => i !== idx))}
-                            className="action_link_btn cancel"
-                            style={{ padding: '4px 10px', fontSize: '0.72rem' }}
-                          >
-                            Remove Card
-                          </button>
-                        </div>
-
-                        <div className="srv_form_grid">
-                          <div className="srv_form_group">
-                            <label className="srv_label">Tool Name</label>
-                            <input
-                              type="text"
-                              className="srv_input"
-                              value={tool.title || ''}
-                              onChange={(e) => {
-                                const updated = [...toolsList];
-                                updated[idx].title = e.target.value;
-                                setToolsList(updated);
-                              }}
-                              placeholder="e.g. BMI Calculator"
-                            />
-                          </div>
-                          <div className="srv_form_group">
-                            <label className="srv_label">Brief Description</label>
-                            <input
-                              type="text"
-                              className="srv_input"
-                              value={tool.desc || ''}
-                              onChange={(e) => {
-                                const updated = [...toolsList];
-                                updated[idx].desc = e.target.value;
-                                setToolsList(updated);
-                              }}
-                              placeholder="e.g. Check your BMI in seconds."
-                            />
-                          </div>
-                        </div>
-
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                          <label className="srv_label">Choose Icon</label>
-                          <IconPickerPanel
-                            selectedKey={tool.icon || 'heart'}
-                            onSelect={(key) => {
-                              const updated = [...toolsList];
-                              updated[idx].icon = key;
-                              setToolsList(updated);
-                            }}
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <button
-                    type="button"
-                    onClick={() => setToolsList([...toolsList, { title: '', icon: 'heart', desc: '' }])}
-                    className="srv_add_btn"
-                    style={{ background: 'transparent', border: '1.5px dashed var(--purple)', color: 'var(--purple)', boxShadow: 'none', marginTop: '16px' }}
-                  >
-                    + Add New Interactive Tool
-                  </button>
-                </div>
-              )}
-
-              {activeTab === 'social' && (
-                <div>
-                  <div className="cnt_form_title">Configure Social Feed Section</div>
-                  <div className="cnt_form_sub">Manage social headlines, links, and grid gallery photo uploads.</div>
-
-                  <div className="srv_form_grid">
-                    <div className="srv_form_group">
-                      <label className="srv_label">Section Title Heading</label>
-                      <input
-                        type="text"
-                        className="srv_input"
-                        value={socialForm.title}
-                        onChange={(e) => setSocialForm({ ...socialForm, title: e.target.value })}
-                        placeholder="e.g. Health Tips on Social"
-                      />
-                    </div>
-                    <div className="srv_form_group">
-                      <label className="srv_label">Subtitle Description</label>
-                      <input
-                        type="text"
-                        className="srv_input"
-                        value={socialForm.content}
-                        onChange={(e) => setSocialForm({ ...socialForm, content: e.target.value })}
-                        placeholder="e.g. Follow us @westchemistclinic for daily medical insights."
-                      />
-                    </div>
-                    <div className="srv_form_group full">
-                      <label className="srv_label">Instagram Account Profile URL</label>
-                      <input
-                        type="url"
-                        className="srv_input"
-                        value={socialForm.instagram_url}
-                        onChange={(e) => setSocialForm({ ...socialForm, instagram_url: e.target.value })}
-                        placeholder="e.g. https://instagram.com/westchemistclinic"
-                      />
-                    </div>
-                  </div>
-
-                  <hr style={{ border: 'none', borderTop: '1px dashed var(--border)', margin: '20px 0' }} />
-                  <label className="srv_label" style={{ fontSize: '0.9rem', fontWeight: 800, color: 'var(--t1)', marginBottom: '6px', display: 'block' }}>Social Gallery Photos</label>
-                  <p style={{ fontSize: '0.8rem', color: 'var(--t3)', marginBottom: '16px' }}>Upload local images or paste external image links to build the homepage social grid.</p>
-
-                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap' }}>
-                    <div style={{ flex: 1, minWidth: '240px', display: 'flex', gap: '8px' }}>
-                      <input
-                        type="url"
-                        className="srv_input"
-                        style={{ margin: 0 }}
-                        value={extSocialUrl}
-                        onChange={(e) => setExtSocialUrl(e.target.value)}
-                        placeholder="Paste image URL (https://...)"
-                      />
-                      <button
-                        type="button"
-                        onClick={handleAddExtSocialUrl}
-                        className="srv_add_btn"
-                        style={{ padding: '0 16px', height: 'auto', alignSelf: 'stretch' }}
-                      >
-                        Add URL
-                      </button>
-                    </div>
-
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                      <input
-                        type="file"
-                        multiple
-                        id="social-gallery-upload"
-                        onChange={handleSocialImageUpload}
-                        style={{ display: 'none' }}
-                        accept="image/*"
-                      />
-                      <label
-                        htmlFor="social-gallery-upload"
-                        className="srv_add_btn"
-                        style={{ background: 'transparent', border: '1.5px dashed var(--purple)', color: 'var(--purple)', boxShadow: 'none' }}
-                      >
-                        {uploadingSocial ? 'Uploading...' : '☁ Upload Local Photos'}
-                      </label>
-                    </div>
-                  </div>
-
-                  {socialImages.length === 0 ? (
-                    <div style={{ padding: '40px', border: '1.5px dashed var(--border)', borderRadius: '12px', background: '#fcfbfe', textAlign: 'center', color: 'var(--t3)', fontSize: '0.8rem' }}>
-                      No custom social photos uploaded yet. (Falls back to default placeholder images).
-                    </div>
-                  ) : (
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(110px, 1fr))', gap: '14px' }}>
-                      {socialImages.filter(Boolean).map((url, i) => (
-                        <div key={i} className="gallery_photo_card">
-                          <img
-                            src={url}
-                            alt={`Gallery image ${i + 1}`}
-                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                            onError={(e) => { e.target.style.display = 'none'; }}
-                          />
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setSocialImages(socialImages.filter((_, idx) => idx !== i));
-                              showToast('Image removed from gallery');
-                            }}
-                            style={{
-                              position: 'absolute', top: '6px', right: '6px',
-                              background: 'rgba(239, 68, 68, 0.9)', color: '#fff',
-                              border: 'none', borderRadius: '50%', width: '22px', height: '22px',
-                              display: 'flex', alignItems: 'center', justifyContent: 'center',
-                              cursor: 'pointer', fontSize: '0.7rem'
-                            }}
-                            title="Delete Image"
-                          >
-                            ✕
-                          </button>
-                          <div style={{
-                            position: 'absolute', bottom: 0, left: 0, right: 0,
-                            background: 'rgba(75, 45, 113, 0.75)', color: '#fff',
-                            fontSize: '0.6rem', fontWeight: '800', textAlign: 'center', padding: '3px 0'
-                          }}>
-                            #{i + 1}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              )}
 
               {activeTab === 'how' && (
                 <div>
@@ -1250,55 +1181,7 @@ export default function HomepageCMSPage() {
                 </div>
               )}
 
-              {activeTab === 'ctas' && (
-                <div>
-                  <div className="cnt_form_title">Guided Weight Loss CTA</div>
-                  <div className="cnt_form_sub">Edit promotional card, button links, description, and graphics.</div>
 
-                  <div className="srv_form_grid">
-                    <div className="srv_form_group">
-                      <label className="srv_label">Promo Card Title</label>
-                      <input type="text" className="srv_input" value={cmsData.appointmentCta.title} onChange={e => updateAppointmentCta('title', e.target.value)} />
-                    </div>
-                    <div className="srv_form_group">
-                      <label className="srv_label">Promo Card Subtitle</label>
-                      <input type="text" className="srv_input" value={cmsData.appointmentCta.subtitle} onChange={e => updateAppointmentCta('subtitle', e.target.value)} />
-                    </div>
-                    <div className="srv_form_group">
-                      <label className="srv_label">Promo Card Image Link</label>
-                      <input type="text" className="srv_input" value={cmsData.appointmentCta.image} onChange={e => updateAppointmentCta('image', e.target.value)} />
-                    </div>
-                    <div className="srv_form_group">
-                      <label className="srv_label">CTA Button Label</label>
-                      <input type="text" className="srv_input" value={cmsData.appointmentCta.ctaText} onChange={e => updateAppointmentCta('ctaText', e.target.value)} />
-                    </div>
-                    <div className="srv_form_group">
-                      <label className="srv_label">CTA Button Link</label>
-                      <input type="text" className="srv_input" value={cmsData.appointmentCta.ctaUrl} onChange={e => updateAppointmentCta('ctaUrl', e.target.value)} />
-                    </div>
-                    <div className="srv_form_group full">
-                      <label className="srv_label">Promo Description Content</label>
-                      <textarea className="srv_textarea" rows={4} value={cmsData.appointmentCta.desc} onChange={e => updateAppointmentCta('desc', e.target.value)} />
-                    </div>
-                  </div>
-
-                  <div className="cnt_form_title" style={{ marginTop: '20px', borderTop: '1px dashed #e2e8f0', paddingTop: '20px' }}>Footer Mega CTA</div>
-                  <div className="srv_form_grid" style={{ marginTop: '12px' }}>
-                    <div className="srv_form_group full">
-                      <label className="srv_label">Footer CTA Title Heading</label>
-                      <input type="text" className="srv_input" value={cmsData.footerCta.title} onChange={e => updateFooterCta('title', e.target.value)} />
-                    </div>
-                    <div className="srv_form_group">
-                      <label className="srv_label">Footer Button Label</label>
-                      <input type="text" className="srv_input" value={cmsData.footerCta.ctaText} onChange={e => updateFooterCta('ctaText', e.target.value)} />
-                    </div>
-                    <div className="srv_form_group">
-                      <label className="srv_label">Footer Button Link</label>
-                      <input type="text" className="srv_input" value={cmsData.footerCta.ctaUrl} onChange={e => updateFooterCta('ctaUrl', e.target.value)} />
-                    </div>
-                  </div>
-                </div>
-              )}
 
               {activeTab === 'seo' && (
                 <div>
@@ -1317,22 +1200,6 @@ export default function HomepageCMSPage() {
                     <div className="srv_form_group full">
                       <label className="srv_label">Meta Keywords (Comma-Separated)</label>
                       <input type="text" className="srv_input" value={cmsData.seoSettings.metaKeywords} onChange={e => updateSeo('metaKeywords', e.target.value)} />
-                    </div>
-                    <div className="srv_form_group">
-                      <label className="srv_label">Canonical HTML Link</label>
-                      <input type="text" className="srv_input" value={cmsData.seoSettings.canonicalUrl} onChange={e => updateSeo('canonicalUrl', e.target.value)} />
-                    </div>
-                    <div className="srv_form_group">
-                      <label className="srv_label">Open Graph (OG) Link Preview Title</label>
-                      <input type="text" className="srv_input" value={cmsData.seoSettings.ogTitle} onChange={e => updateSeo('ogTitle', e.target.value)} />
-                    </div>
-                    <div className="srv_form_group full">
-                      <label className="srv_label">Open Graph Description</label>
-                      <input type="text" className="srv_input" value={cmsData.seoSettings.ogDescription} onChange={e => updateSeo('ogDescription', e.target.value)} />
-                    </div>
-                    <div className="srv_form_group full">
-                      <label className="srv_label">Open Graph Share Preview Image URL</label>
-                      <input type="text" className="srv_input" value={cmsData.seoSettings.ogImage} onChange={e => updateSeo('ogImage', e.target.value)} />
                     </div>
                   </div>
                 </div>

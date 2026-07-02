@@ -44,6 +44,7 @@ const ICONS = {
   edit:      "M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z",
   doc:       "M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z M14 2v6h6 M16 13H8 M16 17H8 M10 9H8",
   info:      "M12 16v-4 M12 8h.01 M12 2a10 10 0 1010 10A10 10 0 0012 2z",
+  globe:     "M12 2a10 10 0 1010 10A10 10 0 0012 2zM2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
 };
 
 /* ─── Toast Component ─── */
@@ -543,6 +544,40 @@ export default function AdminAppointmentsPage() {
   const [spinning,     setSpinning]      = useState(false);
   const [isMobile,     setIsMobile]      = useState(false);
 
+  const CLINICS = [
+    "West Chemist — Northampton Clinic",
+    "West Chemist — Online Virtual Clinic"
+  ];
+  const [selectedBranch, setSelectedBranch] = useState("West Chemist — Northampton Clinic");
+
+  useEffect(() => {
+    const val = localStorage.getItem('adminSelectedBranch');
+    if (val && CLINICS.includes(val)) {
+      setSelectedBranch(val);
+    }
+  }, []);
+
+  const handleBranchChange = (branch) => {
+    setSelectedBranch(branch);
+    localStorage.setItem('adminSelectedBranch', branch);
+    window.dispatchEvent(new Event('adminBranchChanged'));
+  };
+
+  useEffect(() => {
+    const handleSync = () => {
+      const val = localStorage.getItem('adminSelectedBranch');
+      if (val && CLINICS.includes(val) && val !== selectedBranch) {
+        setSelectedBranch(val);
+      }
+    };
+    window.addEventListener('adminBranchChanged', handleSync);
+    window.addEventListener('storage', handleSync);
+    return () => {
+      window.removeEventListener('adminBranchChanged', handleSync);
+      window.removeEventListener('storage', handleSync);
+    };
+  }, [selectedBranch]);
+
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 600);
     checkMobile();
@@ -589,7 +624,7 @@ export default function AdminAppointmentsPage() {
 
   /* ─── Filtering ─── */
   useEffect(() => {
-    let result = [...appointments];
+    let result = appointments.filter(a => a.clinic === selectedBranch);
     if (statusFilter !== 'all') {
       if (statusFilter === 'pending') {
         result = result.filter(a => a.status === 'pending' || a.status === 'confirmed');
@@ -602,12 +637,11 @@ export default function AdminAppointmentsPage() {
       result = result.filter(a =>
         a.patientId?.fullName?.toLowerCase().includes(q) ||
         a.patientId?.mobile?.includes(q) ||
-        a.service?.toLowerCase().includes(q) ||
-        a.clinic?.toLowerCase().includes(q)
+        a.service?.toLowerCase().includes(q)
       );
     }
     setFiltered(result);
-  }, [appointments, statusFilter, search]);
+  }, [appointments, statusFilter, search, selectedBranch]);
 
   /* ─── Admin Actions ─── */
   const adminAction = async (id, action, body = {}) => {
@@ -643,11 +677,12 @@ export default function AdminAppointmentsPage() {
   };
 
   /* ─── Stats ─── */
+  const branchAppts = appointments.filter(a => a.clinic === selectedBranch);
   const stats = {
-    total:    appointments.length,
-    pending:  appointments.filter(a => a.status === 'pending' || a.status === 'confirmed').length,
-    approved: appointments.filter(a => a.status === 'approved').length,
-    rejected: appointments.filter(a => a.status === 'rejected').length,
+    total:    branchAppts.length,
+    pending:  branchAppts.filter(a => a.status === 'pending' || a.status === 'confirmed').length,
+    approved: branchAppts.filter(a => a.status === 'approved').length,
+    rejected: branchAppts.filter(a => a.status === 'rejected').length,
   };
 
   const handleLogout = () => {
@@ -663,6 +698,7 @@ export default function AdminAppointmentsPage() {
     { label: 'Schedule Manager',  path: '/admin/schedule',                 icon: ICONS.cal },
     { label: 'Compliance',        path: '/admin/compliance',               icon: ICONS.shield },
     { label: 'Services & Content', path: '/admin/services',                icon: ICONS.edit },
+    { label: 'Homepage CMS',      path: '/admin/homepage',                 icon: ICONS.globe },
     { label: 'Blog Manager',       path: '/admin/blog',                    icon: ICONS.doc },
     { label: 'About Page',        path: '/admin/about',                    icon: ICONS.info },
   ];
@@ -780,6 +816,28 @@ export default function AdminAppointmentsPage() {
             <div className="adm_header_sub">Review, approve, reject & reschedule patient appointments</div>
           </div>
           <div className="adm_header_right">
+            <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginRight: '16px' }}>
+              <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--t3)' }}>Location:</span>
+              <select
+                value={selectedBranch}
+                onChange={(e) => handleBranchChange(e.target.value)}
+                style={{
+                  fontSize: '0.8rem',
+                  color: 'var(--t1)',
+                  background: '#ffffff',
+                  padding: '6px 10px',
+                  borderRadius: '8px',
+                  border: '1.5px solid var(--border)',
+                  cursor: 'pointer',
+                  fontWeight: '700',
+                  outline: 'none',
+                  boxShadow: 'var(--sh)'
+                }}
+              >
+                <option value="West Chemist — Northampton Clinic">Northampton Clinic</option>
+                <option value="West Chemist — Online Virtual Clinic">Online Virtual Clinic</option>
+              </select>
+            </div>
             <div className="adm_live_dot">Live</div>
             <div className="adm_hdr_avatar" style={{cursor:'default'}}>
               <div className="adm_hdr_av_img">{(adminUser?.username||'A')[0].toUpperCase()}</div>
