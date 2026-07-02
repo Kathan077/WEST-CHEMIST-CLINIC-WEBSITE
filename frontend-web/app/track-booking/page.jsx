@@ -7,6 +7,133 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import html2canvas from 'html2canvas';
 import './track.css';
 
+// ── CUSTOM RESCHEDULE CALENDAR COMPONENT ──
+const CustomRescheduleCalendar = ({ selectedDate, onChange, clinic }) => {
+    const [currentMonth, setCurrentMonth] = useState(new Date());
+    const [holidays, setHolidays] = useState([]);
+    const [schedules, setSchedules] = useState([]);
+    
+    // Fetch settings to know which days are closed/holidays
+    useEffect(() => {
+        const loadSettings = async () => {
+            try {
+                const res = await fetch(`${API_URL}/api/schedule?branch=${encodeURIComponent(clinic)}`);
+                const data = await res.json();
+                if (data.success) {
+                    setHolidays(data.holidays || []);
+                    setSchedules(data.schedules || []);
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        };
+        loadSettings();
+    }, [clinic]);
+
+    // Check if a date is invalid (past, holiday, or closed)
+    const getDayStatus = (date) => {
+        const today = new Date();
+        today.setHours(0,0,0,0);
+        if (date < today) return 'past';
+
+        const yyyy = date.getFullYear();
+        const mm = String(date.getMonth() + 1).padStart(2, '0');
+        const dd = String(date.getDate()).padStart(2, '0');
+        const dateStr = `${yyyy}-${mm}-${dd}`;
+
+        // Check if explicitly blocked as holiday
+        const isHoliday = holidays.some(h => {
+            if (h.holidayType === 'specific-date') {
+                return h.startDateStr === dateStr;
+            } else if (h.holidayType === 'yearly-recurring') {
+                return h.month === date.getMonth() && h.day === date.getDate();
+            }
+            return false;
+        });
+        if (isHoliday) return 'holiday';
+
+        // Check if closed in schedules overrides
+        const dayOfWeek = date.getDay();
+        const dateOverride = schedules.find(s => s.scheduleType === 'specific-date' && s.dateStr === dateStr);
+        if (dateOverride) {
+            return dateOverride.isClosed ? 'closed' : 'open';
+        }
+
+        // Check weekly template
+        const weeklyConfig = schedules.find(s => s.scheduleType === 'weekly-recurring' && s.dayOfWeek === dayOfWeek);
+        if (weeklyConfig && weeklyConfig.isClosed) {
+            return 'closed';
+        }
+
+        // Check default template
+        const defaultTemplate = schedules.find(s => s.scheduleType === 'default');
+        if (defaultTemplate && defaultTemplate.isClosed) {
+            return 'closed';
+        }
+
+        return 'open';
+    };
+
+    const handlePrevMonth = () => {
+        setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1));
+    };
+
+    const handleNextMonth = () => {
+        setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1));
+    };
+
+    // Render calendar days
+    const year = currentMonth.getFullYear();
+    const month = currentMonth.getMonth();
+    const firstDayIndex = new Date(year, month, 1).getDay();
+    const totalDays = new Date(year, month + 1, 0).getDate();
+
+    const blanks = Array(firstDayIndex).fill(null);
+    const dayNumbers = Array.from({ length: totalDays }, (_, i) => i + 1);
+    const grid = [...blanks, ...dayNumbers];
+
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    return (
+        <div className="custom_cal_wrap">
+            <div className="custom_cal_hdr">
+                <button type="button" onClick={handlePrevMonth} className="cal_nav_btn">‹</button>
+                <span className="cal_hdr_title">{monthNames[month]} {year}</span>
+                <button type="button" onClick={handleNextMonth} className="cal_nav_btn">›</button>
+            </div>
+            <div className="custom_cal_weekdays">
+                <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+            </div>
+            <div className="custom_cal_grid">
+                {grid.map((day, idx) => {
+                    if (day === null) return <div key={`blank-${idx}`} className="cal_cell blank"></div>;
+
+                    const dateObj = new Date(year, month, day);
+                    const status = getDayStatus(dateObj);
+                    const yyyy = year;
+                    const mm = String(month + 1).padStart(2, '0');
+                    const dd = String(day).padStart(2, '0');
+                    const dateStr = `${yyyy}-${mm}-${dd}`;
+                    const isSelected = selectedDate === dateStr;
+                    const isSelectable = status === 'open';
+
+                    return (
+                        <button
+                            key={`day-${day}`}
+                            type="button"
+                            disabled={!isSelectable}
+                            onClick={() => onChange(dateStr)}
+                            className={`cal_cell day_cell ${isSelected ? 'selected' : ''} ${status}`}
+                        >
+                            {day}
+                        </button>
+                    );
+                })}
+            </div>
+        </div>
+    );
+};
+
 // Determine dynamic appointment status based on current date
 const getDynamicStatus = (apt) => {
     if (apt.status === 'cancelled') {
@@ -186,6 +313,7 @@ function TrackBookingContent() {
                         ...apt, 
                         status: 'pending', 
                         isRescheduleRequested: true,
+                        isRescheduleNeeded: false,
                         rescheduledDate: rescheduleDate,
                         rescheduledTime: rescheduleTime,
                         adminNote: 'Patient requested reschedule. Awaiting clinical verification.'
@@ -352,9 +480,10 @@ function TrackBookingContent() {
                                                 <div className="ticket_top_title">West Chemist Clinic</div>
                                                 <div className="ticket_top_subtitle">Secure Medical Booking</div>
                                             </div>
-                                            <div className={`status_badge ${apt.isRescheduleRequested ? 'pending' : dynamicStatus}`}>
+                                            <div className={`status_badge ${apt.isRescheduleNeeded ? 'rejected' : (apt.isRescheduleRequested ? 'pending' : dynamicStatus)}`}>
                                                 <span className="status_dot"></span>
                                                 <span>{
+                                                    apt.isRescheduleNeeded ? 'ACTION REQUIRED' :
                                                     apt.isRescheduleRequested ? 'PENDING ' :
                                                     dynamicStatus === 'appointment_day' ? 'APPOINTMENT DAY' : 
                                                     dynamicStatus === 'pending' ? 'AWAITING AUDIT' :
@@ -435,6 +564,36 @@ function TrackBookingContent() {
                                             </div>
                                         )}
 
+                                        {apt.isRescheduleNeeded && (
+                                            <div style={{
+                                                padding: '14px 18px',
+                                                background: '#fff1f2',
+                                                border: '1.5px solid #ffe4e6',
+                                                borderRadius: '14px',
+                                                color: '#be123c',
+                                                fontSize: '0.85rem',
+                                                fontWeight: '800',
+                                                marginBottom: '16px',
+                                                display: 'flex',
+                                                flexDirection: 'column',
+                                                gap: '8px',
+                                                boxShadow: '0 4px 12px rgba(225, 29, 72, 0.05)',
+                                                animation: 'floatY 4s ease-in-out infinite'
+                                            }}>
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                                                        <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+                                                        <line x1="12" y1="9" x2="12" y2="13"/>
+                                                        <line x1="12" y1="17" x2="12.01" y2="17"/>
+                                                    </svg>
+                                                    <span>CLINIC SCHEDULE CHANGED</span>
+                                                </div>
+                                                <p style={{ margin: 0, fontSize: '0.78rem', fontWeight: '500', color: '#be123c', lineHeight: 1.4 }}>
+                                                    Your reserved slot is no longer available because the clinic location schedule or holiday calendar has changed. Please click the Reschedule button below to select a new slot immediately.
+                                                </p>
+                                            </div>
+                                        )}
+
                                         {/* Action Buttons inside Card */}
                                         <div className="ticket_action_bar">
                                             <a 
@@ -469,13 +628,13 @@ function TrackBookingContent() {
                                                         setRescheduleTime('');
                                                         setRescheduleSlots([]);
                                                     }}
-                                                    className="action_link_btn reschedule"
+                                                    className={`action_link_btn reschedule ${apt.isRescheduleNeeded ? 'action_pulse' : ''}`}
                                                 >
                                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                                                         <circle cx="12" cy="12" r="10"/>
                                                         <polyline points="12 6 12 12 16 14"/>
                                                     </svg>
-                                                    <span>Reschedule</span>
+                                                    <span>{apt.isRescheduleNeeded ? 'Reschedule Now' : 'Reschedule'}</span>
                                                 </button>
                                             )}
                                         </div>
@@ -485,15 +644,13 @@ function TrackBookingContent() {
                                                 <h4 className="reschedule_title">Select Date & Preferred Slot</h4>
                                                 
                                                 <div>
-                                                    <label className="ticket_label_txt" style={{ marginBottom: '6px', display: 'block' }}>Select Date</label>
-                                                    <input 
-                                                        type="date" 
-                                                        className="reschedule_input_date"
-                                                        min={new Date().toISOString().split('T')[0]}
-                                                        value={rescheduleDate}
-                                                        onChange={(e) => handleRescheduleDateChange(apt, e.target.value)}
-                                                    />
-                                                </div>
+                                                     <label className="ticket_label_txt" style={{ marginBottom: '8px', display: 'block' }}>Select Date</label>
+                                                     <CustomRescheduleCalendar 
+                                                         selectedDate={rescheduleDate}
+                                                         onChange={(dateVal) => handleRescheduleDateChange(apt, dateVal)}
+                                                         clinic={apt.clinic}
+                                                     />
+                                                 </div>
 
                                                 {rescheduleDate && (
                                                     <div>

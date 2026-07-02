@@ -25,12 +25,82 @@ const getAllContents = async (req, res) => {
 // @access  Public
 const getContentByKey = async (req, res) => {
   try {
-    const content = await PageContent.findOne({ key: req.params.key });
+    const key = req.params.key.toLowerCase().trim();
+    let content = await PageContent.findOne({ key });
     if (!content) {
-      return res.status(404).json({
-        success: false,
-        message: `Content with key '${req.params.key}' not found`
-      });
+      if (key === 'clinic-hours') {
+        content = await PageContent.create({
+          key: 'clinic-hours',
+          title: 'West Chemist Clinic Hours',
+          content: 'Monday - Friday: 9:00 AM - 5:30 PM, Saturday: 9:00 AM - 1:00 PM, Sunday: Closed',
+          section: 'general',
+          metadata: {
+            mon_fri: '9:00 AM - 5:30 PM',
+            sat: '9:00 AM - 1:00 PM',
+            sun: 'Closed'
+          }
+        });
+      } else if (key === 'clinic-holidays') {
+        content = await PageContent.create({
+          key: 'clinic-holidays',
+          title: 'Clinic Blocked Holidays',
+          content: '',
+          section: 'settings',
+          metadata: {}
+        });
+      } else if (key === 'clinic-schedule') {
+        content = await PageContent.create({
+          key: 'clinic-schedule',
+          title: 'Clinic Time Slots Schedule',
+          content: JSON.stringify({
+            defaultSlots: [
+              "09:00 AM", "09:30 AM", "10:00 AM", "10:30 AM",
+              "11:00 AM", "11:30 AM", "01:00 PM", "01:30 PM",
+              "02:00 PM", "02:30 PM", "03:00 PM", "04:00 PM",
+              "04:30 PM", "05:00 PM", "05:30 PM", "06:00 PM"
+            ],
+            customDates: {}
+          }),
+          section: 'settings',
+          metadata: {}
+        });
+      } else if (key === 'health-tools-header') {
+        content = await PageContent.create({
+          key: 'health-tools-header',
+          title: 'Interactive Health Tools',
+          content: 'Free tools to help you monitor and understand your wellbeing.',
+          section: 'general',
+          metadata: {}
+        });
+      } else if (key === 'health-tools-list') {
+        content = await PageContent.create({
+          key: 'health-tools-list',
+          title: 'Interactive Health Tools List',
+          content: JSON.stringify([
+            { title: "BMI Calculator", icon: "calculator", desc: "Check your Body Mass Index in seconds." },
+            { title: "Diabetes Risk", icon: "droplet", desc: "Take a simple test to assess your risk factor." },
+            { title: "Heart Age", icon: "heart", desc: "Evaluate your cardiovascular health profile." },
+            { title: "Symptom Checker", icon: "search", desc: "Get instant guidance on common symptoms." }
+          ]),
+          section: 'general',
+          metadata: {}
+        });
+      } else if (key === 'social-feed-header') {
+        content = await PageContent.create({
+          key: 'social-feed-header',
+          title: 'Health Tips on Social',
+          content: 'Follow us @westchemistclinic for daily medical insights.',
+          section: 'general',
+          metadata: {
+            instagram_url: 'https://instagram.com/westchemistclinic'
+          }
+        });
+      } else {
+        return res.status(404).json({
+          success: false,
+          message: `Content with key '${req.params.key}' not found`
+        });
+      }
     }
     res.status(200).json({
       success: true,

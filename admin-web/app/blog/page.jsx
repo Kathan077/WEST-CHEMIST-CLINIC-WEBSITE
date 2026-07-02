@@ -286,6 +286,7 @@ export default function BlogManagerPage() {
     {label:'Dashboard',    path:'/admin/patients',                   icon:ICONS.home},
     {label:'Appointments', path:'/admin/appointments',               icon:ICONS.cal},
     {label:'Patients',     path:'/admin/patients?view=patients',     icon:ICONS.users},
+    {label:'Schedule Manager', path:'/admin/schedule',               icon:ICONS.cal},
     {label:'Compliance',   path:'/admin/compliance',                 icon:ICONS.shield},
     {label:'Services & Content', path:'/admin/services',             icon:ICONS.edit},
     {label:'Blog Manager', path:'/admin/blog',                       icon:ICONS.doc, active: true},
@@ -308,7 +309,9 @@ export default function BlogManagerPage() {
   const [hoursForm, setHoursForm] = useState({ mon_fri: '', sat: '', sun: '' });
   // Social settings state
   const [socialForm, setSocialForm] = useState({ title: '', content: '', instagram_url: '' });
-  const [socialImages, setSocialImages] = useState(['', '', '', '', '']);
+  const [socialImages, setSocialImages] = useState([]);
+  const [uploadingSocial, setUploadingSocial] = useState(false);
+  const [extSocialUrl, setExtSocialUrl] = useState('');
   // Tools list state
   const [toolsHeader, setToolsHeader] = useState({ title: '', content: '' });
   const [toolsList, setToolsList] = useState([]);
@@ -474,10 +477,14 @@ export default function BlogManagerPage() {
           content: socialJson.data.content || '',
           instagram_url: socialJson.data.metadata?.instagram_url || ''
         });
-        // Load social post images from metadata
+        // Load social post images dynamically from metadata
         const imgs = [];
-        for (let i = 0; i < 5; i++) {
-          imgs.push(socialJson.data.metadata?.[`social_img_${i}`] || '');
+        let i = 0;
+        while (true) {
+          const url = socialJson.data.metadata?.[`social_img_${i}`];
+          if (url === undefined) break;
+          if (url.trim()) imgs.push(url.trim());
+          i++;
         }
         setSocialImages(imgs);
       }
@@ -557,13 +564,51 @@ export default function BlogManagerPage() {
     }
   };
 
+  const handleSocialImageUpload = async (e) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    const formData = new FormData();
+    for (let i = 0; i < files.length; i++) {
+      formData.append('files', files[i]);
+    }
+
+    setUploadingSocial(true);
+    try {
+      const res = await fetch(`${API_URL}/api/blogs/upload`, {
+        method: 'POST',
+        body: formData
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSocialImages(prev => [...prev.filter(Boolean), ...data.urls]);
+        showToast('Social gallery images uploaded successfully!');
+      } else {
+        showToast(data.message || 'File upload failed', 'error');
+      }
+    } catch (err) {
+      console.error(err);
+      showToast('Network error during file upload', 'error');
+    } finally {
+      setUploadingSocial(false);
+      e.target.value = ''; // clear input
+    }
+  };
+
+  const handleAddExtSocialUrl = () => {
+    if (!extSocialUrl) return;
+    setSocialImages(prev => [...prev.filter(Boolean), extSocialUrl.trim()]);
+    setExtSocialUrl('');
+    showToast('External social image added!');
+  };
+
   const handleSaveSocial = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem('adminToken');
     try {
       // Build metadata with instagram URL + all social post images
       const metadata = { instagram_url: socialForm.instagram_url };
-      socialImages.forEach((url, i) => {
+      socialImages.filter(Boolean).forEach((url, i) => {
         if (url.trim()) metadata[`social_img_${i}`] = url.trim();
       });
 
@@ -1289,71 +1334,108 @@ export default function BlogManagerPage() {
                   </div>
                 </div>
 
-                {/* Social post image grid */}
+                {/* Social post image gallery manager */}
                 <div>
                   <hr style={{ border: 'none', borderTop: '1.5px solid var(--border)', margin: '4px 0 20px' }} />
-                  <label className="form_label" style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--t1)', marginBottom: '6px', display: 'block' }}>Social Post Images</label>
-                  <p style={{ fontSize: '0.8rem', color: 'var(--t3)', marginBottom: '16px' }}>Add up to 5 image URLs to display in the social feed grid on the website. Paste direct image links (e.g. from Instagram CDN, Unsplash, Cloudinary).</p>
+                  <label className="form_label" style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--t1)', marginBottom: '6px', display: 'block' }}>Social Gallery Photos</label>
+                  <p style={{ fontSize: '0.8rem', color: 'var(--t3)', marginBottom: '16px' }}>Upload local images or paste external image links to build a dynamic grid gallery shown in the social feed of the clinic website.</p>
 
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                    {socialImages.map((url, i) => (
-                      <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                        {/* Preview thumbnail */}
-                        <div style={{
-                          flexShrink: 0,
-                          width: '56px',
-                          height: '56px',
-                          borderRadius: '10px',
-                          overflow: 'hidden',
-                          border: '1.5px solid #e2e8f0',
-                          background: '#f8fafc',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center'
-                        }}>
-                          {url.trim() ? (
-                            <img src={url} alt={`Post ${i + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={(e) => { e.target.style.display = 'none'; }} />
-                          ) : (
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                              <rect x="3" y="3" width="18" height="18" rx="2" />
-                              <circle cx="8.5" cy="8.5" r="1.5" />
-                              <path d="m21 15-5-5L5 21" />
-                            </svg>
-                          )}
-                        </div>
+                  {/* Upload Actions Row */}
+                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap' }}>
+                    <div style={{ flex: 1, minWidth: '240px', display: 'flex', gap: '8px' }}>
+                      <input
+                        type="url"
+                        className="form_input"
+                        style={{ margin: 0, fontSize: '0.82rem' }}
+                        value={extSocialUrl}
+                        onChange={(e) => setExtSocialUrl(e.target.value)}
+                        placeholder="Paste image URL here (https://...)"
+                      />
+                      <button
+                        type="button"
+                        onClick={handleAddExtSocialUrl}
+                        style={{
+                          padding: '0 16px', background: 'var(--purple)', color: '#fff', border: 'none',
+                          borderRadius: '8px', fontWeight: '700', fontSize: '0.8rem', cursor: 'pointer'
+                        }}
+                      >
+                        Add URL
+                      </button>
+                    </div>
 
-                        <div style={{ flex: 1, position: 'relative' }}>
-                          <input
-                            type="url"
-                            className="form_input"
-                            style={{ margin: 0, paddingRight: url ? '36px' : '14px' }}
-                            value={url}
-                            onChange={(e) => {
-                              const updated = [...socialImages];
-                              updated[i] = e.target.value;
-                              setSocialImages(updated);
-                            }}
-                            placeholder={`Image ${i + 1} URL (https://...)`}
-                          />
-                          {url && (
-                            <button
-                              type="button"
-                              onClick={() => {
-                                const updated = [...socialImages];
-                                updated[i] = '';
-                                setSocialImages(updated);
-                              }}
-                              style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: '#94a3b8', padding: '2px', outline: 'none', lineHeight: 1 }}
-                            >
-                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
-                            </button>
-                          )}
-                        </div>
-
-                        <span style={{ flexShrink: 0, fontSize: '0.72rem', fontWeight: '700', color: '#94a3b8', width: '20px', textAlign: 'center' }}>#{i + 1}</span>
-                      </div>
-                    ))}
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      <input
+                        type="file"
+                        multiple
+                        id="social-gallery-upload"
+                        onChange={handleSocialImageUpload}
+                        style={{ display: 'none' }}
+                        accept="image/*"
+                      />
+                      <label
+                        htmlFor="social-gallery-upload"
+                        style={{
+                          display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '10px 16px',
+                          border: '1.5px dashed var(--purple)', color: 'var(--purple)', background: 'rgba(116, 79, 168, 0.05)',
+                          borderRadius: '8px', fontWeight: '700', fontSize: '0.8rem', cursor: 'pointer'
+                        }}
+                      >
+                        {uploadingSocial ? 'Uploading...' : '☁ Upload Local Photos'}
+                      </label>
+                    </div>
                   </div>
+
+                  {/* Photo Grid Gallery */}
+                  {socialImages.filter(Boolean).length === 0 ? (
+                    <div style={{
+                      padding: '40px', border: '1.5px dashed #cbd5e1', borderRadius: '12px',
+                      background: '#f8fafc', textAlign: 'center', color: '#64748b', fontSize: '0.85rem'
+                    }}>
+                      No custom social photos uploaded yet. (Falls back to default placeholder images).
+                    </div>
+                  ) : (
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(110px, 1fr))', gap: '14px' }}>
+                      {socialImages.filter(Boolean).map((url, i) => (
+                        <div key={i} style={{
+                          position: 'relative', width: '100%', aspectRatio: '1/1',
+                          borderRadius: '12px', overflow: 'hidden', border: '2px solid #e2e8f0',
+                          boxShadow: '0 2px 6px rgba(0,0,0,0.04)'
+                        }}>
+                          <img
+                            src={url}
+                            alt={`Gallery image ${i + 1}`}
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            onError={(e) => { e.target.style.display = 'none'; }}
+                          />
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const updated = socialImages.filter((_, idx) => idx !== i);
+                              setSocialImages(updated);
+                              showToast('Image removed from gallery');
+                            }}
+                            style={{
+                              position: 'absolute', top: '6px', right: '6px',
+                              background: 'rgba(239, 68, 68, 0.9)', color: '#fff',
+                              border: 'none', borderRadius: '50%', width: '24px', height: '24px',
+                              display: 'flex', alignItems: 'center', justifyContent: 'center',
+                              cursor: 'pointer', boxShadow: '0 2px 4px rgba(0,0,0,0.2)', fontSize: '0.75rem'
+                            }}
+                            title="Delete Image"
+                          >
+                            ✕
+                          </button>
+                          <div style={{
+                            position: 'absolute', bottom: 0, left: 0, right: 0,
+                            background: 'rgba(15, 23, 42, 0.65)', color: '#fff',
+                            fontSize: '0.62rem', fontWeight: '800', textAlign: 'center', padding: '3px 0'
+                          }}>
+                            #{i + 1}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 <div className="form_action_bar" style={{ borderTop: '1px solid var(--border)', paddingTop: '16px', marginTop: '4px' }}>

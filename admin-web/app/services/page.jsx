@@ -410,6 +410,7 @@ export default function AdminServicesPage() {
     { label: 'Dashboard',         path: '/admin/patients',                 icon: ICONS.home },
     { label: 'Appointments',      path: '/admin/appointments',             icon: ICONS.cal, badge: pendingCount || null },
     { label: 'Patients',          path: '/admin/patients?view=patients',   icon: ICONS.users },
+    { label: 'Schedule Manager',  path: '/admin/schedule',                 icon: ICONS.cal },
     { label: 'Compliance',        path: '/admin/compliance',               icon: ICONS.shield },
     { label: 'Services & Content', path: '/admin/services',                icon: ICONS.edit, active: true },
     { label: 'Blog Manager',       path: '/admin/blog',                    icon: ICONS.doc },

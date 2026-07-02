@@ -1205,6 +1205,22 @@ select.bk_input {
     opacity: 0.4;
 }
 
+.bk_cal_day.holiday {
+    background: rgba(239, 68, 68, 0.05) !important;
+    border-color: rgba(239, 68, 68, 0.25) !important;
+    color: #ef4444 !important;
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.bk_cal_day.closed_day {
+    background: rgba(100, 116, 139, 0.05) !important;
+    border-color: rgba(100, 116, 139, 0.25) !important;
+    color: #64748b !important;
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
 .bk_cal_day.empty {
     cursor: default;
     background: transparent;

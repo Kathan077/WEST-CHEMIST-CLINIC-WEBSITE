@@ -1,7 +1,7 @@
 'use client';
 
 import { API_URL } from '@/config';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import './dashboard.css';
 
 /* ─ SVG Icons ─ */
@@ -304,7 +304,7 @@ const DonutChart = ({ patients = [] }) => {
 };
 
 /* ─ Calendar mini ─ */
-const MiniCal = ({ appts = [] }) => {
+const MiniCal = ({ appts = [], holidays = [], onToggleHoliday }) => {
   const [hoveredDay, setHoveredDay] = useState(null);
   const today = new Date();
   const m = today.getMonth(); const yr = today.getFullYear();
@@ -335,6 +335,8 @@ const MiniCal = ({ appts = [] }) => {
     const dayRecords = dayAppts[d] || [];
     const hasAppt = dayRecords.length > 0;
     const hasApproved = dayRecords.some(r => r.status === 'approved');
+    const dateStr = `${yr}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+    const isHoliday = holidays.includes(dateStr);
     
     const colIndex = (start + d - 1) % 7;
     let alignmentClass = 'align_center';
@@ -347,16 +349,26 @@ const MiniCal = ({ appts = [] }) => {
     cells.push(
       <div 
         key={d} 
-        className={`cal_day${d===today.getDate()?' today':''}${hasAppt?' has_appt':''}${hasApproved?' has_approved':''}`}
-        style={{ position: 'relative' }}
+        className={`cal_day${d===today.getDate()?' today':''}${hasAppt?' has_appt':''}${hasApproved?' has_approved':''}${isHoliday?' holiday':''}`}
+        style={{ position: 'relative', cursor: 'pointer' }}
         onMouseEnter={() => hasAppt && setHoveredDay(d)}
         onMouseLeave={() => setHoveredDay(null)}
+        onClick={() => {
+          if (onToggleHoliday) {
+            const confirmMsg = isHoliday 
+              ? `Remove ${dateStr} from blocked holidays? This will make time slots available again.`
+              : `Block ${dateStr} as a clinic holiday? This will prevent patients from booking any slots on this day.`;
+            if (window.confirm(confirmMsg)) {
+              onToggleHoliday(dateStr);
+            }
+          }
+        }}
       >
         <span>{d}</span>
         
         {/* Hover Tooltip Box */}
         {hasAppt && hoveredDay === d && (
-          <div className={`cal_day_tooltip ${alignmentClass}`}>
+          <div className={`cal_day_tooltip ${alignmentClass}`} onClick={(e) => e.stopPropagation()}>
             <div className="cal_tooltip_header">
               {months[m]} {d}, {yr} Appointments
             </div>
@@ -384,12 +396,9 @@ const MiniCal = ({ appts = [] }) => {
   
   return (
     <div className="cal_wrap">
-      <div className="cal_hdr">
+      <div className="cal_hdr" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <span className="cal_month">{months[m]} {yr}</span>
-        <div className="cal_nav">
-          <button className="cal_nav_btn">‹</button>
-          <button className="cal_nav_btn">›</button>
-        </div>
+        <span style={{ fontSize: '0.62rem', color: '#94a3b8', background: '#f8fafc', padding: '2px 6px', borderRadius: 4, fontWeight: 600 }}>Click date to toggle holiday</span>
       </div>
       <div className="cal_days">
         {['Su','Mo','Tu','We','Th','Fr','Sa'].map(d=><div key={d} className="cal_day_name">{d}</div>)}
@@ -413,8 +422,13 @@ export default function AdminPatientsPage() {
   const [isMobile, setIsMobile] = useState(false);
 
   const [currentView, setCurrentView] = useState('dashboard');
+  const [holidays, setHolidays] = useState([]);
+  const [bulkStart, setBulkStart] = useState('');
+  const [bulkEnd, setBulkEnd] = useState('');
+
 
   useEffect(() => {
+
     const handleUrlChange = () => {
       const params = new URLSearchParams(window.location.search);
       const viewParam = params.get('view') || 'dashboard';
@@ -447,31 +461,162 @@ export default function AdminPatientsPage() {
   const hr = new Date().getHours();
   const greet = hr < 12 ? 'Good Morning' : hr < 17 ? 'Good Afternoon' : 'Good Evening';
 
+  const fetchData = useCallback(async () => {
+    const token = localStorage.getItem('adminToken');
+    if (!token) return;
+    try {
+      const [rP, rA, rH] = await Promise.all([
+        fetch(`${API_URL}/api/patients`,               {headers:{Authorization:`Bearer ${token}`}}),
+        fetch(`${API_URL}/api/appointments/admin/all`, {headers:{Authorization:`Bearer ${token}`}}),
+        fetch(`${API_URL}/api/contents/clinic-holidays`, {headers:{Authorization:`Bearer ${token}`}}),
+      ]);
+      const dP = await rP.json(); const dA = await rA.json(); const dH = await rH.json();
+      if (dP.success) setPatients(dP.data);
+      if (dA.success) setAppts(dA.data);
+      if (dH.success && dH.data) {
+        const listStr = dH.data.content || '';
+        setHolidays(listStr.split(',').map(d => d.trim()).filter(Boolean));
+      }
+    } catch(e) { console.error(e); }
+    finally { setLoading(false); }
+  }, []);
+
+  const toggleHoliday = async (dateStr) => {
+    const token = localStorage.getItem('adminToken');
+    if (!token) return;
+    
+    let newList;
+    if (holidays.includes(dateStr)) {
+      newList = holidays.filter(d => d !== dateStr);
+    } else {
+      newList = [...holidays, dateStr];
+    }
+    
+    // Optimistic UI update
+    setHolidays(newList);
+    
+    try {
+      const res = await fetch(`${API_URL}/api/contents/clinic-holidays`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          title: 'Clinic Blocked Holidays',
+          content: newList.join(','),
+          section: 'settings'
+        })
+      });
+      const data = await res.json();
+      if (!data.success) {
+        alert(data.message || 'Failed to save holidays list');
+        fetchData(); // reload on error
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Network error saving holidays list');
+      fetchData(); // reload on error
+    }
+  };
+
+  const handleBulkHolidayOverride = async (action) => {
+    const token = localStorage.getItem('adminToken');
+    if (!token) return;
+    if (!bulkStart || !bulkEnd) {
+      alert('Please select both Start Date and End Date for bulk action');
+      return;
+    }
+
+    const startD = new Date(bulkStart);
+    const endD = new Date(bulkEnd);
+    if (endD < startD) {
+      alert('End Date must be equal to or after Start Date');
+      return;
+    }
+
+    // Generate dates range in local YYYY-MM-DD
+    const rangeDates = [];
+    let currentD = new Date(startD);
+    while (currentD <= endD) {
+      const y = currentD.getFullYear();
+      const m = String(currentD.getMonth() + 1).padStart(2, '0');
+      const day = String(currentD.getDate()).padStart(2, '0');
+      rangeDates.push(`${y}-${m}-${day}`);
+      // Increment 1 day safely
+      currentD.setDate(currentD.getDate() + 1);
+    }
+
+    let newList = [...holidays];
+    if (action === 'block') {
+      // Add and prevent duplicate keys
+      rangeDates.forEach(d => {
+        if (!newList.includes(d)) newList.push(d);
+      });
+    } else {
+      // Remove matching keys
+      newList = newList.filter(d => !rangeDates.includes(d));
+    }
+
+    // Optimistic UI update
+    setHolidays(newList);
+    // Reset inputs
+    setBulkStart('');
+    setBulkEnd('');
+
+    try {
+      const res = await fetch(`${API_URL}/api/contents/clinic-holidays`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          title: 'Clinic Blocked Holidays',
+          content: newList.join(','),
+          section: 'settings'
+        })
+      });
+      const data = await res.json();
+      if (!data.success) {
+        alert(data.message || 'Failed to save bulk holidays');
+        fetchData();
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Network error saving bulk holidays');
+      fetchData();
+    }
+  };
+
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
     const user  = localStorage.getItem('adminUser');
     if (!token) { window.location.replace('/admin'); return; }
     if (user) setAdminUser(JSON.parse(user));
-    (async () => {
-      try {
-        const [rP, rA] = await Promise.all([
-          fetch(`${API_URL}/api/patients`,               {headers:{Authorization:`Bearer ${token}`}}),
-          fetch(`${API_URL}/api/appointments/admin/all`, {headers:{Authorization:`Bearer ${token}`}}),
-        ]);
-        const dP = await rP.json(); const dA = await rA.json();
-        if (dP.success) { setPatients(dP.data); setFiltered(dP.data); }
-        if (dA.success) setAppts(dA.data);
-      } catch(e) { console.error(e); }
-      finally { setLoading(false); }
-    })();
-  }, []);
+    
+    // Initial fetch
+    fetchData();
+
+    // Live update interval (syncs automatically every 8 seconds when new requests arrive)
+    const interval = setInterval(fetchData, 8000);
+    return () => clearInterval(interval);
+  }, [fetchData]);
+
 
   useEffect(() => {
+    const approvedPatientIds = new Set(
+      appts
+        .filter(a => a.status === 'approved')
+        .map(a => typeof a.patientId === 'object' && a.patientId ? a.patientId._id : a.patientId)
+        .filter(Boolean)
+    );
+    const approvedPatients = patients.filter(p => approvedPatientIds.has(p._id));
     const q = search.toLowerCase();
-    setFiltered(!q ? patients : patients.filter(p =>
+    setFiltered(!q ? approvedPatients : approvedPatients.filter(p =>
       p.fullName?.toLowerCase().includes(q) || p.mobile?.includes(q) || p.email?.toLowerCase().includes(q)
     ));
-  }, [search, patients]);
+  }, [search, patients, appts]);
 
   const logout = () => { localStorage.removeItem('adminToken'); localStorage.removeItem('adminUser'); window.location.replace('/admin'); };
 
@@ -482,6 +627,7 @@ export default function AdminPatientsPage() {
     {label:'Dashboard',    path:'/admin/patients',                   icon:ICONS.home,   active: currentView === 'dashboard'},
     {label:'Appointments', path:'/admin/appointments',               icon:ICONS.cal,    badge:pending||null},
     {label:'Patients',     path:'/admin/patients?view=patients',     icon:ICONS.users,  active: currentView === 'patients'},
+    {label:'Schedule Manager', path:'/admin/schedule',               icon:ICONS.cal},
     {label:'Compliance',   path:'/admin/compliance',                 icon:ICONS.shield},
     {label:'Services & Content', path:'/admin/services',             icon:ICONS.edit},
     {label:'Blog Manager', path:'/admin/blog',                       icon:ICONS.doc},
@@ -520,8 +666,17 @@ export default function AdminPatientsPage() {
     };
   };
 
+  // Approved Patients set
+  const approvedPatientIds = new Set(
+    appts
+      .filter(a => a.status === 'approved')
+      .map(a => typeof a.patientId === 'object' && a.patientId ? a.patientId._id : a.patientId)
+      .filter(Boolean)
+  );
+  const approvedPatients = patients.filter(p => approvedPatientIds.has(p._id));
+
   // Patients Trend
-  const patientsTrend = getTrend(patients);
+  const patientsTrend = getTrend(approvedPatients);
   
   // Appointments Trend
   const apptsTrend = getTrend(appts);
@@ -549,29 +704,29 @@ export default function AdminPatientsPage() {
   }
 
   // Calculate dynamic targets (denominators)
-  const patientsTarget = patients.length > 0 ? Math.ceil(patients.length / 50) * 50 : 100;
+  const patientsTarget = approvedPatients.length > 0 ? Math.ceil(approvedPatients.length / 50) * 50 : 100;
   const apptsTarget = appts.length > 0 ? Math.ceil(appts.length / 50) * 50 : 150;
   const pendingTarget = pending > 0 ? Math.ceil(pending / 10) * 10 : 20;
   const todayApptsTotal = appts.filter(a => a.date === todayStr).length;
   const approvedTodayTarget = todayApptsTotal > 0 ? todayApptsTotal : 10;
 
   const stats = [
-    {label:'Total Patients',    val:patients.length, total: patientsTarget, iconPath:ICONS.users,  cls:'c1', trend:patientsTrend.text, up:patientsTrend.up},
+    {label:'Total Patients',    val:approvedPatients.length, total: patientsTarget, iconPath:ICONS.users,  cls:'c1', trend:patientsTrend.text, up:patientsTrend.up},
     {label:'Appointments',      val:appts.length,    total: apptsTarget,    iconPath:ICONS.cal,    cls:'c2', trend:apptsTrend.text,  up:apptsTrend.up},
     {label:'Pending',    val:pending,         total: pendingTarget,  iconPath:ICONS.shield, cls:'c3', trend:pendingTrend.text, up:pendingTrend.up},
     {label:'Approved Today',    val:approvedToday,   total: approvedTodayTarget, iconPath:ICONS.check,  cls:'c4', trend:approvedTodayTrend, up:approvedTodayUp},
   ];
 
   // Mini stats stack calculations
-  const totalPatientsCount = patients.length;
-  const maleCount = patients.filter(p => p._id && p._id.charCodeAt(p._id.length - 1) % 2 === 0).length;
+  const totalPatientsCount = approvedPatients.length;
+  const maleCount = approvedPatients.filter(p => p._id && p._id.charCodeAt(p._id.length - 1) % 2 === 0).length;
   const femaleCount = totalPatientsCount - maleCount;
   const malePct = totalPatientsCount > 0 ? Math.round((maleCount / totalPatientsCount) * 100) : 50;
   const femalePct = totalPatientsCount > 0 ? 100 - malePct : 50;
 
   const thirtyDaysAgo = new Date();
   thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-  const newPatientsCount = patients.filter(p => new Date(p.createdAt) >= thirtyDaysAgo).length;
+  const newPatientsCount = approvedPatients.filter(p => new Date(p.createdAt) >= thirtyDaysAgo).length;
   const oldPatientsCount = totalPatientsCount - newPatientsCount;
   const rescheduledCount = appts.filter(a => a.status === 'rescheduled').length;
 
@@ -687,174 +842,229 @@ export default function AdminPatientsPage() {
         {/* Header */}
         <header className="dash_hdr">
           <div className="dash_hdr_left">
-            <h2>{greet}, {adminUser?.username || 'Admin'} 👋</h2>
-            <p>Welcome to the West Chemist Admin Dashboard.</p>
+            {currentView === 'dashboard' ? (
+              <>
+                <h2>{greet}, {adminUser?.username || 'Admin'} 👋</h2>
+                <p>Welcome to the West Chemist Admin Dashboard.</p>
+              </>
+            ) : (
+              <>
+                <h2>Patient Directory</h2>
+                <p>Manage clinic patient registry and details.</p>
+              </>
+            )}
           </div>
           <div className="dash_hdr_right">
           </div>
         </header>
 
         {/* Welcome Banner */}
-        <div className="dash_banner">
-          <div className="banner_tag">⚕ West Chemist Clinical Portal</div>
-          <h1 className="banner_h1">
-            Manage Patients &<br/><span>Appointments Smartly</span>
-          </h1>
-          <p className="banner_sub">
-            Complete control over your clinic — approve bookings, review compliance, and track patient health records in one beautiful dashboard.
-          </p>
-          <div className="banner_btns">
-            <button className="banner_btn_p" onClick={()=>window.location.href='/admin/appointments'}>
-              View Appointments
-            </button>
-            <button className="banner_btn_s" onClick={()=>window.location.href='/admin/compliance'}>
-              Compliance Logs
-            </button>
+        {currentView === 'dashboard' && (
+          <div className="dash_banner">
+            <div className="banner_tag">⚕ West Chemist Clinical Portal</div>
+            <h1 className="banner_h1">
+              Manage Patients &<br/><span>Appointments Smartly</span>
+            </h1>
+            <p className="banner_sub">
+              Complete control over your clinic — approve bookings, review compliance, and track patient health records in one beautiful dashboard.
+            </p>
+            <div className="banner_btns">
+              <button className="banner_btn_p" onClick={()=>window.location.href='/admin/appointments'}>
+                View Appointments
+              </button>
+              <button className="banner_btn_s" onClick={()=>window.location.href='/admin/compliance'}>
+                Compliance Logs
+              </button>
+            </div>
+            <div className="banner_stats">
+              {[
+                {v:`${approvedPatients.length}+`, l:'Total Patients'},
+                {v:`${appts.length}+`, l:'Appointments'},
+                {v:`${pending}`, l:'Pending'},
+                {v:'100%', l:'GDPR Compliant'},
+              ].map((s,i) => (
+                <div key={i} style={{display:'flex',flexDirection:'column'}}>
+                  <div className="bstat_val">{s.v}</div>
+                  <div className="bstat_lbl">{s.l}</div>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="banner_stats">
-            {[
-              {v:`${patients.length}+`, l:'Total Patients'},
-              {v:`${appts.length}+`, l:'Appointments'},
-              {v:`${pending}`, l:'Pending'},
-              {v:'100%', l:'GDPR Compliant'},
-            ].map((s,i) => (
-              <div key={i} style={{display:'flex',flexDirection:'column'}}>
-                <div className="bstat_val">{s.v}</div>
-                <div className="bstat_lbl">{s.l}</div>
+        )}
+
+        {/* Stats Cards */}
+        {currentView === 'dashboard' && (
+          <div className="dash_stats">
+            {stats.map((s,i) => (
+              <div key={s.label} className={`stat_card ${s.cls}`} style={{animationDelay:`${i*0.08}s`}}>
+                <div className="stat_top">
+                  <span className="stat_lbl">{s.label}</span>
+                  <div className={`stat_trend ${s.up?'up':'dn'}`}>
+                    {s.trend}
+                  </div>
+                </div>
+                <div className="stat_main">
+                  <div className="stat_num_wrapper">
+                    <span className="stat_num">{s.val}</span>
+                    <span className="stat_total">/{s.total}</span>
+                  </div>
+                  <div className="stat_icon_box">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d={s.iconPath}/>
+                    </svg>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
-        </div>
-
-        {/* Stats Cards */}
-        <div className="dash_stats">
-          {stats.map((s,i) => (
-            <div key={s.label} className={`stat_card ${s.cls}`} style={{animationDelay:`${i*0.08}s`}}>
-              <div className="stat_top">
-                <span className="stat_lbl">{s.label}</span>
-                <div className={`stat_trend ${s.up?'up':'dn'}`}>
-                  {s.trend}
-                </div>
-              </div>
-              <div className="stat_main">
-                <div className="stat_num_wrapper">
-                  <span className="stat_num">{s.val}</span>
-                  <span className="stat_total">/{s.total}</span>
-                </div>
-                <div className="stat_icon_box">
-                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d={s.iconPath}/>
-                  </svg>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+        )}
 
         {/* Charts Grid */}
-        <div className="dash_grid">
-          {/* Column 1: Line/Area Chart */}
-          <div className="panel" style={{ flex: 1 }}>
-            <div className="panel_hdr">
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                <span className="panel_title">Appointment Trends</span>
-                <span style={{ color: '#94a3b8', fontSize: '0.85rem', cursor: 'pointer' }} title="Appointment tracking logs">ⓘ</span>
-              </div>
-              <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-                <select
-                  value={selectedYear}
-                  onChange={(e) => setSelectedYear(Number(e.target.value))}
-                  style={{
-                    fontSize: '.75rem',
-                    color: '#6b7280',
-                    background: '#fcfaff',
-                    padding: '4px 10px',
-                    borderRadius: 8,
-                    border: '1px solid #eef0f6',
-                    cursor: 'pointer',
-                    fontWeight: 600,
-                    outline: 'none'
-                  }}
-                >
-                  <option value={2025}>2025</option>
-                  <option value={2026}>2026</option>
-                  <option value={2027}>2027</option>
-                </select>
-              </div>
-            </div>
-            
-            <div className="chart_wrap">
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 8 }}>
-                <span style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--t1)' }}>{activeYearBookings} Bookings</span>
-                <span style={{ fontSize: '.75rem', fontWeight: 700, color: apptsTrend.up ? 'var(--pine)' : '#e11d48', background: apptsTrend.up ? '#eef7f5' : '#fff1f2', padding: '2px 8px', borderRadius: 100 }}>
-                  {apptsTrend.up ? '↗' : '↘'} {apptsTrend.text} vs last month
-                </span>
+        {currentView === 'dashboard' && (
+          <div className="dash_grid">
+            {/* Column 1: Line/Area Chart */}
+            <div className="panel" style={{ flex: 1 }}>
+              <div className="panel_hdr">
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <span className="panel_title">Appointment Trends</span>
+                  <span style={{ color: '#94a3b8', fontSize: '0.85rem', cursor: 'pointer' }} title="Appointment tracking logs">ⓘ</span>
+                </div>
+                <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                  <select
+                    value={selectedYear}
+                    onChange={(e) => setSelectedYear(Number(e.target.value))}
+                    style={{
+                      fontSize: '.75rem',
+                      color: '#6b7280',
+                      background: '#fcfaff',
+                      padding: '4px 10px',
+                      borderRadius: 8,
+                      border: '1px solid #eef0f6',
+                      cursor: 'pointer',
+                      fontWeight: 600,
+                      outline: 'none'
+                    }}
+                  >
+                    <option value={2025}>2025</option>
+                    <option value={2026}>2026</option>
+                    <option value={2027}>2027</option>
+                  </select>
+                </div>
               </div>
               
-              <div className="chart_svg_wrap">
-                <AreaChart appts={appts} selectedYear={selectedYear} />
+              <div className="chart_wrap">
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 8 }}>
+                  <span style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--t1)' }}>{activeYearBookings} Bookings</span>
+                  <span style={{ fontSize: '.75rem', fontWeight: 700, color: apptsTrend.up ? 'var(--pine)' : '#e11d48', background: apptsTrend.up ? '#eef7f5' : '#fff1f2', padding: '2px 8px', borderRadius: 100 }}>
+                    {apptsTrend.up ? '↗' : '↘'} {apptsTrend.text} vs last month
+                  </span>
+                </div>
+                
+                <div className="chart_svg_wrap">
+                  <AreaChart appts={appts} selectedYear={selectedYear} />
+                </div>
+                
+                <div style={{ display: 'flex', justifySelf: 'stretch', justifyContent: 'space-between', marginTop: 10, padding: '0 10px' }}>
+                  {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map(m => (
+                    <span key={m} className="chart_month_lbl" style={{ fontSize: '.68rem', color: '#94a3b8', fontWeight: 600 }}>{m}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Column 2: Calendar */}
+            <div className="panel" style={{ overflow: 'visible', position: 'relative', zIndex: 10 }}>
+              <div className="panel_hdr">
+                <span className="panel_title">Clinic Calendar</span>
+              </div>
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '16px', justifyContent: 'center' }}>
+                <MiniCal appts={appts} holidays={holidays} onToggleHoliday={toggleHoliday} />
+                
+                {/* Bulk holiday range editor */}
+                <div style={{ padding: '16px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0', marginTop: '12px' }}>
+                  <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#334155', display: 'block', marginBottom: '10px' }}>Bulk Holiday Selection</span>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '12px' }}>
+                    <div>
+                      <label style={{ fontSize: '0.65rem', fontWeight: 700, color: '#64748b', display: 'block', marginBottom: '4px' }}>Start Date</label>
+                      <input 
+                        type="date" 
+                        value={bulkStart} 
+                        onChange={e => setBulkStart(e.target.value)} 
+                        style={{ width: '100%', padding: '6px 8px', fontSize: '0.75rem', borderRadius: '6px', border: '1px solid #cbd5e1', outline: 'none' }} 
+                      />
+                    </div>
+                    <div>
+                      <label style={{ fontSize: '0.65rem', fontWeight: 700, color: '#64748b', display: 'block', marginBottom: '4px' }}>End Date</label>
+                      <input 
+                        type="date" 
+                        value={bulkEnd} 
+                        onChange={e => setBulkEnd(e.target.value)} 
+                        style={{ width: '100%', padding: '6px 8px', fontSize: '0.75rem', borderRadius: '6px', border: '1px solid #cbd5e1', outline: 'none' }} 
+                      />
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    <button 
+                      onClick={() => handleBulkHolidayOverride('block')} 
+                      style={{ flex: 1, padding: '8px', background: '#ef4444', color: '#fff', border: 'none', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 700, cursor: 'pointer' }}
+                    >
+                      Block Range
+                    </button>
+                    <button 
+                      onClick={() => handleBulkHolidayOverride('unblock')} 
+                      style={{ flex: 1, padding: '8px', background: '#cbd5e1', color: '#334155', border: 'none', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 700, cursor: 'pointer' }}
+                    >
+                      Unblock Range
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Column 3: Stack of 3 mini stats cards */}
+            <div className="mini_stats_stack">
+              <div className="mini_stat_row row_c1">
+                <div className="mini_stat_inner">
+                  <div className="mini_stat_left">
+                    <span className="mini_stat_num">{newPatientsCount}</span>
+                    <span className="mini_stat_lbl">New Patients</span>
+                  </div>
+                  <span className={`mini_stat_trend ${newPatientsTrend.cls}`}>{newPatientsTrend.text}</span>
+                </div>
+                <div className="mini_progress_track">
+                  <div className="mini_progress_bar" style={{ width: `${totalPatientsCount > 0 ? (newPatientsCount / totalPatientsCount) * 100 : 0}%`, background: 'var(--pine)' }} />
+                </div>
               </div>
               
-              <div style={{ display: 'flex', justifySelf: 'stretch', justifyContent: 'space-between', marginTop: 10, padding: '0 10px' }}>
-                {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map(m => (
-                  <span key={m} className="chart_month_lbl" style={{ fontSize: '.68rem', color: '#94a3b8', fontWeight: 600 }}>{m}</span>
-                ))}
+              <div className="mini_stat_row row_c2">
+                <div className="mini_stat_inner">
+                  <div className="mini_stat_left">
+                    <span className="mini_stat_num">{oldPatientsCount}</span>
+                    <span className="mini_stat_lbl">Old Patients</span>
+                  </div>
+                  <span className={`mini_stat_trend ${oldPatientsTrend.cls}`}>{oldPatientsTrend.text}</span>
+                </div>
+                <div className="mini_progress_track">
+                  <div className="mini_progress_bar" style={{ width: `${totalPatientsCount > 0 ? (oldPatientsCount / totalPatientsCount) * 100 : 0}%`, background: '#e11d48' }} />
+                </div>
+              </div>
+              
+              <div className="mini_stat_row row_c3">
+                <div className="mini_stat_inner">
+                  <div className="mini_stat_left">
+                    <span className="mini_stat_num">{rescheduledCount}</span>
+                    <span className="mini_stat_lbl">Rescheduled</span>
+                  </div>
+                  <span className={`mini_stat_trend ${rescheduledTrend.cls}`}>{rescheduledTrend.text}</span>
+                </div>
+                <div className="mini_progress_track">
+                  <div className="mini_progress_bar" style={{ width: `${appts.length > 0 ? (rescheduledCount / appts.length) * 100 : 0}%`, background: 'var(--purple)' }} />
+                </div>
               </div>
             </div>
           </div>
+        )}
 
-          {/* Column 2: Calendar */}
-          <div className="panel" style={{ overflow: 'visible', position: 'relative', zIndex: 10 }}>
-            <div className="panel_hdr">
-              <span className="panel_title">Clinic Calendar</span>
-            </div>
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-              <MiniCal appts={appts} />
-            </div>
-          </div>
-
-          {/* Column 3: Stack of 3 mini stats cards */}
-          <div className="mini_stats_stack">
-            <div className="mini_stat_row row_c1">
-              <div className="mini_stat_inner">
-                <div className="mini_stat_left">
-                  <span className="mini_stat_num">{newPatientsCount}</span>
-                  <span className="mini_stat_lbl">New Patients</span>
-                </div>
-                <span className={`mini_stat_trend ${newPatientsTrend.cls}`}>{newPatientsTrend.text}</span>
-              </div>
-              <div className="mini_progress_track">
-                <div className="mini_progress_bar" style={{ width: `${totalPatientsCount > 0 ? (newPatientsCount / totalPatientsCount) * 100 : 0}%`, background: 'var(--pine)' }} />
-              </div>
-            </div>
-            
-            <div className="mini_stat_row row_c2">
-              <div className="mini_stat_inner">
-                <div className="mini_stat_left">
-                  <span className="mini_stat_num">{oldPatientsCount}</span>
-                  <span className="mini_stat_lbl">Old Patients</span>
-                </div>
-                <span className={`mini_stat_trend ${oldPatientsTrend.cls}`}>{oldPatientsTrend.text}</span>
-              </div>
-              <div className="mini_progress_track">
-                <div className="mini_progress_bar" style={{ width: `${totalPatientsCount > 0 ? (oldPatientsCount / totalPatientsCount) * 100 : 0}%`, background: '#e11d48' }} />
-              </div>
-            </div>
-            
-            <div className="mini_stat_row row_c3">
-              <div className="mini_stat_inner">
-                <div className="mini_stat_left">
-                  <span className="mini_stat_num">{rescheduledCount}</span>
-                  <span className="mini_stat_lbl">Rescheduled</span>
-                </div>
-                <span className={`mini_stat_trend ${rescheduledTrend.cls}`}>{rescheduledTrend.text}</span>
-              </div>
-              <div className="mini_progress_track">
-                <div className="mini_progress_bar" style={{ width: `${appts.length > 0 ? (rescheduledCount / appts.length) * 100 : 0}%`, background: 'var(--purple)' }} />
-              </div>
-            </div>
-          </div>
-        </div>
 
         {/* Bottom Section: Table Grid */}
         <div className="dash_bottom_grid" style={{ gridTemplateColumns: '1fr' }}>
@@ -941,7 +1151,7 @@ export default function AdminPatientsPage() {
                           </span>
                         </td>
                         <td>
-                          <button className="det_btn">
+                          <button className="det_btn" onClick={() => window.location.href = `/admin/patients/${p._id}`}>
                             Details
                             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ transition: 'transform 0.2s' }}>
                               <path d="M9 18l6-6-6-6" />
@@ -961,3 +1171,5 @@ export default function AdminPatientsPage() {
     </div>
   );
 }
+
+

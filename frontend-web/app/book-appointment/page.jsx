@@ -76,7 +76,12 @@ const SERVICES = [
     }
 ];
     
-const TIMES = ["09:00 AM", "09:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM", "01:00 PM", "01:30 PM", "02:00 PM", "02:30 PM", "03:00 PM", "04:00 PM"];
+const TIMES = [
+    "09:00 AM", "09:30 AM", "10:00 AM", "10:30 AM",
+    "11:00 AM", "11:30 AM", "01:00 PM", "01:30 PM",
+    "02:00 PM", "02:30 PM", "03:00 PM", "04:00 PM",
+    "04:30 PM", "05:00 PM", "05:30 PM", "06:00 PM"
+];
 
 const STEPS = [
     { num: 1, label: "Patient Profile" },
@@ -157,6 +162,25 @@ function BookingPageInner() {
     const [loading, setLoading] = useState(false);
     const [apiError, setApiError] = useState('');
     const [dynamicServices, setDynamicServices] = useState(SERVICES);
+    const [holidays, setHolidays] = useState([]);
+    const [schedules, setSchedules] = useState([]);
+
+    useEffect(() => {
+        const fetchHolidaysAndSchedule = async () => {
+            const clinicBranch = formData.clinic || CLINICS[0];
+            try {
+                const res = await fetch(`${API_URL}/api/schedule?branch=${encodeURIComponent(clinicBranch)}`);
+                const data = await res.json();
+                if (data.success) {
+                    setHolidays(data.holidays || []);
+                    setSchedules(data.schedules || []);
+                }
+            } catch (err) {
+                console.error("Failed to load clinic settings on user calendar:", err);
+            }
+        };
+        fetchHolidaysAndSchedule();
+    }, [formData.clinic]);
 
     useEffect(() => {
         const fetchServices = async () => {
@@ -1023,12 +1047,46 @@ function BookingPageInner() {
                                                                 {[...Array(daysInMonth)].map((_, i) => {
                                                                     const d = i + 1;
                                                                     const isSel = isDateSelected(d);
-                                                                    const disabled = isPast(d);
+                                                                    
+                                                                    // Build date string YYYY-MM-DD in local context
+                                                                    const dObj = new Date(viewDate.getFullYear(), viewDate.getMonth(), d);
+                                                                    const dayOfWeek = dObj.getDay(); // 0 = Sunday, 6 = Saturday
+                                                                    
+                                                                    const y = dObj.getFullYear();
+                                                                    const m = String(dObj.getMonth() + 1).padStart(2, '0');
+                                                                    const dayStr = String(dObj.getDate()).padStart(2, '0');
+                                                                    const dateKey = `${y}-${m}-${dayStr}`;
+                                                                    
+                                                                    // Evaluate new scheduling precedence holiday status
+                                                                    const isHoliday = holidays.some(h => {
+                                                                        if (h.holidayType === 'specific-date' && h.startDateStr === dateKey) return true;
+                                                                        if (h.holidayType === 'date-range') {
+                                                                            const end = h.endDateStr || h.startDateStr;
+                                                                            if (dateKey >= h.startDateStr && dateKey <= end) return true;
+                                                                        }
+                                                                        if (h.holidayType === 'recurring-yearly' && h.month === viewDate.getMonth() && h.day === d) return true;
+                                                                        if (h.holidayType === 'recurring-monthly' && h.day === d) return true;
+                                                                        return false;
+                                                                    });
+
+                                                                    // Find matching schedule to check closed status
+                                                                    const specificDateSch = schedules.find(s => s.scheduleType === 'specific-date' && s.dateStr === dateKey);
+                                                                    const yearlySch = schedules.find(s => s.scheduleType === 'yearly' && s.month === viewDate.getMonth() && s.day === d);
+                                                                    const monthlySch = schedules.find(s => s.scheduleType === 'monthly' && s.dayOfMonth === d);
+                                                                    const weeklySch = schedules.find(s => s.scheduleType === 'weekly' && s.dayOfWeek === dayOfWeek);
+                                                                    const defaultSch = schedules.find(s => s.scheduleType === 'default');
+
+                                                                    const activeSch = specificDateSch || yearlySch || monthlySch || weeklySch || defaultSch;
+                                                                    const isClinicClosed = activeSch ? activeSch.isClosed : false;
+                                                                    
+                                                                    const disabled = isPast(d) || isHoliday || isClinicClosed;
+
                                                                     return (
                                                                         <div
                                                                             key={d}
-                                                                            className={`bk_cal_day ${isSel ? 'selected' : ''} ${disabled ? 'disabled' : ''}`}
+                                                                            className={`bk_cal_day ${isSel ? 'selected' : ''} ${disabled ? 'disabled' : ''} ${isHoliday ? 'holiday' : ''} ${isClinicClosed ? 'closed_day' : ''}`}
                                                                             onClick={() => !disabled && selectCalDate(d)}
+                                                                            title={isHoliday ? 'Closed (Holiday)' : isClinicClosed ? 'Clinic Closed' : ''}
                                                                         >
                                                                             {d}
                                                                         </div>
@@ -1044,41 +1102,42 @@ function BookingPageInner() {
                                                                     <h4 className="bk_avail_heading">
                                                                         Available slots on {new Date(formData.date).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'short' })}
                                                                     </h4>
+                                                                    {availableSlots.length > 0 && availableSlots.filter(s => s.available && !isSlotInPast(s.time, formData.date)).length === 0 ? (
+                                                                        <div className="bk_no_slots_msg anim_in">
+                                                                            <div className="bk_no_slots_icon">
+                                                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e11d48" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                                                                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                                                                                    <line x1="16" y1="2" x2="16" y2="6" />
+                                                                                    <line x1="8" y1="2" x2="8" y2="6" />
+                                                                                    <line x1="3" y1="10" x2="21" y2="10" />
+                                                                                    <line x1="15" y1="14" x2="9" y2="20" />
+                                                                                    <line x1="9" y1="14" x2="15" y2="20" />
+                                                                                </svg>
+                                                                            </div>
+                                                                            <div className="bk_no_slots_title">All slots full, please take another</div>
+                                                                            <div className="bk_no_slots_desc">
+                                                                                All time slots for this date are fully booked or in the past. Please select another slot or date.
+                                                                            </div>
+                                                                        </div>
+                                                                    ) : (
+                                                                        <div className="bk_times">
+                                                                            {availableSlots
+                                                                                .filter(s => s.available && !isSlotInPast(s.time, formData.date))
+                                                                                .map(s => {
+                                                                                    const isSel = formData.time === s.time;
+                                                                                    return (
+                                                                                        <div
+                                                                                            key={s.time}
+                                                                                            className={`bk_time ${isSel ? 'selected' : ''}`}
+                                                                                            onClick={() => set('time', s.time)}
+                                                                                        >
+                                                                                            {s.time}
+                                                                                        </div>
+                                                                                    );
+                                                                                })}
+                                                                        </div>
+                                                                    )}
                                                                 </div>
-                                                                {availableSlots.length > 0 && availableSlots.every(s => !s.available) ? (
-                                                                    <div className="bk_no_slots_msg anim_in">
-                                                                        <div className="bk_no_slots_icon">
-                                                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e11d48" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                                                                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                                                                                <line x1="16" y1="2" x2="16" y2="6" />
-                                                                                <line x1="8" y1="2" x2="8" y2="6" />
-                                                                                <line x1="3" y1="10" x2="21" y2="10" />
-                                                                                <line x1="15" y1="14" x2="9" y2="20" />
-                                                                                <line x1="9" y1="14" x2="15" y2="20" />
-                                                                            </svg>
-                                                                        </div>
-                                                                        <div className="bk_no_slots_title">All slots full, please take another</div>
-                                                                        <div className="bk_no_slots_desc">
-                                                                            This time slot is fully booked. Please select another slot or date.
-                                                                        </div>
-                                                                    </div>
-                                                                ) : (
-                                                                    <div className="bk_times">
-                                                                        {availableSlots.map(s => {
-                                                                            const isSel = formData.time === s.time;
-                                                                            const isBooked = !s.available || isSlotInPast(s.time, formData.date);
-                                                                            return (
-                                                                                <div
-                                                                                    key={s.time}
-                                                                                    className={`bk_time ${isSel ? 'selected' : ''} ${isBooked ? 'booked disabled' : ''}`}
-                                                                                    onClick={() => !isBooked && set('time', s.time)}
-                                                                                >
-                                                                                    {s.time}
-                                                                                </div>
-                                                                            );
-                                                                        })}
-                                                                    </div>
-                                                                )}
                                                             </div>
                                                         )}
                                                     </>

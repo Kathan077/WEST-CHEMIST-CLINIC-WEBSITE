@@ -56,6 +56,10 @@ const AppointmentSchema = new mongoose.Schema(
     isRescheduleRequested: {
       type: Boolean,
       default: false
+    },
+    isRescheduleNeeded: {
+      type: Boolean,
+      default: false
     }
   },
   {

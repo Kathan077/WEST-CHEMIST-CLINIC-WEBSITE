@@ -132,8 +132,52 @@ const getPatientById = async (req, res) => {
   }
 };
 
+/**
+ * Update patient status (active/blocked)
+ * @route PUT /api/patients/:id/status
+ */
+const updatePatientStatus = async (req, res) => {
+  try {
+    const { status } = req.body;
+    if (!['active', 'blocked'].includes(status)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid status. Status must be active or blocked.'
+      });
+    }
+
+    const patient = await Patient.findByIdAndUpdate(
+      req.params.id,
+      { status },
+      { new: true }
+    );
+
+    if (!patient) {
+      return res.status(444).json({
+        success: false,
+        message: 'Patient not found'
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: `Patient status successfully updated to ${status}`,
+      data: patient
+    });
+  } catch (error) {
+    console.error(`❌ Error in updatePatientStatus: ${error.message}`);
+    res.status(500).json({
+      success: false,
+      message: 'Server error updating patient status',
+      error: error.message
+    });
+  }
+};
+
 module.exports = {
   registerOrFindPatient,
   getAllPatients,
-  getPatientById
+  getPatientById,
+  updatePatientStatus
 };
+

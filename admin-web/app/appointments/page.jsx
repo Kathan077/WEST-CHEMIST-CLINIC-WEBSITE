@@ -9,7 +9,8 @@ import '../patients/dashboard.css';
 const SLOTS = [
   "09:00 AM","09:30 AM","10:00 AM","10:30 AM",
   "11:00 AM","11:30 AM","01:00 PM","01:30 PM",
-  "02:00 PM","02:30 PM","03:00 PM","04:00 PM"
+  "02:00 PM","02:30 PM","03:00 PM","04:00 PM",
+  "04:30 PM","05:00 PM","05:30 PM","06:00 PM"
 ];
 
 const STATUS_CONFIG = {
@@ -659,6 +660,7 @@ export default function AdminAppointmentsPage() {
     { label: 'Dashboard',         path: '/admin/patients',                 icon: ICONS.home },
     { label: 'Appointments',      path: '/admin/appointments',             icon: ICONS.cal, active: true, badge: stats.pending || null },
     { label: 'Patients',          path: '/admin/patients?view=patients',   icon: ICONS.users },
+    { label: 'Schedule Manager',  path: '/admin/schedule',                 icon: ICONS.cal },
     { label: 'Compliance',        path: '/admin/compliance',               icon: ICONS.shield },
     { label: 'Services & Content', path: '/admin/services',                icon: ICONS.edit },
     { label: 'Blog Manager',       path: '/admin/blog',                    icon: ICONS.doc },

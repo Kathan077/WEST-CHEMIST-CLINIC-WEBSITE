@@ -32,13 +32,22 @@ export default function SocialFeed() {
                         instagram_url: data.data.metadata?.instagram_url || "https://instagram.com/westchemistclinic"
                     });
 
-                    // Load admin-set social post images — fall back to defaults where empty
+                    // Load admin-set social post images dynamically
                     const adminImgs = [];
-                    for (let i = 0; i < 5; i++) {
+                    let i = 0;
+                    while (true) {
                         const url = data.data.metadata?.[`social_img_${i}`];
-                        adminImgs.push(url && url.trim() ? url.trim() : FALLBACK_POSTS[i]);
+                        if (url === undefined) break;
+                        if (url.trim()) {
+                            adminImgs.push(url.trim());
+                        }
+                        i++;
                     }
-                    setPosts(adminImgs);
+                    if (adminImgs.length > 0) {
+                        setPosts(adminImgs);
+                    } else {
+                        setPosts(FALLBACK_POSTS);
+                    }
                 }
             } catch (err) {
                 console.error("Error loading social feed header:", err);

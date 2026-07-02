@@ -13,6 +13,7 @@ const contentRoutes = require('./routes/contentRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 const blogRoutes = require('./routes/blogRoutes');
 const aboutRoutes = require('./routes/aboutRoutes');
+const scheduleRoutes = require('./routes/scheduleRoutes');
 
 // Initialize Express App
 const app = express();
@@ -39,7 +40,13 @@ const corsOptions = {
   origin: function (origin, callback) {
     // Allow requests with no origin (like mobile apps, curl, or postman)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) !== -1 || origin.endsWith('.vercel.app')) {
+    if (
+      process.env.NODE_ENV === 'development' ||
+      origin.startsWith('http://localhost:') ||
+      origin.startsWith('http://127.0.0.1:') ||
+      allowedOrigins.indexOf(origin) !== -1 || 
+      origin.endsWith('.vercel.app')
+    ) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
@@ -85,6 +92,7 @@ app.use('/api/contents', contentRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/blogs', blogRoutes);
 app.use('/api/about', aboutRoutes);
+app.use('/api/schedule', scheduleRoutes);
 
 // Fallback 404 handler for unmatched routes
 app.use((req, res, next) => {

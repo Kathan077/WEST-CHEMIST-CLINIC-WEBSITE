@@ -285,8 +285,95 @@ const sendBookingReceived = async (appointment, patient) => {
   }
 };
 
+/**
+ * Send an email notifying the patient that their slot needs rescheduling due to clinic changes
+ * @param {Object} appointment - The booked appointment Mongoose document
+ * @param {Object} patient - The patient Mongoose document
+ */
+const sendRescheduleNotice = async (appointment, patient) => {
+  const transporter = createTransporter();
+  const from = process.env.EMAIL_FROM || '"West Chemist Clinic" <noreply@westchemistclinic.co.uk>';
+  const to = patient.email || 'patient-notifications@westchemistclinic.co.uk';
+  const subject = `⚠️ Reschedule Required - West Chemist Clinic`;
+  
+  const htmlContent = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px;">
+      <div style="text-align: center; margin-bottom: 20px;">
+        <h2 style="color: #ef4444; margin: 0;">West Chemist</h2>
+        <p style="color: #666; font-size: 14px; margin: 5px 0 0 0;">Clinical Booking Action Required</p>
+      </div>
+      
+      <p>Dear <strong>${patient.fullName}</strong>,</p>
+      <p>We are contacting you because our clinic's operational schedule has changed for the date of your upcoming appointment. As a result, your original slot is no longer available.</p>
+      
+      <div style="background-color: #fff1f2; border-left: 4px solid #ef4444; padding: 15px; margin: 20px 0; border-radius: 4px;">
+        <h3 style="color: #9f1239; margin-top: 0; margin-bottom: 10px;">Affected Appointment Details</h3>
+        <table style="width: 100%; font-size: 14px;">
+          <tr>
+            <td style="color: #666; padding: 4px 0; width: 120px;">Clinical Service:</td>
+            <td><strong>${appointment.service}</strong></td>
+          </tr>
+          <tr>
+            <td style="color: #666; padding: 4px 0;">Location:</td>
+            <td><strong>${appointment.clinic}</strong></td>
+          </tr>
+          <tr>
+            <td style="color: #666; padding: 4px 0;">Original Date:</td>
+            <td><strong>${appointment.date}</strong></td>
+          </tr>
+          <tr>
+            <td style="color: #666; padding: 4px 0;">Original Time:</td>
+            <td><strong style="color: #ef4444; font-size: 16px;">${appointment.time}</strong></td>
+          </tr>
+        </table>
+      </div>
+      
+      <p style="font-size: 14px; color: #333;">
+        Please log in to the <strong>Patient Tracking Center</strong> using your registered phone number (+44 ${patient.mobile}) to select a new date and time slot for your appointment immediately.
+      </p>
+      
+      <div style="text-align: center; margin: 24px 0;">
+        <a href="http://localhost:3000/track-booking?mobile=${encodeURIComponent(patient.mobile)}" style="background-color: #0d9488; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block;">
+          Reschedule My Appointment
+        </a>
+      </div>
+      
+      <hr style="border: 0; border-top: 1px solid #e0e0e0; margin: 20px 0;">
+      
+      <div style="text-align: center; color: #999; font-size: 12px;">
+        <p>This is an automated message, please do not reply directly to this email.</p>
+        <p>🔒 Secure & NHS Accredited Clinical Services</p>
+      </div>
+    </div>
+  `;
+
+  if (!transporter) {
+    console.log(`\n=================== [MOCK EMAIL SENT] ===================`);
+    console.log(`To: ${to}`);
+    console.log(`Subject: ${subject}`);
+    console.log(`Patient: ${patient.fullName} (${patient.mobile})`);
+    console.log(`Service: ${appointment.service} at ${appointment.clinic}`);
+    console.log(`Action Required: RESCHEDULE slot ${appointment.date} at ${appointment.time}`);
+    console.log(`=========================================================\n`);
+    return;
+  }
+
+  try {
+    const info = await transporter.sendMail({
+      from,
+      to,
+      subject,
+      html: htmlContent
+    });
+    console.log(`📧 Reschedule notice email sent: ${info.messageId}`);
+  } catch (error) {
+    console.error(`❌ Failed to send reschedule notice email: ${error.message}`);
+  }
+};
+
 module.exports = {
   sendBookingConfirmation,
   sendVerificationResult,
-  sendBookingReceived
+  sendBookingReceived,
+  sendRescheduleNotice
 };
