@@ -303,7 +303,19 @@ export default function BlogManagerPage() {
   const [activeView, setActiveView] = useState('list'); // 'list' or 'editor'
   const [editingBlog, setEditingBlog] = useState(null); // null if creating
 
+  // Blog Manager tab selection
+  const [activeTab, setActiveTab] = useState('articles'); // 'articles' | 'hours' | 'tools' | 'social'
 
+  // Opening Hours state
+  const [hoursForm, setHoursForm] = useState({ mon_fri: '', sat: '', sun: '' });
+  // Social settings state
+  const [socialForm, setSocialForm] = useState({ title: '', content: '', instagram_url: '' });
+  const [socialImages, setSocialImages] = useState([]);
+  const [uploadingSocial, setUploadingSocial] = useState(false);
+  const [extSocialUrl, setExtSocialUrl] = useState('');
+  // Tools list state
+  const [toolsHeader, setToolsHeader] = useState({ title: '', content: '' });
+  const [toolsList, setToolsList] = useState([]);
 
   // Form States
   const [title, setTitle] = useState('');
@@ -383,6 +395,7 @@ export default function BlogManagerPage() {
 
     fetchCategories();
     fetchBlogs();
+    fetchSettings();
   }, []);
 
   const fetchCategories = async () => {
@@ -420,6 +433,206 @@ export default function BlogManagerPage() {
       showToast('Network error loading blogs', 'error');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchSettings = async () => {
+    try {
+      const [hoursRes, toolsHdrRes, toolsListRes, socialRes] = await Promise.all([
+        fetch(`${API_URL}/api/contents/clinic-hours`),
+        fetch(`${API_URL}/api/contents/health-tools-header`),
+        fetch(`${API_URL}/api/contents/health-tools-list`),
+        fetch(`${API_URL}/api/contents/social-feed-header`)
+      ]);
+      
+      const hoursJson = await hoursRes.json();
+      const toolsHdrJson = await toolsHdrRes.json();
+      const toolsListJson = await toolsListRes.json();
+      const socialJson = await socialRes.json();
+
+      if (hoursJson.success && hoursJson.data) {
+        const meta = hoursJson.data.metadata || {};
+        setHoursForm({
+          mon_fri: meta.mon_fri || '',
+          sat: meta.sat || '',
+          sun: meta.sun || ''
+        });
+      }
+      if (toolsHdrJson.success && toolsHdrJson.data) {
+        setToolsHeader({
+          title: toolsHdrJson.data.title || '',
+          content: toolsHdrJson.data.content || ''
+        });
+      }
+      if (toolsListJson.success && toolsListJson.data) {
+        try {
+          const parsed = JSON.parse(toolsListJson.data.content || '[]');
+          setToolsList(parsed);
+        } catch (e) {
+          console.error(e);
+        }
+      }
+      if (socialJson.success && socialJson.data) {
+        setSocialForm({
+          title: socialJson.data.title || '',
+          content: socialJson.data.content || '',
+          instagram_url: socialJson.data.metadata?.instagram_url || ''
+        });
+        // Load social post images dynamically from metadata
+        const imgs = [];
+        let i = 0;
+        while (true) {
+          const url = socialJson.data.metadata?.[`social_img_${i}`];
+          if (url === undefined) break;
+          if (url.trim()) imgs.push(url.trim());
+          i++;
+        }
+        setSocialImages(imgs);
+      }
+    } catch (err) {
+      console.error("Error loading blog settings:", err);
+    }
+  };
+
+  const handleSaveHours = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem('adminToken');
+    const finalContent = `Mon - Fri: ${hoursForm.mon_fri}\nSaturday: ${hoursForm.sat}\nSunday: ${hoursForm.sun}`;
+    try {
+      const res = await fetch(`${API_URL}/api/contents/clinic-hours`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          title: 'Clinic Opening Hours',
+          content: finalContent,
+          metadata: {
+            mon_fri: hoursForm.mon_fri,
+            sat: hoursForm.sat,
+            sun: hoursForm.sun
+          }
+        })
+      });
+      if (res.ok) {
+        showToast("Clinic hours updated successfully!");
+      } else {
+        showToast("Failed to update clinic hours", "error");
+      }
+    } catch (err) {
+      console.error(err);
+      showToast("Error updating clinic hours", "error");
+    }
+  };
+
+  const handleSaveTools = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem('adminToken');
+    try {
+      const resHeader = await fetch(`${API_URL}/api/contents/health-tools-header`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          title: toolsHeader.title,
+          content: toolsHeader.content
+        })
+      });
+      
+      const resList = await fetch(`${API_URL}/api/contents/health-tools-list`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          title: 'Interactive Health Tools List',
+          content: JSON.stringify(toolsList)
+        })
+      });
+
+      if (resHeader.ok && resList.ok) {
+        showToast("Interactive health tools updated successfully!");
+      } else {
+        showToast("Failed to update health tools", "error");
+      }
+    } catch (err) {
+      console.error(err);
+      showToast("Error saving health tools changes", "error");
+    }
+  };
+
+  const handleSocialImageUpload = async (e) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    const formData = new FormData();
+    for (let i = 0; i < files.length; i++) {
+      formData.append('files', files[i]);
+    }
+
+    setUploadingSocial(true);
+    try {
+      const res = await fetch(`${API_URL}/api/blogs/upload`, {
+        method: 'POST',
+        body: formData
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSocialImages(prev => [...prev.filter(Boolean), ...data.urls]);
+        showToast('Social gallery images uploaded successfully!');
+      } else {
+        showToast(data.message || 'File upload failed', 'error');
+      }
+    } catch (err) {
+      console.error(err);
+      showToast('Network error during file upload', 'error');
+    } finally {
+      setUploadingSocial(false);
+      e.target.value = ''; // clear input
+    }
+  };
+
+  const handleAddExtSocialUrl = () => {
+    if (!extSocialUrl) return;
+    setSocialImages(prev => [...prev.filter(Boolean), extSocialUrl.trim()]);
+    setExtSocialUrl('');
+    showToast('External social image added!');
+  };
+
+  const handleSaveSocial = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem('adminToken');
+    try {
+      // Build metadata with instagram URL + all social post images
+      const metadata = { instagram_url: socialForm.instagram_url };
+      socialImages.filter(Boolean).forEach((url, i) => {
+        if (url.trim()) metadata[`social_img_${i}`] = url.trim();
+      });
+
+      const res = await fetch(`${API_URL}/api/contents/social-feed-header`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          title: socialForm.title,
+          content: socialForm.content,
+          metadata
+        })
+      });
+      if (res.ok) {
+        showToast("Social feed settings updated successfully!");
+      } else {
+        showToast("Failed to update social settings", "error");
+      }
+    } catch (err) {
+      console.error(err);
+      showToast("Error saving social settings", "error");
     }
   };
 
@@ -777,10 +990,34 @@ export default function BlogManagerPage() {
           </div>
         </header>
 
+        {/* Tab switcher row (only in list view) */}
+        {activeView === 'list' && (
+          <div className="blog_tabs_row">
+            {[
+              { key: 'articles', label: 'Articles',         icon: ICONS.doc   },
+              { key: 'hours',    label: 'Clinic Hours',     icon: ICONS.clock },
+              { key: 'tools',    label: 'Interactive Tools',icon: ICONS.tool  },
+              { key: 'social',   label: 'Social Settings',  icon: ICONS.globe },
+            ].map(({ key, label, icon }) => (
+              <button
+                key={key}
+                type="button"
+                className={`blog_tab_btn${activeTab === key ? ' active' : ''}`}
+                onClick={() => setActiveTab(key)}
+              >
+                <I d={icon} s={15} />
+                <span>{label}</span>
+              </button>
+            ))}
+          </div>
+        )}
+
         {activeView === 'list' ? (
           <div className="blog_mgr_container">
-            {/* Toolbar */}
-            <div className="blog_toolbar">
+            {activeTab === 'articles' && (
+              <>
+                {/* Toolbar */}
+                <div className="blog_toolbar">
                   <div className="blog_search_box">
                     <I d={ICONS.search} />
                     <input
@@ -852,6 +1089,363 @@ export default function BlogManagerPage() {
                     ))}
                   </div>
                 )}
+              </>
+            )}
+
+            {/* Clinic Hours Tab Content */}
+            {activeTab === 'hours' && (
+              <form onSubmit={handleSaveHours} className="editor_pane" style={{ background: '#fff', border: '1px solid var(--border)', padding: '28px', borderRadius: '16px', boxShadow: 'var(--sh)', maxWidth: '640px', width: '100%', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--t1)', margin: 0, borderBottom: '1.5px solid var(--border)', paddingBottom: '12px' }}>Configure Clinic Opening Hours</h3>
+                
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div className="form_field_group">
+                    <label className="form_label">Monday - Friday Hours</label>
+                    <input
+                      type="text"
+                      className="form_input"
+                      value={hoursForm.mon_fri}
+                      onChange={(e) => setHoursForm({ ...hoursForm, mon_fri: e.target.value })}
+                      placeholder="e.g. 8:30 AM - 6:30 PM"
+                      required
+                    />
+                  </div>
+                  <div className="form_field_group">
+                    <label className="form_label">Saturday Hours</label>
+                    <input
+                      type="text"
+                      className="form_input"
+                      value={hoursForm.sat}
+                      onChange={(e) => setHoursForm({ ...hoursForm, sat: e.target.value })}
+                      placeholder="e.g. 9:00 AM - 2:00 PM"
+                      required
+                    />
+                  </div>
+                  <div className="form_field_group">
+                    <label className="form_label">Sunday Hours</label>
+                    <input
+                      type="text"
+                      className="form_input"
+                      value={hoursForm.sun}
+                      onChange={(e) => setHoursForm({ ...hoursForm, sun: e.target.value })}
+                      placeholder="e.g. 9:00 AM - 12:00 PM"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="form_action_bar" style={{ borderTop: '1px solid var(--border)', paddingTop: '16px', marginTop: '12px' }}>
+                  <button type="submit" className="form_btn_save" style={{ height: 'auto', padding: '10px 24px', borderRadius: '10px' }}>
+                    Save Hours Changes
+                  </button>
+                </div>
+              </form>
+            )}
+
+            {/* Health Tools Tab Content */}
+            {activeTab === 'tools' && (
+              <form onSubmit={handleSaveTools} className="editor_pane" style={{ background: '#fff', border: '1px solid var(--border)', padding: '28px', borderRadius: '16px', boxShadow: 'var(--sh)', maxWidth: '780px', width: '100%', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--t1)', margin: 0, borderBottom: '1.5px solid var(--border)', paddingBottom: '12px' }}>Configure Wellbeing Tools Section</h3>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div className="form_field_group">
+                    <label className="form_label">Section Title Header</label>
+                    <input
+                      type="text"
+                      className="form_input"
+                      value={toolsHeader.title}
+                      onChange={(e) => setToolsHeader({ ...toolsHeader, title: e.target.value })}
+                      placeholder="e.g. Interactive Health Tools"
+                      required
+                    />
+                  </div>
+                  <div className="form_field_group">
+                    <label className="form_label">Section Subtitle Description</label>
+                    <input
+                      type="text"
+                      className="form_input"
+                      value={toolsHeader.content}
+                      onChange={(e) => setToolsHeader({ ...toolsHeader, content: e.target.value })}
+                      placeholder="e.g. Free tools to help you monitor and understand your wellbeing."
+                      required
+                    />
+                  </div>
+
+                  <hr style={{ border: 'none', borderTop: '1.5px solid var(--border)', margin: '20px 0 24px' }} />
+                  <label className="form_label" style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--t1)', marginBottom: '16px', display: 'block' }}>Manage Tool Cards</label>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                    {toolsList.map((tool, idx) => (
+                      <div 
+                        key={idx} 
+                        style={{ 
+                          background: '#ffffff', 
+                          border: '1px solid #e2e8f0', 
+                          borderRadius: '16px', 
+                          padding: '24px', 
+                          display: 'flex', 
+                          flexDirection: 'column', 
+                          gap: '20px',
+                          position: 'relative',
+                          boxShadow: '0 2px 8px rgba(0,0,0,0.04)'
+                        }}
+                      >
+                        {/* Card index label */}
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #f1f5f9', paddingBottom: '14px' }}>
+                          <span style={{ fontSize: '0.75rem', fontWeight: '800', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.8px' }}>
+                            Tool Card #{idx + 1}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => setToolsList(toolsList.filter((_, i) => i !== idx))}
+                            style={{ 
+                              background: 'rgba(239, 68, 68, 0.06)', 
+                              border: '1px solid rgba(239, 68, 68, 0.15)', 
+                              color: '#ef4444', 
+                              padding: '5px 12px', 
+                              borderRadius: '8px', 
+                              fontSize: '.75rem', 
+                              fontWeight: '700',
+                              cursor: 'pointer',
+                              transition: 'all 0.15s ease',
+                              outline: 'none'
+                            }}
+                          >
+                            Remove Card
+                          </button>
+                        </div>
+
+                        {/* Tool Name & Description row */}
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                          <div className="form_field_group" style={{ margin: 0 }}>
+                            <label className="form_label">Tool Name</label>
+                            <input
+                              type="text"
+                              className="form_input"
+                              value={tool.title || ''}
+                              onChange={(e) => {
+                                const updated = [...toolsList];
+                                updated[idx].title = e.target.value;
+                                setToolsList(updated);
+                              }}
+                              placeholder="e.g. BMI Calculator"
+                              required
+                            />
+                          </div>
+                          <div className="form_field_group" style={{ margin: 0 }}>
+                            <label className="form_label">Brief Description</label>
+                            <input
+                              type="text"
+                              className="form_input"
+                              value={tool.desc || ''}
+                              onChange={(e) => {
+                                const updated = [...toolsList];
+                                updated[idx].desc = e.target.value;
+                                setToolsList(updated);
+                              }}
+                              placeholder="e.g. Check your BMI in seconds."
+                              required
+                            />
+                          </div>
+                        </div>
+
+                        {/* Icon selector section */}
+                        <div>
+                          <label className="form_label" style={{ marginBottom: '10px', display: 'block' }}>Choose Icon</label>
+                          <IconPickerPanel
+                            selectedKey={tool.icon && tool.icon !== '__custom__' ? tool.icon : 'heart'}
+                            onSelect={(key) => {
+                              const updated = [...toolsList];
+                              updated[idx].icon = key;
+                              updated[idx].customSvg = '';
+                              setToolsList(updated);
+                            }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => setToolsList([...toolsList, { title: '', icon: 'heart', desc: '' }])}
+                    style={{
+                      background: 'transparent',
+                      border: '1.5px dashed var(--purple)',
+                      color: 'var(--purple)',
+                      padding: '10px',
+                      borderRadius: '8px',
+                      fontWeight: '700',
+                      fontSize: '.85rem',
+                      cursor: 'pointer',
+                      textAlign: 'center',
+                      marginTop: '8px',
+                      transition: 'all 0.2s'
+                    }}
+                  >
+                    + Add New Interactive Tool
+                  </button>
+                </div>
+
+                <div className="form_action_bar" style={{ borderTop: '1px solid var(--border)', paddingTop: '16px', marginTop: '12px' }}>
+                  <button type="submit" className="form_btn_save" style={{ height: 'auto', padding: '10px 24px', borderRadius: '10px' }}>
+                    Save Tools Changes
+                  </button>
+                </div>
+              </form>
+            )}
+
+            {/* Social settings Tab Content */}
+            {activeTab === 'social' && (
+              <form onSubmit={handleSaveSocial} className="editor_pane" style={{ background: '#fff', border: '1px solid var(--border)', padding: '28px', borderRadius: '16px', boxShadow: 'var(--sh)', maxWidth: '700px', width: '100%', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--t1)', margin: 0, borderBottom: '1.5px solid var(--border)', paddingBottom: '12px' }}>Configure Social Feed Section</h3>
+
+                {/* Header copy */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div className="form_field_group">
+                    <label className="form_label">Section Title Heading</label>
+                    <input
+                      type="text"
+                      className="form_input"
+                      value={socialForm.title}
+                      onChange={(e) => setSocialForm({ ...socialForm, title: e.target.value })}
+                      placeholder="e.g. Health Tips on Social"
+                      required
+                    />
+                  </div>
+                  <div className="form_field_group">
+                    <label className="form_label">Subtitle Description</label>
+                    <input
+                      type="text"
+                      className="form_input"
+                      value={socialForm.content}
+                      onChange={(e) => setSocialForm({ ...socialForm, content: e.target.value })}
+                      placeholder="e.g. Follow us @westchemistclinic for daily medical insights."
+                      required
+                    />
+                  </div>
+                  <div className="form_field_group">
+                    <label className="form_label">Instagram Account Profile URL</label>
+                    <input
+                      type="url"
+                      className="form_input"
+                      value={socialForm.instagram_url}
+                      onChange={(e) => setSocialForm({ ...socialForm, instagram_url: e.target.value })}
+                      placeholder="e.g. https://instagram.com/westchemistclinic"
+                    />
+                  </div>
+                </div>
+
+                {/* Social post image gallery manager */}
+                <div>
+                  <hr style={{ border: 'none', borderTop: '1.5px solid var(--border)', margin: '4px 0 20px' }} />
+                  <label className="form_label" style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--t1)', marginBottom: '6px', display: 'block' }}>Social Gallery Photos</label>
+                  <p style={{ fontSize: '0.8rem', color: 'var(--t3)', marginBottom: '16px' }}>Upload local images or paste external image links to build a dynamic grid gallery shown in the social feed of the clinic website.</p>
+
+                  {/* Upload Actions Row */}
+                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap' }}>
+                    <div style={{ flex: 1, minWidth: '240px', display: 'flex', gap: '8px' }}>
+                      <input
+                        type="url"
+                        className="form_input"
+                        style={{ margin: 0, fontSize: '0.82rem' }}
+                        value={extSocialUrl}
+                        onChange={(e) => setExtSocialUrl(e.target.value)}
+                        placeholder="Paste image URL here (https://...)"
+                      />
+                      <button
+                        type="button"
+                        onClick={handleAddExtSocialUrl}
+                        style={{
+                          padding: '0 16px', background: 'var(--purple)', color: '#fff', border: 'none',
+                          borderRadius: '8px', fontWeight: '700', fontSize: '0.8rem', cursor: 'pointer'
+                        }}
+                      >
+                        Add URL
+                      </button>
+                    </div>
+
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      <input
+                        type="file"
+                        multiple
+                        id="social-gallery-upload"
+                        onChange={handleSocialImageUpload}
+                        style={{ display: 'none' }}
+                        accept="image/*"
+                      />
+                      <label
+                        htmlFor="social-gallery-upload"
+                        style={{
+                          display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '10px 16px',
+                          border: '1.5px dashed var(--purple)', color: 'var(--purple)', background: 'rgba(116, 79, 168, 0.05)',
+                          borderRadius: '8px', fontWeight: '700', fontSize: '0.8rem', cursor: 'pointer'
+                        }}
+                      >
+                        {uploadingSocial ? 'Uploading...' : '☁ Upload Local Photos'}
+                      </label>
+                    </div>
+                  </div>
+
+                  {/* Photo Grid Gallery */}
+                  {socialImages.filter(Boolean).length === 0 ? (
+                    <div style={{
+                      padding: '40px', border: '1.5px dashed #cbd5e1', borderRadius: '12px',
+                      background: '#f8fafc', textAlign: 'center', color: '#64748b', fontSize: '0.85rem'
+                    }}>
+                      No custom social photos uploaded yet. (Falls back to default placeholder images).
+                    </div>
+                  ) : (
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(110px, 1fr))', gap: '14px' }}>
+                      {socialImages.filter(Boolean).map((url, i) => (
+                        <div key={i} style={{
+                          position: 'relative', width: '100%', aspectRatio: '1/1',
+                          borderRadius: '12px', overflow: 'hidden', border: '2px solid #e2e8f0',
+                          boxShadow: '0 2px 6px rgba(0,0,0,0.04)'
+                        }}>
+                          <img
+                            src={url}
+                            alt={`Gallery image ${i + 1}`}
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            onError={(e) => { e.target.style.display = 'none'; }}
+                          />
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const updated = socialImages.filter((_, idx) => idx !== i);
+                              setSocialImages(updated);
+                              showToast('Image removed from gallery');
+                            }}
+                            style={{
+                              position: 'absolute', top: '6px', right: '6px',
+                              background: 'rgba(239, 68, 68, 0.9)', color: '#fff',
+                              border: 'none', borderRadius: '50%', width: '24px', height: '24px',
+                              display: 'flex', alignItems: 'center', justifyContent: 'center',
+                              cursor: 'pointer', boxShadow: '0 2px 4px rgba(0,0,0,0.2)', fontSize: '0.75rem'
+                            }}
+                            title="Delete Image"
+                          >
+                            ✕
+                          </button>
+                          <div style={{
+                            position: 'absolute', bottom: 0, left: 0, right: 0,
+                            background: 'rgba(15, 23, 42, 0.65)', color: '#fff',
+                            fontSize: '0.62rem', fontWeight: '800', textAlign: 'center', padding: '3px 0'
+                          }}>
+                            #{i + 1}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                <div className="form_action_bar" style={{ borderTop: '1px solid var(--border)', paddingTop: '16px', marginTop: '4px' }}>
+                  <button type="submit" className="form_btn_save" style={{ height: 'auto', padding: '10px 24px', borderRadius: '10px' }}>
+                    Save Social Settings
+                  </button>
+                </div>
+              </form>
+            )}
           </div>
         ) : (
           /* ══ EDIT / CREATE WORKSPACE ══ */
