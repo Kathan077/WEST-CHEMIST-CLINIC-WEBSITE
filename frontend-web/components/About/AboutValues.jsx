@@ -54,8 +54,8 @@ export default function AboutWhy() {
                         </svg>
                     </div>
                     <div className="med_why_text">
-                        <h4>Compassion</h4>
-                        <p className="med_why_desc">We deliver empathetic, respectful healthcare that focuses on your physical and emotional well-being.</p>
+                        <h4>Patient First</h4>
+                        <p className="med_why_desc">Every decision is made with your health and wellbeing in mind.</p>
                     </div>
                 </div>
 
@@ -66,8 +66,8 @@ export default function AboutWhy() {
                         </svg>
                     </div>
                     <div className="med_why_text">
-                        <h4>Trust</h4>
-                        <p className="med_why_desc">We build lasting, transparent relationships through clear communication and clinical excellence.</p>
+                        <h4>Compassion</h4>
+                        <p className="med_why_desc">We treat every patient with kindness, respect, and understanding.</p>
                     </div>
                 </div>
 
@@ -78,8 +78,8 @@ export default function AboutWhy() {
                         </svg>
                     </div>
                     <div className="med_why_text">
-                        <h4>Excellence</h4>
-                        <p className="med_why_desc">We strive for exceptional quality in every diagnosis, treatment, and patient consultation.</p>
+                        <h4>Clinical Excellence</h4>
+                        <p className="med_why_desc">Safe, evidence-based care delivered by qualified professionals.</p>
                     </div>
                 </div>
 
@@ -91,8 +91,8 @@ export default function AboutWhy() {
                         </svg>
                     </div>
                     <div className="med_why_text">
-                        <h4>Integrity</h4>
-                        <p className="med_why_desc">We uphold the highest ethical and clinical standards to ensure safe, honest medical guidance.</p>
+                        <h4>Trust & Integrity</h4>
+                        <p className="med_why_desc">Honest advice and ethical healthcare you can rely on.</p>
                     </div>
                 </div>
 

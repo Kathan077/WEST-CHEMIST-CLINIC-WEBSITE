@@ -16,7 +16,7 @@ const DEFAULT_SLOTS = [
  * @param {string} date - Date in YYYY-MM-DD format
  * @returns {Promise<Array<{time: string, available: boolean, isHoliday?: boolean, isClosed?: boolean}>>}
  */
-const getAvailableSlots = async (clinic, date) => {
+const getAvailableSlots = async (clinic, date, excludeAppointmentId = null) => {
   if (!clinic || !date) {
     throw new Error('Clinic and date are required to fetch slots');
   }
@@ -128,12 +128,16 @@ const getAvailableSlots = async (clinic, date) => {
     }));
   }
 
-  // 3. Find booked appointments count per slot
-  const bookedAppointments = await Appointment.find({
+  // 3. Find booked appointments count per slot (optionally excluding a specific appointment ID)
+  const bookedQuery = {
     clinic,
     date: reqDateStr,
     status: { $nin: ['cancelled', 'rejected'] }
-  }).select('time');
+  };
+  if (excludeAppointmentId) {
+    bookedQuery._id = { $ne: excludeAppointmentId };
+  }
+  const bookedAppointments = await Appointment.find(bookedQuery).select('time');
 
   // Count bookings per slot
   const bookingsMap = {};

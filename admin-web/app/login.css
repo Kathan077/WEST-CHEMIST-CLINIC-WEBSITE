@@ -1,15 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap');
 
+/* ── Design Tokens ───────────────────────────────── */
 :root {
-    --purple: #4b2d71;
-    --pine: #206b5e;
-    --teal: #008473;
+    --purple:   #4b2d71;
+    --pine:     #206b5e;
+    --teal:     #008473;
     --lavender: #7859a3;
-    --sage: #779c8c;
+    --sage:     #779c8c;
 }
 
+/* ── Reset / Base ────────────────────────────────── */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* ── Full-Screen Container ───────────────────────── */
 .login_container {
     display: flex;
+    position: relative;        /* anchor for doctor_wrapper */
     width: 100vw;
     height: 100vh;
     overflow: hidden;
@@ -17,7 +33,9 @@
     background-color: #f5f4f8;
 }
 
-/* Left Panel styling - peeking doctor */
+/* ═══════════════════════════════════════════════════
+   LEFT PANEL
+═══════════════════════════════════════════════════ */
 .left_panel {
     position: relative;
     width: 48%;
@@ -26,48 +44,49 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-left: 8%;
-    overflow: hidden;
+    padding: 0 0 0 8%;
+    /* No overflow:hidden — lets doctor image bridge the divider */
 }
 
-/* Organic decorative circles/curves in background */
+/* Decorative soft glow — top-left */
 .left_panel::before {
     content: '';
     position: absolute;
-    top: -10%;
-    left: -10%;
-    width: 350px;
-    height: 350px;
+    top: -8%;
+    left: -8%;
+    width: 320px;
+    height: 320px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(32, 107, 94, 0.12) 0%, rgba(32, 107, 94, 0) 70%);
+    background: radial-gradient(circle, rgba(32, 107, 94, 0.14) 0%, transparent 70%);
     pointer-events: none;
 }
 
+/* Decorative soft glow — bottom-left */
 .left_panel::after {
     content: '';
     position: absolute;
-    bottom: -15%;
-    left: 5%;
-    width: 450px;
-    height: 450px;
+    bottom: -12%;
+    left: 2%;
+    width: 400px;
+    height: 400px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(75, 45, 113, 0.12) 0%, rgba(75, 45, 113, 0) 75%);
+    background: radial-gradient(circle, rgba(75, 45, 113, 0.12) 0%, transparent 75%);
     pointer-events: none;
 }
 
+/* ── Left Text Content ───────────────────────────── */
 .left_content {
     position: relative;
     z-index: 10;
-    max-width: 360px;
-    animation: fadeInUp 0.8s ease-out;
+    max-width: 340px;
+    animation: fadeInUp 0.8s ease-out both;
 }
 
 .left_hello {
-    font-size: 4.2rem;
+    font-size: clamp(2.8rem, 4.5vw, 4.8rem);
     font-weight: 900;
     color: var(--purple);
-    margin: 0;
-    line-height: 1.05;
+    line-height: 1.0;
     letter-spacing: -0.03em;
     text-transform: uppercase;
 }
@@ -79,38 +98,39 @@
 }
 
 .left_subtitle {
-    font-size: 1.15rem;
+    font-size: clamp(0.9rem, 1.2vw, 1.1rem);
     color: #4b3c60;
-    margin-top: 1.5rem;
-    line-height: 1.6;
+    margin-top: 1.4rem;
+    line-height: 1.65;
     font-weight: 500;
-    position: relative;
-    padding-left: 16px;
+    padding-left: 14px;
     border-left: 3px solid var(--pine);
 }
 
-/* Doctor peeking container positioning */
+/* ── Doctor illustration — spans the junction of both panels */
 .doctor_wrapper {
     position: absolute;
-    right: -4vw;
-    bottom: 5%;
-    width: 34vw;
-    min-width: 380px;
-    max-width: 520px;
+    /* Align the doctor/wall boundary exactly on the dividing line (48%) */
+    left: 48%;
+    bottom: 0;
+    width: clamp(280px, 28vw, 420px);
     height: auto;
-    z-index: 5;
+    z-index: 30;               /* above both panels */
     pointer-events: none;
-    animation: peerIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: peerIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .doctor_img {
     width: 100%;
     height: auto;
     object-fit: contain;
-    filter: drop-shadow(0 20px 25px rgba(0, 0, 0, 0.08));
+    display: block;
+    filter: drop-shadow(-6px 10px 20px rgba(75, 45, 113, 0.20));
 }
 
-/* Right Panel styling - login form */
+/* ═══════════════════════════════════════════════════
+   RIGHT PANEL — Login Form
+═══════════════════════════════════════════════════ */
 .right_panel {
     width: 52%;
     height: 100%;
@@ -118,44 +138,45 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 40px;
-    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.02);
+    padding: 40px 5%;
+    box-shadow: -8px 0 24px rgba(0, 0, 0, 0.04);
     position: relative;
     z-index: 20;
+    overflow-y: auto;
 }
 
 .form_container {
     width: 100%;
-    max-width: 440px;
+    max-width: 420px;
     display: flex;
     flex-direction: column;
-    animation: fadeInRight 0.8s ease-out;
+    animation: fadeInRight 0.8s ease-out both;
 }
 
-/* Logo Hospital Section */
+/* ── Logo ────────────────────────────────────────── */
 .logo_section {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 12px;
-    margin-bottom: 48px;
+    margin-bottom: 40px;
 }
 
 .logo_icon {
-    width: 40px;
-    height: 40px;
+    width: 38px;
+    height: 38px;
     background: linear-gradient(135deg, var(--purple) 0%, var(--pine) 100%);
     border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #ffffff;
-    font-weight: bold;
-    box-shadow: 0 4px 12px rgba(75, 45, 113, 0.2);
+    box-shadow: 0 4px 12px rgba(75, 45, 113, 0.22);
+    flex-shrink: 0;
 }
 
 .logo_text {
-    font-size: 1.8rem;
+    font-size: clamp(1.4rem, 2vw, 1.8rem);
     font-weight: 800;
     color: var(--pine);
     letter-spacing: -0.01em;
@@ -165,19 +186,18 @@
     color: var(--purple);
 }
 
-/* Form inputs styling */
+/* ── Form Inputs ─────────────────────────────────── */
 .input_group {
-    margin-bottom: 24px;
+    margin-bottom: 20px;
     display: flex;
     flex-direction: column;
 }
 
 .input_label {
-    font-size: 0.9rem;
+    font-size: 0.875rem;
     font-weight: 600;
     color: #475569;
     margin-bottom: 8px;
-    text-align: left;
 }
 
 .input_wrapper {
@@ -189,8 +209,9 @@
 
 .input_field {
     width: 100%;
-    padding: 14px 16px;
+    padding: 13px 16px;
     font-size: 0.95rem;
+    font-family: inherit;
     border: 1.5px solid #e2e8f0;
     border-radius: 12px;
     color: #1e293b;
@@ -205,7 +226,6 @@
     box-shadow: 0 0 0 4px rgba(75, 45, 113, 0.1);
 }
 
-/* Input error state styling matching screenshot */
 .input_field.error {
     border-color: #ef4444;
     background-color: #fffafb;
@@ -215,10 +235,10 @@
     box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
 }
 
-/* Toggle password visibility button */
+/* ── Password Toggle ─────────────────────────────── */
 .password_toggle {
     position: absolute;
-    right: 16px;
+    right: 14px;
     background: none;
     border: none;
     color: #94a3b8;
@@ -234,7 +254,7 @@
     color: #475569;
 }
 
-/* Error message matching image design */
+/* ── Error Message ───────────────────────────────── */
 .error_msg {
     color: #ef4444;
     font-size: 0.8rem;
@@ -246,19 +266,20 @@
     animation: shake 0.4s ease-in-out;
 }
 
-/* Submit Log In pill button */
+/* ── Login Button ────────────────────────────────── */
 .login_button {
     width: 100%;
     padding: 14px 28px;
-    border-radius: 30px; /* rounded pill as per image */
+    border-radius: 30px;
     background: linear-gradient(135deg, var(--purple) 0%, var(--lavender) 100%);
     color: #ffffff;
     font-size: 1rem;
     font-weight: 700;
+    font-family: inherit;
     border: none;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(75, 45, 113, 0.25);
-    margin-top: 32px;
+    box-shadow: 0 4px 15px rgba(75, 45, 113, 0.28);
+    margin-top: 28px;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
@@ -266,41 +287,40 @@
     gap: 8px;
 }
 
-.login_button:hover {
-    transform: translate3d(0, -2px, 0);
-    box-shadow: 0 6px 20px rgba(75, 45, 113, 0.35);
+.login_button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(75, 45, 113, 0.38);
     background: linear-gradient(135deg, var(--purple) 0%, var(--pine) 100%);
 }
 
-.login_button:active {
-    transform: translate3d(0, 0, 0);
+.login_button:active:not(:disabled) {
+    transform: translateY(0);
 }
 
 .login_button:disabled {
     background: #94a3b8;
     cursor: not-allowed;
-    transform: none;
     box-shadow: none;
 }
 
-/* Loading spinner */
+/* ── Spinner ─────────────────────────────────────── */
 .spinner {
-    width: 20px;
-    height: 20px;
-    border: 3px solid rgba(255, 255, 255, 0.3);
+    width: 18px;
+    height: 18px;
+    border: 2.5px solid rgba(255, 255, 255, 0.35);
     border-radius: 50%;
     border-top-color: white;
-    animation: spin 1s ease-in-out infinite;
+    animation: spin 0.9s linear infinite;
 }
 
-/* Navigation Links */
+/* ── Navigation Links ────────────────────────────── */
 .forgot_link {
     align-self: center;
     color: var(--teal);
-    font-size: 0.9rem;
+    font-size: 0.875rem;
     font-weight: 600;
     text-decoration: none;
-    margin-top: 24px;
+    margin-top: 20px;
     transition: color 0.2s ease;
     cursor: pointer;
 }
@@ -312,8 +332,8 @@
 
 .signup_container {
     align-self: center;
-    margin-top: 20px;
-    font-size: 0.9rem;
+    margin-top: 16px;
+    font-size: 0.875rem;
     color: #64748b;
 }
 
@@ -330,38 +350,22 @@
     text-decoration: underline;
 }
 
-/* Animations */
+/* ═══════════════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════════════ */
 @keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translate3d(0, 20px, 0);
-    }
-    to {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
-    }
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fadeInRight {
-    from {
-        opacity: 0;
-        transform: translate3d(30px, 0, 0);
-    }
-    to {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
-    }
+    from { opacity: 0; transform: translateX(28px); }
+    to   { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes peerIn {
-    from {
-        opacity: 0;
-        transform: translate3d(120px, 0, 0) translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translate3d(0, 0, 0) translateY(0);
-    }
+    from { opacity: 0; transform: translateX(calc(-67% + 100px)) translateY(16px); }
+    to   { opacity: 1; transform: translateX(-67%)    translateY(0); }
 }
 
 @keyframes spin {
@@ -369,46 +373,129 @@
 }
 
 @keyframes shake {
-    0%, 100% { transform: translate3d(0, 0, 0); }
-    25% { transform: translate3d(-5px, 0, 0); }
-    75% { transform: translate3d(5px, 0, 0); }
+    0%,100% { transform: translateX(0); }
+    25%      { transform: translateX(-5px); }
+    75%      { transform: translateX(5px); }
 }
 
-/* Responsive layout: hide left panel on mobile/tablet */
+/* ═══════════════════════════════════════════════════
+   RESPONSIVE BREAKPOINTS
+═══════════════════════════════════════════════════ */
+
+/* ── Large Desktop (1400px+) ─────────────────────── */
+@media (min-width: 1400px) {
+    .left_hello {
+        font-size: 5rem;
+    }
+    .doctor_wrapper {
+        width: clamp(300px, 26vw, 500px);
+        left: calc(48% - 200px);
+    }
+}
+
+/* ── Medium Desktop (1200px – 1399px) ───────────── */
+@media (max-width: 1200px) {
+    .left_panel {
+        width: 45%;
+        padding-left: 6%;
+    }
+    .right_panel {
+        width: 55%;
+    }
+    .doctor_wrapper {
+        width: clamp(250px, 25vw, 400px);
+        left: calc(45% - 160px);
+    }
+}
+
+/* ── Small Desktop / Large Tablet (993px – 1199px) ─ */
+@media (max-width: 1100px) {
+    .left_hello {
+        font-size: 3rem;
+    }
+    .left_content {
+        max-width: 280px;
+    }
+    .doctor_wrapper {
+        width: clamp(220px, 23vw, 360px);
+        left: calc(45% - 140px);
+    }
+    .form_container {
+        max-width: 380px;
+    }
+}
+
+/* ── Tablet (768px – 992px): hide left, center form ─ */
 @media (max-width: 992px) {
     .left_panel {
         display: none;
     }
+    .doctor_wrapper {
+        display: none;       /* hide doctor when left panel is hidden */
+    }
     .right_panel {
         width: 100%;
-        padding: 24px;
+        padding: 32px 24px;
     }
     .login_container {
         justify-content: center;
+        align-items: center;
     }
-}
-
-@media (max-width: 450px) {
-    .right_panel {
-        padding: 24px 16px !important;
+    .form_container {
+        max-width: 460px;
     }
     .logo_section {
-        margin-bottom: 24px !important;
-    }
-    .logo_text {
-        font-size: 1.5rem !important;
-    }
-    .input_field {
-        padding: 12px !important;
-        font-size: 0.9rem !important;
-    }
-    .login_button {
-        margin-top: 20px !important;
-        padding: 12px 20px !important;
-    }
-    .forgot_link, .signup_container {
-        font-size: 0.85rem !important;
-        margin-top: 16px !important;
+        margin-bottom: 32px;
     }
 }
 
+/* ── Large Mobile (481px – 767px) ───────────────── */
+@media (max-width: 767px) {
+    .right_panel {
+        padding: 28px 20px;
+        align-items: flex-start;
+        padding-top: 48px;
+    }
+    .form_container {
+        max-width: 100%;
+    }
+    .logo_section {
+        margin-bottom: 28px;
+    }
+    .logo_text {
+        font-size: 1.5rem;
+    }
+    .input_group {
+        margin-bottom: 16px;
+    }
+    .login_button {
+        margin-top: 20px;
+    }
+}
+
+/* ── Small Mobile (≤ 480px) ──────────────────────── */
+@media (max-width: 480px) {
+    .right_panel {
+        padding: 24px 16px;
+        padding-top: 40px;
+    }
+    .logo_text {
+        font-size: 1.35rem;
+    }
+    .logo_icon {
+        width: 32px;
+        height: 32px;
+    }
+    .input_field {
+        padding: 12px 14px;
+        font-size: 0.9rem;
+    }
+    .login_button {
+        padding: 13px 20px;
+        font-size: 0.95rem;
+        margin-top: 16px;
+    }
+    .input_group {
+        margin-bottom: 14px;
+    }
+}

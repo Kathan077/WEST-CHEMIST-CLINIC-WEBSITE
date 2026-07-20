@@ -6,7 +6,6 @@ import { API_URL } from '@/config';
 import BlogHero from '@/components/blog/BlogHero';
 import BlogGrid from '@/components/blog/BlogGrid';
 import HealthTools from '@/components/blog/HealthTools';
-import SocialFeed from '@/components/blog/SocialFeed';
 import CTASection from '@/components/home/CTASection';
 import '@/components/blog/BlogGrid.css';
 
@@ -60,9 +59,6 @@ export default function BlogPage() {
                 onReadClick={openReader} 
                 showWelcomeIfEmpty={posts.length === 0}
             />
-
-            {/* Instagram Style Social Feed */}
-            <SocialFeed />
 
             {/* Reuse Home CTA */}
             <CTASection />

@@ -622,7 +622,7 @@ export default function AdminAppointmentsPage() {
 
   useEffect(() => { fetchAppointments(); }, [fetchAppointments]);
 
-  /* ─── Filtering ─── */
+  /* ─── Filtering & Sorting ─── */
   useEffect(() => {
     let result = appointments.filter(a => a.clinic === selectedBranch);
     if (statusFilter !== 'all') {
@@ -640,6 +640,28 @@ export default function AdminAppointmentsPage() {
         a.service?.toLowerCase().includes(q)
       );
     }
+
+    // Sort: pending reviews & reschedule requests always top, then newest request first
+    result.sort((a, b) => {
+      const aIsNew = a.status === 'pending' || a.status === 'confirmed' || a.isRescheduleRequested;
+      const bIsNew = b.status === 'pending' || b.status === 'confirmed' || b.isRescheduleRequested;
+
+      if (aIsNew && !bIsNew) return -1;
+      if (!aIsNew && bIsNew) return 1;
+
+      // Within the same status priority group, sort by createdAt descending (newest request first)
+      const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+      const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+      if (dateB !== dateA) {
+        return dateB - dateA;
+      }
+      
+      // Fallback to appointment date/time
+      const apptDateA = new Date(a.date).getTime();
+      const apptDateB = new Date(b.date).getTime();
+      return apptDateB - apptDateA;
+    });
+
     setFiltered(result);
   }, [appointments, statusFilter, search, selectedBranch]);
 

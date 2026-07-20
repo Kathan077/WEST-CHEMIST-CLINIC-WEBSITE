@@ -312,6 +312,10 @@ export default function HomepageCMSPage() {
   const [isMobile, setIsMobile] = useState(false);
   const [uploadingSlideIdx, setUploadingSlideIdx] = useState(null);
   const slideFileRefs = useRef({});
+  const [uploadingWlImage, setUploadingWlImage] = useState(false);
+  const wlFileRef = useRef(null);
+  const [uploadingAboutImage, setUploadingAboutImage] = useState(false);
+  const aboutFileRef = useRef(null);
 
   // Slide image upload handler
   const handleSlideImageUpload = async (e, slideIdx) => {
@@ -338,6 +342,56 @@ export default function HomepageCMSPage() {
       if (slideFileRefs.current[slideIdx]) slideFileRefs.current[slideIdx].value = '';
     }
   };
+  
+  const handleWlImageUpload = async (e) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+    const formData = new FormData();
+    formData.append('files', files[0]);
+    setUploadingWlImage(true);
+    try {
+      const res = await fetch(`${API_URL}/api/blogs/upload`, { method: 'POST', body: formData });
+      const data = await res.json();
+      if (data.success && data.urls && data.urls.length > 0) {
+        const url = data.urls[0].startsWith('http') ? data.urls[0] : `${API_URL}${data.urls[0]}`;
+        updateAppointmentCta('image', url);
+        showToast('Weight Loss CTA image uploaded successfully!');
+      } else {
+        showToast(data.message || 'Upload failed', 'error');
+      }
+    } catch (err) {
+      console.error(err);
+      showToast('Network error during image upload', 'error');
+    } finally {
+      setUploadingWlImage(false);
+      if (wlFileRef.current) wlFileRef.current.value = '';
+    }
+  };
+
+  const handleAboutImageUpload = async (e) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+    const formData = new FormData();
+    formData.append('files', files[0]);
+    setUploadingAboutImage(true);
+    try {
+      const res = await fetch(`${API_URL}/api/blogs/upload`, { method: 'POST', body: formData });
+      const data = await res.json();
+      if (data.success && data.urls && data.urls.length > 0) {
+        const url = data.urls[0].startsWith('http') ? data.urls[0] : `${API_URL}${data.urls[0]}`;
+        updateAbout('image', url);
+        showToast('About Section image uploaded successfully!');
+      } else {
+        showToast(data.message || 'Upload failed', 'error');
+      }
+    } catch (err) {
+      console.error(err);
+      showToast('Network error during image upload', 'error');
+    } finally {
+      setUploadingAboutImage(false);
+      if (aboutFileRef.current) aboutFileRef.current.value = '';
+    }
+  };
 
   // Tabs: 'hero' | 'about' | 'services' | 'hours' | 'how' | 'testimonials' | 'seo'
   const [activeTab, setActiveTab] = useState('hero');
@@ -346,11 +400,11 @@ export default function HomepageCMSPage() {
   const [cmsData, setCmsData] = useState({
     heroSlides: [],
     heroStats: [],
-    aboutSection: { title: '', subtitle: '', desc: '', image: '', yearsExperience: '', experienceLabel: '', features: [], ctaText: '', ctaUrl: '' },
+    aboutSection: { title: '', subtitle: '', desc: '', image: '', yearsExperience: '', experienceLabel: '', features: [], ctaText: '', ctaUrl: '', secondaryCtaText: '', secondaryCtaUrl: '' },
     servicesSection: { title: '', subtitle: '', desc: '' },
     howItWorks: { title: '', subtitle: '', desc: '', steps: [] },
     testimonials: { title: '', subtitle: '', desc: '', reviews: [] },
-    appointmentCta: { title: '', subtitle: '', desc: '', image: '', ctaText: '', ctaUrl: '' },
+    appointmentCta: { title: '', subtitle: '', desc: '', image: '', ctaText: '', ctaUrl: '', bullets: [] },
     footerCta: { title: '', ctaText: '', ctaUrl: '' },
     seoSettings: { metaTitle: '', metaDescription: '', metaKeywords: '', canonicalUrl: '', logoUrl: '', ogTitle: '', ogDescription: '', ogImage: '' }
   });
@@ -374,6 +428,7 @@ export default function HomepageCMSPage() {
   // Tools list state
   const [toolsHeader, setToolsHeader] = useState({ title: '', content: '' });
   const [toolsList, setToolsList] = useState([]);
+  const [services, setServices] = useState([]);
 
   // Custom Modal dialogs
   const [modalConfig, setModalConfig] = useState(null);
@@ -427,17 +482,19 @@ export default function HomepageCMSPage() {
     }
 
     try {
-      const [resCms, hoursRes, toolsHdrRes, toolsListRes] = await Promise.all([
+      const [resCms, hoursRes, toolsHdrRes, toolsListRes, resSrv] = await Promise.all([
         fetch(`${API_URL}/api/homepage`),
         fetch(`${API_URL}/api/contents/clinic-hours`),
         fetch(`${API_URL}/api/contents/health-tools-header`),
-        fetch(`${API_URL}/api/contents/health-tools-list`)
+        fetch(`${API_URL}/api/contents/health-tools-list`),
+        fetch(`${API_URL}/api/services`)
       ]);
 
       const resJson = await resCms.json();
       const hoursJson = await hoursRes.json();
       const toolsHdrJson = await toolsHdrRes.json();
       const toolsListJson = await toolsListRes.json();
+      const srvJson = await resSrv.json();
 
       if (resJson.success && resJson.data) {
         updateCmsState(resJson.data);
@@ -467,6 +524,9 @@ export default function HomepageCMSPage() {
           console.error(e);
         }
       }
+      if (srvJson.success) {
+        setServices(srvJson.data || []);
+      }
     } catch (err) {
       console.error(err);
       triggerAlert('Failed to establish connection to database.');
@@ -488,11 +548,20 @@ export default function HomepageCMSPage() {
     try {
       const finalHoursContent = `Mon - Fri: ${hoursForm.mon_fri}\nSaturday: ${hoursForm.sat}\nSunday: ${hoursForm.sun}`;
 
+      // Clean up bullets data: trim each string and filter out empty strings
+      const cleanedCmsData = {
+        ...cmsData,
+        appointmentCta: {
+          ...cmsData.appointmentCta,
+          bullets: (cmsData.appointmentCta.bullets || []).map(b => b.trim()).filter(Boolean)
+        }
+      };
+
       const [resCms, resHours, resToolsHdr, resToolsList] = await Promise.all([
         fetch(`${API_URL}/api/homepage`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-          body: JSON.stringify(cmsData)
+          body: JSON.stringify(cleanedCmsData)
         }),
         fetch(`${API_URL}/api/contents/clinic-hours`, {
           method: 'PUT',
@@ -540,28 +609,38 @@ export default function HomepageCMSPage() {
     }
   };
 
-  // Re-seed default configurations
+  // Re-seed default configurations (section-aware)
   const handleReSeed = async () => {
-    const approved = await triggerConfirm('Are you sure you want to reset all homepage contents back to clinical defaults? Any unsaved custom headings, button names, and images will be overwritten.');
+    const sectionLabels = {
+      hero: 'Hero Slider & Stats',
+      services: 'Services Intro',
+      hours: 'Clinic Opening Hours',
+      how: 'How It Works',
+      testimonials: 'Patient Testimonials',
+      weightLossCta: 'Weight Loss CTA',
+      seo: 'SEO Metadata'
+    };
+    const sectionLabel = sectionLabels[activeTab] || activeTab;
+    const approved = await triggerConfirm(`Are you sure you want to reset "${sectionLabel}" back to clinic defaults? Any unsaved custom changes to this section will be overwritten.`);
     if (!approved) return;
 
     setLoading(true);
     const token = localStorage.getItem('adminToken');
     try {
-      const res = await fetch(`${API_URL}/api/homepage/seed`, {
+      const res = await fetch(`${API_URL}/api/homepage/seed?section=${encodeURIComponent(activeTab)}`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
       if (data.success) {
-        showToast('Homepage CMS re-seeded successfully.');
+        showToast(`"${sectionLabel}" reset to defaults successfully.`);
         updateCmsState(data.data);
       } else {
-        triggerAlert('Seeding failed: ' + data.message);
+        triggerAlert('Reset failed: ' + data.message);
       }
     } catch (err) {
       console.error(err);
-      triggerAlert('Error running seed script.');
+      triggerAlert('Error running reset.');
     } finally {
       setLoading(false);
     }
@@ -707,6 +786,38 @@ export default function HomepageCMSPage() {
     }));
   };
 
+  const toggleServiceOnHome = async (id, currentVal) => {
+    const token = localStorage.getItem('adminToken');
+    if (!token) return;
+    
+    // Optimistic update
+    setServices(prev => prev.map(s => s._id === id ? { ...s, onHome: !currentVal } : s));
+    
+    try {
+      const res = await fetch(`${API_URL}/api/services/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ onHome: !currentVal })
+      });
+      const data = await res.json();
+      if (!data.success) {
+        showToast(data.message || 'Failed to update service homepage status', 'error');
+        // Revert
+        setServices(prev => prev.map(s => s._id === id ? { ...s, onHome: currentVal } : s));
+      } else {
+        showToast('Service homepage status updated successfully!');
+      }
+    } catch (err) {
+      console.error(err);
+      showToast('Network error updating service status', 'error');
+      // Revert
+      setServices(prev => prev.map(s => s._id === id ? { ...s, onHome: currentVal } : s));
+    }
+  };
+
   const nav = [
     {label:'Dashboard',    path:'/admin/patients',                   icon:ICONS.home},
     {label:'Appointments', path:'/admin/appointments',               icon:ICONS.cal},
@@ -773,7 +884,7 @@ export default function HomepageCMSPage() {
           </div>
           <div className="dash_hdr_right" style={{ gap: '12px' }}>
             <button className="bk_btn_secondary btn_reset" onClick={handleReSeed} disabled={loading || publishing} style={{ width: 'auto', padding: '10px 18px' }}>
-              Reset to Defaults
+              Reset Section to Defaults
             </button>
             <button className="srv_add_btn" onClick={handlePublish} disabled={loading || publishing} style={{ width: 'auto' }}>
               {publishing ? 'Publishing...' : 'Publish Live Changes'}
@@ -791,11 +902,11 @@ export default function HomepageCMSPage() {
             <div className="cnt_sidebar">
               <div className="cnt_sidebar_title" style={{ fontSize: '0.72rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.5px', padding: '4px 14px' }}>Sections</div>
               <button className={`cnt_sidebar_btn ${activeTab === 'hero' ? 'active' : ''}`} onClick={() => setActiveTab('hero')}>Hero Slider & Stats</button>
-              <button className={`cnt_sidebar_btn ${activeTab === 'about' ? 'active' : ''}`} onClick={() => setActiveTab('about')}>About Section</button>
               <button className={`cnt_sidebar_btn ${activeTab === 'services' ? 'active' : ''}`} onClick={() => setActiveTab('services')}>Services Intro</button>
               <button className={`cnt_sidebar_btn ${activeTab === 'hours' ? 'active' : ''}`} onClick={() => setActiveTab('hours')}>Clinic Opening Hours</button>
               <button className={`cnt_sidebar_btn ${activeTab === 'how' ? 'active' : ''}`} onClick={() => setActiveTab('how')}>How It Works</button>
               <button className={`cnt_sidebar_btn ${activeTab === 'testimonials' ? 'active' : ''}`} onClick={() => setActiveTab('testimonials')}>Patient Testimonials</button>
+              <button className={`cnt_sidebar_btn ${activeTab === 'weightLossCta' ? 'active' : ''}`} onClick={() => setActiveTab('weightLossCta')}>Weight Loss CTA</button>
               <button className={`cnt_sidebar_btn ${activeTab === 'seo' ? 'active' : ''}`} onClick={() => setActiveTab('seo')}>SEO Metadata</button>
             </div>
 
@@ -945,69 +1056,12 @@ export default function HomepageCMSPage() {
                 </div>
               )}
 
-              {activeTab === 'about' && (
-                <div>
-                  <div className="cnt_form_title">About Section Info</div>
-                  <div className="cnt_form_sub">Modify history, statistics, features, and main graphics.</div>
 
-                  <div className="srv_form_grid">
-                    <div className="srv_form_group">
-                      <label className="srv_label">Section Title</label>
-                      <input type="text" className="srv_input" value={cmsData.aboutSection.title} onChange={e => updateAbout('title', e.target.value)} />
-                    </div>
-                    <div className="srv_form_group">
-                      <label className="srv_label">Section Subtitle</label>
-                      <input type="text" className="srv_input" value={cmsData.aboutSection.subtitle} onChange={e => updateAbout('subtitle', e.target.value)} />
-                    </div>
-                    <div className="srv_form_group full">
-                      <label className="srv_label">Description Content</label>
-                      <textarea className="srv_textarea" rows={4} value={cmsData.aboutSection.desc} onChange={e => updateAbout('desc', e.target.value)} />
-                    </div>
-                    <div className="srv_form_group">
-                      <label className="srv_label">Feature Banner Image</label>
-                      <input type="text" className="srv_input" value={cmsData.aboutSection.image} onChange={e => updateAbout('image', e.target.value)} />
-                    </div>
-                    <div className="srv_form_group">
-                      <label className="srv_label">Experience Counter (e.g. 15+)</label>
-                      <input type="text" className="srv_input" value={cmsData.aboutSection.yearsExperience} onChange={e => updateAbout('yearsExperience', e.target.value)} />
-                    </div>
-                    <div className="srv_form_group full">
-                      <label className="srv_label">Experience Badge Description Label</label>
-                      <input type="text" className="srv_input" value={cmsData.aboutSection.experienceLabel} onChange={e => updateAbout('experienceLabel', e.target.value)} />
-                    </div>
-                  </div>
-
-                  <div className="cnt_form_title" style={{ marginTop: '20px', borderTop: '1px dashed #e2e8f0', paddingTop: '20px' }}>Features Checkmarks</div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginTop: '12px' }}>
-                    {cmsData.aboutSection.features.map((feat, fIdx) => (
-                      <div key={fIdx} style={{ background: '#f8fafc', padding: '16px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
-                        <strong style={{ fontSize: '0.8rem', color: 'var(--purple)', display: 'block', marginBottom: '8px' }}>Feature #{fIdx+1} Details</strong>
-                        <div className="srv_form_grid">
-                          <div className="srv_form_group">
-                            <label className="srv_label">Feature Icon</label>
-                            <div style={{ marginTop: '4px' }}>
-                              <IconPickerPanel selectedKey={feat.icon} onSelect={val => updateAboutFeature(fIdx, 'icon', val)} />
-                            </div>
-                          </div>
-                          <div className="srv_form_group">
-                            <label className="srv_label">Feature Title</label>
-                            <input type="text" className="srv_input" value={feat.title} onChange={e => updateAboutFeature(fIdx, 'title', e.target.value)} />
-                          </div>
-                          <div className="srv_form_group full">
-                            <label className="srv_label">Feature Description Text</label>
-                            <input type="text" className="srv_input" value={feat.desc} onChange={e => updateAboutFeature(fIdx, 'desc', e.target.value)} />
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
 
               {activeTab === 'services' && (
                 <div>
                   <div className="cnt_form_title">Services Section Header Info</div>
-                  <div className="cnt_form_sub">Modify header text. The services themselves are managed in the Clinical Services tab.</div>
+                  <div className="cnt_form_sub">Modify header text and select which services appear on the homepage.</div>
 
                   <div className="srv_form_grid">
                     <div className="srv_form_group">
@@ -1022,6 +1076,90 @@ export default function HomepageCMSPage() {
                       <label className="srv_label">Section Description Paragraph</label>
                       <textarea className="srv_textarea" rows={4} value={cmsData.servicesSection.desc} onChange={e => updateServices('desc', e.target.value)} />
                     </div>
+                  </div>
+
+                  <div className="cnt_form_title" style={{ marginTop: '30px', borderTop: '1px dashed #e2e8f0', paddingTop: '20px' }}>
+                    Manage Homepage Services
+                  </div>
+                  <div className="cnt_form_sub">
+                    Toggle which clinical services are displayed on the frontend homepage.
+                  </div>
+
+                  <div className="homepage_services_list" style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '16px' }}>
+                    {services.map(srv => (
+                      <div key={srv._id} style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        padding: '12px 18px',
+                        background: '#f8fafc',
+                        borderRadius: '12px',
+                        border: '1px solid #e2e8f0',
+                        transition: 'all 0.2s ease'
+                      }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+                          <div style={{
+                            width: '44px',
+                            height: '44px',
+                            borderRadius: '8px',
+                            overflow: 'hidden',
+                            background: '#e2e8f0',
+                            flexShrink: 0
+                          }}>
+                            {srv.img ? (
+                              <img src={srv.img} alt={srv.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            ) : (
+                              <div style={{ width: '100%', height: '100%', background: 'var(--purple)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold' }}>
+                                {srv.title ? srv.title[0] : 'S'}
+                              </div>
+                            )}
+                          </div>
+                          <div>
+                            <div style={{ fontWeight: '700', color: 'var(--t1)', fontSize: '0.9rem' }}>{srv.title}</div>
+                            <div style={{ fontSize: '0.74rem', color: 'var(--t3)', fontWeight: '600', marginTop: '2px' }}>{srv.cat || srv.parentCategory}</div>
+                          </div>
+                        </div>
+                        
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                          <label className="switch" style={{
+                            position: 'relative',
+                            display: 'inline-block',
+                            width: '40px',
+                            height: '22px'
+                          }}>
+                            <input 
+                              type="checkbox" 
+                              checked={!!srv.onHome} 
+                              onChange={() => toggleServiceOnHome(srv._id, srv.onHome)}
+                              style={{ opacity: 0, width: 0, height: 0 }}
+                            />
+                            <span className="slider round" style={{
+                              position: 'absolute',
+                              cursor: 'pointer',
+                              top: 0, left: 0, right: 0, bottom: 0,
+                              background: srv.onHome ? 'var(--teal)' : '#cbd5e1',
+                              transition: '0.3s',
+                              borderRadius: '34px'
+                            }}>
+                              <span style={{
+                                position: 'absolute',
+                                content: '""',
+                                height: '16px',
+                                width: '16px',
+                                left: srv.onHome ? '21px' : '3px',
+                                bottom: '3px',
+                                background: 'white',
+                                transition: '0.3s',
+                                borderRadius: '50%'
+                              }} />
+                            </span>
+                          </label>
+                          <span style={{ fontSize: '0.8rem', fontWeight: '700', color: srv.onHome ? 'var(--teal)' : 'var(--t3)', width: '64px', whiteSpace: 'nowrap' }}>
+                            {srv.onHome ? 'Visible' : 'Hidden'}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               )}
@@ -1182,6 +1320,258 @@ export default function HomepageCMSPage() {
               )}
 
 
+
+              {activeTab === 'weightLossCta' && (
+                <div>
+                  <div className="cnt_form_title">Weight Loss CTA Section</div>
+                  <div className="cnt_form_sub">Modify titles, images, links, and custom bullet points for the weight loss program teaser.</div>
+
+                  <div className="srv_form_grid">
+                    <div className="srv_form_group">
+                      <label className="srv_label">Section Title</label>
+                      <input 
+                        type="text" 
+                        className="srv_input" 
+                        value={cmsData.appointmentCta.title || ''} 
+                        onChange={e => updateAppointmentCta('title', e.target.value)} 
+                      />
+                    </div>
+                    <div className="srv_form_group">
+                      <label className="srv_label">Section Subtitle</label>
+                      <input 
+                        type="text" 
+                        className="srv_input" 
+                        value={cmsData.appointmentCta.subtitle || ''} 
+                        onChange={e => updateAppointmentCta('subtitle', e.target.value)} 
+                      />
+                    </div>
+                    <div className="srv_form_group full">
+                      <label className="srv_label">Section Description Paragraph</label>
+                      <textarea 
+                        className="srv_textarea" 
+                        rows={4} 
+                        value={cmsData.appointmentCta.desc || ''} 
+                        onChange={e => updateAppointmentCta('desc', e.target.value)} 
+                      />
+                    </div>
+                    <div className="srv_form_group">
+                      <label className="srv_label">CTA Button Label</label>
+                      <input 
+                        type="text" 
+                        className="srv_input" 
+                        value={cmsData.appointmentCta.ctaText || ''} 
+                        onChange={e => updateAppointmentCta('ctaText', e.target.value)} 
+                      />
+                    </div>
+                    <div className="srv_form_group full">
+                      <label className="srv_label">Section Presentation Image</label>
+                      {/* Preview */}
+                      {cmsData.appointmentCta.image && (
+                        <div style={{ marginBottom: '10px', borderRadius: '10px', overflow: 'hidden', height: '180px', background: '#f1f5f9', position: 'relative', width: '320px' }}>
+                          <img
+                            src={cmsData.appointmentCta.image}
+                            alt="Weight Loss CTA preview"
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                          />
+                        </div>
+                      )}
+                      
+                      {/* Drag & Drop Upload block */}
+                      <div
+                        onClick={() => wlFileRef.current?.click()}
+                        onDragOver={e => { e.preventDefault(); e.currentTarget.style.borderColor = 'var(--purple)'; }}
+                        onDragLeave={e => { e.currentTarget.style.borderColor = '#e2e8f0'; }}
+                        onDrop={async e => {
+                          e.preventDefault();
+                          e.currentTarget.style.borderColor = '#e2e8f0';
+                          const file = e.dataTransfer.files[0];
+                          if (file && file.type.startsWith('image/')) {
+                            const fakeEvent = { target: { files: [file] } };
+                            await handleWlImageUpload(fakeEvent);
+                          }
+                        }}
+                        style={{
+                          border: '2px dashed #e2e8f0', borderRadius: '10px', padding: '24px',
+                          textAlign: 'center', cursor: 'pointer', marginBottom: '10px',
+                          background: '#f8fafc', transition: 'border-color .15s', width: '100%', boxSizing: 'border-box'
+                        }}
+                      >
+                        <input
+                          type="file"
+                          accept="image/png,image/jpeg,image/jpg,image/webp"
+                          ref={wlFileRef}
+                          style={{ display: 'none' }}
+                          onChange={handleWlImageUpload}
+                        />
+                        <div style={{ color: 'var(--purple)', marginBottom: '6px', display: 'flex', justifyContent: 'center' }}>
+                          <I d={ICONS.upload} s={22} />
+                        </div>
+                        <span style={{ fontSize: '0.82rem', fontWeight: '700', color: 'var(--t2)' }}>
+                          {uploadingWlImage ? 'Uploading...' : 'Click or Drag & Drop to upload a new section image'}
+                        </span>
+                        <br />
+                        <span style={{ fontSize: '0.74rem', color: 'var(--t3)' }}>PNG, JPEG, WEBP — Max 10MB</span>
+                      </div>
+                      
+                      {/* Or paste link */}
+                      <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                        <span style={{ fontSize: '0.76rem', color: 'var(--t3)', flexShrink: 0 }}>Or paste URL:</span>
+                        <input 
+                          type="text" 
+                          className="srv_input" 
+                          style={{ flex: 1 }}
+                          value={cmsData.appointmentCta.image || ''} 
+                          onChange={e => updateAppointmentCta('image', e.target.value)} 
+                        />
+                      </div>
+                    </div>
+                    
+                    <div className="srv_form_group full" style={{ borderTop: '1px dashed #e2e8f0', paddingTop: '20px', marginTop: '10px' }}>
+                      <label className="srv_label" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <span>Bullet Points List (One per line)</span>
+                        <small style={{ fontWeight: 'normal', color: 'var(--t3)' }}>These list items display under the button and description.</small>
+                      </label>
+                      <textarea 
+                        className="srv_textarea" 
+                        rows={5} 
+                        placeholder="e.g. Personalized expert support&#10;In-person or secure online consultations available"
+                        value={(cmsData.appointmentCta.bullets || []).join('\n')} 
+                        onChange={e => updateAppointmentCta('bullets', e.target.value.split('\n'))} 
+                      />
+                    </div>
+                  </div>
+
+                  {/* About Section Form fields merged here */}
+                  <div className="cnt_form_title" style={{ marginTop: '40px', borderTop: '2px solid #e2e8f0', paddingTop: '30px' }}>About Section / Clinical Credibility Info</div>
+                  <div className="cnt_form_sub">Modify history, statistics, features, and main graphics.</div>
+
+                  <div className="srv_form_grid">
+                    <div className="srv_form_group">
+                      <label className="srv_label">Section Title</label>
+                      <input type="text" className="srv_input" value={cmsData.aboutSection.title} onChange={e => updateAbout('title', e.target.value)} />
+                    </div>
+                    <div className="srv_form_group">
+                      <label className="srv_label">Section Subtitle</label>
+                      <input type="text" className="srv_input" value={cmsData.aboutSection.subtitle} onChange={e => updateAbout('subtitle', e.target.value)} />
+                    </div>
+                    <div className="srv_form_group full">
+                      <label className="srv_label">Description Content</label>
+                      <textarea className="srv_textarea" rows={4} value={cmsData.aboutSection.desc} onChange={e => updateAbout('desc', e.target.value)} />
+                    </div>
+                    <div className="srv_form_group full">
+                      <label className="srv_label">Feature Banner Image</label>
+                      {/* Preview */}
+                      {cmsData.aboutSection.image && (
+                        <div style={{ marginBottom: '10px', borderRadius: '10px', overflow: 'hidden', height: '180px', background: '#f1f5f9', position: 'relative', width: '320px' }}>
+                          <img
+                            src={cmsData.aboutSection.image}
+                            alt="About Section preview"
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                          />
+                        </div>
+                      )}
+                      
+                      {/* Drag & Drop Upload block */}
+                      <div
+                        onClick={() => aboutFileRef.current?.click()}
+                        onDragOver={e => { e.preventDefault(); e.currentTarget.style.borderColor = 'var(--purple)'; }}
+                        onDragLeave={e => { e.currentTarget.style.borderColor = '#e2e8f0'; }}
+                        onDrop={async e => {
+                          e.preventDefault();
+                          e.currentTarget.style.borderColor = '#e2e8f0';
+                          const file = e.dataTransfer.files[0];
+                          if (file && file.type.startsWith('image/')) {
+                            const fakeEvent = { target: { files: [file] } };
+                            await handleAboutImageUpload(fakeEvent);
+                          }
+                        }}
+                        style={{
+                          border: '2px dashed #e2e8f0', borderRadius: '10px', padding: '24px',
+                          textAlign: 'center', cursor: 'pointer', marginBottom: '10px',
+                          background: '#f8fafc', transition: 'border-color .15s', width: '100%', boxSizing: 'border-box'
+                        }}
+                      >
+                        <input
+                          type="file"
+                          accept="image/png,image/jpeg,image/jpg,image/webp"
+                          ref={aboutFileRef}
+                          style={{ display: 'none' }}
+                          onChange={handleAboutImageUpload}
+                        />
+                        <div style={{ color: 'var(--purple)', marginBottom: '6px', display: 'flex', justifyContent: 'center' }}>
+                          <I d={ICONS.upload} s={22} />
+                        </div>
+                        <span style={{ fontSize: '0.82rem', fontWeight: '700', color: 'var(--t2)' }}>
+                          {uploadingAboutImage ? 'Uploading...' : 'Click or Drag & Drop to upload a new About Section image'}
+                        </span>
+                        <br />
+                        <span style={{ fontSize: '0.74rem', color: 'var(--t3)' }}>PNG, JPEG, WEBP — Max 10MB</span>
+                      </div>
+                      
+                      {/* Or paste link */}
+                      <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                        <span style={{ fontSize: '0.76rem', color: 'var(--t3)', flexShrink: 0 }}>Or paste URL:</span>
+                        <input 
+                          type="text" 
+                          className="srv_input" 
+                          style={{ flex: 1 }}
+                          value={cmsData.aboutSection.image || ''} 
+                          onChange={e => updateAbout('image', e.target.value)} 
+                        />
+                      </div>
+                    </div>
+                    <div className="srv_form_group">
+                      <label className="srv_label">Experience Counter (e.g. 15+)</label>
+                      <input type="text" className="srv_input" value={cmsData.aboutSection.yearsExperience} onChange={e => updateAbout('yearsExperience', e.target.value)} />
+                    </div>
+                    <div className="srv_form_group">
+                      <label className="srv_label">Experience Badge Description Label</label>
+                      <input type="text" className="srv_input" value={cmsData.aboutSection.experienceLabel} onChange={e => updateAbout('experienceLabel', e.target.value)} />
+                    </div>
+                    <div className="srv_form_group">
+                      <label className="srv_label">Primary Button Text</label>
+                      <input type="text" className="srv_input" value={cmsData.aboutSection.ctaText || ''} onChange={e => updateAbout('ctaText', e.target.value)} />
+                    </div>
+                    <div className="srv_form_group">
+                      <label className="srv_label">Primary Button Link</label>
+                      <input type="text" className="srv_input" value={cmsData.aboutSection.ctaUrl || ''} onChange={e => updateAbout('ctaUrl', e.target.value)} />
+                    </div>
+                    <div className="srv_form_group">
+                      <label className="srv_label">Secondary Button Text</label>
+                      <input type="text" className="srv_input" value={cmsData.aboutSection.secondaryCtaText || ''} onChange={e => updateAbout('secondaryCtaText', e.target.value)} />
+                    </div>
+                    <div className="srv_form_group">
+                      <label className="srv_label">Secondary Button Link</label>
+                      <input type="text" className="srv_input" value={cmsData.aboutSection.secondaryCtaUrl || ''} onChange={e => updateAbout('secondaryCtaUrl', e.target.value)} />
+                    </div>
+                  </div>
+
+                  <div className="cnt_form_title" style={{ marginTop: '20px', borderTop: '1px dashed #e2e8f0', paddingTop: '20px' }}>Features Checkmarks</div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginTop: '12px' }}>
+                    {cmsData.aboutSection.features.map((feat, fIdx) => (
+                      <div key={fIdx} style={{ background: '#f8fafc', padding: '16px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                        <strong style={{ fontSize: '0.8rem', color: 'var(--purple)', display: 'block', marginBottom: '8px' }}>Feature #{fIdx+1} Details</strong>
+                        <div className="srv_form_grid">
+                          <div className="srv_form_group">
+                            <label className="srv_label">Feature Icon</label>
+                            <div style={{ marginTop: '4px' }}>
+                              <IconPickerPanel selectedKey={feat.icon} onSelect={val => updateAboutFeature(fIdx, 'icon', val)} />
+                            </div>
+                          </div>
+                          <div className="srv_form_group">
+                            <label className="srv_label">Feature Title</label>
+                            <input type="text" className="srv_input" value={feat.title} onChange={e => updateAboutFeature(fIdx, 'title', e.target.value)} />
+                          </div>
+                          <div className="srv_form_group full">
+                            <label className="srv_label">Feature Description Text</label>
+                            <input type="text" className="srv_input" value={feat.desc} onChange={e => updateAboutFeature(fIdx, 'desc', e.target.value)} />
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {activeTab === 'seo' && (
                 <div>

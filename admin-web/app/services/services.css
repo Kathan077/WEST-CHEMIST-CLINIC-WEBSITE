@@ -359,6 +359,8 @@
     font-size: 0.9rem;
     outline: none;
     transition: border-color 0.2s ease;
+    background-color: #ffffff !important;
+    color: #1e293b !important;
 }
 
 .srv_input:focus, .srv_textarea:focus {

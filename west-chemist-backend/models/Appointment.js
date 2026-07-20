@@ -67,7 +67,7 @@ const AppointmentSchema = new mongoose.Schema(
   }
 );
 
-// Prevent double bookings at the same clinic, date, and time slot
-AppointmentSchema.index({ clinic: 1, date: 1, time: 1 }, { unique: true });
+// Prevent double bookings at the same clinic, date, and time slot (handled at application level via maxAppointments)
+// AppointmentSchema.index({ clinic: 1, date: 1, time: 1 }, { unique: true });
 
 module.exports = mongoose.model('Appointment', AppointmentSchema);

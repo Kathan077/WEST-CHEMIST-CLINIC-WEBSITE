@@ -79,9 +79,11 @@ const Branches = () => {
                                 ...item,
                                 metadata: {
                                     address: meta.address || '',
-                                    image: meta.image || (item.title?.toLowerCase().includes('virtual') || item.title?.toLowerCase().includes('online')
-                                        ? 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=800'
-                                        : 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=800'),
+                                    image: typeof meta.image === 'undefined'
+                                        ? (item.title?.toLowerCase().includes('virtual') || item.title?.toLowerCase().includes('online')
+                                            ? 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=800'
+                                            : 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=800')
+                                        : meta.image,
                                     badge: meta.badge || '',
                                     stat1_num: meta.stat1_num || '',
                                     stat1_label: meta.stat1_label || '',
@@ -222,22 +224,29 @@ const Branches = () => {
                                 className="br_pro_card reveal_on_scroll"
                                 style={{ transitionDelay: `${idx * 0.2}s` }}
                             >
-                                <div className="br_pro_visual">
-                                    <img 
-                                        src={resolveImage(branch.metadata?.image || (branch.title?.toLowerCase().includes('virtual') || branch.title?.toLowerCase().includes('online')
-                                            ? 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=800'
-                                            : 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=800'))} 
-                                        alt={branch.title} 
-                                        className="br_pro_image" 
-                                    />
-                                    <div className="br_pro_overlay" />
-                                    {branch.metadata?.badge && (
-                                        <div className={`br_badge ${idx % 2 !== 0 ? 'accent_badge' : ''}`}>
-                                            {branch.metadata.badge}
+                                {branch.metadata?.image && (
+                                    <div className="br_pro_visual">
+                                        <img 
+                                            src={resolveImage(branch.metadata.image)} 
+                                            alt={branch.title} 
+                                            className="br_pro_image" 
+                                        />
+                                        <div className="br_pro_overlay" />
+                                        {branch.metadata?.badge && (
+                                            <div className={`br_badge ${idx % 2 !== 0 ? 'accent_badge' : ''}`}>
+                                                {branch.metadata.badge}
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+                                <div className="br_pro_content">
+                                    {!branch.metadata?.image && branch.metadata?.badge && (
+                                        <div style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: '14px' }}>
+                                            <span className={`br_badge ${idx % 2 !== 0 ? 'accent_badge' : ''}`} style={{ position: 'static', display: 'inline-block' }}>
+                                                {branch.metadata.badge}
+                                            </span>
                                         </div>
                                     )}
-                                </div>
-                                <div className="br_pro_content">
                                     <div className="br_pro_head">
                                         <div className="br_pro_icon">
                                             {branch.icon && (branch.icon.startsWith('data:') || branch.icon.startsWith('http') || branch.icon.startsWith('/') || branch.icon.includes('.')) ? (

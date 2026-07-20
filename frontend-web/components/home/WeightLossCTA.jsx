@@ -10,7 +10,12 @@ const DEFAULT_WL = {
     desc: 'Looking to achieve your weight loss goals? Begin your journey today with expert guidance and personalized care from our healthcare professionals.',
     image: '/images/e0dc23d6-3cb0-4a6a-9076-058313605f8d.png',
     ctaText: 'Book Now',
-    ctaUrl: '/book-appointment'
+    ctaUrl: '/book-appointment',
+    bullets: [
+        'Personalized expert support',
+        'In-person or secure online consultations available',
+        'Flexible appointment options, including evening slots'
+    ]
 };
 
 export default function WeightLossCTA() {
@@ -47,7 +52,8 @@ export default function WeightLossCTA() {
                         desc: sec.desc || DEFAULT_WL.desc,
                         image: sec.image || DEFAULT_WL.image,
                         ctaText: sec.ctaText || DEFAULT_WL.ctaText,
-                        ctaUrl: sec.ctaUrl || DEFAULT_WL.ctaUrl
+                        ctaUrl: sec.ctaUrl || DEFAULT_WL.ctaUrl,
+                        bullets: sec.bullets && sec.bullets.length > 0 ? sec.bullets : DEFAULT_WL.bullets
                     });
                 }
             } catch (err) {
@@ -103,11 +109,13 @@ export default function WeightLossCTA() {
                         {wlData.desc}
                     </p>
 
-                    <ul className="wl_list wl_reveal" style={{ '--delay': '450ms' }}>
-                        <li>Personalized expert support</li>
-                        <li>In-person or secure online consultations available</li>
-                        <li>Flexible appointment options, including evening slots</li>
-                    </ul>
+                    {wlData.bullets && wlData.bullets.length > 0 && (
+                        <ul className="wl_list wl_reveal" style={{ '--delay': '450ms' }}>
+                            {wlData.bullets.map((b, idx) => (
+                                <li key={idx}>{b}</li>
+                            ))}
+                        </ul>
+                    )}
                 </div>
 
                 {/* ── Right Image Box ── */}
@@ -126,26 +134,6 @@ export default function WeightLossCTA() {
                         
                         {/* ── Floating Badges ── */}
                         
-                        {/* Dumbbell bubble */}
-                        <div className="wl_badge bubble_purple_1">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                <line x1="6" y1="5" x2="6" y2="19"/>
-                                <line x1="18" y1="5" x2="18" y2="19"/>
-                                <line x1="6" y1="12" x2="18" y2="12"/>
-                                <rect x="2" y="8" width="4" height="8" rx="1"/>
-                                <rect x="18" y="8" width="4" height="8" rx="1"/>
-                            </svg>
-                        </div>
-
-                        {/* Weight scale bubble */}
-                        <div className="wl_badge bubble_purple_2">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                <rect x="2" y="5" width="20" height="14" rx="2"/>
-                                <path d="M12 9v4"/>
-                                <path d="M12 9a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
-                            </svg>
-                        </div>
-
                         {/* Book Now Red Badge */}
                         <Link href={wlData.ctaUrl || "/book-appointment"} className="wl_badge red_badge">
                             <span className="red_badge_lg">Book</span>

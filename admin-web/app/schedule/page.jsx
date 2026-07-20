@@ -77,13 +77,16 @@ export default function SchedulePage() {
   const [scheduleClipboard, setScheduleClipboard] = useState(null);
 
   const [busy, setBusy] = useState(false);
-  const [feedback, setFeedback] = useState('');
 
   // Custom Modal dialogs
   const [modalConfig, setModalConfig] = useState(null);
 
   const triggerAlert = (message) => {
     setModalConfig({ type: 'alert', message, onConfirm: () => setModalConfig(null) });
+  };
+
+  const triggerSuccess = (message) => {
+    setModalConfig({ type: 'success', message, onConfirm: () => setModalConfig(null) });
   };
 
   const triggerConfirm = (message) => {
@@ -206,6 +209,57 @@ export default function SchedulePage() {
     }
   };
 
+  // Select all Saturdays & Sundays in current viewed month
+  const handleSelectWeekends = () => {
+    const datesInMonth = [];
+    const year = viewDate.getFullYear();
+    const month = viewDate.getMonth();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    for (let day = 1; day <= daysInMonth; day++) {
+      const dObj = new Date(year, month, day);
+      const dayOfWeek = dObj.getDay(); // 0 = Sunday, 6 = Saturday
+      if (dayOfWeek === 0 || dayOfWeek === 6) {
+        datesInMonth.push(formatDateString(dObj));
+      }
+    }
+
+    const allSelected = datesInMonth.every(d => selectedDates.includes(d));
+    if (allSelected) {
+      setSelectedDates(prev => prev.filter(d => !datesInMonth.includes(d)));
+    } else {
+      setSelectedDates(prev => [...new Set([...prev, ...datesInMonth])]);
+    }
+  };
+
+  // Select all Mondays through Fridays in current viewed month
+  const handleSelectWeekdays = () => {
+    const datesInMonth = [];
+    const year = viewDate.getFullYear();
+    const month = viewDate.getMonth();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    for (let day = 1; day <= daysInMonth; day++) {
+      const dObj = new Date(year, month, day);
+      const dayOfWeek = dObj.getDay(); // 1-5 = Mon-Fri
+      if (dayOfWeek >= 1 && dayOfWeek <= 5) {
+        datesInMonth.push(formatDateString(dObj));
+      }
+    }
+
+    const allSelected = datesInMonth.every(d => selectedDates.includes(d));
+    if (allSelected) {
+      setSelectedDates(prev => prev.filter(d => !datesInMonth.includes(d)));
+    } else {
+      setSelectedDates(prev => [...new Set([...prev, ...datesInMonth])]);
+    }
+  };
+
+  // Clear all selected dates
+  const handleClearAllSelected = () => {
+    setSelectedDates([]);
+  };
+
   // Month navigation
   const changeMonth = (direction) => {
     setViewDate(new Date(viewDate.getFullYear(), viewDate.getMonth() + direction, 1));
@@ -229,7 +283,6 @@ export default function SchedulePage() {
     }
 
     setBusy(true);
-    setFeedback('');
     const token = localStorage.getItem('adminToken');
 
     // Compile dates list
@@ -258,7 +311,7 @@ export default function SchedulePage() {
       });
       const data = await res.json();
       if (data.success) {
-        setFeedback('Selected holidays successfully blocked!');
+        triggerSuccess('Selected holidays successfully blocked!');
         setHolidayName('');
         setBulkHolidaysText('');
         setSelectedDates([]);
@@ -281,7 +334,6 @@ export default function SchedulePage() {
       return;
     }
     setBusy(true);
-    setFeedback('');
     const token = localStorage.getItem('adminToken');
     try {
       const res = await fetch(`${API_URL}/api/schedule/holiday-remove`, {
@@ -291,7 +343,7 @@ export default function SchedulePage() {
       });
       const data = await res.json();
       if (data.success) {
-        setFeedback('Selected holidays successfully unblocked!');
+        triggerSuccess('Selected holidays successfully unblocked!');
         setSelectedDates([]);
         fetchAllData();
       }
@@ -347,7 +399,7 @@ export default function SchedulePage() {
       current += step + gap;
     }
     setActiveSlots(generated);
-    setFeedback(`Generated ${generated.length} slots based on work hours.`);
+    triggerSuccess(`Generated ${generated.length} slots based on work hours.`);
   };
 
   // Add manual time slot
@@ -397,7 +449,6 @@ export default function SchedulePage() {
     if (!approved) return;
 
     setBusy(true);
-    setFeedback('');
     const token = localStorage.getItem('adminToken');
     try {
       const res = await fetch(`${API_URL}/api/schedule/clinic-toggle`, {
@@ -407,7 +458,7 @@ export default function SchedulePage() {
       });
       const data = await res.json();
       if (data.success) {
-        setFeedback(`Clinic successfully ${statusClosed ? 'Closed' : 'Opened'}!`);
+        triggerSuccess(`Clinic successfully ${statusClosed ? 'Closed' : 'Opened'}!`);
         setSelectedDates([]);
         fetchAllData();
       }
@@ -427,7 +478,6 @@ export default function SchedulePage() {
     }
 
     setBusy(true);
-    setFeedback('');
     const token = localStorage.getItem('adminToken');
 
     const payload = {
@@ -464,7 +514,7 @@ export default function SchedulePage() {
       });
       const data = await res.json();
       if (data.success) {
-        setFeedback('Schedule configurations successfully applied!');
+        triggerSuccess('Schedule configurations successfully applied!');
         setSelectedDates([]);
         fetchAllData();
       } else {
@@ -491,7 +541,7 @@ export default function SchedulePage() {
       breakEnd,
       isClosed
     });
-    setFeedback('Copied active schedule configurations to clipboard!');
+    triggerSuccess('Copied active schedule configurations to clipboard!');
   };
 
   const handlePasteClipboard = () => {
@@ -508,7 +558,7 @@ export default function SchedulePage() {
     setBreakStart(scheduleClipboard.breakStart);
     setBreakEnd(scheduleClipboard.breakEnd);
     setIsClosed(scheduleClipboard.isClosed);
-    setFeedback('Pasted schedule template to editor slots successfully!');
+    triggerSuccess('Pasted schedule template to editor slots successfully!');
   };
 
   // Clear Overrides
@@ -520,7 +570,6 @@ export default function SchedulePage() {
     if (!approved) return;
 
     setBusy(true);
-    setFeedback('');
     const token = localStorage.getItem('adminToken');
     try {
       const res = await fetch(`${API_URL}/api/schedule/clear`, {
@@ -534,7 +583,7 @@ export default function SchedulePage() {
       });
       const data = await res.json();
       if (data.success) {
-        setFeedback('Schedules successfully cleared!');
+        triggerSuccess('Schedules successfully cleared!');
         setSelectedDates([]);
         fetchAllData();
       }
@@ -555,7 +604,7 @@ export default function SchedulePage() {
     link.href = url;
     link.download = `west-chemist-schedule-backup-${new Date().toISOString().split('T')[0]}.json`;
     link.click();
-    setFeedback('Schedules configurations exported successfully.');
+    triggerSuccess('Schedules configurations exported successfully.');
   };
 
   const handleImportBackup = async (e) => {
@@ -583,7 +632,7 @@ export default function SchedulePage() {
         });
         const data = await res.json();
         if (data.success) {
-          setFeedback('Schedules successfully restored from JSON backup!');
+          triggerSuccess('Schedules successfully restored from JSON backup!');
           fetchAllData();
         }
       } catch (err) {
@@ -855,6 +904,22 @@ export default function SchedulePage() {
                   </div>
                 </div>
 
+                {/* Quick Selection Helpers */}
+                <div className="quick_select_row" style={{ display: 'flex', gap: '8px', marginBottom: '16px', flexWrap: 'wrap', alignItems: 'center' }}>
+                  <span style={{ fontSize: '0.78rem', fontWeight: '800', color: 'var(--t3)', textTransform: 'uppercase', letterSpacing: '0.05em', marginRight: '4px' }}>
+                    Quick Select:
+                  </span>
+                  <button type="button" className="cal_today_btn" onClick={handleSelectWeekends} style={{ padding: '6px 12px', fontSize: '0.75rem', borderRadius: '8px' }}>
+                    Saturdays & Sundays (Weekends)
+                  </button>
+                  <button type="button" className="cal_today_btn" onClick={handleSelectWeekdays} style={{ padding: '6px 12px', fontSize: '0.75rem', borderRadius: '8px' }}>
+                    Weekdays (Mon-Fri)
+                  </button>
+                  <button type="button" className="cal_today_btn btn_reset" onClick={handleClearAllSelected} style={{ padding: '6px 12px', fontSize: '0.75rem', borderRadius: '8px' }}>
+                    Clear Selection
+                  </button>
+                </div>
+
                 {/* Day of Week Label Header */}
                 <div className="cal_weekdays_grid">
                   {weekdaysHeader.map((w, idx) => (
@@ -1090,17 +1155,7 @@ export default function SchedulePage() {
                     </button>
                 </div>
               </div>
-
-              {feedback && (
-                <div style={{
-                  padding: '14px', background: '#ecfdf5', border: '1px solid #a7f3d0',
-                  color: '#065f46', borderRadius: '12px', fontSize: '0.8rem', fontWeight: 700,
-                  textAlign: 'center'
-                }}>
-                  ✅ {feedback}
-                </div>
-              )}
-            </div>
+          </div>
 
           </div>
         )}
@@ -1114,6 +1169,10 @@ export default function SchedulePage() {
               {modalConfig.type === 'confirm' ? (
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ color: 'var(--purple)' }}>
                   <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+              ) : modalConfig.type === 'success' ? (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ color: '#10b981' }}>
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
                 </svg>
               ) : (
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ color: '#be123c' }}>

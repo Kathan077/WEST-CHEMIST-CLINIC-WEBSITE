@@ -142,8 +142,8 @@
   border-radius: 8px;
   border: 1px solid var(--border);
   outline: none;
-  background: #fcfbfe;
-  color: var(--t1);
+  background: #ffffff !important;
+  color: #1e293b !important;
   font-family: var(--f);
   transition: all 0.2s ease;
 }

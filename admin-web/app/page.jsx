@@ -40,7 +40,7 @@ export default function AdminLoginPage() {
                 // Success: store admin auth token and metadata
                 localStorage.setItem('adminToken', data.token);
                 localStorage.setItem('adminUser', JSON.stringify(data.admin));
-                
+
                 // Redirect to patients compliance dashboard
                 window.location.href = '/admin/patients';
             } else {
@@ -56,7 +56,7 @@ export default function AdminLoginPage() {
 
     return (
         <div className="login_container">
-            {/* Left Panel: peeking doctor matching the screenshot */}
+            {/* Left Panel */}
             <div className="left_panel">
                 <div className="left_content">
                     <h1 className="left_hello">
@@ -67,15 +67,16 @@ export default function AdminLoginPage() {
                     </p>
                 </div>
                 <div className="doctor_wrapper">
-                    <img 
-                        src="/images/admin_login_doctor.png" 
-                        alt="Peeking Doctor Illustration" 
+                    <img
+                        src="/admin/images/admin_login_doctor.png"
+                        alt="Doctor Illustration"
                         className="doctor_img"
+                        onError={(e) => { e.target.style.display = 'none'; }}
                     />
                 </div>
             </div>
 
-            {/* Right Panel: login form with logo, inputs, error message and submit button */}
+            {/* Right Panel: login form */}
             <div className="right_panel">
                 <div className="form_container">
                     <div className="logo_section">
@@ -152,8 +153,8 @@ export default function AdminLoginPage() {
                         </div>
 
                         {/* Pill Login Button */}
-                        <button 
-                            type="submit" 
+                        <button
+                            type="submit"
                             className="login_button"
                             disabled={loading}
                         >
@@ -168,15 +169,12 @@ export default function AdminLoginPage() {
                         </button>
                     </form>
 
-                    <a className="forgot_link" onClick={() => alert('Please contact administrator support to recover your login credentials.')}>
-                        Forget Password?
-                    </a>
 
-                    <div className="signup_container">
-                        Do Not Have Account? <span className="signup_link" style={{ cursor: 'pointer' }} onClick={() => alert('Only existing clinical staff can access this portal. Account creation must be done by a primary supervisor.')}>Sign Up</span>
-                    </div>
                 </div>
             </div>
+
+            {/* Doctor illustration — positioned at the junction of both panels */}
+
         </div>
     );
 }

@@ -6,6 +6,15 @@ const connectDB = async () => {
       // Modern Mongoose options (Mongoose 6+ has these enabled by default, but good to ensure stability)
     });
     console.log(`MongoDB Connected: ${conn.connection.host}`);
+
+    // Drop unique index to allow multiple bookings per slot (up to capacity)
+    try {
+      await mongoose.connection.db.collection('appointments').dropIndex('clinic_1_date_1_time_1');
+      console.log('✅ Dropped unique index clinic_1_date_1_time_1 successfully');
+    } catch (indexError) {
+      // Index might not exist or already dropped, which is fine
+      console.log('ℹ️ clinic_1_date_1_time_1 index drop skipped: ' + indexError.message);
+    }
     
     // Seed default administrator if DB is empty
     // const { seedDefaultAdmin } = require('../controllers/adminController');

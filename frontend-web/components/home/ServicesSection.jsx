@@ -172,11 +172,21 @@ export default function ServicesSection() {
                 <div className="ss_header ss_reveal">
                     <span className="ss_eyebrow">{intro.subtitle}</span>
                     <h2 className="ss_title">
-                        {intro.title?.split('Better Care & Healthy Living')[0]}
-                        {intro.title?.includes('Better Care & Healthy Living') && (
-                            <span className="ss_title_accent">Better Care & Healthy Living</span>
+                        {intro.title?.includes('Better Care & Healthy Living') ? (
+                            <>
+                                {intro.title.split('Better Care & Healthy Living')[0]}
+                                <span className="ss_title_accent">Better Care & Healthy Living</span>
+                                {intro.title.split('Better Care & Healthy Living')[1]}
+                            </>
+                        ) : intro.title?.includes('We Offer') ? (
+                            <>
+                                {intro.title.split('We Offer')[0]}
+                                <span className="ss_title_accent">We Offer</span>
+                                {intro.title.split('We Offer')[1]}
+                            </>
+                        ) : (
+                            intro.title
                         )}
-                        {intro.title?.split('Better Care & Healthy Living')[1]}
                     </h2>
                     <p className="ss_subtitle">
                         {intro.desc}

@@ -1,7 +1,7 @@
 'use client';
 
 import { API_URL } from '@/config';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import './dashboard.css';
 
 /* ─ SVG Icons ─ */
@@ -356,12 +356,7 @@ const MiniCal = ({ appts = [], holidays = [], onToggleHoliday }) => {
         onMouseLeave={() => setHoveredDay(null)}
         onClick={() => {
           if (onToggleHoliday) {
-            const confirmMsg = isHoliday 
-              ? `Remove ${dateStr} from blocked holidays? This will make time slots available again.`
-              : `Block ${dateStr} as a clinic holiday? This will prevent patients from booking any slots on this day.`;
-            if (window.confirm(confirmMsg)) {
-              onToggleHoliday(dateStr);
-            }
+            onToggleHoliday(dateStr);
           }
         }}
       >
@@ -426,6 +421,36 @@ export default function AdminPatientsPage() {
   const [holidays, setHolidays] = useState([]);
   const [bulkStart, setBulkStart] = useState('');
   const [bulkEnd, setBulkEnd] = useState('');
+
+  // Custom Modal dialogs & Toasts
+  const [modalConfig, setModalConfig] = useState(null);
+  const [toast, setToast] = useState(null);
+
+  const showToast = (message, type = 'success') => {
+    setToast({ message, type });
+    setTimeout(() => setToast(null), 3000);
+  };
+
+  const triggerAlert = (message) => {
+    setModalConfig({ type: 'alert', message, onConfirm: () => setModalConfig(null) });
+  };
+
+  const triggerConfirm = (message) => {
+    return new Promise((resolve) => {
+      setModalConfig({
+        type: 'confirm',
+        message,
+        onConfirm: () => {
+          setModalConfig(null);
+          resolve(true);
+        },
+        onCancel: () => {
+          setModalConfig(null);
+          resolve(false);
+        }
+      });
+    });
+  };
 
   const CLINICS = [
     "West Chemist — Northampton Clinic",
@@ -503,54 +528,70 @@ export default function AdminPatientsPage() {
       const [rP, rA, rH] = await Promise.all([
         fetch(`${API_URL}/api/patients`,               {headers:{Authorization:`Bearer ${token}`}}),
         fetch(`${API_URL}/api/appointments/admin/all`, {headers:{Authorization:`Bearer ${token}`}}),
-        fetch(`${API_URL}/api/contents/clinic-holidays`, {headers:{Authorization:`Bearer ${token}`}}),
+        fetch(`${API_URL}/api/schedule?branch=${encodeURIComponent(selectedBranch)}`, {headers:{Authorization:`Bearer ${token}`}}),
       ]);
       const dP = await rP.json(); const dA = await rA.json(); const dH = await rH.json();
       if (dP.success) setPatients(dP.data);
       if (dA.success) setAppts(dA.data);
-      if (dH.success && dH.data) {
-        const listStr = dH.data.content || '';
-        setHolidays(listStr.split(',').map(d => d.trim()).filter(Boolean));
+      if (dH.success && dH.holidays) {
+        const datesList = dH.holidays
+          .filter(h => h.holidayType === 'specific-date')
+          .map(h => h.startDateStr);
+        setHolidays(datesList);
       }
     } catch(e) { console.error(e); }
     finally { setLoading(false); }
-  }, []);
+  }, [selectedBranch]);
 
   const toggleHoliday = async (dateStr) => {
     const token = localStorage.getItem('adminToken');
     if (!token) return;
     
-    let newList;
-    if (holidays.includes(dateStr)) {
-      newList = holidays.filter(d => d !== dateStr);
-    } else {
-      newList = [...holidays, dateStr];
-    }
+    const isBlocked = holidays.includes(dateStr);
+    const confirmMsg = isBlocked 
+      ? `Remove ${dateStr} from blocked holidays? This will make time slots available again.`
+      : `Block ${dateStr} as a clinic holiday? This will prevent patients from booking any slots on this day.`;
+
+    const approved = await triggerConfirm(confirmMsg);
+    if (!approved) return;
     
-    // Optimistic UI update
+    let newList = isBlocked ? holidays.filter(d => d !== dateStr) : [...holidays, dateStr];
     setHolidays(newList);
     
     try {
-      const res = await fetch(`${API_URL}/api/contents/clinic-holidays`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          title: 'Clinic Blocked Holidays',
-          content: newList.join(','),
-          section: 'settings'
-        })
-      });
+      let res;
+      if (!isBlocked) {
+        const parts = dateStr.split('-');
+        const payload = [{
+          holidayType: 'specific-date',
+          startDateStr: dateStr,
+          month: parseInt(parts[1], 10) - 1,
+          day: parseInt(parts[2], 10),
+          name: 'Clinic Holiday'
+        }];
+        res = await fetch(`${API_URL}/api/schedule/holiday-bulk`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+          body: JSON.stringify({ holidays: payload, branch: selectedBranch })
+        });
+      } else {
+        res = await fetch(`${API_URL}/api/schedule/holiday-remove`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+          body: JSON.stringify({ dates: [dateStr], branch: selectedBranch })
+        });
+      }
+      
       const data = await res.json();
-      if (!data.success) {
-        alert(data.message || 'Failed to save holidays list');
+      if (data.success) {
+        fetchData();
+      } else {
+        triggerAlert(data.message || 'Failed to save holiday');
         fetchData(); // reload on error
       }
     } catch (err) {
       console.error(err);
-      alert('Network error saving holidays list');
+      triggerAlert('Network error saving holiday');
       fetchData(); // reload on error
     }
   };
@@ -559,16 +600,19 @@ export default function AdminPatientsPage() {
     const token = localStorage.getItem('adminToken');
     if (!token) return;
     if (!bulkStart || !bulkEnd) {
-      alert('Please select both Start Date and End Date for bulk action');
+      triggerAlert('Please select both Start Date and End Date for bulk action');
       return;
     }
 
     const startD = new Date(bulkStart);
     const endD = new Date(bulkEnd);
     if (endD < startD) {
-      alert('End Date must be equal to or after Start Date');
+      triggerAlert('End Date must be equal to or after Start Date');
       return;
     }
+
+    const approved = await triggerConfirm(`Are you sure you want to bulk ${action === 'block' ? 'block' : 'unblock'} dates from ${bulkStart} to ${bulkEnd}?`);
+    if (!approved) return;
 
     // Generate dates range in local YYYY-MM-DD
     const rangeDates = [];
@@ -578,48 +622,58 @@ export default function AdminPatientsPage() {
       const m = String(currentD.getMonth() + 1).padStart(2, '0');
       const day = String(currentD.getDate()).padStart(2, '0');
       rangeDates.push(`${y}-${m}-${day}`);
-      // Increment 1 day safely
       currentD.setDate(currentD.getDate() + 1);
     }
 
     let newList = [...holidays];
     if (action === 'block') {
-      // Add and prevent duplicate keys
       rangeDates.forEach(d => {
         if (!newList.includes(d)) newList.push(d);
       });
     } else {
-      // Remove matching keys
       newList = newList.filter(d => !rangeDates.includes(d));
     }
 
-    // Optimistic UI update
     setHolidays(newList);
-    // Reset inputs
     setBulkStart('');
     setBulkEnd('');
 
     try {
-      const res = await fetch(`${API_URL}/api/contents/clinic-holidays`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          title: 'Clinic Blocked Holidays',
-          content: newList.join(','),
-          section: 'settings'
-        })
-      });
+      let res;
+      if (action === 'block') {
+        const payload = rangeDates.map(dObjStr => {
+          const parts = dObjStr.split('-');
+          return {
+            holidayType: 'specific-date',
+            startDateStr: dObjStr,
+            month: parseInt(parts[1], 10) - 1,
+            day: parseInt(parts[2], 10),
+            name: 'Clinic Holiday'
+          };
+        });
+        res = await fetch(`${API_URL}/api/schedule/holiday-bulk`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+          body: JSON.stringify({ holidays: payload, branch: selectedBranch })
+        });
+      } else {
+        res = await fetch(`${API_URL}/api/schedule/holiday-remove`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+          body: JSON.stringify({ dates: rangeDates, branch: selectedBranch })
+        });
+      }
+      
       const data = await res.json();
-      if (!data.success) {
-        alert(data.message || 'Failed to save bulk holidays');
+      if (data.success) {
+        fetchData();
+      } else {
+        triggerAlert(data.message || 'Failed to save bulk holidays');
         fetchData();
       }
     } catch (err) {
       console.error(err);
-      alert('Network error saving bulk holidays');
+      triggerAlert('Network error saving bulk holidays');
       fetchData();
     }
   };
@@ -639,7 +693,7 @@ export default function AdminPatientsPage() {
   }, [fetchData]);
 
 
-  const branchAppts = appts.filter(a => a.clinic === selectedBranch);
+  const branchAppts = useMemo(() => appts.filter(a => a.clinic === selectedBranch), [appts, selectedBranch]);
 
   useEffect(() => {
     const approvedPatientIds = new Set(
@@ -1226,6 +1280,38 @@ export default function AdminPatientsPage() {
         </div>
 
       </div>
+
+
+
+      {modalConfig && (
+        <div className="custom_modal_overlay">
+          <div className="custom_modal_box">
+            <div className="modal_icon_circle">
+              {modalConfig.type === 'confirm' ? (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ color: 'var(--purple)' }}>
+                  <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+              ) : (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ color: '#be123c' }}>
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+              )}
+            </div>
+            <div className="modal_message">{modalConfig.message}</div>
+            <div className="modal_actions">
+              {modalConfig.type === 'confirm' && (
+                <button type="button" className="modal_btn btn_cancel" onClick={modalConfig.onCancel}>
+                  Cancel
+                </button>
+              )}
+              <button type="button" className="modal_btn btn_confirm" onClick={modalConfig.onConfirm}>
+                {modalConfig.type === 'confirm' ? 'Yes, Proceed' : 'OK'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }

@@ -65,7 +65,9 @@ const DEFAULT_HOMEPAGE_CONTENT = {
       { icon: 'clock', title: 'Walk-In & Booking Ease', desc: 'Get fast, hassle-free care when you need it most with flexible appointments.' }
     ],
     ctaText: 'Learn More About Us',
-    ctaUrl: '/about'
+    ctaUrl: '/about',
+    secondaryCtaText: 'Contact Us',
+    secondaryCtaUrl: '/contact'
   },
   servicesSection: {
     title: 'Clinical Services We Offer',
@@ -98,7 +100,12 @@ const DEFAULT_HOMEPAGE_CONTENT = {
     desc: 'Are you looking to achieve and maintain a healthy weight? Our clinical team provides safe, medically supervised weight loss programs tailored to you. We offer professional advice, progress tracking, and regulation-compliant guidance.',
     image: '/images/e0dc23d6-3cb0-4a6a-9076-058313605f8d.png',
     ctaText: 'Start Weight Loss Program',
-    ctaUrl: '/weight-loss'
+    ctaUrl: '/weight-loss',
+    bullets: [
+      'Personalized expert support',
+      'In-person or secure online consultations available',
+      'Flexible appointment options, including evening slots'
+    ]
   },
   footerCta: {
     title: 'Ready to take the next step?',
@@ -186,6 +193,52 @@ const updateHomepageContent = async (req, res) => {
 // @access  Private/Admin
 const seedHomepageContent = async (req, res) => {
   try {
+    const { section } = req.query;
+
+    if (section) {
+      let content = await HomepageCMS.findOne({ key: 'main' });
+      if (!content) {
+        content = await HomepageCMS.create(DEFAULT_HOMEPAGE_CONTENT);
+      }
+
+      switch (section) {
+        case 'hero':
+          content.heroSlides = DEFAULT_HOMEPAGE_CONTENT.heroSlides;
+          content.heroStats = DEFAULT_HOMEPAGE_CONTENT.heroStats;
+          break;
+        case 'about':
+          content.aboutSection = DEFAULT_HOMEPAGE_CONTENT.aboutSection;
+          break;
+        case 'services':
+          content.servicesSection = DEFAULT_HOMEPAGE_CONTENT.servicesSection;
+          break;
+        case 'how':
+          content.howItWorks = DEFAULT_HOMEPAGE_CONTENT.howItWorks;
+          break;
+        case 'testimonials':
+          content.testimonials = DEFAULT_HOMEPAGE_CONTENT.testimonials;
+          break;
+        case 'weightLossCta':
+          content.appointmentCta = DEFAULT_HOMEPAGE_CONTENT.appointmentCta;
+          break;
+        case 'seo':
+          content.seoSettings = DEFAULT_HOMEPAGE_CONTENT.seoSettings;
+          break;
+        default:
+          return res.status(400).json({
+            success: false,
+            message: `Invalid section '${section}' specified for reset`
+          });
+      }
+
+      await content.save();
+      return res.status(200).json({
+        success: true,
+        message: `Homepage CMS section "${section}" reset successfully!`,
+        data: content
+      });
+    }
+
     await HomepageCMS.deleteOne({ key: 'main' });
     const content = await HomepageCMS.create(DEFAULT_HOMEPAGE_CONTENT);
     

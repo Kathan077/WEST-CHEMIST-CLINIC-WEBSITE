@@ -118,18 +118,19 @@ const bookAppointment = async (req, res) => {
     // All appointments start as pending until approved by the admin.
     const initialStatus = 'pending';
 
-    // Check if slot is already booked (prevent race conditions or duplicate booking)
-    const existingBooking = await Appointment.findOne({
-      clinic,
-      date,
-      time,
-      status: { $ne: 'cancelled' }
-    });
-
-    if (existingBooking) {
+    // Check if slot is available according to the schedule's max capacity limit
+    const availableSlots = await slotService.getAvailableSlots(clinic, date);
+    const matchedSlot = availableSlots.find(s => s.time === time);
+    if (!matchedSlot) {
+      return res.status(400).json({
+        success: false,
+        message: 'The selected time slot is invalid for this clinic and date.'
+      });
+    }
+    if (!matchedSlot.available) {
       return res.status(409).json({
         success: false,
-        message: 'This time slot has already been reserved. Please select another slot.'
+        message: 'This time slot is fully booked or unavailable. Please select another slot.'
       });
     }
 
@@ -415,19 +416,19 @@ const adminRescheduleAppointment = async (req, res) => {
       return res.status(404).json({ success: false, message: 'Appointment not found' });
     }
 
-    // Check for conflicts at the new slot (excluding this appointment)
-    const conflict = await Appointment.findOne({
-      clinic: appointment.clinic,
-      date: newDate,
-      time: newTime,
-      status: { $ne: 'cancelled' },
-      _id: { $ne: id }
-    });
-
-    if (conflict) {
+    // Check if the new slot is available according to max capacity limits (excluding this appointment)
+    const availableSlots = await slotService.getAvailableSlots(appointment.clinic, newDate, id);
+    const matchedSlot = availableSlots.find(s => s.time === newTime);
+    if (!matchedSlot) {
+      return res.status(400).json({
+        success: false,
+        message: 'The selected new time slot is invalid for this clinic and date.'
+      });
+    }
+    if (!matchedSlot.available) {
       return res.status(409).json({
         success: false,
-        message: 'The new time slot is already booked. Please choose another slot.'
+        message: 'The selected new time slot is fully booked or unavailable. Please choose another slot.'
       });
     }
 
@@ -493,7 +494,7 @@ const getAppointmentById = async (req, res) => {
 const requestRescheduleAppointment = async (req, res) => {
   try {
     const { id } = req.params;
-    const { newDate, newTime } = req.body;
+    const { newDate, newTime, newClinic, newService } = req.body;
 
     if (!newDate || !newTime) {
       return res.status(400).json({ success: false, message: 'newDate and newTime are required' });
@@ -504,33 +505,48 @@ const requestRescheduleAppointment = async (req, res) => {
       return res.status(404).json({ success: false, message: 'Appointment not found' });
     }
 
-    // Check for conflicts at the new slot (excluding this appointment)
-    const conflict = await Appointment.findOne({
-      clinic: appointment.clinic,
-      date: newDate,
-      time: newTime,
-      status: { $ne: 'cancelled' },
-      _id: { $ne: id }
-    });
+    const targetClinic = newClinic || appointment.clinic;
 
-    if (conflict) {
+    // Check if the new slot is available according to max capacity limits (excluding this appointment)
+    const availableSlots = await slotService.getAvailableSlots(targetClinic, newDate, id);
+    const matchedSlot = availableSlots.find(s => s.time === newTime);
+    if (!matchedSlot) {
+      return res.status(400).json({
+        success: false,
+        message: 'The selected date or time slot is invalid for this clinic.'
+      });
+    }
+    if (!matchedSlot.available) {
       return res.status(409).json({
         success: false,
-        message: 'The selected slot is already booked. Please choose another date or time.'
+        message: 'The selected time slot is fully booked or unavailable. Please choose another slot.'
       });
     }
 
-    // Update proposed rescheduled date and time, set status to pending, flag request
-    appointment.rescheduledDate = newDate;
-    appointment.rescheduledTime = newTime;
-    appointment.isRescheduleRequested = true;
-    appointment.status = 'pending';
-    appointment.adminNote = `Proposed reschedule to ${newDate} at ${newTime} (Awaiting Pharmacist Audit)`;
+    if (appointment.status === 'pending') {
+      // Direct edit while still pending audit
+      appointment.clinic = targetClinic;
+      appointment.service = newService || appointment.service;
+      appointment.date = newDate;
+      appointment.time = newTime;
+      appointment.isRescheduleRequested = false;
+      appointment.adminNote = ''; // reset note
+    } else {
+      // Propose reschedule for audited appointment
+      appointment.rescheduledDate = newDate;
+      appointment.rescheduledTime = newTime;
+      appointment.clinic = targetClinic;
+      appointment.service = newService || appointment.service;
+      appointment.isRescheduleRequested = true;
+      appointment.status = 'pending'; // Revert status to pending for new audit
+      appointment.adminNote = `Proposed reschedule to ${newDate} at ${newTime} (Awaiting Pharmacist Audit)`;
+    }
+
     await appointment.save();
 
     res.status(200).json({
       success: true,
-      message: `Reschedule request submitted for ${newDate} at ${newTime}`,
+      message: `Appointment updated successfully.`,
       data: appointment
     });
   } catch (error) {

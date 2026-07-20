@@ -164,6 +164,7 @@ function BookingPageInner() {
     const [dynamicServices, setDynamicServices] = useState(SERVICES);
     const [holidays, setHolidays] = useState([]);
     const [schedules, setSchedules] = useState([]);
+    const [modalMessage, setModalMessage] = useState('');
 
     useEffect(() => {
         const fetchHolidaysAndSchedule = async () => {
@@ -506,6 +507,7 @@ function BookingPageInner() {
                 router.push(`/booking-success?id=${apptId}&fullName=${encodeURIComponent(formData.fullName)}&mobile=${encodeURIComponent(formData.mobile)}&service=${encodeURIComponent(formData.service)}&clinic=${encodeURIComponent(formData.clinic)}&date=${encodeURIComponent(formData.date)}&time=${encodeURIComponent(formData.time)}&patientId=${encodeURIComponent(patientId)}`);
             } else {
                 setApiError(result.message || 'The selected slot was recently booked. Please pick another.');
+                setModalMessage(result.message || 'The selected slot was recently booked. Please pick another.');
             }
         } catch (err) {
             console.warn('⚠️ West Chemist Backend is offline. Redirecting in Demo Mode.');
@@ -1267,6 +1269,82 @@ function BookingPageInner() {
                 </div>
             </div>
 
+            {modalMessage && (
+                <div style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: 'rgba(15, 23, 42, 0.45)',
+                    backdropFilter: 'blur(8px)',
+                    zIndex: 9999,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }} className="custom_modal_overlay">
+                    <div style={{
+                        background: '#ffffff',
+                        borderRadius: '20px',
+                        width: '90%',
+                        maxWidth: '440px',
+                        padding: '30px',
+                        boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        textAlign: 'center',
+                        gap: '16px',
+                        border: '1px solid #e2e8f0',
+                        margin: 'auto'
+                    }} className="custom_modal_box">
+                        <div style={{
+                            width: '52px',
+                            height: '52px',
+                            borderRadius: '50%',
+                            background: '#fef2f2',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                        }}>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#be123c" strokeWidth="2.5">
+                                <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" /><line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" />
+                            </svg>
+                        </div>
+                        <div style={{
+                            fontSize: '0.98rem',
+                            fontWeight: 700,
+                            color: '#0f172a',
+                            lineHeight: '1.5'
+                        }}>{modalMessage}</div>
+                        <div style={{
+                            display: 'flex',
+                            gap: '12px',
+                            width: '100%',
+                            marginTop: '10px'
+                        }}>
+                            <button 
+                                type="button" 
+                                style={{
+                                    flex: 1,
+                                    padding: '12px 18px',
+                                    borderRadius: '12px',
+                                    fontSize: '0.9rem',
+                                    fontWeight: 800,
+                                    cursor: 'pointer',
+                                    background: 'linear-gradient(135deg, #4b2d71, #7859a3)',
+                                    border: 'none',
+                                    color: '#ffffff',
+                                    transition: 'opacity 0.2s'
+                                }}
+                                onClick={() => setModalMessage('')}
+                            >
+                                OK
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </>
     );
 }

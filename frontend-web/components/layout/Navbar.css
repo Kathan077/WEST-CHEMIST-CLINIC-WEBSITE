@@ -603,9 +603,141 @@
     font-weight: 700;
 }
 
+/* ════════════════════════════════════
+   DESKTOP SPECIAL DROPDOWNS
+   Vaccination & Weight Loss — compact floating panel
+════════════════════════════════════ */
 @media (min-width: 1025px) {
-    /* specific minor tweaks if necessary */
+    /* Compact panel — positioned below nav link, not full-width */
+    .wl_dropdown,
+    .vacc_dropdown {
+        position: absolute;
+        left: 0;
+        right: auto;
+        width: auto;
+        min-width: 220px;
+        max-width: 520px;
+        border-radius: 16px;
+        border-top: 2px solid var(--accent, #008473);
+        border-left: 1px solid rgba(0, 0, 0, 0.07);
+        border-right: 1px solid rgba(0, 0, 0, 0.07);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+        padding: 12px 0 16px;
+        box-shadow: 0 20px 48px rgba(0, 0, 0, 0.1);
+        background: #ffffff;
+    }
+
+    /* Vaccination has 2 columns side by side */
+    .vacc_dropdown {
+        min-width: 420px;
+    }
+
+    /* Side-by-side layout for vaccination */
+    .vacc_dropdown .dropdown_inner {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 0;
+        padding: 0 8px;
+    }
+
+    /* Single column for weight loss */
+    .wl_dropdown .dropdown_inner {
+        flex-direction: column;
+        gap: 2px;
+        padding: 0 8px;
+    }
+
+    /* Each column group */
+    .vacc_dropdown .dropdown_group {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        padding: 0 4px;
+        min-width: 0;
+    }
+
+    /* Divider between vaccination groups */
+    .vacc_dropdown .dropdown_group:not(:last-child) {
+        border-right: 1px solid rgba(0, 0, 0, 0.07);
+        margin-right: 4px;
+        padding-right: 8px;
+    }
+
+    /* Group section title */
+    .wl_dropdown .group_title,
+    .vacc_dropdown .group_title {
+        font-size: 0.65rem !important;
+        font-weight: 800 !important;
+        letter-spacing: 0.1em !important;
+        text-transform: uppercase !important;
+        color: #008473 !important;
+        padding: 6px 8px 8px !important;
+        display: block !important;
+        margin: 0 0 4px 0 !important;
+        border-bottom: 1px solid rgba(0, 132, 115, 0.12) !important;
+    }
+
+    /* Items in compact panels — override card-style from base .dropdown_item */
+    .wl_dropdown .dropdown_item,
+    .vacc_dropdown .dropdown_item {
+        background: transparent !important;
+        border: none !important;
+        border-radius: 8px !important;
+        box-shadow: none !important;
+        padding: 8px 10px !important;
+        font-size: 0.875rem !important;
+        font-weight: 600 !important;
+        color: var(--primary, #2d1b69) !important;
+        white-space: nowrap !important;
+        justify-content: space-between !important;
+        display: flex !important;
+        align-items: center !important;
+        min-height: 0 !important;
+        height: auto !important;
+    }
+
+    .wl_dropdown .dropdown_item:hover,
+    .vacc_dropdown .dropdown_item:hover {
+        background: rgba(94, 53, 177, 0.06) !important;
+        color: var(--secondary, #5e35b1) !important;
+        transform: translate3d(4px, 0, 0) !important;
+        box-shadow: none !important;
+        border-color: transparent !important;
+    }
+
+    .wl_dropdown .dropdown_item::after,
+    .vacc_dropdown .dropdown_item::after {
+        content: '›' !important;
+        font-size: 1.1rem !important;
+        font-weight: 400 !important;
+        color: inherit !important;
+        opacity: 0.4 !important;
+        margin-left: 8px !important;
+        transform: none !important;
+        transition: transform 0.2s ease, opacity 0.2s ease !important;
+    }
+
+    .wl_dropdown .dropdown_item:hover::after,
+    .vacc_dropdown .dropdown_item:hover::after {
+        transform: translate3d(3px, 0, 0) !important;
+        opacity: 0.9 !important;
+    }
+
+    /* Weight Loss item sizing */
+    .wl_item {
+        font-size: 0.9rem !important;
+        font-weight: 700 !important;
+    }
+
+    /* Containers holding compact dropdowns must be position:relative
+       so the panel anchors under the navlink (not the viewport) */
+    .nav_dropdown_container:has(.wl_dropdown),
+    .nav_dropdown_container:has(.vacc_dropdown) {
+        position: relative;
+    }
 }
+
 
 .mobile_cta_container {
     display: none;

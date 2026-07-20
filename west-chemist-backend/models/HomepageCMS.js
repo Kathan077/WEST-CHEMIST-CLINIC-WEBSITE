@@ -59,7 +59,9 @@ const HomepageCMSSchema = new mongoose.Schema({
     experienceLabel: { type: String, default: '' },
     features: [aboutFeatureSchema],
     ctaText: { type: String, default: '' },
-    ctaUrl: { type: String, default: '' }
+    ctaUrl: { type: String, default: '' },
+    secondaryCtaText: { type: String, default: '' },
+    secondaryCtaUrl: { type: String, default: '' }
   },
   servicesSection: {
     title: { type: String, default: '' },
@@ -84,7 +86,8 @@ const HomepageCMSSchema = new mongoose.Schema({
     desc: { type: String, default: '' },
     image: { type: String, default: '' },
     ctaText: { type: String, default: '' },
-    ctaUrl: { type: String, default: '' }
+    ctaUrl: { type: String, default: '' },
+    bullets: { type: [String], default: [] }
   },
   footerCta: {
     title: { type: String, default: '' },
