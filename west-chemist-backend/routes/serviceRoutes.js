@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const serviceUpload = require('../middleware/serviceUploadMiddleware');
 const {
   getAllServices,
   getServiceBySlug,
@@ -12,9 +13,37 @@ const {
 router.get('/', getAllServices);
 router.get('/:slug', getServiceBySlug);
 
-// Admin endpoints (Private/Protected in production, simple endpoints matching the dashboard)
+// Service Image Upload Endpoint
+router.post('/upload', serviceUpload.single('image'), (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: 'No image file provided for upload'
+      });
+    }
+
+    const relativePath = `/uploads/services/${req.file.filename}`;
+    res.status(200).json({
+      success: true,
+      message: 'Service image uploaded successfully',
+      url: relativePath,
+      filename: req.file.filename
+    });
+  } catch (error) {
+    console.error(`💥 Error uploading service image: ${error.message}`);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to process service image upload',
+      error: error.message
+    });
+  }
+});
+
+// Admin CRUD endpoints
 router.post('/', createService);
 router.put('/:id', updateService);
 router.delete('/:id', deleteService);
 
 module.exports = router;
+

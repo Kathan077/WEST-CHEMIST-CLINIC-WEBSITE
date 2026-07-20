@@ -99,10 +99,29 @@ export default function NHSServices() {
             try {
                 const res = await fetch(`${API_URL}/api/services`);
                 const json = await res.json();
-                if (res.ok && json.success && json.data.length > 0) {
-                    const nhs = json.data.filter(s => s.parentCategory === 'NHS Services (Pharmacy First)');
+                if (res.ok && json.success && Array.isArray(json.data) && json.data.length > 0) {
+                    const dbMap = {};
+                    json.data.forEach(s => {
+                        if (s.title) dbMap[s.title.toLowerCase().trim()] = s;
+                        if (s.slug) dbMap[s.slug.toLowerCase().trim()] = s;
+                    });
+
+                    // Filter all NHS Services & Pharmacy First services
+                    const nhs = json.data.filter(s => 
+                        s.parentCategory === 'NHS Services (Pharmacy First)' || 
+                        s.parentCategory === 'Pharmacy First' ||
+                        (s.parentCategory && s.parentCategory.includes('NHS')) ||
+                        s.cat === 'Pharmacy First'
+                    );
+
                     if (nhs.length > 0) {
                         setServices(nhs);
+                    } else {
+                        // Merge static fallback with DB images if available
+                        setServices(allServices.map(s => {
+                            const match = dbMap[s.title.toLowerCase().trim()];
+                            return match ? { ...s, img: match.img || s.img, desc: match.desc || s.desc, slug: match.slug } : s;
+                        }));
                     }
                 }
             } catch (err) {
@@ -129,6 +148,12 @@ export default function NHSServices() {
         return () => observer.disconnect();
     }, [services]);
 
+    const getImgUrl = (img) => {
+        if (!img) return 'https://images.unsplash.com/photo-1559839734-2b71f1536783?w=600&q=80';
+        if (img.startsWith('/uploads')) return `${API_URL}${img}`;
+        return img;
+    };
+
     return (
         <section className="ns_section">
             <div className="ns_container">
@@ -149,7 +174,7 @@ export default function NHSServices() {
                             }}
                         >
                             <div className="ns_card_bottom">
-                                <img src={s.img} alt={s.title} className="ns_image" />
+                                <img src={getImgUrl(s.img)} alt={s.title} className="ns_image" />
                                 <div className="ns_image_gradient" />
                             </div>
                             <div className="ns_card_top">
@@ -180,3 +205,4 @@ export default function NHSServices() {
         </section>
     );
 }
+

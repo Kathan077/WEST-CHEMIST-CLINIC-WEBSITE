@@ -44,8 +44,8 @@ html, body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 0 0 0 8%;
-    /* No overflow:hidden — lets doctor image bridge the divider */
+    padding: 0 8% 0 10%;
+    overflow: hidden;
 }
 
 /* Decorative soft glow — top-left */
@@ -77,8 +77,8 @@ html, body {
 /* ── Left Text Content ───────────────────────────── */
 .left_content {
     position: relative;
-    z-index: 10;
-    max-width: 340px;
+    z-index: 20;
+    max-width: 400px;
     animation: fadeInUp 0.8s ease-out both;
 }
 
@@ -86,7 +86,7 @@ html, body {
     font-size: clamp(2.8rem, 4.5vw, 4.8rem);
     font-weight: 900;
     color: var(--purple);
-    line-height: 1.0;
+    line-height: 1.05;
     letter-spacing: -0.03em;
     text-transform: uppercase;
 }
@@ -98,35 +98,16 @@ html, body {
 }
 
 .left_subtitle {
-    font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+    font-size: clamp(0.95rem, 1.2vw, 1.15rem);
     color: #4b3c60;
-    margin-top: 1.4rem;
+    margin-top: 1.5rem;
     line-height: 1.65;
     font-weight: 500;
-    padding-left: 14px;
-    border-left: 3px solid var(--pine);
+    padding-left: 16px;
+    border-left: 3.5px solid var(--pine);
 }
 
-/* ── Doctor illustration — spans the junction of both panels */
-.doctor_wrapper {
-    position: absolute;
-    /* Align the doctor/wall boundary exactly on the dividing line (48%) */
-    left: 48%;
-    bottom: 0;
-    width: clamp(280px, 28vw, 420px);
-    height: auto;
-    z-index: 30;               /* above both panels */
-    pointer-events: none;
-    animation: peerIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
 
-.doctor_img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    display: block;
-    filter: drop-shadow(-6px 10px 20px rgba(75, 45, 113, 0.20));
-}
 
 /* ═══════════════════════════════════════════════════
    RIGHT PANEL — Login Form
@@ -313,6 +294,66 @@ html, body {
     animation: spin 0.9s linear infinite;
 }
 
+/* ── Form Tabs Switcher ──────────────────────────── */
+.auth_tabs {
+    display: flex;
+    background: #f1f5f9;
+    padding: 4px;
+    border-radius: 14px;
+    margin-bottom: 24px;
+    position: relative;
+}
+
+.auth_tab {
+    flex: 1;
+    text-align: center;
+    padding: 10px 16px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #64748b;
+    border: none;
+    background: transparent;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.auth_tab.active {
+    background: #ffffff;
+    color: var(--purple);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.auth_tab:hover:not(.active) {
+    color: var(--pine);
+}
+
+.form_subtitle {
+    font-size: 0.95rem;
+    color: #64748b;
+    text-align: center;
+    margin-bottom: 24px;
+    font-weight: 500;
+}
+
+/* ── Success Message ─────────────────────────────── */
+.success_msg {
+    color: #10b981;
+    background-color: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 10px 14px;
+    border-radius: 10px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    animation: fadeInUp 0.3s ease-out;
+}
+
 /* ── Navigation Links ────────────────────────────── */
 .forgot_link {
     align-self: center;
@@ -332,9 +373,10 @@ html, body {
 
 .signup_container {
     align-self: center;
-    margin-top: 16px;
+    margin-top: 20px;
     font-size: 0.875rem;
     color: #64748b;
+    text-align: center;
 }
 
 .signup_link {
@@ -343,12 +385,14 @@ html, body {
     text-decoration: none;
     margin-left: 6px;
     transition: color 0.2s ease;
+    cursor: pointer;
 }
 
 .signup_link:hover {
     color: var(--pine);
     text-decoration: underline;
 }
+
 
 /* ═══════════════════════════════════════════════════
    ANIMATIONS
@@ -364,8 +408,8 @@ html, body {
 }
 
 @keyframes peerIn {
-    from { opacity: 0; transform: translateX(calc(-67% + 100px)) translateY(16px); }
-    to   { opacity: 1; transform: translateX(-67%)    translateY(0); }
+    from { opacity: 0; transform: translateY(35px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes spin {
@@ -387,10 +431,6 @@ html, body {
     .left_hello {
         font-size: 5rem;
     }
-    .doctor_wrapper {
-        width: clamp(300px, 26vw, 500px);
-        left: calc(48% - 200px);
-    }
 }
 
 /* ── Medium Desktop (1200px – 1399px) ───────────── */
@@ -402,10 +442,6 @@ html, body {
     .right_panel {
         width: 55%;
     }
-    .doctor_wrapper {
-        width: clamp(250px, 25vw, 400px);
-        left: calc(45% - 160px);
-    }
 }
 
 /* ── Small Desktop / Large Tablet (993px – 1199px) ─ */
@@ -414,11 +450,7 @@ html, body {
         font-size: 3rem;
     }
     .left_content {
-        max-width: 280px;
-    }
-    .doctor_wrapper {
-        width: clamp(220px, 23vw, 360px);
-        left: calc(45% - 140px);
+        max-width: 320px;
     }
     .form_container {
         max-width: 380px;
@@ -430,13 +462,11 @@ html, body {
     .left_panel {
         display: none;
     }
-    .doctor_wrapper {
-        display: none;       /* hide doctor when left panel is hidden */
-    }
     .right_panel {
         width: 100%;
         padding: 32px 24px;
     }
+
     .login_container {
         justify-content: center;
         align-items: center;

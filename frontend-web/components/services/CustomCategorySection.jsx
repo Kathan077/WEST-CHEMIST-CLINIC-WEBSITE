@@ -24,6 +24,12 @@ export default function CustomCategorySection({ categoryName, services }) {
 
     if (!services || services.length === 0) return null;
 
+    const getImgUrl = (img) => {
+        if (!img) return 'https://images.unsplash.com/photo-1559839734-2b71f1536783?w=600&q=80';
+        if (img.startsWith('/uploads')) return `${API_URL}${img}`;
+        return img;
+    };
+
     return (
         <section className="ps_section" style={{ background: '#f8fafc', borderTop: '1px solid #f1f5f9' }}>
             <div className="ps_container">
@@ -44,7 +50,7 @@ export default function CustomCategorySection({ categoryName, services }) {
                             }}
                         >
                             <div className="ps_img_wrap">
-                                <img src={s.img} alt={s.title} className="ps_img" />
+                                <img src={getImgUrl(s.img)} alt={s.title} className="ps_img" />
                                 <div className="ps_tag">{s.cat}</div>
                             </div>
                             <div className="ps_info">

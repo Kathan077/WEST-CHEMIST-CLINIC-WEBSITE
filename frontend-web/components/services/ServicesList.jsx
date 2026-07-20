@@ -1,9 +1,10 @@
 "use client";
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { API_URL } from '@/config';
 import './ServicesList.css';
 
-const coreServices = [
+const defaultCoreServices = [
     {
         title: "Weight Loss Clinic",
         tag: "Specialised Clinic",
@@ -40,6 +41,37 @@ const coreServices = [
 
 export default function ServicesList() {
     const sectionRef = useRef(null);
+    const [services, setServices] = useState(defaultCoreServices);
+
+    useEffect(() => {
+        const fetchLiveServices = async () => {
+            try {
+                const res = await fetch(`${API_URL}/api/services`);
+                const json = await res.json();
+                if (res.ok && json.success && Array.isArray(json.data) && json.data.length > 0) {
+                    const dbMap = {};
+                    json.data.forEach(s => {
+                        if (s.title) dbMap[s.title.toLowerCase().trim()] = s;
+                        if (s.slug) dbMap[s.slug.toLowerCase().trim()] = s;
+                    });
+
+                    setServices(defaultCoreServices.map(s => {
+                        const matchKey = s.title.toLowerCase().includes('weight') ? 'weight-loss'
+                            : s.title.toLowerCase().includes('vac') ? 'travel-clinic'
+                            : s.title.toLowerCase().includes('ear') ? 'earwax-removal'
+                            : s.title.toLowerCase().includes('health') ? 'heart-check'
+                            : s.title.toLowerCase().trim();
+
+                        const match = dbMap[matchKey] || dbMap[s.title.toLowerCase().trim()];
+                        return match ? { ...s, img: match.img || s.img, desc: match.desc || s.desc } : s;
+                    }));
+                }
+            } catch (err) {
+                console.error("Failed to fetch core services from API:", err);
+            }
+        };
+        fetchLiveServices();
+    }, []);
 
     useEffect(() => {
         const observer = new IntersectionObserver((entries) => {
@@ -50,11 +82,19 @@ export default function ServicesList() {
             });
         }, { threshold: 0.1 });
 
-        const cards = sectionRef.current.querySelectorAll('.sl_card_wrapper');
-        cards.forEach(card => observer.observe(card));
+        const cards = sectionRef.current?.querySelectorAll('.sl_card_wrapper');
+        if (cards) {
+            cards.forEach(card => observer.observe(card));
+        }
 
         return () => observer.disconnect();
-    }, []);
+    }, [services]);
+
+    const getImgUrl = (img) => {
+        if (!img) return 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80';
+        if (img.startsWith('/uploads')) return `${API_URL}${img}`;
+        return img;
+    };
 
     return (
         <section className="sl_section" ref={sectionRef}>
@@ -65,14 +105,15 @@ export default function ServicesList() {
                 </div>
 
                 <div className="sl_grid">
-                    {coreServices.map((service, idx) => (
+                    {services.map((service, idx) => (
                         <div className="sl_card_wrapper" key={idx}>
                             <div className="sl_card">
                                 <div className="sl_img_side">
-                                    <img src={service.img} alt={service.title} />
+                                    <img src={getImgUrl(service.img)} alt={service.title} />
                                     <div className="sl_img_overlay" style={{ background: service.color }} />
                                     <span className="sl_tag">{service.tag}</span>
                                 </div>
+
                                 <div className="sl_content_side">
                                     <h3>{service.title}</h3>
                                     <p>{service.desc}</p>

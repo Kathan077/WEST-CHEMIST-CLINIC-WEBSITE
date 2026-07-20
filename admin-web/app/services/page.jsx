@@ -66,6 +66,68 @@ export default function AdminServicesPage() {
     onHome: true
   });
 
+  // Drag & Drop Image Upload states for Services Modal
+  const [isDragging, setIsDragging] = useState(false);
+  const [isUploadingImg, setIsUploadingImg] = useState(false);
+  const [imgUploadMode, setImgUploadMode] = useState('upload'); // 'upload' | 'url'
+
+  const getImgUrl = (img) => {
+    if (!img) return '/images/services/dispensing_medicines.jpg';
+    if (img.startsWith('http://') || img.startsWith('https://')) return img;
+    if (img.startsWith('/uploads')) return `${API_URL}${img}`;
+    return img;
+  };
+
+  const uploadServiceImageFile = async (file) => {
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      showToast('Please select a valid image file (JPG, PNG, WEBP, SVG, GIF)', 'error');
+      return;
+    }
+
+    setIsUploadingImg(true);
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+      const res = await fetch(`${API_URL}/api/services/upload`, {
+        method: 'POST',
+        body: formData
+      });
+
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setServiceForm(prev => ({ ...prev, img: data.url }));
+        showToast('Service image uploaded successfully!', 'success');
+      } else {
+        showToast(data.message || 'Failed to upload image', 'error');
+      }
+    } catch (err) {
+      console.error('Image upload error:', err);
+      showToast('Network error uploading service image', 'error');
+    } finally {
+      setIsUploadingImg(false);
+    }
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      uploadServiceImageFile(e.dataTransfer.files[0]);
+    }
+  };
+
   // Toaster Notifications
   const [toast, setToast] = useState(null);
 
@@ -73,6 +135,7 @@ export default function AdminServicesPage() {
     setToast({ message, type });
     setTimeout(() => setToast(null), 3000);
   };
+
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 600);
@@ -578,7 +641,7 @@ export default function AdminServicesPage() {
                   return (
                     <div key={srv._id} className="srv_card">
                       <div className="srv_card_banner" style={{ background: gradient }}>
-                        {srv.img && <img src={srv.img} alt={srv.title} className="srv_card_img" />}
+                        {srv.img && <img src={getImgUrl(srv.img)} alt={srv.title} className="srv_card_img" />}
                         <div className="srv_card_banner_content">
                           <span className="srv_card_cat">{srv.cat}</span>
                           <h4 className="srv_card_title">{srv.title}</h4>
@@ -1084,34 +1147,128 @@ export default function AdminServicesPage() {
                   />
                 </div>
 
-                <div className="srv_form_grid">
-                  <div className="srv_form_group">
-                    <label className="srv_label">Banner Accent Color</label>
-                    <select
-                      className="srv_select"
-                      value={serviceForm.color}
-                      onChange={(e) => setServiceForm({ ...serviceForm, color: e.target.value })}
-                      required
-                    >
-                      <option value="emerald">Emerald Green</option>
-                      <option value="blue">Royal Blue</option>
-                      <option value="indigo">Deep Indigo</option>
-                      <option value="purple">Modern Purple</option>
-                      <option value="pine">Dark Pine</option>
-                    </select>
+                <div className="srv_form_group">
+                  <label className="srv_label">Banner Accent Color</label>
+                  <select
+                    className="srv_select"
+                    value={serviceForm.color}
+                    onChange={(e) => setServiceForm({ ...serviceForm, color: e.target.value })}
+                    required
+                  >
+                    <option value="emerald">Emerald Green</option>
+                    <option value="blue">Royal Blue</option>
+                    <option value="indigo">Deep Indigo</option>
+                    <option value="purple">Modern Purple</option>
+                    <option value="pine">Dark Pine</option>
+                  </select>
+                </div>
+
+                <div className="srv_form_group full">
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                    <label className="srv_label">Service Banner Image</label>
+                    <div className="srv_img_toggle_bar">
+                      <button
+                        type="button"
+                        className={`srv_img_toggle_btn ${imgUploadMode === 'upload' ? 'active' : ''}`}
+                        onClick={() => setImgUploadMode('upload')}
+                      >
+                        📁 Drag & Drop File
+                      </button>
+                      <button
+                        type="button"
+                        className={`srv_img_toggle_btn ${imgUploadMode === 'url' ? 'active' : ''}`}
+                        onClick={() => setImgUploadMode('url')}
+                      >
+                        🔗 Image URL
+                      </button>
+                    </div>
                   </div>
 
-                  <div className="srv_form_group">
-                    <label className="srv_label">Image Path / URL</label>
+                  {imgUploadMode === 'upload' ? (
+                    <div className="srv_dropzone_container">
+                      {serviceForm.img ? (
+                        <div className="srv_preview_box">
+                          <img src={getImgUrl(serviceForm.img)} alt="Service Banner Preview" className="srv_preview_img" />
+                          <div className="srv_preview_overlay">
+                            <button
+                              type="button"
+                              className="srv_remove_img_btn"
+                              onClick={() => {
+                                const fileInput = document.getElementById('srvFileInput');
+                                if (fileInput) fileInput.click();
+                              }}
+                            >
+                              🔄 Change Image
+                            </button>
+                            <button
+                              type="button"
+                              className="srv_remove_img_btn"
+                              style={{ background: '#ef4444' }}
+                              onClick={() => setServiceForm({ ...serviceForm, img: '' })}
+                            >
+                              ✕ Remove
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        <div
+                          className={`srv_dropzone_area ${isDragging ? 'dragging' : ''}`}
+                          onDragOver={handleDragOver}
+                          onDragLeave={handleDragLeave}
+                          onDrop={handleDrop}
+                          onClick={() => {
+                            const fileInput = document.getElementById('srvFileInput');
+                            if (fileInput) fileInput.click();
+                          }}
+                        >
+                          {isUploadingImg ? (
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', padding: '12px' }}>
+                              <div className="adm_spinner" style={{ width: 28, height: 28 }} />
+                              <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#206b5e' }}>Uploading image to server...</span>
+                            </div>
+                          ) : (
+                            <>
+                              <div className="srv_dropzone_icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                  <polyline points="17 8 12 3 7 8" />
+                                  <line x1="12" y1="3" x2="12" y2="15" />
+                                </svg>
+                              </div>
+                              <div className="srv_dropzone_text">
+                                Drag & Drop image file here, or <span>Browse</span>
+                              </div>
+                              <div className="srv_dropzone_subtext">
+                                Supports JPG, PNG, WEBP, SVG or GIF (Max 10MB)
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      )}
+
+                      <input
+                        type="file"
+                        id="srvFileInput"
+                        accept="image/*"
+                        style={{ display: 'none' }}
+                        onChange={(e) => {
+                          if (e.target.files && e.target.files[0]) {
+                            uploadServiceImageFile(e.target.files[0]);
+                          }
+                        }}
+                      />
+                    </div>
+                  ) : (
                     <input
                       type="text"
                       className="srv_input"
-                      placeholder="/images/services/name.jpg"
+                      placeholder="e.g. /images/services/dispensing_medicines.jpg or https://..."
                       value={serviceForm.img}
                       onChange={(e) => setServiceForm({ ...serviceForm, img: e.target.value })}
                     />
-                  </div>
+                  )}
                 </div>
+
 
                 <div className="srv_form_group checkbox">
                   <input

@@ -66,15 +66,8 @@ export default function AdminLoginPage() {
                         Please enter your administrative details to continue
                     </p>
                 </div>
-                <div className="doctor_wrapper">
-                    <img
-                        src="/admin/images/admin_login_doctor.png"
-                        alt="Doctor Illustration"
-                        className="doctor_img"
-                        onError={(e) => { e.target.style.display = 'none'; }}
-                    />
-                </div>
             </div>
+
 
             {/* Right Panel: login form */}
             <div className="right_panel">
@@ -89,6 +82,12 @@ export default function AdminLoginPage() {
                         <span className="logo_text"><span>WEST</span> CHEMIST</span>
                     </div>
 
+                    {/* Mode Navigation Tabs */}
+                    <div className="auth_tabs">
+                        <button type="button" className="auth_tab active">Log In</button>
+                        <a href="/admin/signup" className="auth_tab">Sign Up</a>
+                    </div>
+
                     <form onSubmit={handleLogin}>
                         {/* Username/Email Input */}
                         <div className="input_group">
@@ -99,7 +98,10 @@ export default function AdminLoginPage() {
                                     className={`input_field ${errorMsg ? 'error' : ''}`}
                                     placeholder="Enter username or email"
                                     value={usernameOrEmail}
-                                    onChange={(e) => setUsernameOrEmail(e.target.value)}
+                                    onChange={(e) => {
+                                        setUsernameOrEmail(e.target.value);
+                                        if (errorMsg) setErrorMsg('');
+                                    }}
                                     required
                                     disabled={loading}
                                 />
@@ -115,7 +117,10 @@ export default function AdminLoginPage() {
                                     className={`input_field ${errorMsg ? 'error' : ''}`}
                                     placeholder="Enter password"
                                     value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    onChange={(e) => {
+                                        setPassword(e.target.value);
+                                        if (errorMsg) setErrorMsg('');
+                                    }}
                                     required
                                     disabled={loading}
                                 />
@@ -139,7 +144,7 @@ export default function AdminLoginPage() {
                                 </button>
                             </div>
 
-                            {/* Red error message displayed under fields exactly as shown in screenshot */}
+                            {/* Red error message */}
                             {errorMsg && (
                                 <div className="error_msg">
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
@@ -169,9 +174,14 @@ export default function AdminLoginPage() {
                         </button>
                     </form>
 
-
+                    {/* Bottom Signup Navigation Container */}
+                    <div className="signup_container">
+                        Don't have an admin account?
+                        <a href="/admin/signup" className="signup_link">Sign Up</a>
+                    </div>
                 </div>
             </div>
+
 
             {/* Doctor illustration — positioned at the junction of both panels */}
 
