@@ -116,7 +116,7 @@ const DEFAULT_HOMEPAGE_CONTENT = {
     metaTitle: 'West Chemist Clinic — Expert Pharmaceutical & Health Services',
     metaDescription: 'West Chemist Clinic offers expert pharmaceutical care, travel vaccinations, weight loss programs, and specialist health advice in WA.',
     metaKeywords: 'pharmacy, clinic, travel clinic, vaccinations, Northampton, weight loss, health check',
-    canonicalUrl: 'http://localhost:3000/',
+    canonicalUrl: process.env.FRONTEND_URL || 'https://west-chemist-clinic-website.vercel.app/',
     logoUrl: '/images/ddfd45c4-3070-498a-9e4e-68f1fb48ad3e.png',
     ogTitle: 'West Chemist Clinic — Expert Pharmaceutical & Health Services',
     ogDescription: 'West Chemist Clinic offers expert pharmaceutical care, travel vaccinations, weight loss programs, and specialist health advice in WA.',

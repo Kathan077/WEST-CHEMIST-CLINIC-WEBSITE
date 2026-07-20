@@ -37,23 +37,31 @@ const allowedOrigins = [
   'http://127.0.0.1:3000',
   'http://localhost:3001',
   'http://127.0.0.1:3001',
-  'https://west-chemist-clinic-website.vercel.app'
+  'https://west-chemist-clinic-website.vercel.app',
+  'https://west-chemist-clinic-website-hekp.vercel.app'
 ];
 
 if (process.env.FRONTEND_URL) {
-  allowedOrigins.push(process.env.FRONTEND_URL);
+  allowedOrigins.push(process.env.FRONTEND_URL.replace(/\/$/, ''));
+}
+if (process.env.ADMIN_URL) {
+  allowedOrigins.push(process.env.ADMIN_URL.replace(/\/$/, ''));
 }
 
 const corsOptions = {
   origin: function (origin, callback) {
     // Allow requests with no origin (like mobile apps, curl, or postman)
     if (!origin) return callback(null, true);
+    
+    // Trim trailing slash from origin for consistent matching
+    const sanitizedOrigin = origin.replace(/\/$/, '');
+    
     if (
       process.env.NODE_ENV === 'development' ||
-      origin.startsWith('http://localhost:') ||
-      origin.startsWith('http://127.0.0.1:') ||
-      allowedOrigins.indexOf(origin) !== -1 || 
-      origin.endsWith('.vercel.app')
+      sanitizedOrigin.startsWith('http://localhost:') ||
+      sanitizedOrigin.startsWith('http://127.0.0.1:') ||
+      allowedOrigins.indexOf(sanitizedOrigin) !== -1 || 
+      sanitizedOrigin.endsWith('.vercel.app')
     ) {
       callback(null, true);
     } else {
