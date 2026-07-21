@@ -8,7 +8,7 @@ const programsData = [
         title: "Wegovy® (Semaglutide)",
         tagline: "The Gold Standard GLP-1",
         description: "A weekly injection clinically proven to regulate appetite and significantly reduce body weight when combined with a balanced lifestyle.",
-        image: "/brain/a9794728-9bd2-4101-a344-91ef761459ce/glp1_pen_premium_1777977535256.png",
+        image: "/images/wegovy_pen.png",
         stats: [
             { label: "Dosage", value: "Once Weekly" },
             { label: "Admin", value: "Pre-filled Pen" },
@@ -25,7 +25,7 @@ const programsData = [
         title: "Mounjaro® (Tirzepatide)",
         tagline: "Next-Gen Dual Action",
         description: "The latest breakthrough in weight management. A dual-acting GIP/GLP-1 receptor agonist offering unprecedented efficacy in weight reduction.",
-        image: "/brain/a9794728-9bd2-4101-a344-91ef761459ce/mounjaro_pen_premium_1777977877135.png",
+        image: "/images/mounjaro_pen.png",
         stats: [
             { label: "Dosage", value: "Once Weekly" },
             { label: "Admin", value: "Pre-filled Pen" },

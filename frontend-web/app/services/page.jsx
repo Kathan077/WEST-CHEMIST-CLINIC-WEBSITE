@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import ServicesHero from '@/components/services/ServicesHero';
-import ServicesList from '@/components/services/ServicesList';
 import NHSServices from '@/components/services/NHSServices';
 import PrivateServices from '@/components/services/PrivateServices';
 import TravelClinic from '@/components/services/TravelClinic';
@@ -61,14 +60,11 @@ export default function ServicesPage() {
             {/* Custom Category Sections */}
             {Object.keys(customCategories).map(catName => (
                 <CustomCategorySection 
-                    key={catName} 
-                    categoryName={catName} 
-                    services={customCategories[catName]} 
+                     key={catName} 
+                     categoryName={catName} 
+                     services={customCategories[catName]} 
                 />
             ))}
-
-            {/* Core Clinical Services Section */}
-            <ServicesList />
 
             {/* Why Choose Us Section */}
             <ServiceBenefits />

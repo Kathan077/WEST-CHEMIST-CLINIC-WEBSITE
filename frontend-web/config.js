@@ -5,3 +5,12 @@ const IS_DEV = typeof window !== 'undefined'
 export const API_URL = process.env.NEXT_PUBLIC_API_URL || 
   (IS_DEV ? 'http://localhost:5000' : 'https://west-chemist-clinic-website.onrender.com');
 
+export const getImageUrl = (img) => {
+  if (!img) return '';
+  if (img.startsWith('http://') || img.startsWith('https://') || img.startsWith('data:')) {
+    return img;
+  }
+  const normalizedPath = img.startsWith('/') ? img : `/${img}`;
+  return `${API_URL}${normalizedPath}`;
+};
+

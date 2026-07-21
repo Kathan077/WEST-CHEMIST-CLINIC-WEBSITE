@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
-import { API_URL } from '@/config';
+import { API_URL, getImageUrl } from '@/config';
 import './ServicesSection.css';
 
 const DEFAULT_INTRO = {
@@ -10,57 +10,6 @@ const DEFAULT_INTRO = {
     subtitle: 'Our Services',
     desc: 'Discover top-tier pharmaceutical care, from travel vaccines to personalised weight loss guidance.'
 };
-
-const DEFAULT_SERVICES = [
-    {
-        _id: '1',
-        slug: 'weight-loss',
-        title: 'Weight Loss',
-        img: '/images/e0dc23d6-3cb0-4a6a-9076-058313605f8d.png',
-        color: 'indigo',
-        desc: 'Personalised medical weight loss programs.'
-    },
-    {
-        _id: '2',
-        slug: 'pharmacy-first',
-        title: 'Pharmacy First',
-        img: '/images/about-pharmacist.jpg',
-        color: 'emerald',
-        desc: 'Immediate expert advice and treatment.'
-    },
-    {
-        _id: '3',
-        slug: 'earwax-removal',
-        title: 'Ear Microsuction',
-        img: '/images/0a198cad-eabf-40b6-81dc-45dbd61ed432.png',
-        color: 'blue',
-        desc: 'Safe and effective ear wax removal.'
-    },
-    {
-        _id: '4',
-        slug: 'vaccinations',
-        title: 'Vaccinations',
-        img: '/images/8df30593-83e5-4551-ab3b-4b82c1684d55.png',
-        color: 'purple',
-        desc: 'Comprehensive immunisation services.'
-    },
-    {
-        _id: '5',
-        slug: 'travel-vaccinations',
-        title: 'Travel Clinic',
-        img: '/images/0a198cad-eabf-40b6-81dc-45dbd61ed432.png',
-        color: 'pine',
-        desc: 'Essential vaccines for worry-free travel.'
-    },
-    {
-        _id: '6',
-        slug: 'blood-pressure',
-        title: 'Health Checks',
-        img: '/images/8df30593-83e5-4551-ab3b-4b82c1684d55.png',
-        color: 'emerald',
-        desc: 'Comprehensive blood pressure and health screenings.'
-    }
-];
 
 const getServiceColor = (colorName) => {
     switch (colorName) {
@@ -80,15 +29,17 @@ const getServiceColor = (colorName) => {
 };
 
 const getServiceLink = (slug) => {
-    if (slug === 'weight-loss') return '/weight-loss';
-    if (slug === 'vaccinations') return '/vaccination';
+    if (!slug) return '#';
+    const s = slug.toLowerCase();
+    if (s === 'weight-loss' || s === 'weight-loss-management-service') return '/weight-loss';
+    if (s === 'vaccinations' || s === 'travel-clinic') return '/vaccination';
     return `/services/${slug}`;
 };
 
 export default function ServicesSection() {
     const sectionRef = useRef(null);
     const [intro, setIntro] = useState(DEFAULT_INTRO);
-    const [services, setServices] = useState(DEFAULT_SERVICES);
+    const [services, setServices] = useState([]);
 
     useEffect(() => {
         const loadCMS = async () => {
@@ -109,9 +60,7 @@ export default function ServicesSection() {
                 const jsonSrv = await resSrv.json();
                 if (jsonSrv.success && Array.isArray(jsonSrv.data)) {
                     const homeServices = jsonSrv.data.filter(s => s.onHome);
-                    if (homeServices.length > 0) {
-                        setServices(homeServices);
-                    }
+                    setServices(homeServices);
                 }
             } catch (err) {
                 console.error("Failed to load services CMS data:", err);
@@ -206,7 +155,7 @@ export default function ServicesSection() {
                             {/* Inner Wrap - used for 3D preservation */}
                             <div className="ss_card_inner">
                                 <div className="ss_img_wrapper">
-                                    <img src={service.img?.startsWith('/uploads') ? `${API_URL}${service.img}` : (service.img || null)} alt={service.title} className="ss_img" loading="lazy" />
+                                    <img src={getImageUrl(service.img)} alt={service.title} className="ss_img" loading="lazy" />
                                     <div className="ss_img_shimmer" />
                                 </div>
                                 <div className="ss_content">

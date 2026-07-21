@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import './ServiceDetail.css';
-import { API_URL } from '@/config';
+import { API_URL, getImageUrl } from '@/config';
 
 // Comprehensive data mapper for all services
 const serviceData = {
@@ -290,7 +290,7 @@ const serviceData = {
     "wegovy": {
         title: "Wegovy Weight Management",
         cat: "Medical Weight Loss",
-        img: "/brain/a9794728-9bd2-4101-a344-91ef761459ce/glp1_pen_premium_1777977535256.png",
+        img: "/images/wegovy_pen.png",
         desc: "Wegovy® (semaglutide) is an MHRA-approved weekly injection for effective, clinical weight management. Designed to mimic the GLP-1 hormone, it regulates your appetite, reduces cravings, and delays stomach emptying. Our program combines this highly effective medication with continuous clinician support to ensure safe, sustainable weight loss.",
         duration: "30 Mins",
         features: ["Once-Weekly Injectable Medication", "Clinically Proven GLP-1 Hormone Analog", "Appetite Regulation & Craving Reduction", "Comprehensive Clinical Consultation Required", "Tailored Support & Titration Plan"]
@@ -298,7 +298,7 @@ const serviceData = {
     "mounjaro": {
         title: "Mounjaro Weight Management",
         cat: "Advanced Medical Weight Loss",
-        img: "/brain/a9794728-9bd2-4101-a344-91ef761459ce/mounjaro_pen_premium_1777977877135.png",
+        img: "/images/mounjaro_pen.png",
         desc: "Mounjaro® (tirzepatide) represents the latest innovation in metabolic science. Acting as a dual GIP and GLP-1 receptor agonist, it offers advanced efficacy in weight reduction. Under strict clinical supervision, our program provides personalized dosage schedules and tracking to maximize weight loss outcomes.",
         duration: "45 Mins",
         features: ["Innovative Dual Receptor Agonist (GIP & GLP-1)", "Advanced Weight Reduction Efficacy", "Personalized Clinical Titration Schedules", "Direct Professional Prescribing & Dispensing", "Continuous Progress Monitoring & Guidance"]
@@ -320,11 +320,19 @@ export default function ServiceDetail() {
                 if (res.ok && json.success && json.data) {
                     setService(json.data);
                 } else {
-                    setService(serviceData[slug] || null);
+                    if (slug === 'wegovy' || slug === 'mounjaro') {
+                        setService(serviceData[slug] || null);
+                    } else {
+                        setService(null);
+                    }
                 }
             } catch (err) {
                 console.error("Error fetching service: ", err);
-                setService(serviceData[slug] || null);
+                if (slug === 'wegovy' || slug === 'mounjaro') {
+                    setService(serviceData[slug] || null);
+                } else {
+                    setService(null);
+                }
             } finally {
                 setLoading(false);
             }
@@ -364,7 +372,7 @@ export default function ServiceDetail() {
         <div className="sd_page">
             {/* Cinematic Hero */}
             <header className="sd_hero">
-                <img src={service.img?.startsWith('/uploads') ? `${API_URL}${service.img}` : (service.img || null)} alt={service.title} className="sd_hero_bg" />
+                <img src={getImageUrl(service.img)} alt={service.title} className="sd_hero_bg" />
                 <div className="sd_hero_overlay" />
                 <div className="sd_hero_content">
                     <span className="sd_eyebrow">{service.cat} Service</span>
