@@ -10,6 +10,33 @@ import ServiceFAQ from '@/components/services/ServiceFAQ';
 import CTASection from '@/components/home/CTASection';
 import { API_URL } from '@/config';
 
+const isVaccination = (s) => {
+    const slug = (s.slug || '').toLowerCase();
+    const cat = (s.cat || '').toLowerCase();
+    const parentCat = (s.parentCategory || '').toLowerCase();
+    const title = (s.title || '').toLowerCase();
+    
+    const isWeightLoss = slug === 'wegovy' || slug === 'mounjaro' || cat.includes('weight') || parentCat.includes('weight') || title.includes('weight');
+    if (isWeightLoss) return false;
+    if (slug === 'travel-clinic') return false;
+    
+    return (
+        parentCat === 'vaccination services' ||
+        parentCat === 'travel clinic' ||
+        parentCat.includes('vacc') ||
+        cat.includes('vacc') ||
+        cat.includes('immuniz') ||
+        cat.includes('travel') ||
+        title.includes('vaccin') ||
+        title.includes('immunis') ||
+        title.includes('immuniz') ||
+        slug.startsWith('travel-') ||
+        slug.includes('flu-') ||
+        slug.includes('covid-') ||
+        slug.includes('meningitis')
+    );
+};
+
 export default function ServicesPage() {
     const [customCategories, setCustomCategories] = useState({});
 
@@ -27,6 +54,9 @@ export default function ServicesPage() {
                     
                     const groups = {};
                     json.data.forEach(s => {
+                        // Skip vaccination services completely
+                        if (isVaccination(s)) return;
+                        
                         const parent = s.parentCategory || 'Private Services';
                         if (!standardCats.includes(parent)) {
                             if (!groups[parent]) {
@@ -54,7 +84,7 @@ export default function ServicesPage() {
             {/* Premium Private Services Section */}
             <PrivateServices />
 
-            {/* Specialist Travel Clinic Section */}
+            {/* Travel Clinic Section */}
             <TravelClinic />
 
             {/* Custom Category Sections */}

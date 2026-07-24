@@ -266,11 +266,11 @@
 
 .srv_modal {
     background-color: #ffffff;
-    width: 90%;
-    max-width: 600px;
-    max-height: 85vh;
+    width: 95%;
+    max-width: 620px;
+    max-height: 88vh;
     border-radius: 16px;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -281,6 +281,7 @@
     display: flex;
     flex-direction: column;
     flex: 1;
+    min-height: 0;
     overflow: hidden;
 }
 
@@ -290,15 +291,17 @@
 }
 
 .srv_modal_header {
-    padding: 20px 24px;
+    padding: 18px 24px;
     border-bottom: 1px solid #e2e8f0;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: #ffffff;
+    z-index: 2;
 }
 
 .srv_modal_title {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: #1e293b;
 }
@@ -309,16 +312,21 @@
     font-size: 1.25rem;
     cursor: pointer;
     color: #64748b;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
 }
 
 .srv_modal_close:hover {
     color: #1e293b;
+    background-color: #f1f5f9;
 }
 
 .srv_modal_body {
     padding: 24px;
     overflow-y: auto;
     flex: 1;
+    min-height: 0;
 }
 
 .srv_form_grid {
@@ -379,6 +387,7 @@
     display: flex;
     justify-content: flex-end;
     gap: 12px;
+    z-index: 2;
 }
 
 .srv_btn_cancel {
@@ -422,7 +431,7 @@
 .srv_dropzone_area {
     border: 2px dashed #cbd5e1;
     border-radius: 12px;
-    padding: 24px 16px;
+    padding: 16px 14px;
     background-color: #f8fafc;
     text-align: center;
     cursor: pointer;
@@ -431,7 +440,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
     position: relative;
 }
 

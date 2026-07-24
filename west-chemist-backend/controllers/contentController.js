@@ -26,7 +26,13 @@ const getAllContents = async (req, res) => {
 const getContentByKey = async (req, res) => {
   try {
     const key = req.params.key.toLowerCase().trim();
-    let content = await PageContent.findOne({ key });
+    const alternativeKey = key.replace(/_/g, '-');
+    let content = await PageContent.findOne({
+      $or: [
+        { key: key },
+        { key: alternativeKey }
+      ]
+    });
     if (!content) {
       if (key === 'clinic-hours') {
         content = await PageContent.create({
@@ -121,9 +127,15 @@ const getContentByKey = async (req, res) => {
 const updateContentByKey = async (req, res) => {
   try {
     const { key } = req.params;
+    const alternativeKey = key.toLowerCase().trim().replace(/_/g, '-');
     const { title, content, section, metadata } = req.body;
 
-    let pageContent = await PageContent.findOne({ key });
+    let pageContent = await PageContent.findOne({
+      $or: [
+        { key: key.toLowerCase().trim() },
+        { key: alternativeKey }
+      ]
+    });
     
     if (pageContent) {
       // Update existing content

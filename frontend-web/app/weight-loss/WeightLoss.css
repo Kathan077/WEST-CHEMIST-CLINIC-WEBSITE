@@ -1,0 +1,692 @@
+/* ==========================================================================
+   WEIGHT LOSS CLINIC PAGE CSS — PREMIUM AESTHETICS ✦ West Chemist Clinic
+   ========================================================================== */
+
+/* Page Shell & Wrapper */
+.wl_page_wrapper {
+    background-color: var(--background);
+    color: var(--foreground);
+    overflow: hidden;
+    font-family: 'Outfit', sans-serif;
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   1. HERO BANNER
+   ────────────────────────────────────────────────────────────────────────── */
+.wl_hero_banner {
+    position: relative;
+    padding: 120px 0 80px 0;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(75, 45, 113, 0.08) 0%, rgba(0, 132, 115, 0.05) 50%, rgba(255, 255, 255, 1) 100%);
+    border-bottom: 1px solid rgba(0, 132, 115, 0.1);
+}
+
+.wl_hero_banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(0, 132, 115, 0.06) 0%, rgba(255, 255, 255, 0) 70%);
+    z-index: 0;
+    pointer-events: none;
+    border-radius: 50%;
+}
+
+.wl_hero_container {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.wl_hero_info {
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: wl_fade_up 0.8s var(--transition) forwards;
+}
+
+.wl_hero_tag {
+    display: inline-block;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent);
+    background: rgba(0, 132, 115, 0.08);
+    border-radius: var(--radius-full);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 24px;
+    border: 1px solid rgba(0, 132, 115, 0.15);
+}
+
+.wl_hero_title {
+    font-size: clamp(2.5rem, 5vw, 3.75rem);
+    font-weight: 800;
+    line-height: 1.15;
+    color: var(--primary);
+    margin-bottom: 20px;
+    letter-spacing: -1px;
+}
+
+.wl_hero_title span {
+    color: var(--accent);
+    background: linear-gradient(135deg, var(--accent) 30%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.wl_hero_description {
+    font-size: 1.15rem;
+    line-height: 1.65;
+    color: #4a5568;
+    margin-bottom: 32px;
+}
+
+.wl_hero_buttons {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.wl_btn_primary {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
+    color: white !important;
+    padding: 16px 32px;
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 14px rgba(0, 132, 115, 0.3);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.wl_btn_primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 132, 115, 0.4);
+}
+
+.wl_btn_secondary {
+    background: white;
+    color: var(--primary) !important;
+    padding: 16px 32px;
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: var(--radius-md);
+    border: 2px solid rgba(75, 45, 113, 0.2);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.wl_btn_secondary:hover {
+    border-color: var(--primary);
+    background: rgba(75, 45, 113, 0.02);
+    transform: translateY(-2px);
+}
+
+.wl_hero_visual {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    animation: wl_fade_up 1s var(--transition) forwards;
+}
+
+.wl_hero_img_wrapper {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    border: 4px solid white;
+    max-width: 100%;
+}
+
+.wl_hero_img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+    max-height: 420px;
+}
+
+.wl_hero_badge {
+    position: absolute;
+    bottom: -20px;
+    left: -20px;
+    background: white;
+    padding: 16px 24px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    border-left: 5px solid var(--accent);
+    display: flex;
+    flex-direction: column;
+    z-index: 3;
+}
+
+.wl_badge_title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.wl_badge_sub {
+    font-size: 0.8rem;
+    color: #718096;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   2. TREATMENTS SECTION
+   ────────────────────────────────────────────────────────────────────────── */
+.wl_section_container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 24px;
+}
+
+.wl_section_header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 56px auto;
+}
+
+.wl_section_subtitle {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.wl_section_title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 16px;
+}
+
+.wl_section_desc {
+    color: #4a5568;
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+.wl_treatment_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 32px;
+}
+
+.wl_treatment_card {
+    background: white;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.wl_treatment_card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(75, 45, 113, 0.08);
+    border-color: rgba(75, 45, 113, 0.15);
+}
+
+.wl_card_image_wrapper {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
+}
+
+.wl_card_image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.wl_treatment_card:hover .wl_card_image {
+    transform: scale(1.08);
+}
+
+.wl_card_cat {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--primary);
+    padding: 6px 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: var(--radius-sm);
+    text-transform: uppercase;
+    box-shadow: var(--shadow-sm);
+}
+
+.wl_card_content {
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.wl_card_title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 12px;
+}
+
+.wl_card_desc {
+    font-size: 0.95rem;
+    color: #4a5568;
+    line-height: 1.55;
+    margin-bottom: 24px;
+    flex-grow: 1;
+}
+
+.wl_card_features {
+    list-style: none;
+    margin-bottom: 28px;
+}
+
+.wl_card_features li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: #2d3748;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.wl_feature_icon {
+    color: var(--accent);
+    font-weight: bold;
+}
+
+.wl_card_actions {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 12px;
+}
+
+.wl_card_btn_view {
+    text-align: center;
+    padding: 12px;
+    border-radius: var(--radius-md);
+    background: #f7fafc;
+    color: var(--primary) !important;
+    font-weight: 700;
+    font-size: 0.9rem;
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s ease;
+}
+
+.wl_card_btn_view:hover {
+    background: #edf2f7;
+    border-color: #cbd5e0;
+}
+
+.wl_card_btn_book {
+    text-align: center;
+    padding: 12px;
+    border-radius: var(--radius-md);
+    background: var(--primary);
+    color: white !important;
+    font-weight: 700;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 10px rgba(75, 45, 113, 0.25);
+    transition: all 0.2s ease;
+}
+
+.wl_card_btn_book:hover {
+    background: var(--highlight-purple);
+    box-shadow: 0 6px 14px rgba(75, 45, 113, 0.35);
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   3. COMPARISON SECTION
+   ────────────────────────────────────────────────────────────────────────── */
+.wl_comparison_section {
+    background: #f7fafc;
+    border-top: 1px solid rgba(0, 0, 0, 0.04);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.wl_table_responsive {
+    width: 100%;
+    overflow-x: auto;
+    background: white;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    margin-top: 32px;
+}
+
+.wl_comparison_table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    min-width: 700px;
+}
+
+.wl_comparison_table th {
+    background: var(--primary);
+    color: white;
+    padding: 20px 24px;
+    font-weight: 700;
+    font-size: 1.05rem;
+}
+
+.wl_comparison_table th:first-child {
+    background: #2d3748;
+}
+
+.wl_comparison_table td {
+    padding: 20px 24px;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 0.95rem;
+    color: #4a5568;
+    line-height: 1.5;
+    vertical-align: middle;
+}
+
+.wl_comparison_table tr:last-child td {
+    border-bottom: none;
+}
+
+.wl_comparison_table tr:hover td {
+    background: rgba(75, 45, 113, 0.01);
+}
+
+.wl_table_param {
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.wl_badge_pill {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: var(--radius-full);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.wl_badge_pill.accent {
+    background: rgba(0, 132, 115, 0.1);
+    color: var(--accent);
+}
+
+.wl_badge_pill.purple {
+    background: rgba(75, 45, 113, 0.1);
+    color: var(--primary);
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   4. HOW IT WORKS
+   ────────────────────────────────────────────────────────────────────────── */
+.wl_timeline_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 32px;
+    margin-top: 48px;
+    position: relative;
+}
+
+.wl_timeline_step {
+    position: relative;
+    background: white;
+    padding: 32px 24px;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.wl_timeline_step:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(0, 132, 115, 0.15);
+}
+
+.wl_step_num {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 800;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px auto;
+    box-shadow: 0 4px 10px rgba(0, 132, 115, 0.2);
+}
+
+.wl_step_title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 12px;
+}
+
+.wl_step_desc {
+    font-size: 0.9rem;
+    color: #718096;
+    line-height: 1.5;
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   5. FAQS
+   ────────────────────────────────────────────────────────────────────────── */
+.wl_faq_section {
+    background: #f7fafc;
+}
+
+.wl_faq_list {
+    max-width: 800px;
+    margin: 32px auto 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.wl_faq_item {
+    background: white;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+}
+
+.wl_faq_question {
+    width: 100%;
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: none;
+    border: none;
+    text-align: left;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--primary);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.wl_faq_question:hover {
+    background-color: rgba(75, 45, 113, 0.02);
+}
+
+.wl_faq_arrow {
+    transition: transform 0.3s ease;
+    color: var(--accent);
+}
+
+.wl_faq_item.active .wl_faq_arrow {
+    transform: rotate(180deg);
+}
+
+.wl_faq_answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s cubic-bezier(0, 1, 0, 1);
+}
+
+.wl_faq_item.active .wl_faq_answer {
+    max-height: 1000px; /* high enough threshold */
+    transition: max-height 0.3s cubic-bezier(1, 0, 1, 0);
+}
+
+.wl_faq_answer_inner {
+    padding: 0 24px 20px 24px;
+    font-size: 0.95rem;
+    color: #4a5568;
+    line-height: 1.6;
+    border-top: 1px solid rgba(0, 0, 0, 0.02);
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   6. CTA BLOCK
+   ────────────────────────────────────────────────────────────────────────── */
+.wl_cta_section {
+    position: relative;
+    padding: 100px 0;
+    background: linear-gradient(135deg, var(--primary) 0%, #30174e 100%);
+    color: white;
+    text-align: center;
+    overflow: hidden;
+}
+
+.wl_cta_section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.05) 1.5px, transparent 1.5px);
+    background-size: 30px 30px;
+    opacity: 0.4;
+}
+
+.wl_cta_container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 2;
+}
+
+.wl_cta_eyebrow {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+    display: block;
+}
+
+.wl_cta_title {
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 800;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.wl_cta_desc {
+    font-size: 1.1rem;
+    color: #d69e2e;
+    margin-bottom: 36px;
+    line-height: 1.6;
+    font-weight: 500;
+}
+
+.wl_cta_btn {
+    background: var(--accent);
+    color: white !important;
+    padding: 18px 40px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border-radius: var(--radius-md);
+    box-shadow: 0 6px 20px rgba(0, 132, 115, 0.4);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+.wl_cta_btn:hover {
+    background: #009683;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 132, 115, 0.5);
+}
+
+.wl_cta_note {
+    margin-top: 20px;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   7. ANIMATIONS
+   ────────────────────────────────────────────────────────────────────────── */
+@keyframes wl_fade_up {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   8. RESPONSIVE MEDIA QUERIES
+   ────────────────────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .wl_hero_banner {
+        padding: 80px 0 60px 0;
+    }
+    .wl_section_container {
+        padding: 56px 24px;
+    }
+    .wl_treatment_grid {
+        grid-template-columns: 1fr;
+    }
+    .wl_card_actions {
+        grid-template-columns: 1fr;
+    }
+    .wl_timeline_grid {
+        grid-template-columns: 1fr;
+    }
+}

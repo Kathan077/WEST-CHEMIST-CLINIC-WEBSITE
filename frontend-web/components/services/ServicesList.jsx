@@ -11,15 +11,7 @@ const defaultCoreServices = [
         img: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80",
         desc: "Clinically proven medical weight loss programs including Wegovy and Mounjaro, with full clinical support.",
         color: "var(--primary)",
-        link: "/weight-loss"
-    },
-    {
-        title: "Vaccinations & Travel",
-        tag: "Global Health",
-        img: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&q=80",
-        desc: "Comprehensive travel vaccinations and seasonal immunisations for your family's protection.",
-        color: "var(--secondary)",
-        link: "/vaccination"
+        link: "/services/wegovy"
     },
     {
         title: "Ear Microsuction",
@@ -27,7 +19,7 @@ const defaultCoreServices = [
         img: "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=800&q=80",
         desc: "Safe, painless, and effective earwax removal using the latest microsuction technology.",
         color: "var(--accent)",
-        link: "/services/earwax-removal"
+        link: "/services/ear-wax-removal"
     },
     {
         title: "Health Screenings",
@@ -35,7 +27,7 @@ const defaultCoreServices = [
         img: "https://images.unsplash.com/photo-1505751172107-160bf2a35368?w=800&q=80",
         desc: "Detailed health checks including cholesterol, glucose, and full cardiovascular risk assessments.",
         color: "var(--highlight-purple)",
-        link: "/services/heart-check"
+        link: "/services/nhs-blood-pressure"
     }
 ];
 
@@ -56,10 +48,10 @@ export default function ServicesList() {
                     });
 
                     setServices(defaultCoreServices.map(s => {
-                        const matchKey = s.title.toLowerCase().includes('weight') ? 'weight-loss'
+                        const matchKey = s.title.toLowerCase().includes('weight') ? 'weight-loss-management'
                             : s.title.toLowerCase().includes('vac') ? 'travel-clinic'
-                            : s.title.toLowerCase().includes('ear') ? 'earwax-removal'
-                            : s.title.toLowerCase().includes('health') ? 'heart-check'
+                            : s.title.toLowerCase().includes('ear') ? 'ear-wax-removal'
+                            : s.title.toLowerCase().includes('health') ? 'nhs-blood-pressure'
                             : s.title.toLowerCase().trim();
 
                         const match = dbMap[matchKey] || dbMap[s.title.toLowerCase().trim()];

@@ -302,6 +302,14 @@ const serviceData = {
         desc: "Mounjaro® (tirzepatide) represents the latest innovation in metabolic science. Acting as a dual GIP and GLP-1 receptor agonist, it offers advanced efficacy in weight reduction. Under strict clinical supervision, our program provides personalized dosage schedules and tracking to maximize weight loss outcomes.",
         duration: "45 Mins",
         features: ["Innovative Dual Receptor Agonist (GIP & GLP-1)", "Advanced Weight Reduction Efficacy", "Personalized Clinical Titration Schedules", "Direct Professional Prescribing & Dispensing", "Continuous Progress Monitoring & Guidance"]
+    },
+    "weight-loss-management": {
+        title: "Weight Loss Management Service",
+        cat: "Medical Weight Loss",
+        img: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=1200&q=80",
+        desc: "Comprehensive clinical and lifestyle guidance, including weight monitoring, side-effect management, and supportive care for your journey.",
+        duration: "30 Mins",
+        features: ["Personalised lifestyle guidance", "Regular progress reviews", "Clinician-backed support", "Continuous health tracking"]
     }
 };
 
@@ -315,24 +323,40 @@ export default function ServiceDetail() {
     useEffect(() => {
         const fetchService = async () => {
             try {
+                // 1. Try to fetch the service by exact slug first
                 const res = await fetch(`${API_URL}/api/services/${slug}`);
                 const json = await res.json();
                 if (res.ok && json.success && json.data) {
                     setService(json.data);
                 } else {
-                    if (slug === 'wegovy' || slug === 'mounjaro') {
-                        setService(serviceData[slug] || null);
+                    // 2. Fetch all services and look for a normalized slug or title-slugify match
+                    const allRes = await fetch(`${API_URL}/api/services`);
+                    const allJson = await allRes.json();
+                    let matchedService = null;
+                    
+                    if (allRes.ok && allJson.success && Array.isArray(allJson.data)) {
+                        const targetNorm = slug.toLowerCase().replace(/[^a-z0-9]/g, '');
+                        // Check if normalized slugs match
+                        matchedService = allJson.data.find(s => s.slug && s.slug.toLowerCase().replace(/[^a-z0-9]/g, '') === targetNorm);
+                        
+                        if (!matchedService) {
+                            // Helper to slugify service title
+                            const slugify = (text) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+                            matchedService = allJson.data.find(s => s.title && slugify(s.title) === slug);
+                        }
+                    }
+                    
+                    if (matchedService) {
+                        setService(matchedService);
                     } else {
-                        setService(null);
+                        // Fallback to local hardcoded data
+                        setService(serviceData[slug] || null);
                     }
                 }
             } catch (err) {
                 console.error("Error fetching service: ", err);
-                if (slug === 'wegovy' || slug === 'mounjaro') {
-                    setService(serviceData[slug] || null);
-                } else {
-                    setService(null);
-                }
+                // Fallback to local hardcoded data
+                setService(serviceData[slug] || null);
             } finally {
                 setLoading(false);
             }

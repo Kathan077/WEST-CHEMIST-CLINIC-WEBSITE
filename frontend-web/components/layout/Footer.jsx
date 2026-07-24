@@ -64,7 +64,7 @@ export default function Footer() {
                             <li><Link href="/">Home</Link></li>
                             <li><Link href="/about">About Our Clinic</Link></li>
                             <li><Link href="/services">Full Services List</Link></li>
-                            <li><Link href="/weight-loss">Weight Loss Program</Link></li>
+                            <li><Link href="/services/wegovy">Weight Loss Program</Link></li>
                             <li><Link href="/book-appointment">Book an Appointment</Link></li>
                         </ul>
                     </div>

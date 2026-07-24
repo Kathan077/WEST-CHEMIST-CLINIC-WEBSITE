@@ -5,6 +5,7 @@ import { API_URL } from '@/config';
 import { useState, useEffect, useCallback, useRef } from 'react';
 import './appointments.css';
 import '../patients/dashboard.css';
+import Sidebar from '@/components/Sidebar';
 
 const SLOTS = [
   "09:00 AM","09:30 AM","10:00 AM","10:30 AM",
@@ -713,18 +714,6 @@ export default function AdminAppointmentsPage() {
     window.location.replace('/admin');
   };
 
-  const navItems = [
-    { label: 'Dashboard',         path: '/admin/patients',                 icon: ICONS.home },
-    { label: 'Appointments',      path: '/admin/appointments',             icon: ICONS.cal, active: true, badge: stats.pending || null },
-    { label: 'Patients',          path: '/admin/patients?view=patients',   icon: ICONS.users },
-    { label: 'Schedule Manager',  path: '/admin/schedule',                 icon: ICONS.cal },
-    { label: 'Compliance',        path: '/admin/compliance',               icon: ICONS.shield },
-    { label: 'Services & Content', path: '/admin/services',                icon: ICONS.edit },
-    { label: 'Homepage CMS',      path: '/admin/homepage',                 icon: ICONS.globe },
-    { label: 'Blog Manager',       path: '/admin/blog',                    icon: ICONS.doc },
-    { label: 'About Page',        path: '/admin/about',                    icon: ICONS.info },
-  ];
-
   return (
     <div className="adm_shell">
 
@@ -768,62 +757,7 @@ export default function AdminAppointmentsPage() {
       )}
 
       {/* ══ SIDEBAR ══ */}
-      <aside className="dash_sb">
-        {!isMobile && (
-          <div className="sb_logo">
-            <div className="sb_logo_mark">W</div>
-            <div className="sb_logo_name">
-              West Chemist
-              <small>Admin Portal</small>
-            </div>
-          </div>
-        )}
-
-        <div style={{ flex: 1, overflowY: 'auto' }}>
-          {!isMobile && <div className="sb_section"><div className="sb_section_label">General</div></div>}
-          <div style={{ padding: '0 14px' }}>
-            {navItems.map(n => (
-              <a key={n.label} href={n.path} className={`sb_link${n.active ? ' active' : ''}`}>
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                  strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d={n.icon} />
-                </svg>
-                <span>{n.label}</span>
-                {n.badge ? <span className="sb_badge">{n.badge}</span> : null}
-              </a>
-            ))}
-          </div>
-
-          {!isMobile && <div className="sb_section" style={{ marginTop: 8 }}><div className="sb_section_label">Settings</div></div>}
-          <div style={{ padding: '0 14px' }}>
-            <a className="sb_link" href="#" onClick={e => { e.preventDefault(); handleLogout(); }}>
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d={ICONS.logout} />
-              </svg>
-              <span>Log Out</span>
-            </a>
-          </div>
-        </div>
-
-        {!isMobile && (
-          <div className="sb_foot">
-            <div className="sb_user">
-              <div className="sb_av">{(adminUser?.username || 'A')[0].toUpperCase()}</div>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div className="sb_uname">{adminUser?.username || 'Admin'}</div>
-                <div className="sb_urole">Administrator</div>
-              </div>
-              <button className="sb_logout" onClick={handleLogout} title="Sign Out">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                  strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d={ICONS.logout} />
-                </svg>
-              </button>
-            </div>
-          </div>
-        )}
-      </aside>
+      <Sidebar activePage="appointments" />
 
       {/* ════ MAIN ════ */}
       <main className="adm_main">

@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useRef } from 'react';
+import { API_URL } from '@/config';
 import '@/components/services/PrivateServices.css';
 
 export default function CustomCategorySection({ categoryName, services }) {

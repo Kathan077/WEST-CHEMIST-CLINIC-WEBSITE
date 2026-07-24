@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap');
-
 /* ── Global resets for admin shell ── */
 html, body { margin: 0 !important; padding: 0 !important; }
 .dash_main { margin-top: 0 !important; padding-top: 0 !important; }

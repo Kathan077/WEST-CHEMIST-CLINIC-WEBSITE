@@ -7,6 +7,34 @@ import { usePathname } from 'next/navigation';
 import { API_URL } from '../../config';
 import './Navbar.css';
 
+const isVaccination = (s) => {
+    const slug = (s.slug || '').toLowerCase();
+    const cat = (s.cat || '').toLowerCase();
+    const parentCat = (s.parentCategory || '').toLowerCase();
+    const title = (s.title || '').toLowerCase();
+    
+    const isWeightLoss = slug === 'wegovy' || slug === 'mounjaro' || cat.includes('weight') || parentCat.includes('weight') || title.includes('weight');
+    if (isWeightLoss) return false;
+    if (slug === 'travel-clinic') return false;
+    if (parentCat === 'travel clinic') return false;
+    
+    return (
+        parentCat === 'vaccination services' ||
+        parentCat === 'travel clinic' ||
+        parentCat.includes('vacc') ||
+        cat.includes('vacc') ||
+        cat.includes('immuniz') ||
+        cat.includes('travel') ||
+        title.includes('vaccin') ||
+        title.includes('immunis') ||
+        title.includes('immuniz') ||
+        slug.startsWith('travel-') ||
+        slug.includes('flu-') ||
+        slug.includes('covid-') ||
+        slug.includes('meningitis')
+    );
+};
+
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
@@ -21,6 +49,7 @@ const Navbar = () => {
 
     const [categories, setCategories] = useState([]);
     const [services, setServices] = useState([]);
+    const [weightLossServices, setWeightLossServices] = useState([]);
     const [activeCategory, setActiveCategory] = useState(null);
 
     useEffect(() => {
@@ -34,10 +63,39 @@ const Navbar = () => {
                 const srvJson = await srvRes.json();
 
                 if (catJson.success && catJson.data) {
-                    setCategories(catJson.data);
+                    const filteredCats = catJson.data.filter(c => 
+                        !c.name.toLowerCase().includes('vacc')
+                    );
+                    setCategories(filteredCats);
                 }
                 if (srvJson.success && srvJson.data) {
-                    setServices(srvJson.data);
+                    // Weight loss services filter
+                    const wlSrvs = srvJson.data.filter(s => {
+                        const slug = (s.slug || '').toLowerCase();
+                        const cat = (s.cat || '').toLowerCase();
+                        const parentCat = (s.parentCategory || '').toLowerCase();
+                        const title = (s.title || '').toLowerCase();
+                        return (
+                            slug === 'wegovy' ||
+                            slug === 'mounjaro' ||
+                            cat.includes('weight') ||
+                            parentCat.includes('weight') ||
+                            title.includes('weight') ||
+                            title.includes('wegovy') ||
+                            title.includes('mounjaro') ||
+                            title.includes('ozempic') ||
+                            title.includes('saxenda') ||
+                            title.includes('slimming') ||
+                            slug.includes('weight') ||
+                            slug.includes('wegovy') ||
+                            slug.includes('mounjaro')
+                        );
+                    });
+                    setWeightLossServices(wlSrvs);
+
+                    // Non-vaccination, non-weight-loss services for Services dropdown
+                    const filteredSrvs = srvJson.data.filter(s => !isVaccination(s));
+                    setServices(filteredSrvs);
                 }
             } catch (err) {
                 console.error("Error loading dynamic navbar items:", err);
@@ -109,6 +167,45 @@ const Navbar = () => {
 
                     <Link href="/" className="nav_link" onClick={handleLinkClick}>Home</Link>
                     <Link href="/about" className="nav_link" onClick={handleLinkClick}>About Us</Link>
+                    <div className={`nav_dropdown_container ${dropdownForceClose ? 'force_close' : ''} ${mobileDropdowns.weightLoss ? 'mobile_open' : ''}`}>
+                        <Link href="/weight-loss" className="nav_link" onClick={handleLinkClick}>
+                            Weight Loss
+                            <span className="dropdown_icon_wrapper" onClick={(e) => {
+                                if (window.innerWidth <= 1024) {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    toggleMobileDropdownDirect('weightLoss');
+                                }
+                            }}>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className={`dropdown_icon ${mobileDropdowns.weightLoss ? 'rotated' : ''}`}>
+                                    <path d="m6 9 6 6 6-6" />
+                                </svg>
+                            </span>
+                        </Link>
+                        <div className="nav_dropdown wl_dropdown">
+                            <div className="dropdown_inner">
+                                <div className="dropdown_group">
+                                    {weightLossServices.length > 0 ? (
+                                        weightLossServices.map(s => (
+                                            <Link
+                                                key={s._id}
+                                                href={`/services/${s.slug || s.title.toLowerCase().replace(/\s+/g, '-')}`}
+                                                className="dropdown_item"
+                                                onClick={handleLinkClick}
+                                            >
+                                                {s.title}
+                                            </Link>
+                                        ))
+                                    ) : (
+                                        <>
+                                            <Link href="/services/wegovy" className="dropdown_item" onClick={handleLinkClick}>Wegovy</Link>
+                                            <Link href="/services/mounjaro" className="dropdown_item" onClick={handleLinkClick}>Mounjaro</Link>
+                                        </>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div className={`nav_dropdown_container ${dropdownForceClose ? 'force_close' : ''} ${mobileDropdowns.services ? 'mobile_open' : ''}`}>
                         <Link href="/services" className="nav_link" onClick={handleLinkClick}>
@@ -187,7 +284,6 @@ const Navbar = () => {
                                                 <Link href="/services/shingles-service" className="dropdown_item" onClick={handleLinkClick}>Shingles</Link>
                                                 <Link href="/services/sore-throat-service" className="dropdown_item" onClick={handleLinkClick}>Sore Throat</Link>
                                                 <Link href="/services/sinusitis-service" className="dropdown_item" onClick={handleLinkClick}>Sinusitis</Link>
-                                                <Link href="/services/flu-vaccination" className="dropdown_item" onClick={handleLinkClick}>Flu Vaccination</Link>
                                             </div>
                                         </div>
                                         <div className={`dropdown_group ${activeCategory === 'Private Services' ? 'expanded' : ''}`}>
@@ -213,71 +309,13 @@ const Navbar = () => {
                                                 <Link href="/services/blood-testing" className="dropdown_item" onClick={handleLinkClick}>Blood Testing</Link>
                                             </div>
                                         </div>
-                                        <div className={`dropdown_group ${activeCategory === 'Travel Clinic' ? 'expanded' : ''}`}>
-                                            <div
-                                                className="group_title_toggle"
-                                                onClick={(e) => {
-                                                    e.preventDefault();
-                                                    e.stopPropagation();
-                                                    setActiveCategory(activeCategory === 'Travel Clinic' ? null : 'Travel Clinic');
-                                                }}
-                                            >
-                                                <span className="group_title">Travel Clinic</span>
-                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="category_chevron">
-                                                    <path d="m6 9 6 6 6-6" />
-                                                </svg>
-                                            </div>
-                                            <div className="group_services_grid">
-                                                <Link href="/services/dtp-vaccine" className="dropdown_item" onClick={handleLinkClick}>Diphtheria / Tetanus / Polio</Link>
-                                                <Link href="/services/typhoid-injection" className="dropdown_item" onClick={handleLinkClick}>Typhoid (Injection)</Link>
-                                                <Link href="/services/typhoid-oral" className="dropdown_item" onClick={handleLinkClick}>Typhoid (Oral)</Link>
-                                                <Link href="/services/hepatitis-a-typhoid-combined" className="dropdown_item" onClick={handleLinkClick}>Hep A & Typhoid Combined</Link>
-                                                <Link href="/services/hepatitis-a-vaccine" className="dropdown_item" onClick={handleLinkClick}>Hepatitis A</Link>
-                                                <Link href="/services/hepatitis-b-vaccine" className="dropdown_item" onClick={handleLinkClick}>Hepatitis B</Link>
-                                                <Link href="/services/twinrix-vaccine" className="dropdown_item" onClick={handleLinkClick}>Twinrix (Hep A & B)</Link>
-                                                <Link href="/services/cholera-vaccine" className="dropdown_item" onClick={handleLinkClick}>Cholera</Link>
-                                                <Link href="/services/rabies-vaccine" className="dropdown_item" onClick={handleLinkClick}>Rabies</Link>
-                                                <Link href="/services/meningitis-acwy" className="dropdown_item" onClick={handleLinkClick}>Meningitis ACWY</Link>
-                                                <Link href="/services/meningitis-menveo" className="dropdown_item" onClick={handleLinkClick}>Meningitis Menveo</Link>
-                                                <Link href="/services/japanese-encephalitis" className="dropdown_item" onClick={handleLinkClick}>Japanese Encephalitis</Link>
-                                                <Link href="/services/tick-borne-encephalitis" className="dropdown_item" onClick={handleLinkClick}>Tick-Borne Encephalitis</Link>
-                                            </div>
-                                        </div>
                                     </>
                                 )}
                             </div>
                         </div>
                     </div>
 
-                    <div className={`nav_dropdown_container ${dropdownForceClose ? 'force_close' : ''} ${mobileDropdowns.weightLoss ? 'mobile_open' : ''}`}>
-                        <Link href="/weight-loss" className="nav_link" onClick={handleLinkClick}>
-                            Weight Loss Service
-                            <span className="dropdown_icon_wrapper" onClick={(e) => {
-                                if (window.innerWidth <= 1024) {
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                    toggleMobileDropdownDirect('weightLoss');
-                                }
-                            }}>
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className={`dropdown_icon ${mobileDropdowns.weightLoss ? 'rotated' : ''}`}>
-                                    <path d="m6 9 6 6 6-6" />
-                                </svg>
-                            </span>
-                        </Link>
-                        <div className="nav_dropdown wl_dropdown">
-                            <div className="dropdown_inner">
-                                <div className="dropdown_group">
-                                    <Link href="/services/wegovy" className="dropdown_item wl_item" onClick={handleLinkClick}>
-                                        Wegovy Injections
-                                    </Link>
-                                    <Link href="/services/mounjaro" className="dropdown_item wl_item" onClick={handleLinkClick}>
-                                        Mounjaro Injections
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                    
                     <div className={`nav_dropdown_container ${dropdownForceClose ? 'force_close' : ''} ${mobileDropdowns.vaccination ? 'mobile_open' : ''}`}>
                         <Link href="/vaccination" className="nav_link" onClick={handleLinkClick}>
                             Vaccination
@@ -296,23 +334,24 @@ const Navbar = () => {
                         <div className="nav_dropdown vacc_dropdown">
                             <div className="dropdown_inner">
                                 <div className="dropdown_group">
-                                    <span className="group_title">Travel & Specialist</span>
-                                    <Link href="/services/japanese-encephalitis" className="dropdown_item" onClick={handleLinkClick}>Japanese Encephalitis</Link>
-                                    <Link href="/services/typhoid-injection" className="dropdown_item" onClick={handleLinkClick}>Typhoid</Link>
-                                    <Link href="/services/rabies-vaccine" className="dropdown_item" onClick={handleLinkClick}>Rabies</Link>
-                                    <Link href="/services/hepatitis-b-vaccine" className="dropdown_item" onClick={handleLinkClick}>Hepatitis</Link>
-                                    <Link href="/services/chikungunya-vaccine" className="dropdown_item" onClick={handleLinkClick}>Chikungunya</Link>
+                                    <Link href="/services/travel-meningitis" className="dropdown_item" onClick={handleLinkClick}>Meningitis</Link>
+                                    <Link href="/services/nhs-meningitis-b" className="dropdown_item" onClick={handleLinkClick}>Meningitis B Vaccination</Link>
+                                    <Link href="/services/chickenpox-vaccine" className="dropdown_item" onClick={handleLinkClick}>Chickenpox</Link>
+                                    <Link href="/services/travel-chikungunya" className="dropdown_item" onClick={handleLinkClick}>Chikungunya Vaccine</Link>
+                                    <Link href="/services/nhs-shingles" className="dropdown_item" onClick={handleLinkClick}>Shingles</Link>
                                 </div>
                                 <div className="dropdown_group">
-                                    <span className="group_title">Routine & Essential</span>
-                                    <Link href="/services/meningitis-acwy" className="dropdown_item" onClick={handleLinkClick}>Meningitis</Link>
                                     <Link href="/services/hpv-vaccine" className="dropdown_item" onClick={handleLinkClick}>HPV</Link>
-                                    <Link href="/services/shingles-service" className="dropdown_item" onClick={handleLinkClick}>Shingles</Link>
-                                    <Link href="/services/chickenpox-vaccine" className="dropdown_item" onClick={handleLinkClick}>Chickenpox</Link>
+                                    <Link href="/services/travel-rabies" className="dropdown_item" onClick={handleLinkClick}>Rabies</Link>
+                                    <Link href="/services/travel-hepatitis-b" className="dropdown_item" onClick={handleLinkClick}>Hepatitis</Link>
+                                    <Link href="/services/travel-typhoid" className="dropdown_item" onClick={handleLinkClick}>Typhoid</Link>
+                                    <Link href="/services/travel-japanese-encephalitis" className="dropdown_item" onClick={handleLinkClick}>Japanese Encephalitis</Link>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
 
                     <Link href="/blog" className="nav_link" onClick={handleLinkClick}>Blog</Link>
                     <Link href="/contact" className="nav_link" onClick={handleLinkClick}>

@@ -643,8 +643,15 @@
     /* Single column for weight loss */
     .wl_dropdown .dropdown_inner {
         flex-direction: column;
-        gap: 2px;
-        padding: 0 8px;
+        gap: 0;
+        padding: 4px 6px;
+    }
+
+    .wl_dropdown .dropdown_group {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        padding: 0;
     }
 
     /* Each column group */
@@ -685,7 +692,7 @@
         border: none !important;
         border-radius: 8px !important;
         box-shadow: none !important;
-        padding: 8px 10px !important;
+        padding: 7px 10px !important;
         font-size: 0.875rem !important;
         font-weight: 600 !important;
         color: var(--primary, #2d1b69) !important;
@@ -695,6 +702,7 @@
         align-items: center !important;
         min-height: 0 !important;
         height: auto !important;
+        margin: 0 !important;
     }
 
     .wl_dropdown .dropdown_item:hover,

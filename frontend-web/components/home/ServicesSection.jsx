@@ -28,12 +28,43 @@ const getServiceColor = (colorName) => {
     }
 };
 
-const getServiceLink = (slug) => {
-    if (!slug) return '#';
-    const s = slug.toLowerCase();
+const isVaccination = (s) => {
+    const slug = (s.slug || '').toLowerCase();
+    const cat = (s.cat || '').toLowerCase();
+    const parentCat = (s.parentCategory || '').toLowerCase();
+    const title = (s.title || '').toLowerCase();
+    
+    const isWeightLoss = slug === 'wegovy' || slug === 'mounjaro' || cat.includes('weight') || parentCat.includes('weight') || title.includes('weight');
+    if (isWeightLoss) return false;
+    if (slug === 'travel-clinic') return false;
+    
+    return (
+        parentCat === 'vaccination services' ||
+        parentCat === 'travel clinic' ||
+        parentCat.includes('vacc') ||
+        cat.includes('vacc') ||
+        cat.includes('immuniz') ||
+        cat.includes('travel') ||
+        title.includes('vaccin') ||
+        title.includes('immunis') ||
+        title.includes('immuniz') ||
+        slug.startsWith('travel-') ||
+        slug.includes('flu-') ||
+        slug.includes('covid-') ||
+        slug.includes('meningitis')
+    );
+};
+
+const getServiceLink = (service) => {
+    if (!service || !service.slug) return '#';
+    const s = service.slug.toLowerCase();
     if (s === 'weight-loss' || s === 'weight-loss-management-service') return '/weight-loss';
-    if (s === 'vaccinations' || s === 'travel-clinic') return '/vaccination';
-    return `/services/${slug}`;
+    if (s === 'vaccinations' || s === 'travel-clinic' || s === 'travel-clinic-service') return '/vaccination';
+    
+    if (isVaccination(service)) {
+        return `/vaccination/${service.slug}`;
+    }
+    return `/services/${service.slug}`;
 };
 
 export default function ServicesSection() {
@@ -59,7 +90,7 @@ export default function ServicesSection() {
                 const resSrv = await fetch(`${API_URL}/api/services`);
                 const jsonSrv = await resSrv.json();
                 if (jsonSrv.success && Array.isArray(jsonSrv.data)) {
-                    const homeServices = jsonSrv.data.filter(s => s.onHome);
+                    const homeServices = jsonSrv.data.filter(s => s.onHome && !isVaccination(s));
                     setServices(homeServices);
                 }
             } catch (err) {
@@ -163,7 +194,7 @@ export default function ServicesSection() {
                                     <p className="ss_card_desc">{service.desc}</p>
                                     
                                     <div className="ss_actions">
-                                        <Link href={getServiceLink(service.slug)} className="ss_btn ss_btn_outline">
+                                        <Link href={getServiceLink(service)} className="ss_btn ss_btn_outline">
                                             <span>MORE INFO</span>
                                         </Link>
                                         <Link href="/book-appointment" className="ss_btn ss_btn_solid">

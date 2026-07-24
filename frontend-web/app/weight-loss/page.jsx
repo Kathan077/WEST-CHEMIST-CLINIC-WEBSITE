@@ -1,27 +1,16 @@
 import React from 'react';
-import Navbar from '../../components/layout/Navbar';
-import Footer from '../../components/layout/Footer';
-import WLHero from '../../components/weight-loss/WLHero';
-import WLPrograms from '../../components/weight-loss/WLPrograms';
-import WLProcess from '../../components/weight-loss/WLProcess';
-import WLSuccess from '../../components/weight-loss/WLSuccess';
-import WLFAQ from '../../components/weight-loss/WLFAQ';
+import WeightLossContent from './WeightLossContent';
 
 export const metadata = {
-    title: 'Medical Weight Loss - West Chemist Clinic',
-    description: 'Transform your health with our doctor-led GLP-1 weight loss programs including Wegovy and Mounjaro. Tailored, safe, and effective.',
+    title: 'Weight Loss Clinic & Medical Management - West Chemist Clinic',
+    description: 'Achieve sustainable, clinically supervised weight loss at West Chemist Clinic. We offer weekly Wegovy and Mounjaro injections with GPhC prescription oversight.',
+    keywords: 'weight loss clinic, wegovy, mounjaro, semaglutide, tirzepatide, medical weight loss, weight management, west chemist clinic',
 };
 
 export default function WeightLossPage() {
     return (
-        <main className="min-h-screen">
-            <Navbar />
-            <WLHero />
-            <WLPrograms />
-            <WLProcess />
-            <WLSuccess />
-            <WLFAQ />
-          
-        </main>
+        <div className="min-h-screen">
+            <WeightLossContent />
+        </div>
     );
 }

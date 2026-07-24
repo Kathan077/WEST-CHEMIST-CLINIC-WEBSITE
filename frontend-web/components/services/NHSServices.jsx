@@ -3,6 +3,33 @@ import React, { useState, useEffect, useRef } from 'react';
 import { API_URL, getImageUrl } from '@/config';
 import './NHSServices.css';
 
+const isVaccination = (s) => {
+    const slug = (s.slug || '').toLowerCase();
+    const cat = (s.cat || '').toLowerCase();
+    const parentCat = (s.parentCategory || '').toLowerCase();
+    const title = (s.title || '').toLowerCase();
+    
+    const isWeightLoss = slug === 'wegovy' || slug === 'mounjaro' || cat.includes('weight') || parentCat.includes('weight') || title.includes('weight');
+    if (isWeightLoss) return false;
+    if (slug === 'travel-clinic') return false;
+    
+    return (
+        parentCat === 'vaccination services' ||
+        parentCat === 'travel clinic' ||
+        parentCat.includes('vacc') ||
+        cat.includes('vacc') ||
+        cat.includes('immuniz') ||
+        cat.includes('travel') ||
+        title.includes('vaccin') ||
+        title.includes('immunis') ||
+        title.includes('immuniz') ||
+        slug.startsWith('travel-') ||
+        slug.includes('flu-') ||
+        slug.includes('covid-') ||
+        slug.includes('meningitis')
+    );
+};
+
 export default function NHSServices() {
     const gridRef = useRef(null);
     const [services, setServices] = useState([]);
@@ -13,7 +40,7 @@ export default function NHSServices() {
                 const res = await fetch(`${API_URL}/api/services`);
                 const json = await res.json();
                 if (res.ok && json.success && Array.isArray(json.data)) {
-                    const nhs = json.data.filter(s => s.parentCategory === 'NHS Services (Pharmacy First)');
+                    const nhs = json.data.filter(s => s.parentCategory === 'NHS Services (Pharmacy First)' && !isVaccination(s));
                     setServices(nhs);
                 }
             } catch (err) {

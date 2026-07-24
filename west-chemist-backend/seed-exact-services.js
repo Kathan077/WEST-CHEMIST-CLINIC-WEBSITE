@@ -515,18 +515,18 @@ const seedExactServices = async () => {
     console.log(`📡 MongoDB connected successfully.`);
 
     // 2. Ensure Categories Exist
-    console.log(`📂 Ensuring parent categories exist in categories collection...`);
+    console.log(`📂 Seeding parent categories...`);
     const defaultCategories = [
       { name: "NHS Services (Pharmacy First)", slug: "nhs-services-pharmacy-first" },
       { name: "Private Services", slug: "private-services" },
       { name: "Travel Clinic", slug: "travel-clinic" }
     ];
+    const deleteCatCount = await Category.deleteMany({});
+    console.log(`   🗑️ Cleared ${deleteCatCount.deletedCount} existing categories from database.`);
+    
     for (const cat of defaultCategories) {
-      const exists = await Category.findOne({ slug: cat.slug });
-      if (!exists) {
-        await Category.create(cat);
-        console.log(`   ✅ Created category: ${cat.name}`);
-      }
+      await Category.create(cat);
+      console.log(`   ✅ Created category: ${cat.name}`);
     }
 
     // 3. Insert Services
