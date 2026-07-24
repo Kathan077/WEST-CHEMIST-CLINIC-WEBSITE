@@ -83,24 +83,34 @@ const isVaccination = (s) => {
     const parentCat = (s.parentCategory || '').toLowerCase();
     const title = (s.title || '').toLowerCase();
     
-    const isWeightLoss = slug === 'wegovy' || slug === 'mounjaro' || cat.includes('weight') || parentCat.includes('weight') || title.includes('weight');
+    const isWeightLoss = parentCat.includes('weight') || cat.includes('weight') || slug === 'wegovy' || slug === 'mounjaro' || title.includes('weight') || title.includes('wegovy') || title.includes('mounjaro');
     if (isWeightLoss) return false;
-    if (slug === 'travel-clinic') return false;
+    if (slug === 'travel-clinic' || title === 'travel clinic' || slug === 'travel-clinic-service') return false;
     
     return (
         parentCat === 'vaccination services' ||
-        parentCat === 'travel clinic' ||
         parentCat.includes('vacc') ||
         cat.includes('vacc') ||
         cat.includes('immuniz') ||
-        cat.includes('travel') ||
         title.includes('vaccin') ||
         title.includes('immunis') ||
         title.includes('immuniz') ||
-        slug.startsWith('travel-') ||
-        slug.includes('flu-') ||
-        slug.includes('covid-') ||
-        slug.includes('meningitis')
+        title.includes('flu') ||
+        title.includes('covid') ||
+        title.includes('meningitis') ||
+        title.includes('shingles') ||
+        title.includes('chickenpox') ||
+        title.includes('hpv') ||
+        title.includes('rabies') ||
+        title.includes('hepatitis') ||
+        title.includes('typhoid') ||
+        title.includes('yellow fever') ||
+        title.includes('dengue') ||
+        title.includes('chikungunya') ||
+        title.includes('encephalitis') ||
+        title.includes('dtp') ||
+        title.includes('mmr') ||
+        title.includes('cholera')
     );
 };
 

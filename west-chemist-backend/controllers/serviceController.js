@@ -45,6 +45,8 @@ const getServiceBySlug = async (req, res) => {
   }
 };
 
+const slugify = (text) => (text || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+
 // @desc    Create new service
 // @route   POST /api/services
 // @access  Private/Admin
@@ -52,26 +54,29 @@ const createService = async (req, res) => {
   try {
     const { slug, title, cat, parentCategory, img, desc, duration, features, color, onHome } = req.body;
 
-    if (!slug || !title || !cat || !img || !desc || !duration) {
+    if (!title || !img || !desc || !duration) {
       return res.status(400).json({
         success: false,
-        message: 'Please provide all required fields: slug, title, cat, img, desc, duration'
+        message: 'Please provide all required fields: title, img, desc, duration'
       });
     }
 
-    const exists = await Service.findOne({ slug: slug.toLowerCase() });
+    let finalSlug = (slug ? slugify(slug) : slugify(title)).trim();
+    if (!finalSlug) finalSlug = `service-${Date.now()}`;
+
+    const finalCat = (cat ? cat.trim() : (parentCategory ? parentCategory.trim() : title.trim()));
+    const finalParent = parentCategory ? parentCategory.trim() : 'Private Services';
+
+    let exists = await Service.findOne({ slug: finalSlug });
     if (exists) {
-      return res.status(400).json({
-        success: false,
-        message: 'A service with this URL slug already exists'
-      });
+      finalSlug = `${finalSlug}-${Date.now().toString().slice(-4)}`;
     }
 
     const service = await Service.create({
-      slug: slug.toLowerCase().trim(),
+      slug: finalSlug,
       title: title.trim(),
-      cat: cat.trim(),
-      parentCategory: parentCategory ? parentCategory.trim() : 'Private Services',
+      cat: finalCat,
+      parentCategory: finalParent,
       img: img.trim(),
       desc: desc.trim(),
       duration: duration.trim(),
@@ -109,20 +114,28 @@ const updateService = async (req, res) => {
       });
     }
 
-    // Check slug collision if slug is changed
-    if (slug && slug.toLowerCase() !== service.slug) {
-      const exists = await Service.findOne({ slug: slug.toLowerCase() });
-      if (exists) {
-        return res.status(400).json({
-          success: false,
-          message: 'A service with this URL slug already exists'
-        });
+    if (title) {
+      service.title = title.trim();
+      if (!slug) {
+        service.slug = slugify(title);
       }
-      service.slug = slug.toLowerCase().trim();
     }
 
-    if (title) service.title = title.trim();
+    if (slug) {
+      const cleanSlug = slugify(slug);
+      if (cleanSlug !== service.slug) {
+        const exists = await Service.findOne({ slug: cleanSlug });
+        if (exists && exists._id.toString() !== req.params.id) {
+          service.slug = `${cleanSlug}-${Date.now().toString().slice(-4)}`;
+        } else {
+          service.slug = cleanSlug;
+        }
+      }
+    }
+
     if (cat) service.cat = cat.trim();
+    else if (parentCategory) service.cat = parentCategory.trim();
+
     if (parentCategory) service.parentCategory = parentCategory.trim();
     if (img) service.img = img.trim();
     if (desc) service.desc = desc.trim();

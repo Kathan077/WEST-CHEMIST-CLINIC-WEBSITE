@@ -33,8 +33,9 @@ const slugify = (text) =>
   (text || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
 
 const VACC_CATEGORIES = [
-  { name: 'Travel Clinic',                  color: '#4B2D71', dot: '#7c3aed' },
-  { name: 'NHS Services (Pharmacy First)',   color: '#008473', dot: '#10b981' },
+  { name: 'Vaccination Services',           color: '#4B2D71', dot: '#7c3aed' },
+  { name: 'Travel Clinic',                  color: '#008473', dot: '#10b981' },
+  { name: 'NHS Services (Pharmacy First)',   color: '#2563eb', dot: '#3b82f6' },
   { name: 'Private Services',               color: '#be123c', dot: '#f43f5e' },
 ];
 
@@ -55,8 +56,8 @@ export default function AdminVaccinationPage() {
   const [imgUploadMode, setImgUploadMode]   = useState('url');
 
   const [form, setForm] = useState({
-    title: '', cat: 'Travel Immunization',
-    parentCategory: 'Travel Clinic',
+    title: '', cat: 'Vaccination Care',
+    parentCategory: 'Vaccination Services',
     duration: '15 Mins', desc: '', featuresText: '',
     img: 'https://images.unsplash.com/photo-1584308919139-332c34f370d5?w=600&q=80',
     color: '#4B2D71', onHome: false
@@ -108,13 +109,32 @@ export default function AdminVaccinationPage() {
           const parent = (s.parentCategory || '').toLowerCase();
           const cat    = (s.cat || '').toLowerCase();
           const title  = (s.title || '').toLowerCase();
-          const slug   = (s.slug || '').toLowerCase();
-          if (slug === 'travel-clinic' || title === 'travel clinic') return false;
+          // Exclude weight-loss services
+          if (parent.includes('weight') || cat.includes('weight') || title.includes('weight') || title.includes('wegovy') || title.includes('mounjaro')) return false;
+          // Show services tagged as Vaccination Services OR common vaccine-related keywords
           return (
-            parent === 'travel clinic' ||
-            cat.includes('vaccin') || cat.includes('immuniz') ||
-            title.includes('vaccin') || title.includes('flu') ||
-            title.includes('covid') || title.includes('meningitis')
+            parent === 'vaccination services' ||
+            parent.includes('vacc') ||
+            cat.includes('vacc') ||
+            cat.includes('immuniz') ||
+            title.includes('vaccin') ||
+            title.includes('immunis') ||
+            title.includes('flu') ||
+            title.includes('covid') ||
+            title.includes('meningitis') ||
+            title.includes('shingles') ||
+            title.includes('chickenpox') ||
+            title.includes('hpv') ||
+            title.includes('rabies') ||
+            title.includes('hepatitis') ||
+            title.includes('typhoid') ||
+            title.includes('yellow fever') ||
+            title.includes('dengue') ||
+            title.includes('chikungunya') ||
+            title.includes('encephalitis') ||
+            title.includes('dtp') ||
+            title.includes('mmr') ||
+            title.includes('cholera')
           );
         });
         setServices(vaccServices);
@@ -137,7 +157,7 @@ export default function AdminVaccinationPage() {
   }, []);
 
   const resetForm = () => setForm({
-    title: '', cat: 'Travel Immunization', parentCategory: 'Travel Clinic',
+    title: '', cat: 'Vaccination Care', parentCategory: 'Vaccination Services',
     duration: '15 Mins', desc: '', featuresText: '',
     img: 'https://images.unsplash.com/photo-1584308919139-332c34f370d5?w=600&q=80',
     color: '#4B2D71', onHome: false
@@ -147,8 +167,8 @@ export default function AdminVaccinationPage() {
   const openEdit = (srv) => {
     setModalMode('edit'); setSelectedId(srv._id);
     setForm({
-      title: srv.title || '', cat: srv.cat || 'Travel Immunization',
-      parentCategory: srv.parentCategory || 'Travel Clinic',
+      title: srv.title || '', cat: srv.cat || 'Vaccination Care',
+      parentCategory: srv.parentCategory || 'Vaccination Services',
       duration: srv.duration || '15 Mins', desc: srv.desc || '',
       featuresText: Array.isArray(srv.features) ? srv.features.join(', ') : (srv.features || ''),
       img: srv.img || 'https://images.unsplash.com/photo-1584308919139-332c34f370d5?w=600&q=80',
@@ -363,36 +383,9 @@ export default function AdminVaccinationPage() {
                       className="vacc_input"
                       placeholder="e.g. Yellow Fever Vaccination"
                       value={form.title}
-                      onChange={e => setForm({ ...form, title: e.target.value })}
+                      onChange={e => setForm({ ...form, title: e.target.value, cat: 'Vaccination Care', parentCategory: form.parentCategory || 'Vaccination Services' })}
                       required
                     />
-                  </div>
-                  <div className="vacc_form_group">
-                    <label className="vacc_form_label">Sub-Category <span>*</span></label>
-                    <input
-                      type="text"
-                      className="vacc_input"
-                      placeholder="e.g. Travel Immunization"
-                      value={form.cat}
-                      onChange={e => setForm({ ...form, cat: e.target.value })}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className="vacc_form_grid">
-                  <div className="vacc_form_group">
-                    <label className="vacc_form_label">Parent Category <span>*</span></label>
-                    <select
-                      className="vacc_select"
-                      value={form.parentCategory}
-                      onChange={e => setForm({ ...form, parentCategory: e.target.value })}
-                      required
-                    >
-                      <option value="Travel Clinic">Travel Clinic</option>
-                      <option value="NHS Services (Pharmacy First)">NHS Services (Pharmacy First)</option>
-                      <option value="Private Services">Private Services</option>
-                    </select>
                   </div>
                   <div className="vacc_form_group">
                     <label className="vacc_form_label">Duration</label>
@@ -404,6 +397,21 @@ export default function AdminVaccinationPage() {
                       onChange={e => setForm({ ...form, duration: e.target.value })}
                     />
                   </div>
+                </div>
+
+                <div className="vacc_form_group full">
+                  <label className="vacc_form_label">Parent Category <span>*</span></label>
+                  <select
+                    className="vacc_select"
+                    value={form.parentCategory}
+                    onChange={e => setForm({ ...form, parentCategory: e.target.value, cat: 'Vaccination Care' })}
+                    required
+                  >
+                    <option value="Vaccination Services">Vaccination Services</option>
+                    <option value="Travel Clinic">Travel Clinic</option>
+                    <option value="NHS Services (Pharmacy First)">NHS Services (Pharmacy First)</option>
+                    <option value="Private Services">Private Services</option>
+                  </select>
                 </div>
 
                 <div className="vacc_form_group">
@@ -489,41 +497,20 @@ export default function AdminVaccinationPage() {
                   )}
                 </div>
 
-                {/* Color + Checkbox Row */}
-                <div className="vacc_form_grid" style={{ alignItems: 'flex-start' }}>
-                  <div className="vacc_form_group">
-                    <label className="vacc_form_label">Card Accent Color</label>
-                    <div className="vacc_color_row">
-                      <input
-                        type="color"
-                        className="vacc_color_swatch"
-                        value={form.color && form.color.startsWith('#') ? form.color : '#4B2D71'}
-                        onChange={e => setForm({ ...form, color: e.target.value })}
-                      />
-                      <input
-                        type="text"
-                        className="vacc_input"
-                        placeholder="#4B2D71"
-                        value={form.color}
-                        onChange={e => setForm({ ...form, color: e.target.value })}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="vacc_form_group">
-                    <label className="vacc_form_label">Visibility</label>
-                    <label className="vacc_checkbox_row">
-                      <input
-                        type="checkbox"
-                        className="vacc_checkbox"
-                        id="vacc_onHome"
-                        checked={form.onHome}
-                        onChange={e => setForm({ ...form, onHome: e.target.checked })}
-                      />
-                      <span className="vacc_checkbox_label">Show on homepage</span>
-                      <span className="vacc_checkbox_hint">Featured</span>
-                    </label>
-                  </div>
+                {/* Visibility */}
+                <div className="vacc_form_group">
+                  <label className="vacc_form_label">Visibility</label>
+                  <label className="vacc_checkbox_row">
+                    <input
+                      type="checkbox"
+                      className="vacc_checkbox"
+                      id="vacc_onHome"
+                      checked={form.onHome}
+                      onChange={e => setForm({ ...form, onHome: e.target.checked })}
+                    />
+                    <span className="vacc_checkbox_label">Show on homepage</span>
+                    <span className="vacc_checkbox_hint">Featured</span>
+                  </label>
                 </div>
 
               </div>

@@ -365,34 +365,14 @@ export default function AdminWeightLossPage() {
             </div>
 
             <form className="wl_modal_body" onSubmit={handleSave}>
-              {/* Title + Slug */}
+              {/* Title & Duration */}
               <div className="wl_form_grid">
                 <div className="wl_form_group">
                   <label className="wl_label">Service Title <span className="wl_req">*</span></label>
                   <input
                     className="wl_input" required placeholder="e.g. Wegovy Weight Management"
                     value={form.title}
-                    onChange={e => setForm({ ...form, title: e.target.value, slug: slugify(e.target.value) })}
-                  />
-                </div>
-                <div className="wl_form_group">
-                  <label className="wl_label">URL Slug</label>
-                  <input
-                    className="wl_input" placeholder="auto-generated"
-                    value={form.slug}
-                    onChange={e => setForm({ ...form, slug: slugify(e.target.value) })}
-                  />
-                </div>
-              </div>
-
-              {/* Category + Duration */}
-              <div className="wl_form_grid">
-                <div className="wl_form_group">
-                  <label className="wl_label">Category <span className="wl_req">*</span></label>
-                  <input
-                    className="wl_input" required placeholder="e.g. Weight Loss"
-                    value={form.cat}
-                    onChange={e => setForm({ ...form, cat: e.target.value })}
+                    onChange={e => setForm({ ...form, title: e.target.value, slug: slugify(e.target.value), cat: 'Weight Loss', parentCategory: 'Weight Management' })}
                   />
                 </div>
                 <div className="wl_form_group">
@@ -482,27 +462,14 @@ export default function AdminWeightLossPage() {
                 )}
               </div>
 
-              {/* Color + onHome */}
-              <div className="wl_form_grid">
-                <div className="wl_form_group">
-                  <label className="wl_label">Accent Color</label>
-                  <div className="wl_color_row">
-                    <input type="color" className="wl_color_swatch"
-                      value={form.color.startsWith('#') ? form.color : '#1a6b5c'}
-                      onChange={e => setForm({ ...form, color: e.target.value })} />
-                    <input className="wl_input"
-                      placeholder="#1a6b5c" value={form.color}
-                      onChange={e => setForm({ ...form, color: e.target.value })} />
-                  </div>
-                </div>
-                <div className="wl_form_group" style={{ justifyContent: 'flex-end', paddingTop: 24 }}>
-                  <label className="wl_checkbox_label">
-                    <input type="checkbox" className="wl_checkbox"
-                      checked={form.onHome}
-                      onChange={e => setForm({ ...form, onHome: e.target.checked })} />
-                    <span>Show on Homepage</span>
-                  </label>
-                </div>
+              {/* onHome */}
+              <div className="wl_form_group">
+                <label className="wl_checkbox_label">
+                  <input type="checkbox" className="wl_checkbox"
+                    checked={form.onHome}
+                    onChange={e => setForm({ ...form, onHome: e.target.checked })} />
+                  <span>Show on Homepage</span>
+                </label>
               </div>
 
               <div className="wl_modal_footer">

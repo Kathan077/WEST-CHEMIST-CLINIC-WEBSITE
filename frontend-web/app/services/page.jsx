@@ -10,30 +10,47 @@ import ServiceFAQ from '@/components/services/ServiceFAQ';
 import CTASection from '@/components/home/CTASection';
 import { API_URL } from '@/config';
 
+const isWeightLoss = (s) => {
+    const slug = (s.slug || '').toLowerCase();
+    const cat = (s.cat || '').toLowerCase();
+    const parentCat = (s.parentCategory || '').toLowerCase();
+    const title = (s.title || '').toLowerCase();
+    return parentCat.includes('weight') || cat.includes('weight') || slug === 'wegovy' || slug === 'mounjaro' || title.includes('weight') || title.includes('wegovy') || title.includes('mounjaro');
+};
+
 const isVaccination = (s) => {
+    if (isWeightLoss(s)) return false;
     const slug = (s.slug || '').toLowerCase();
     const cat = (s.cat || '').toLowerCase();
     const parentCat = (s.parentCategory || '').toLowerCase();
     const title = (s.title || '').toLowerCase();
     
-    const isWeightLoss = slug === 'wegovy' || slug === 'mounjaro' || cat.includes('weight') || parentCat.includes('weight') || title.includes('weight');
-    if (isWeightLoss) return false;
-    if (slug === 'travel-clinic') return false;
+    if (slug === 'travel-clinic' || title === 'travel clinic' || slug === 'travel-clinic-service') return false;
     
     return (
         parentCat === 'vaccination services' ||
-        parentCat === 'travel clinic' ||
         parentCat.includes('vacc') ||
         cat.includes('vacc') ||
         cat.includes('immuniz') ||
-        cat.includes('travel') ||
         title.includes('vaccin') ||
         title.includes('immunis') ||
         title.includes('immuniz') ||
-        slug.startsWith('travel-') ||
-        slug.includes('flu-') ||
-        slug.includes('covid-') ||
-        slug.includes('meningitis')
+        title.includes('flu') ||
+        title.includes('covid') ||
+        title.includes('meningitis') ||
+        title.includes('shingles') ||
+        title.includes('chickenpox') ||
+        title.includes('hpv') ||
+        title.includes('rabies') ||
+        title.includes('hepatitis') ||
+        title.includes('typhoid') ||
+        title.includes('yellow fever') ||
+        title.includes('dengue') ||
+        title.includes('chikungunya') ||
+        title.includes('encephalitis') ||
+        title.includes('dtp') ||
+        title.includes('mmr') ||
+        title.includes('cholera')
     );
 };
 
@@ -49,13 +66,15 @@ export default function ServicesPage() {
                     const standardCats = [
                         'NHS Services (Pharmacy First)',
                         'Private Services',
-                        'Travel Clinic'
+                        'Travel Clinic',
+                        'Vaccination Services',
+                        'Weight Management'
                     ];
                     
                     const groups = {};
                     json.data.forEach(s => {
-                        // Skip vaccination services completely
-                        if (isVaccination(s)) return;
+                        // Skip vaccination and weight loss services completely from /services page
+                        if (isVaccination(s) || isWeightLoss(s)) return;
                         
                         const parent = s.parentCategory || 'Private Services';
                         if (!standardCats.includes(parent)) {

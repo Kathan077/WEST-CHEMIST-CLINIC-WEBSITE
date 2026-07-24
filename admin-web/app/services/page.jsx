@@ -1024,39 +1024,25 @@ export default function AdminServicesPage() {
                   />
                 </div>
 
-                <div className="srv_form_grid">
-                  <div className="srv_form_group">
-                    <label className="srv_label">Category Group</label>
-                    <select
-                      className="srv_select"
-                      value={serviceForm.parentCategory}
-                      onChange={(e) => setServiceForm({ ...serviceForm, parentCategory: e.target.value })}
-                      required
-                    >
-                      {categories.map(c => (
-                        <option key={c._id} value={c.name}>{c.name}</option>
-                      ))}
-                      {categories.length === 0 && (
-                        <>
-                          <option value="NHS Services (Pharmacy First)">NHS Services (Pharmacy First)</option>
-                          <option value="Private Services">Private Services</option>
-                          <option value="Travel Clinic">Travel Clinic</option>
-                        </>
-                      )}
-                    </select>
-                  </div>
-
-                  <div className="srv_form_group">
-                    <label className="srv_label">Specific Sub-Category</label>
-                    <input
-                      type="text"
-                      className="srv_input"
-                      placeholder="e.g. Clinical Ear Care"
-                      value={serviceForm.cat}
-                      onChange={(e) => setServiceForm({ ...serviceForm, cat: e.target.value })}
-                      required
-                    />
-                  </div>
+                <div className="srv_form_group full">
+                  <label className="srv_label">Category Group</label>
+                  <select
+                    className="srv_select"
+                    value={serviceForm.parentCategory}
+                    onChange={(e) => setServiceForm({ ...serviceForm, parentCategory: e.target.value, cat: e.target.value })}
+                    required
+                  >
+                    {categories.map(c => (
+                      <option key={c._id} value={c.name}>{c.name}</option>
+                    ))}
+                    {categories.length === 0 && (
+                      <>
+                        <option value="NHS Services (Pharmacy First)">NHS Services (Pharmacy First)</option>
+                        <option value="Private Services">Private Services</option>
+                        <option value="Travel Clinic">Travel Clinic</option>
+                      </>
+                    )}
+                  </select>
                 </div>
 
                 <div className="srv_form_group">
@@ -1091,22 +1077,6 @@ export default function AdminServicesPage() {
                     value={serviceForm.featuresText}
                     onChange={(e) => setServiceForm({ ...serviceForm, featuresText: e.target.value })}
                   />
-                </div>
-
-                <div className="srv_form_group">
-                  <label className="srv_label">Banner Accent Color</label>
-                  <select
-                    className="srv_select"
-                    value={serviceForm.color}
-                    onChange={(e) => setServiceForm({ ...serviceForm, color: e.target.value })}
-                    required
-                  >
-                    <option value="emerald">Emerald Green</option>
-                    <option value="blue">Royal Blue</option>
-                    <option value="indigo">Deep Indigo</option>
-                    <option value="purple">Modern Purple</option>
-                    <option value="pine">Dark Pine</option>
-                  </select>
                 </div>
 
                 <div className="srv_form_group full">

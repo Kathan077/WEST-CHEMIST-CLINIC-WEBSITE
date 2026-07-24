@@ -3,6 +3,42 @@ import React, { useState, useEffect, useRef } from 'react';
 import { API_URL, getImageUrl } from '@/config';
 import './TravelClinic.css';
 
+const isVaccination = (s) => {
+    const slug = (s.slug || '').toLowerCase();
+    const cat = (s.cat || '').toLowerCase();
+    const parentCat = (s.parentCategory || '').toLowerCase();
+    const title = (s.title || '').toLowerCase();
+    
+    const isWeightLoss = parentCat.includes('weight') || cat.includes('weight') || slug === 'wegovy' || slug === 'mounjaro' || title.includes('weight') || title.includes('wegovy') || title.includes('mounjaro');
+    if (isWeightLoss) return false;
+    if (slug === 'travel-clinic' || title === 'travel clinic' || slug === 'travel-clinic-service') return false;
+    
+    return (
+        parentCat === 'vaccination services' ||
+        cat.includes('vacc') ||
+        cat.includes('immuniz') ||
+        title.includes('vaccin') ||
+        title.includes('immunis') ||
+        title.includes('immuniz') ||
+        title.includes('flu') ||
+        title.includes('covid') ||
+        title.includes('meningitis') ||
+        title.includes('shingles') ||
+        title.includes('chickenpox') ||
+        title.includes('hpv') ||
+        title.includes('rabies') ||
+        title.includes('hepatitis') ||
+        title.includes('typhoid') ||
+        title.includes('yellow fever') ||
+        title.includes('dengue') ||
+        title.includes('chikungunya') ||
+        title.includes('encephalitis') ||
+        title.includes('dtp') ||
+        title.includes('mmr') ||
+        title.includes('cholera')
+    );
+};
+
 export default function TravelClinic() {
     const listRef = useRef(null);
     const [services, setServices] = useState([]);
@@ -14,7 +50,7 @@ export default function TravelClinic() {
                 const json = await res.json();
                 if (res.ok && json.success && Array.isArray(json.data)) {
                     // Filter for Travel Clinic category
-                    const travelSrvs = json.data.filter(s => s.parentCategory === 'Travel Clinic');
+                    const travelSrvs = json.data.filter(s => s.parentCategory === 'Travel Clinic' && !isVaccination(s));
                     setServices(travelSrvs);
                 }
             } catch (err) {
