@@ -73,8 +73,8 @@ export default function ServicesPage() {
                     
                     const groups = {};
                     json.data.forEach(s => {
-                        // Skip vaccination and weight loss services completely from /services page
-                        if (isVaccination(s) || isWeightLoss(s)) return;
+                        // Skip weight loss services completely from custom categories on /services page
+                        if (isWeightLoss(s)) return;
                         
                         const parent = s.parentCategory || 'Private Services';
                         if (!standardCats.includes(parent)) {

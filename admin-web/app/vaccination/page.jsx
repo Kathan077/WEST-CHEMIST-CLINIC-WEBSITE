@@ -34,9 +34,6 @@ const slugify = (text) =>
 
 const VACC_CATEGORIES = [
   { name: 'Vaccination Services',           color: '#4B2D71', dot: '#7c3aed' },
-  { name: 'Travel Clinic',                  color: '#008473', dot: '#10b981' },
-  { name: 'NHS Services (Pharmacy First)',   color: '#2563eb', dot: '#3b82f6' },
-  { name: 'Private Services',               color: '#be123c', dot: '#f43f5e' },
 ];
 
 export default function AdminVaccinationPage() {
@@ -105,38 +102,35 @@ export default function AdminVaccinationPage() {
       const dataSrv = await resSrv.json();
       const dataApp = await resApp.json();
       if (dataSrv.success) {
-        const vaccServices = (dataSrv.data || []).filter(s => {
-          const parent = (s.parentCategory || '').toLowerCase();
-          const cat    = (s.cat || '').toLowerCase();
-          const title  = (s.title || '').toLowerCase();
-          // Exclude weight-loss services
-          if (parent.includes('weight') || cat.includes('weight') || title.includes('weight') || title.includes('wegovy') || title.includes('mounjaro')) return false;
-          // Show services tagged as Vaccination Services OR common vaccine-related keywords
-          return (
-            parent === 'vaccination services' ||
-            parent.includes('vacc') ||
-            cat.includes('vacc') ||
-            cat.includes('immuniz') ||
-            title.includes('vaccin') ||
-            title.includes('immunis') ||
-            title.includes('flu') ||
-            title.includes('covid') ||
-            title.includes('meningitis') ||
-            title.includes('shingles') ||
-            title.includes('chickenpox') ||
-            title.includes('hpv') ||
-            title.includes('rabies') ||
-            title.includes('hepatitis') ||
-            title.includes('typhoid') ||
-            title.includes('yellow fever') ||
-            title.includes('dengue') ||
-            title.includes('chikungunya') ||
-            title.includes('encephalitis') ||
-            title.includes('dtp') ||
-            title.includes('mmr') ||
-            title.includes('cholera')
-          );
-        });
+        const isExactVaccine = (s) => {
+          const slug = (s.slug || '').toLowerCase();
+          const title = (s.title || '').toLowerCase();
+
+          // 1. Meningitis
+          if (slug === 'travel-meningitis' || slug === 'meningitis-vaccine' || (title.includes('meningitis') && !title.includes('b') && !title.includes('acwy'))) return true;
+          // 2. Meningitis B Vaccination
+          if (slug === 'nhs-meningitis-b' || slug === 'meningitis-b-vaccination' || title.includes('meningitis b')) return true;
+          // 3. Chickenpox
+          if (slug === 'chickenpox-vaccine' || title.includes('chickenpox')) return true;
+          // 4. Chikungunya Vaccine
+          if (slug === 'travel-chikungunya' || title.includes('chikungunya')) return true;
+          // 5. Shingles
+          if (slug === 'nhs-shingles' || title.includes('shingles')) return true;
+          // 6. HPV
+          if (slug === 'hpv-vaccine' || title.includes('hpv')) return true;
+          // 7. Rabies
+          if (slug === 'travel-rabies' || title.includes('rabies')) return true;
+          // 8. Hepatitis
+          if (slug === 'travel-hepatitis-b' || title.includes('hepatitis')) return true;
+          // 9. Typhoid
+          if (slug === 'travel-typhoid' || title.includes('typhoid')) return true;
+          // 10. Japanese Encephalitis
+          if (slug === 'travel-japanese-encephalitis' || title.includes('japanese encephalitis')) return true;
+
+          return false;
+        };
+
+        const vaccServices = (dataSrv.data || []).filter(s => isExactVaccine(s));
         setServices(vaccServices);
       }
       if (dataApp.success) setAppts(dataApp.data || []);
@@ -281,7 +275,7 @@ export default function AdminVaccinationPage() {
             </div>
           ) : (
             VACC_CATEGORIES.map(catDef => {
-              const catServices = filtered.filter(s => s.parentCategory === catDef.name);
+              const catServices = filtered;
               if (catServices.length === 0) return null;
               return (
                 <div key={catDef.name} className="vacc_cat_section">
@@ -408,9 +402,6 @@ export default function AdminVaccinationPage() {
                     required
                   >
                     <option value="Vaccination Services">Vaccination Services</option>
-                    <option value="Travel Clinic">Travel Clinic</option>
-                    <option value="NHS Services (Pharmacy First)">NHS Services (Pharmacy First)</option>
-                    <option value="Private Services">Private Services</option>
                   </select>
                 </div>
 

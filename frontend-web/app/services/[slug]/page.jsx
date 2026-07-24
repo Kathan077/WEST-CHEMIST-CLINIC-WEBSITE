@@ -289,7 +289,7 @@ const serviceData = {
     },
     "wegovy": {
         title: "Wegovy Weight Management",
-        cat: "Medical Weight Loss",
+        cat: "Weight Loss",
         img: "/images/wegovy_pen.png",
         desc: "Wegovy® (semaglutide) is an MHRA-approved weekly injection for effective, clinical weight management. Designed to mimic the GLP-1 hormone, it regulates your appetite, reduces cravings, and delays stomach emptying. Our program combines this highly effective medication with continuous clinician support to ensure safe, sustainable weight loss.",
         duration: "30 Mins",
@@ -297,7 +297,7 @@ const serviceData = {
     },
     "mounjaro": {
         title: "Mounjaro Weight Management",
-        cat: "Advanced Medical Weight Loss",
+        cat: "Weight Loss",
         img: "/images/mounjaro_pen.png",
         desc: "Mounjaro® (tirzepatide) represents the latest innovation in metabolic science. Acting as a dual GIP and GLP-1 receptor agonist, it offers advanced efficacy in weight reduction. Under strict clinical supervision, our program provides personalized dosage schedules and tracking to maximize weight loss outcomes.",
         duration: "45 Mins",
@@ -305,7 +305,7 @@ const serviceData = {
     },
     "weight-loss-management": {
         title: "Weight Loss Management Service",
-        cat: "Medical Weight Loss",
+        cat: "Weight Loss",
         img: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=1200&q=80",
         desc: "Comprehensive clinical and lifestyle guidance, including weight monitoring, side-effect management, and supportive care for your journey.",
         duration: "30 Mins",

@@ -24,21 +24,56 @@ const exactServices = [
     color: "#4B2D71",
     onHome: true
   },
+  // --- Weight Loss Services ---
   {
-    slug: "weight-loss-management",
-    title: "Weight loss management service",
-    cat: "Medical Weight Loss",
-    parentCategory: "Private Services",
-    img: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=600&q=80",
-    desc: "Clinical guidance and treatment plans including Wegovy (semaglutide) injections for effective and safe weight loss management.",
+    slug: "mounjaro",
+    title: "Mounjaro Injections",
+    cat: "Weight Loss",
+    parentCategory: "Weight Loss",
+    img: "/images/mounjaro_pen.png",
+    desc: "The latest innovation in weight management. A once-weekly injection that acts as a dual GIP and GLP-1 receptor agonist, regulating appetite and slowing digestion for high-efficacy outcomes.",
+    duration: "45 Mins",
+    features: [
+      "Once-weekly subcutaneous injection",
+      "Dual hormone GIP/GLP-1 activation",
+      "Average weight reduction up to 20.9%",
+      "Full pharmacist-led dosage titration"
+    ],
+    color: "#4338ca",
+    onHome: true
+  },
+  {
+    slug: "wegovy",
+    title: "Wegovy Injections",
+    cat: "Weight Loss",
+    parentCategory: "Weight Loss",
+    img: "/images/wegovy_pen.png",
+    desc: "A highly trusted, clinically-proven weekly injection. Mimics the GLP-1 hormone to curb hunger, increase fullness, and support portion control under medical guidance.",
     duration: "30 Mins",
     features: [
-      "Once-weekly injection options",
-      "Clinically proven GLP-1 hormone therapy",
-      "Continuous health and weight monitoring",
-      "Appetite regulation and nutritional guidance"
+      "Once-weekly subcutaneous injection",
+      "Mimics natural satiety GLP-1 hormone",
+      "Average weight loss of 15% of body weight",
+      "Comprehensive lifestyle & nutritional support"
     ],
-    color: "#008473",
+    color: "#1a6b5c",
+    onHome: true
+  },
+  {
+    slug: "wegovy-pills",
+    title: "Wegovy Pills",
+    cat: "Weight Loss",
+    parentCategory: "Weight Loss",
+    img: "https://images.unsplash.com/photo-1584308919139-332c34f370d5?w=600&q=80",
+    desc: "Oral weight management medication providing appetite regulation and weight loss support for patients preferring tablets over injections.",
+    duration: "15 Mins",
+    features: [
+      "Daily oral capsule option",
+      "Regulates appetite & food intake",
+      "Clinical health & BMI monitoring",
+      "In-clinic prescribing & dispensing"
+    ],
+    color: "#b45309",
     onHome: true
   },
   {

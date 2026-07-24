@@ -106,7 +106,7 @@ export default function ServicesSection() {
                 const resSrv = await fetch(`${API_URL}/api/services`);
                 const jsonSrv = await resSrv.json();
                 if (jsonSrv.success && Array.isArray(jsonSrv.data)) {
-                    const homeServices = jsonSrv.data.filter(s => s.onHome && !isVaccination(s));
+                    const homeServices = jsonSrv.data.filter(s => s.onHome && !isWeightLoss(s));
                     setServices(homeServices);
                 }
             } catch (err) {

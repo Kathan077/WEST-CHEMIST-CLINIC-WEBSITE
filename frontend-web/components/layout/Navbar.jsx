@@ -50,6 +50,7 @@ const Navbar = () => {
     const [categories, setCategories] = useState([]);
     const [services, setServices] = useState([]);
     const [weightLossServices, setWeightLossServices] = useState([]);
+    const [vaccinationServices, setVaccinationServices] = useState([]);
     const [activeCategory, setActiveCategory] = useState(null);
 
     useEffect(() => {
@@ -63,14 +64,17 @@ const Navbar = () => {
                 const srvJson = await srvRes.json();
 
                 if (catJson.success && catJson.data) {
-                    const filteredCats = catJson.data.filter(c => 
-                        !c.name.toLowerCase().includes('vacc')
-                    );
+                    const filteredCats = catJson.data.filter(c => {
+                        const name = (c.name || '').toLowerCase();
+                        return !name.includes('vacc') && !name.includes('weight');
+                    });
                     setCategories(filteredCats);
                 }
                 if (srvJson.success && srvJson.data) {
-                    // Weight loss services filter
-                    const wlSrvs = srvJson.data.filter(s => {
+                    const allSrvs = srvJson.data;
+
+                    // Weight loss services for Weight Loss dropdown
+                    const wlSrvs = allSrvs.filter(s => {
                         const slug = (s.slug || '').toLowerCase();
                         const cat = (s.cat || '').toLowerCase();
                         const parentCat = (s.parentCategory || '').toLowerCase();
@@ -93,8 +97,12 @@ const Navbar = () => {
                     });
                     setWeightLossServices(wlSrvs);
 
-                    // Non-vaccination, non-weight-loss services for Services dropdown
-                    const filteredSrvs = srvJson.data.filter(s => !isVaccination(s));
+                    // Vaccination services for Vaccination dropdown
+                    const vSrvs = allSrvs.filter(s => isVaccination(s));
+                    setVaccinationServices(vSrvs);
+
+                    // General clinical services for Services hover dropdown (non-vaccine, non-weight-loss)
+                    const filteredSrvs = allSrvs.filter(s => !isVaccination(s) && !isWeightLoss(s));
                     setServices(filteredSrvs);
                 }
             } catch (err) {
@@ -185,23 +193,9 @@ const Navbar = () => {
                         <div className="nav_dropdown wl_dropdown">
                             <div className="dropdown_inner">
                                 <div className="dropdown_group">
-                                    {weightLossServices.length > 0 ? (
-                                        weightLossServices.map(s => (
-                                            <Link
-                                                key={s._id}
-                                                href={`/services/${s.slug || s.title.toLowerCase().replace(/\s+/g, '-')}`}
-                                                className="dropdown_item"
-                                                onClick={handleLinkClick}
-                                            >
-                                                {s.title}
-                                            </Link>
-                                        ))
-                                    ) : (
-                                        <>
-                                            <Link href="/services/wegovy" className="dropdown_item" onClick={handleLinkClick}>Wegovy</Link>
-                                            <Link href="/services/mounjaro" className="dropdown_item" onClick={handleLinkClick}>Mounjaro</Link>
-                                        </>
-                                    )}
+                                    <Link href="/services/mounjaro" className="dropdown_item" onClick={handleLinkClick}>Mounjaro Injections</Link>
+                                    <Link href="/services/wegovy" className="dropdown_item" onClick={handleLinkClick}>Wegovy Injections</Link>
+                                    <Link href="/services/wegovy" className="dropdown_item" onClick={handleLinkClick}>Wegovy Pills</Link>
                                 </div>
                             </div>
                         </div>
@@ -226,7 +220,11 @@ const Navbar = () => {
                             <div className="dropdown_inner">
                                 {categories.length > 0 && services.length > 0 ? (
                                     categories.map(cat => {
-                                        const catServices = services.filter(s => s.parentCategory === cat.name);
+                                        const catServices = services.filter(s => {
+                                            const parent = (s.parentCategory || '').toLowerCase();
+                                            const cName = cat.name.toLowerCase();
+                                            return parent === cName;
+                                        });
                                         if (catServices.length === 0) return null;
                                         const isExpanded = activeCategory === cat.name;
                                         return (

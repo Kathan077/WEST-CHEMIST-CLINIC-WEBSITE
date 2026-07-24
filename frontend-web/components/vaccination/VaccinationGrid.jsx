@@ -79,39 +79,30 @@ const vaccineCatalog = [
 
 const isVaccination = (s) => {
     const slug = (s.slug || '').toLowerCase();
-    const cat = (s.cat || '').toLowerCase();
-    const parentCat = (s.parentCategory || '').toLowerCase();
     const title = (s.title || '').toLowerCase();
-    
-    const isWeightLoss = parentCat.includes('weight') || cat.includes('weight') || slug === 'wegovy' || slug === 'mounjaro' || title.includes('weight') || title.includes('wegovy') || title.includes('mounjaro');
-    if (isWeightLoss) return false;
-    if (slug === 'travel-clinic' || title === 'travel clinic' || slug === 'travel-clinic-service') return false;
-    
-    return (
-        parentCat === 'vaccination services' ||
-        parentCat.includes('vacc') ||
-        cat.includes('vacc') ||
-        cat.includes('immuniz') ||
-        title.includes('vaccin') ||
-        title.includes('immunis') ||
-        title.includes('immuniz') ||
-        title.includes('flu') ||
-        title.includes('covid') ||
-        title.includes('meningitis') ||
-        title.includes('shingles') ||
-        title.includes('chickenpox') ||
-        title.includes('hpv') ||
-        title.includes('rabies') ||
-        title.includes('hepatitis') ||
-        title.includes('typhoid') ||
-        title.includes('yellow fever') ||
-        title.includes('dengue') ||
-        title.includes('chikungunya') ||
-        title.includes('encephalitis') ||
-        title.includes('dtp') ||
-        title.includes('mmr') ||
-        title.includes('cholera')
-    );
+
+    // 1. Meningitis
+    if (slug === 'travel-meningitis' || slug === 'meningitis-vaccine' || (title.includes('meningitis') && !title.includes('b') && !title.includes('acwy'))) return true;
+    // 2. Meningitis B Vaccination
+    if (slug === 'nhs-meningitis-b' || slug === 'meningitis-b-vaccination' || title.includes('meningitis b')) return true;
+    // 3. Chickenpox
+    if (slug === 'chickenpox-vaccine' || title.includes('chickenpox')) return true;
+    // 4. Chikungunya Vaccine
+    if (slug === 'travel-chikungunya' || title.includes('chikungunya')) return true;
+    // 5. Shingles
+    if (slug === 'nhs-shingles' || title.includes('shingles')) return true;
+    // 6. HPV
+    if (slug === 'hpv-vaccine' || title.includes('hpv')) return true;
+    // 7. Rabies
+    if (slug === 'travel-rabies' || title.includes('rabies')) return true;
+    // 8. Hepatitis
+    if (slug === 'travel-hepatitis-b' || title.includes('hepatitis')) return true;
+    // 9. Typhoid
+    if (slug === 'travel-typhoid' || title.includes('typhoid')) return true;
+    // 10. Japanese Encephalitis
+    if (slug === 'travel-japanese-encephalitis' || title.includes('japanese encephalitis')) return true;
+
+    return false;
 };
 
 const VaccinationGrid = () => {

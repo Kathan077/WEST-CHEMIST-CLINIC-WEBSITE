@@ -57,7 +57,7 @@ export default function PrivateServices() {
                 const res = await fetch(`${API_URL}/api/services`);
                 const json = await res.json();
                 if (res.ok && json.success && Array.isArray(json.data)) {
-                    const privateSrvs = json.data.filter(s => s.parentCategory === 'Private Services' && !isVaccination(s) && !isWeightLoss(s));
+                    const privateSrvs = json.data.filter(s => (s.parentCategory || '').toLowerCase() === 'private services' && !isWeightLoss(s));
                     setServices(privateSrvs);
                 }
             } catch (err) {

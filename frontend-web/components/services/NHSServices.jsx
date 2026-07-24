@@ -57,7 +57,7 @@ export default function NHSServices() {
                 const res = await fetch(`${API_URL}/api/services`);
                 const json = await res.json();
                 if (res.ok && json.success && Array.isArray(json.data)) {
-                    const nhs = json.data.filter(s => s.parentCategory === 'NHS Services (Pharmacy First)' && !isVaccination(s) && !isWeightLoss(s));
+                    const nhs = json.data.filter(s => (s.parentCategory || '').toLowerCase() === 'nhs services (pharmacy first)' && !isWeightLoss(s));
                     setServices(nhs);
                 }
             } catch (err) {

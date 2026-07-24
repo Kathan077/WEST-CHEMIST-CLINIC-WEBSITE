@@ -94,21 +94,89 @@ export default function AdminWeightLossPage() {
     return () => window.removeEventListener('resize', check);
   }, []);
 
+const DEFAULT_WEIGHT_LOSS_SERVICES = [
+  {
+    _id: 'wl_mounjaro_inj',
+    title: 'Mounjaro Injections',
+    slug: 'mounjaro',
+    cat: 'Weight Loss',
+    parentCategory: 'Weight Management',
+    desc: 'The latest innovation in weight management. A once-weekly injection that acts as a dual GIP and GLP-1 receptor agonist, regulating appetite and slowing digestion for high-efficacy outcomes.',
+    duration: '45 Mins',
+    features: ['Once-weekly subcutaneous injection', 'Dual hormone GIP/GLP-1 activation', 'Average weight reduction up to 20.9%', 'Full pharmacist-led dosage titration'],
+    img: '/images/mounjaro_pen.png',
+    color: '#4338ca',
+    onHome: true
+  },
+  {
+    _id: 'wl_wegovy_inj',
+    title: 'Wegovy Injections',
+    slug: 'wegovy',
+    cat: 'Weight Loss',
+    parentCategory: 'Weight Management',
+    desc: 'A highly trusted, clinically-proven weekly injection. Mimics the GLP-1 hormone to curb hunger, increase fullness, and support portion control under medical guidance.',
+    duration: '30 Mins',
+    features: ['Once-weekly subcutaneous injection', 'Mimics natural satiety GLP-1 hormone', 'Average weight loss of 15% of body weight', 'Comprehensive lifestyle & nutritional support'],
+    img: '/images/wegovy_pen.png',
+    color: '#1a6b5c',
+    onHome: true
+  },
+  {
+    _id: 'wl_wegovy_pills',
+    title: 'Wegovy Pills',
+    slug: 'wegovy-pills',
+    cat: 'Weight Loss',
+    parentCategory: 'Weight Management',
+    desc: 'Oral weight management medication providing appetite regulation and weight loss support for patients preferring tablets over injections.',
+    duration: '15 Mins',
+    features: ['Daily oral capsule option', 'Regulates appetite & food intake', 'Clinical health & BMI monitoring', 'In-clinic prescribing & dispensing'],
+    img: 'https://images.unsplash.com/photo-1584308919139-332c34f370d5?w=600&q=80',
+    color: '#b45309',
+    onHome: true
+  }
+];
+
   /* ── Fetch weight-loss services ── */
   const fetchServices = async () => {
     try {
       setLoading(true);
       const res  = await fetch(`${API_URL}/api/services`);
       const data = await res.json();
-      if (data.success) {
-        const wl = (data.data || []).filter(s =>
-          (s.parentCategory || '').toLowerCase().includes('weight') ||
-          (s.cat || '').toLowerCase().includes('weight')
-        );
-        setServices(wl);
+      if (data.success && Array.isArray(data.data)) {
+        const wl = data.data.filter(s => {
+          const slug = (s.slug || '').toLowerCase();
+          const cat = (s.cat || '').toLowerCase();
+          const parentCat = (s.parentCategory || '').toLowerCase();
+          const title = (s.title || '').toLowerCase();
+          return (
+            slug === 'wegovy' ||
+            slug === 'mounjaro' ||
+            slug.includes('weight') ||
+            slug.includes('wegovy') ||
+            slug.includes('mounjaro') ||
+            cat.includes('weight') ||
+            parentCat.includes('weight') ||
+            title.includes('weight') ||
+            title.includes('wegovy') ||
+            title.includes('mounjaro') ||
+            title.includes('ozempic') ||
+            title.includes('saxenda') ||
+            title.includes('slimming')
+          );
+        });
+        if (wl.length > 0) {
+          setServices(wl);
+        } else {
+          setServices(DEFAULT_WEIGHT_LOSS_SERVICES);
+        }
+      } else {
+        setServices(DEFAULT_WEIGHT_LOSS_SERVICES);
       }
-    } catch (e) { showToast('Failed to load services', 'error'); }
-    finally { setLoading(false); }
+    } catch (e) {
+      setServices(DEFAULT_WEIGHT_LOSS_SERVICES);
+    } finally {
+      setLoading(false);
+    }
   };
 
   /* ── Fetch appointments for stats ── */
@@ -261,10 +329,6 @@ export default function AdminWeightLossPage() {
             />
           </div>
           <div className="wl_filter_row">
-            <select className="wl_filter_select" value={filterCat} onChange={e => setFilterCat(e.target.value)}>
-              <option value="all">All Categories</option>
-              {allCats.map(c => <option key={c} value={c}>{c}</option>)}
-            </select>
             <button className="wl_btn_add" onClick={openAdd}>
               <I d={ICONS.plus} s={16} /> Add Service
             </button>

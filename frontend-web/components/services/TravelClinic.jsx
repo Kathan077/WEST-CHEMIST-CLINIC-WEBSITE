@@ -50,7 +50,7 @@ export default function TravelClinic() {
                 const json = await res.json();
                 if (res.ok && json.success && Array.isArray(json.data)) {
                     // Filter for Travel Clinic category
-                    const travelSrvs = json.data.filter(s => s.parentCategory === 'Travel Clinic' && !isVaccination(s));
+                    const travelSrvs = json.data.filter(s => (s.parentCategory || '').toLowerCase() === 'travel clinic');
                     setServices(travelSrvs);
                 }
             } catch (err) {
