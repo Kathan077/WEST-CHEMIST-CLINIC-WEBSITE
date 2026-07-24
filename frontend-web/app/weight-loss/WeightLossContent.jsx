@@ -28,51 +28,6 @@ const FAQ_ITEMS = [
     }
 ];
 
-const FALLBACK_SERVICES = [
-    {
-        _id: 'mounjaro-fallback',
-        title: 'Mounjaro® (Tirzepatide)',
-        desc: 'The latest innovation in weight management. A once-weekly injection that acts as a dual GIP and GLP-1 receptor agonist, regulating appetite and slowing digestion for high-efficacy outcomes.',
-        features: [
-            'Once-weekly subcutaneous injection',
-            'Dual hormone GIP/GLP-1 activation',
-            'Average weight reduction up to 20.9%',
-            'Full pharmacist-led dosage titration'
-        ],
-        cat: 'Advanced Dual Action',
-        img: 'https://images.unsplash.com/photo-1584308919139-332c34f370d5?w=600&q=80',
-        slug: 'mounjaro'
-    },
-    {
-        _id: 'wegovy-fallback',
-        title: 'Wegovy® (Semaglutide)',
-        desc: 'A highly trusted, clinically-proven weekly injection. Mimics the GLP-1 hormone to curb hunger, increase fullness, and support portion control under medical guidance.',
-        features: [
-            'Once-weekly subcutaneous injection',
-            'Mimics natural satiety GLP-1 hormone',
-            'Average weight loss of 15% of body weight',
-            'Comprehensive lifestyle & nutritional support'
-        ],
-        cat: 'GLP-1 Standard',
-        img: 'https://images.unsplash.com/photo-1579154236594-c199f3768fb9?w=600&q=80',
-        slug: 'wegovy'
-    },
-    {
-        _id: 'support-fallback',
-        title: 'Weight Loss Support',
-        desc: 'Integrative health monitoring for patients on our medical programs. Includes regular check-ins, side-effect profiling, dosage updates, and nutritional habit coaching.',
-        features: [
-            'Monthly face-to-face clinical reviews',
-            'Body composition and BMI tracking',
-            'Side effect management & mitigation',
-            'In-clinic prescribing and repeat dispensing'
-        ],
-        cat: 'Comprehensive Care',
-        img: 'https://images.unsplash.com/photo-1505751172107-160bf2a35368?w=600&q=80',
-        slug: 'weight-loss-management'
-    }
-];
-
 export default function WeightLossContent() {
     const [faqActive, setFaqActive] = useState({});
     const [services, setServices] = useState([]);
@@ -112,6 +67,7 @@ export default function WeightLossContent() {
                             slug.includes('mounjaro')
                         );
                     });
+
                     setServices(wlSrvs);
                 }
             } catch (err) {
@@ -123,7 +79,7 @@ export default function WeightLossContent() {
         fetchServices();
     }, []);
 
-    const displayServices = services.length > 0 ? services : FALLBACK_SERVICES;
+    const displayServices = services;
 
     return (
         <div className="wl_page_wrapper">

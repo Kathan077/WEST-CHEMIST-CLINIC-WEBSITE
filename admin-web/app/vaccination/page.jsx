@@ -35,7 +35,6 @@ const slugify = (text) =>
 const VACC_CATEGORIES = [
   { name: 'Vaccination Services',           color: '#4B2D71', dot: '#7c3aed' },
 ];
-
 export default function AdminVaccinationPage() {
   const [services, setServices] = useState([]);
   const [appts, setAppts]       = useState([]);
@@ -102,35 +101,8 @@ export default function AdminVaccinationPage() {
       const dataSrv = await resSrv.json();
       const dataApp = await resApp.json();
       if (dataSrv.success) {
-        const isExactVaccine = (s) => {
-          const slug = (s.slug || '').toLowerCase();
-          const title = (s.title || '').toLowerCase();
-
-          // 1. Meningitis
-          if (slug === 'travel-meningitis' || slug === 'meningitis-vaccine' || (title.includes('meningitis') && !title.includes('b') && !title.includes('acwy'))) return true;
-          // 2. Meningitis B Vaccination
-          if (slug === 'nhs-meningitis-b' || slug === 'meningitis-b-vaccination' || title.includes('meningitis b')) return true;
-          // 3. Chickenpox
-          if (slug === 'chickenpox-vaccine' || title.includes('chickenpox')) return true;
-          // 4. Chikungunya Vaccine
-          if (slug === 'travel-chikungunya' || title.includes('chikungunya')) return true;
-          // 5. Shingles
-          if (slug === 'nhs-shingles' || title.includes('shingles')) return true;
-          // 6. HPV
-          if (slug === 'hpv-vaccine' || title.includes('hpv')) return true;
-          // 7. Rabies
-          if (slug === 'travel-rabies' || title.includes('rabies')) return true;
-          // 8. Hepatitis
-          if (slug === 'travel-hepatitis-b' || title.includes('hepatitis')) return true;
-          // 9. Typhoid
-          if (slug === 'travel-typhoid' || title.includes('typhoid')) return true;
-          // 10. Japanese Encephalitis
-          if (slug === 'travel-japanese-encephalitis' || title.includes('japanese encephalitis')) return true;
-
-          return false;
-        };
-
-        const vaccServices = (dataSrv.data || []).filter(s => isExactVaccine(s));
+        const dbServices = dataSrv.data || [];
+        const vaccServices = dbServices.filter(s => (s.parentCategory || '').toLowerCase() === 'vaccination services');
         setServices(vaccServices);
       }
       if (dataApp.success) setAppts(dataApp.data || []);
@@ -158,8 +130,10 @@ export default function AdminVaccinationPage() {
   });
 
   const openAdd = () => { setModalMode('add'); setSelectedId(null); resetForm(); setIsModalOpen(true); };
+
   const openEdit = (srv) => {
-    setModalMode('edit'); setSelectedId(srv._id);
+    setModalMode('edit');
+    setSelectedId(srv._id);
     setForm({
       title: srv.title || '', cat: srv.cat || 'Vaccination Care',
       parentCategory: srv.parentCategory || 'Vaccination Services',
@@ -188,19 +162,26 @@ export default function AdminVaccinationPage() {
       const json   = await res.json();
       if (res.ok && json.success) {
         showToast(modalMode === 'add' ? 'Vaccination added!' : 'Vaccination updated!');
-        setServices(prev => modalMode === 'add' ? [...prev, json.data] : prev.map(s => s._id === selectedId ? json.data : s));
+        fetchData();
         setIsModalOpen(false);
       } else { showToast(json.message || 'Failed', 'error'); }
     } catch { showToast('Error processing request', 'error'); }
   };
 
   const handleDelete = async (id, title) => {
+    if (!id) {
+      showToast('Cannot delete service (missing ID).', 'error');
+      return;
+    }
     if (!window.confirm(`Delete "${title}"?`)) return;
     const token = localStorage.getItem('adminToken');
     try {
       const res  = await fetch(`${API_URL}/api/services/${id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } });
       const json = await res.json();
-      if (res.ok && json.success) { showToast('Deleted successfully'); setServices(prev => prev.filter(s => s._id !== id)); }
+      if (res.ok && json.success) {
+        showToast('Deleted successfully');
+        fetchData();
+      }
       else showToast(json.message || 'Delete failed', 'error');
     } catch { showToast('Network error', 'error'); }
   };
@@ -289,7 +270,7 @@ export default function AdminVaccinationPage() {
                     {catServices.map(srv => {
                       const cardColor = srv.color && srv.color.startsWith('#') ? srv.color : catDef.color;
                       return (
-                        <div key={srv._id} className="vacc_card">
+                        <div key={srv._id || srv.slug} className="vacc_card">
                           {/* Banner */}
                           <div
                             className="vacc_card_banner"

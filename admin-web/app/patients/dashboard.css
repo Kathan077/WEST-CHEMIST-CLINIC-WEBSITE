@@ -1219,13 +1219,19 @@ tbody tr:nth-child(8){ animation-delay:.32s }
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
-    justify-content: space-between !important;
     width: 100% !important;
     height: 100% !important;
-    overflow: hidden !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
     padding: 0 !important;
     margin: 0 !important;
     gap: 0 !important;
+    scrollbar-width: none !important;
+  }
+  
+  .dash_sb > div:not(.sb_logo):not(.sb_foot)::-webkit-scrollbar {
+    display: none !important;
   }
 
   /* ── Nav links row (General section) ── */
@@ -1233,13 +1239,11 @@ tbody tr:nth-child(8){ animation-delay:.32s }
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
-    justify-content: space-around !important;
     height: 100% !important;
-    padding: 0 !important;
+    padding: 0 4px !important;
     margin: 0 !important;
-    gap: 0 !important;
-    flex: 8 !important;
-    overflow: hidden !important;
+    gap: 2px !important;
+    flex: 1 !important;
   }
 
   /* ── Logout link row (Settings section) ── */
@@ -1249,11 +1253,16 @@ tbody tr:nth-child(8){ animation-delay:.32s }
     align-items: center !important;
     justify-content: center !important;
     height: 100% !important;
-    padding: 0 !important;
+    padding: 0 10px !important;
     margin: 0 !important;
     gap: 0 !important;
-    flex: 1 !important;
+    flex-shrink: 0 !important;
     border-left: 1px solid var(--border) !important;
+    background: #ffffff !important;
+    position: sticky !important;
+    right: 0 !important;
+    z-index: 10 !important;
+    box-shadow: -6px 0 15px rgba(0, 0, 0, 0.05) !important;
   }
 
   /* Every link distributes evenly */
@@ -1262,10 +1271,7 @@ tbody tr:nth-child(8){ animation-delay:.32s }
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
-    flex: 1 !important;
-    width: auto !important;
-    min-width: 0 !important;
-    max-width: none !important;
+    flex: 0 0 44px !important;
     height: 100% !important;
     padding: 0 !important;
     margin: 0 !important;

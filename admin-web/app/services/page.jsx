@@ -151,6 +151,72 @@ export default function AdminServicesPage() {
     window.location.replace('/admin');
   };
 
+  const isWeightLoss = (s) => {
+    const slug = (s.slug || '').toLowerCase();
+    const cat = (s.cat || '').toLowerCase();
+    const parentCat = (s.parentCategory || '').toLowerCase();
+    const title = (s.title || '').toLowerCase();
+    return (
+      parentCat.includes('weight') ||
+      cat.includes('weight') ||
+      slug === 'wegovy' ||
+      slug === 'mounjaro' ||
+      title.includes('weight') ||
+      title.includes('wegovy') ||
+      title.includes('mounjaro')
+    );
+  };
+
+  const isVaccination = (s) => {
+    if (isWeightLoss(s)) return false;
+    
+    const slug = (s.slug || '').toLowerCase();
+    const cat = (s.cat || '').toLowerCase();
+    const parentCat = (s.parentCategory || '').toLowerCase();
+    const title = (s.title || '').toLowerCase();
+    
+    if (slug === 'travel-clinic' || title === 'travel clinic' || slug === 'travel-clinic-service') return false;
+    
+    return (
+      parentCat === 'vaccination services' ||
+      parentCat.includes('vacc') ||
+      cat.includes('vacc') ||
+      cat.includes('immuniz') ||
+      title.includes('vaccin') ||
+      title.includes('immunis') ||
+      title.includes('immuniz') ||
+      title.includes('flu') ||
+      title.includes('covid') ||
+      title.includes('meningitis') ||
+      title.includes('shingles') ||
+      title.includes('chickenpox') ||
+      title.includes('hpv') ||
+      title.includes('rabies') ||
+      title.includes('hepatitis') ||
+      title.includes('typhoid') ||
+      title.includes('yellow fever') ||
+      title.includes('dengue') ||
+      title.includes('chikungunya') ||
+      title.includes('encephalitis') ||
+      title.includes('dtp') ||
+      title.includes('mmr') ||
+      title.includes('cholera') ||
+      title.includes('japanese') ||
+      slug.includes('yellow-fever') ||
+      slug.includes('chickenpox') ||
+      slug.includes('shingles') ||
+      slug.includes('hpv') ||
+      slug.includes('rabies') ||
+      slug.includes('hepatitis') ||
+      slug.includes('typhoid') ||
+      slug.includes('japanese') ||
+      slug.includes('encephalitis') ||
+      slug.includes('flu') ||
+      slug.includes('covid') ||
+      slug.includes('travel-vacc')
+    );
+  };
+
   const fetchData = async () => {
     setLoading(true);
     const token = localStorage.getItem('adminToken');
@@ -172,7 +238,10 @@ export default function AdminServicesPage() {
       const dataApp = await resApp.json();
       const dataCats = await resCats.json();
 
-      if (dataSrv.success) setServices(dataSrv.data || []);
+      if (dataSrv.success) {
+        const filteredSrvs = (dataSrv.data || []).filter(s => !isVaccination(s) && !isWeightLoss(s));
+        setServices(filteredSrvs);
+      }
       if (dataCats.success) setCategories(dataCats.data || []);
       if (dataCnt.success) {
         setContents(dataCnt.data || []);

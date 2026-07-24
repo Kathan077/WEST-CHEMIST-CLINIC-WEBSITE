@@ -94,49 +94,6 @@ export default function AdminWeightLossPage() {
     return () => window.removeEventListener('resize', check);
   }, []);
 
-const DEFAULT_WEIGHT_LOSS_SERVICES = [
-  {
-    _id: 'wl_mounjaro_inj',
-    title: 'Mounjaro Injections',
-    slug: 'mounjaro',
-    cat: 'Weight Loss',
-    parentCategory: 'Weight Management',
-    desc: 'The latest innovation in weight management. A once-weekly injection that acts as a dual GIP and GLP-1 receptor agonist, regulating appetite and slowing digestion for high-efficacy outcomes.',
-    duration: '45 Mins',
-    features: ['Once-weekly subcutaneous injection', 'Dual hormone GIP/GLP-1 activation', 'Average weight reduction up to 20.9%', 'Full pharmacist-led dosage titration'],
-    img: '/images/mounjaro_pen.png',
-    color: '#4338ca',
-    onHome: true
-  },
-  {
-    _id: 'wl_wegovy_inj',
-    title: 'Wegovy Injections',
-    slug: 'wegovy',
-    cat: 'Weight Loss',
-    parentCategory: 'Weight Management',
-    desc: 'A highly trusted, clinically-proven weekly injection. Mimics the GLP-1 hormone to curb hunger, increase fullness, and support portion control under medical guidance.',
-    duration: '30 Mins',
-    features: ['Once-weekly subcutaneous injection', 'Mimics natural satiety GLP-1 hormone', 'Average weight loss of 15% of body weight', 'Comprehensive lifestyle & nutritional support'],
-    img: '/images/wegovy_pen.png',
-    color: '#1a6b5c',
-    onHome: true
-  },
-  {
-    _id: 'wl_wegovy_pills',
-    title: 'Wegovy Pills',
-    slug: 'wegovy-pills',
-    cat: 'Weight Loss',
-    parentCategory: 'Weight Management',
-    desc: 'Oral weight management medication providing appetite regulation and weight loss support for patients preferring tablets over injections.',
-    duration: '15 Mins',
-    features: ['Daily oral capsule option', 'Regulates appetite & food intake', 'Clinical health & BMI monitoring', 'In-clinic prescribing & dispensing'],
-    img: 'https://images.unsplash.com/photo-1584308919139-332c34f370d5?w=600&q=80',
-    color: '#b45309',
-    onHome: true
-  }
-];
-
-  /* ── Fetch weight-loss services ── */
   const fetchServices = async () => {
     try {
       setLoading(true);
@@ -164,16 +121,10 @@ const DEFAULT_WEIGHT_LOSS_SERVICES = [
             title.includes('slimming')
           );
         });
-        if (wl.length > 0) {
-          setServices(wl);
-        } else {
-          setServices(DEFAULT_WEIGHT_LOSS_SERVICES);
-        }
-      } else {
-        setServices(DEFAULT_WEIGHT_LOSS_SERVICES);
+        setServices(wl);
       }
     } catch (e) {
-      setServices(DEFAULT_WEIGHT_LOSS_SERVICES);
+      console.error(e);
     } finally {
       setLoading(false);
     }
@@ -263,6 +214,11 @@ const DEFAULT_WEIGHT_LOSS_SERVICES = [
 
   /* ── Delete ── */
   const handleDelete = async (id) => {
+    if (!id) {
+      showToast('Cannot delete service (missing ID).', 'error');
+      setConfirmDelete(null);
+      return;
+    }
     try {
       const res  = await fetch(`${API_URL}/api/services/${id}`, { method: 'DELETE' });
       const data = await res.json();
@@ -356,7 +312,7 @@ const DEFAULT_WEIGHT_LOSS_SERVICES = [
           ) : (
             <div className="wl_grid">
               {filtered.map(svc => (
-                <div className="wl_card" key={svc._id}>
+                <div className="wl_card" key={svc._id || svc.slug}>
                   <div className="wl_card_banner" style={{ background: `linear-gradient(135deg, ${svc.color || '#1a6b5c'}, ${svc.color || '#1a6b5c'}cc)` }}>
                     {svc.img && (
                       <img src={getImgUrl(svc.img)} alt={svc.title} className="wl_card_img" />

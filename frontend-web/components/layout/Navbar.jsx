@@ -7,14 +7,30 @@ import { usePathname } from 'next/navigation';
 import { API_URL } from '../../config';
 import './Navbar.css';
 
+const isWeightLoss = (s) => {
+    const slug = (s.slug || '').toLowerCase();
+    const cat = (s.cat || '').toLowerCase();
+    const parentCat = (s.parentCategory || '').toLowerCase();
+    const title = (s.title || '').toLowerCase();
+    return (
+        parentCat.includes('weight') ||
+        cat.includes('weight') ||
+        slug === 'wegovy' ||
+        slug === 'mounjaro' ||
+        title.includes('weight') ||
+        title.includes('wegovy') ||
+        title.includes('mounjaro')
+    );
+};
+
 const isVaccination = (s) => {
+    if (isWeightLoss(s)) return false;
+    
     const slug = (s.slug || '').toLowerCase();
     const cat = (s.cat || '').toLowerCase();
     const parentCat = (s.parentCategory || '').toLowerCase();
     const title = (s.title || '').toLowerCase();
     
-    const isWeightLoss = slug === 'wegovy' || slug === 'mounjaro' || cat.includes('weight') || parentCat.includes('weight') || title.includes('weight');
-    if (isWeightLoss) return false;
     if (slug === 'travel-clinic') return false;
     if (parentCat === 'travel clinic') return false;
     
@@ -73,7 +89,7 @@ const Navbar = () => {
                 if (srvJson.success && srvJson.data) {
                     const allSrvs = srvJson.data;
 
-                    // Weight loss services for Weight Loss dropdown
+                    // Filter weight loss services from database
                     const wlSrvs = allSrvs.filter(s => {
                         const slug = (s.slug || '').toLowerCase();
                         const cat = (s.cat || '').toLowerCase();
@@ -97,8 +113,8 @@ const Navbar = () => {
                     });
                     setWeightLossServices(wlSrvs);
 
-                    // Vaccination services for Vaccination dropdown
-                    const vSrvs = allSrvs.filter(s => isVaccination(s));
+                    // Filter vaccination services from database
+                    const vSrvs = allSrvs.filter(s => (s.parentCategory || '').toLowerCase() === 'vaccination services');
                     setVaccinationServices(vSrvs);
 
                     // General clinical services for Services hover dropdown (non-vaccine, non-weight-loss)
@@ -193,9 +209,16 @@ const Navbar = () => {
                         <div className="nav_dropdown wl_dropdown">
                             <div className="dropdown_inner">
                                 <div className="dropdown_group">
-                                    <Link href="/services/mounjaro" className="dropdown_item" onClick={handleLinkClick}>Mounjaro Injections</Link>
-                                    <Link href="/services/wegovy" className="dropdown_item" onClick={handleLinkClick}>Wegovy Injections</Link>
-                                    <Link href="/services/wegovy" className="dropdown_item" onClick={handleLinkClick}>Wegovy Pills</Link>
+                                    {weightLossServices.map((srv, idx) => (
+                                        <Link 
+                                            key={srv._id || srv.slug || idx} 
+                                            href={`/services/${srv.slug}`} 
+                                            className="dropdown_item" 
+                                            onClick={handleLinkClick}
+                                        >
+                                            {srv.title}
+                                        </Link>
+                                    ))}
                                 </div>
                             </div>
                         </div>
@@ -331,20 +354,39 @@ const Navbar = () => {
                         </Link>
                         <div className="nav_dropdown vacc_dropdown">
                             <div className="dropdown_inner">
-                                <div className="dropdown_group">
-                                    <Link href="/services/travel-meningitis" className="dropdown_item" onClick={handleLinkClick}>Meningitis</Link>
-                                    <Link href="/services/nhs-meningitis-b" className="dropdown_item" onClick={handleLinkClick}>Meningitis B Vaccination</Link>
-                                    <Link href="/services/chickenpox-vaccine" className="dropdown_item" onClick={handleLinkClick}>Chickenpox</Link>
-                                    <Link href="/services/travel-chikungunya" className="dropdown_item" onClick={handleLinkClick}>Chikungunya Vaccine</Link>
-                                    <Link href="/services/nhs-shingles" className="dropdown_item" onClick={handleLinkClick}>Shingles</Link>
-                                </div>
-                                <div className="dropdown_group">
-                                    <Link href="/services/hpv-vaccine" className="dropdown_item" onClick={handleLinkClick}>HPV</Link>
-                                    <Link href="/services/travel-rabies" className="dropdown_item" onClick={handleLinkClick}>Rabies</Link>
-                                    <Link href="/services/travel-hepatitis-b" className="dropdown_item" onClick={handleLinkClick}>Hepatitis</Link>
-                                    <Link href="/services/travel-typhoid" className="dropdown_item" onClick={handleLinkClick}>Typhoid</Link>
-                                    <Link href="/services/travel-japanese-encephalitis" className="dropdown_item" onClick={handleLinkClick}>Japanese Encephalitis</Link>
-                                </div>
+                                {(() => {
+                                    const mid = Math.ceil(vaccinationServices.length / 2);
+                                    const col1 = vaccinationServices.slice(0, mid);
+                                    const col2 = vaccinationServices.slice(mid);
+                                    return (
+                                        <>
+                                            <div className="dropdown_group">
+                                                {col1.map((srv, idx) => (
+                                                    <Link 
+                                                        key={srv._id || srv.slug || idx} 
+                                                        href={`/services/${srv.slug}`} 
+                                                        className="dropdown_item" 
+                                                        onClick={handleLinkClick}
+                                                    >
+                                                        {srv.title}
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                            <div className="dropdown_group">
+                                                {col2.map((srv, idx) => (
+                                                    <Link 
+                                                        key={srv._id || srv.slug || idx} 
+                                                        href={`/services/${srv.slug}`} 
+                                                        className="dropdown_item" 
+                                                        onClick={handleLinkClick}
+                                                    >
+                                                        {srv.title}
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                        </>
+                                    );
+                                })()}
                             </div>
                         </div>
                     </div>
