@@ -7,20 +7,22 @@ import { usePathname } from 'next/navigation';
 import { API_URL } from '../../config';
 import './Navbar.css';
 
+const VACCINE_SLUGS = [
+    'travel-meningitis',
+    'nhs-meningitis-b',
+    'chickenpox-vaccine',
+    'travel-chikungunya',
+    'nhs-shingles',
+    'hpv-vaccine',
+    'travel-rabies',
+    'travel-hepatitis-b',
+    'travel-typhoid',
+    'travel-japanese-encephalitis'
+];
+
 const isWeightLoss = (s) => {
     const slug = (s.slug || '').toLowerCase();
-    const cat = (s.cat || '').toLowerCase();
-    const parentCat = (s.parentCategory || '').toLowerCase();
-    const title = (s.title || '').toLowerCase();
-    return (
-        parentCat.includes('weight') ||
-        cat.includes('weight') ||
-        slug === 'wegovy' ||
-        slug === 'mounjaro' ||
-        title.includes('weight') ||
-        title.includes('wegovy') ||
-        title.includes('mounjaro')
-    );
+    return slug === 'wegovy' || slug === 'mounjaro' || slug === 'wegovy-pills';
 };
 
 const isVaccination = (s) => {
@@ -31,23 +33,33 @@ const isVaccination = (s) => {
     const parentCat = (s.parentCategory || '').toLowerCase();
     const title = (s.title || '').toLowerCase();
     
-    if (slug === 'travel-clinic') return false;
-    if (parentCat === 'travel clinic') return false;
+    if (slug === 'travel-clinic' || title === 'travel clinic' || slug === 'travel-clinic-service') return false;
     
     return (
         parentCat === 'vaccination services' ||
-        parentCat === 'travel clinic' ||
+        VACCINE_SLUGS.includes(slug) ||
         parentCat.includes('vacc') ||
         cat.includes('vacc') ||
         cat.includes('immuniz') ||
-        cat.includes('travel') ||
         title.includes('vaccin') ||
         title.includes('immunis') ||
         title.includes('immuniz') ||
-        slug.startsWith('travel-') ||
-        slug.includes('flu-') ||
-        slug.includes('covid-') ||
-        slug.includes('meningitis')
+        title.includes('flu') ||
+        title.includes('covid') ||
+        title.includes('meningitis') ||
+        title.includes('shingles') ||
+        title.includes('chickenpox') ||
+        title.includes('hpv') ||
+        title.includes('rabies') ||
+        title.includes('hepatitis') ||
+        title.includes('typhoid') ||
+        title.includes('yellow fever') ||
+        title.includes('dengue') ||
+        title.includes('chikungunya') ||
+        title.includes('encephalitis') ||
+        title.includes('dtp') ||
+        title.includes('mmr') ||
+        title.includes('cholera')
     );
 };
 
@@ -114,7 +126,10 @@ const Navbar = () => {
                     setWeightLossServices(wlSrvs);
 
                     // Filter vaccination services from database
-                    const vSrvs = allSrvs.filter(s => (s.parentCategory || '').toLowerCase() === 'vaccination services');
+                    const vSrvs = allSrvs.filter(s => 
+                        (s.parentCategory || '').toLowerCase() === 'vaccination services' ||
+                        VACCINE_SLUGS.includes(s.slug)
+                    );
                     setVaccinationServices(vSrvs);
 
                     // General clinical services for Services hover dropdown (non-vaccine, non-weight-loss)

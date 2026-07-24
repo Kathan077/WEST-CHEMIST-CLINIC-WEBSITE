@@ -32,9 +32,23 @@ const ICONS = {
 const slugify = (text) =>
   (text || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
 
+const VACCINE_SLUGS = [
+  'travel-meningitis',
+  'nhs-meningitis-b',
+  'chickenpox-vaccine',
+  'travel-chikungunya',
+  'nhs-shingles',
+  'hpv-vaccine',
+  'travel-rabies',
+  'travel-hepatitis-b',
+  'travel-typhoid',
+  'travel-japanese-encephalitis'
+];
+
 const VACC_CATEGORIES = [
   { name: 'Vaccination Services',           color: '#4B2D71', dot: '#7c3aed' },
 ];
+
 export default function AdminVaccinationPage() {
   const [services, setServices] = useState([]);
   const [appts, setAppts]       = useState([]);
@@ -102,7 +116,10 @@ export default function AdminVaccinationPage() {
       const dataApp = await resApp.json();
       if (dataSrv.success) {
         const dbServices = dataSrv.data || [];
-        const vaccServices = dbServices.filter(s => (s.parentCategory || '').toLowerCase() === 'vaccination services');
+        const vaccServices = dbServices.filter(s => 
+          (s.parentCategory || '').toLowerCase() === 'vaccination services' ||
+          VACCINE_SLUGS.includes(s.slug)
+        );
         setServices(vaccServices);
       }
       if (dataApp.success) setAppts(dataApp.data || []);

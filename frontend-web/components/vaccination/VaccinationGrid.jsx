@@ -4,6 +4,19 @@ import Link from 'next/link';
 import { API_URL, getImageUrl } from '@/config';
 import './VaccinationGrid.css';
 
+const VACCINE_SLUGS = [
+    'travel-meningitis',
+    'nhs-meningitis-b',
+    'chickenpox-vaccine',
+    'travel-chikungunya',
+    'nhs-shingles',
+    'hpv-vaccine',
+    'travel-rabies',
+    'travel-hepatitis-b',
+    'travel-typhoid',
+    'travel-japanese-encephalitis'
+];
+
 const VaccinationGrid = () => {
     const gridRef = useRef(null);
     const [vaccines, setVaccines] = useState([]);
@@ -15,7 +28,10 @@ const VaccinationGrid = () => {
                 const res = await fetch(`${API_URL}/api/services`);
                 const json = await res.json();
                 if (res.ok && json.success && Array.isArray(json.data)) {
-                    const vaccServices = json.data.filter(s => (s.parentCategory || '').toLowerCase() === 'vaccination services');
+                    const vaccServices = json.data.filter(s => 
+                        (s.parentCategory || '').toLowerCase() === 'vaccination services' ||
+                        VACCINE_SLUGS.includes(s.slug)
+                    );
                     setVaccines(vaccServices);
                 }
             } catch (err) {

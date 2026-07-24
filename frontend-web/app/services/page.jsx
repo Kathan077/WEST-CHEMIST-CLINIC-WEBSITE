@@ -12,10 +12,7 @@ import { API_URL } from '@/config';
 
 const isWeightLoss = (s) => {
     const slug = (s.slug || '').toLowerCase();
-    const cat = (s.cat || '').toLowerCase();
-    const parentCat = (s.parentCategory || '').toLowerCase();
-    const title = (s.title || '').toLowerCase();
-    return parentCat.includes('weight') || cat.includes('weight') || slug === 'wegovy' || slug === 'mounjaro' || title.includes('weight') || title.includes('wegovy') || title.includes('mounjaro');
+    return slug === 'wegovy' || slug === 'mounjaro' || slug === 'wegovy-pills';
 };
 
 const isVaccination = (s) => {

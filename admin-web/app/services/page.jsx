@@ -239,7 +239,18 @@ export default function AdminServicesPage() {
       const dataCats = await resCats.json();
 
       if (dataSrv.success) {
-        const filteredSrvs = (dataSrv.data || []).filter(s => !isVaccination(s) && !isWeightLoss(s));
+        const filteredSrvs = (dataSrv.data || []).filter(s => {
+          const parentCat = (s.parentCategory || '').toLowerCase();
+          const slug = (s.slug || '').toLowerCase();
+          
+          if (slug === 'mounjaro' || slug === 'wegovy' || slug === 'wegovy-pills') return false;
+          if (parentCat === 'vaccination services') return false;
+          if (parentCat === 'weight loss' || parentCat === 'weight management') {
+            if (slug === 'weight-loss-management') return true;
+            return false;
+          }
+          return true;
+        });
         setServices(filteredSrvs);
       }
       if (dataCats.success) setCategories(dataCats.data || []);
