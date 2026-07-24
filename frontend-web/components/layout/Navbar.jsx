@@ -20,6 +20,19 @@ const VACCINE_SLUGS = [
     'travel-japanese-encephalitis'
 ];
 
+const DEFAULT_VACCINE_SERVICES = [
+    { title: "Meningitis", slug: "travel-meningitis" },
+    { title: "Meningitis B Vaccination", slug: "nhs-meningitis-b" },
+    { title: "Chickenpox", slug: "chickenpox-vaccine" },
+    { title: "Chikungunya Vaccine", slug: "travel-chikungunya" },
+    { title: "Shingles", slug: "nhs-shingles" },
+    { title: "HPV", slug: "hpv-vaccine" },
+    { title: "Rabies", slug: "travel-rabies" },
+    { title: "Hepatitis", slug: "travel-hepatitis-b" },
+    { title: "Typhoid", slug: "travel-typhoid" },
+    { title: "Japanese Encephalitis", slug: "travel-japanese-encephalitis" }
+];
+
 const isWeightLoss = (s) => {
     const slug = (s.slug || '').toLowerCase();
     return slug === 'wegovy' || slug === 'mounjaro' || slug === 'wegovy-pills';
@@ -33,7 +46,7 @@ const isVaccination = (s) => {
     const parentCat = (s.parentCategory || '').toLowerCase();
     const title = (s.title || '').toLowerCase();
     
-    if (slug === 'travel-clinic' || title === 'travel clinic' || slug === 'travel-clinic-service') return false;
+    if (parentCat === 'travel clinic') return false;
     
     return (
         parentCat === 'vaccination services' ||
@@ -96,6 +109,9 @@ const Navbar = () => {
                         const name = (c.name || '').toLowerCase();
                         return !name.includes('vacc') && !name.includes('weight');
                     });
+                    if (!filteredCats.some(c => (c.name || '').toLowerCase() === 'travel clinic')) {
+                        filteredCats.push({ _id: 'cat_travel_clinic', name: 'Travel Clinic', slug: 'travel-clinic' });
+                    }
                     setCategories(filteredCats);
                 }
                 if (srvJson.success && srvJson.data) {
@@ -125,15 +141,15 @@ const Navbar = () => {
                     });
                     setWeightLossServices(wlSrvs);
 
-                    // Filter vaccination services from database
+                    // Filter vaccination services from database (matches /vaccination page data exactly)
                     const vSrvs = allSrvs.filter(s => 
                         (s.parentCategory || '').toLowerCase() === 'vaccination services' ||
                         VACCINE_SLUGS.includes(s.slug)
                     );
                     setVaccinationServices(vSrvs);
 
-                    // General clinical services for Services hover dropdown (non-vaccine, non-weight-loss)
-                    const filteredSrvs = allSrvs.filter(s => !isVaccination(s) && !isWeightLoss(s));
+                    // General clinical services for Services hover dropdown (non-weight-loss, includes Travel Clinic)
+                    const filteredSrvs = allSrvs.filter(s => !isWeightLoss(s));
                     setServices(filteredSrvs);
                 }
             } catch (err) {
@@ -261,12 +277,15 @@ const Navbar = () => {
                                         const catServices = services.filter(s => {
                                             const parent = (s.parentCategory || '').toLowerCase();
                                             const cName = cat.name.toLowerCase();
+                                            if (cName.includes('travel')) {
+                                                return parent === 'travel clinic' || parent.includes('travel') || (s.slug || '').startsWith('travel-');
+                                            }
                                             return parent === cName;
                                         });
                                         if (catServices.length === 0) return null;
                                         const isExpanded = activeCategory === cat.name;
                                         return (
-                                            <div className={`dropdown_group ${isExpanded ? 'expanded' : ''}`} key={cat._id}>
+                                            <div className={`dropdown_group ${isExpanded ? 'expanded' : ''}`} key={cat._id || cat.name}>
                                                 <div
                                                     className="group_title_toggle"
                                                     onClick={(e) => {
@@ -283,7 +302,7 @@ const Navbar = () => {
                                                 <div className="group_services_grid">
                                                     {catServices.map(s => (
                                                         <Link
-                                                            key={s._id}
+                                                            key={s._id || s.slug}
                                                             href={`/services/${s.slug || s.title.toLowerCase().replace(/\s+/g, '-')}`}
                                                             className="dropdown_item"
                                                             onClick={handleLinkClick}
@@ -345,6 +364,29 @@ const Navbar = () => {
                                                 <Link href="/services/blood-testing" className="dropdown_item" onClick={handleLinkClick}>Blood Testing</Link>
                                             </div>
                                         </div>
+                                        <div className={`dropdown_group ${activeCategory === 'Travel Clinic' ? 'expanded' : ''}`}>
+                                            <div
+                                                className="group_title_toggle"
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    e.stopPropagation();
+                                                    setActiveCategory(activeCategory === 'Travel Clinic' ? null : 'Travel Clinic');
+                                                }}
+                                            >
+                                                <span className="group_title">Travel Clinic</span>
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="category_chevron">
+                                                    <path d="m6 9 6 6 6-6" />
+                                                </svg>
+                                            </div>
+                                            <div className="group_services_grid">
+                                                <Link href="/services/travel-rabies" className="dropdown_item" onClick={handleLinkClick}>Rabies Vaccine</Link>
+                                                <Link href="/services/travel-typhoid" className="dropdown_item" onClick={handleLinkClick}>Typhoid Vaccine</Link>
+                                                <Link href="/services/travel-hepatitis-b" className="dropdown_item" onClick={handleLinkClick}>Hepatitis B</Link>
+                                                <Link href="/services/travel-japanese-encephalitis" className="dropdown_item" onClick={handleLinkClick}>Japanese Encephalitis</Link>
+                                                <Link href="/services/travel-chikungunya" className="dropdown_item" onClick={handleLinkClick}>Chikungunya</Link>
+                                                <Link href="/services/travel-meningitis" className="dropdown_item" onClick={handleLinkClick}>Meningitis ACWY</Link>
+                                            </div>
+                                        </div>
                                     </>
                                 )}
                             </div>
@@ -369,39 +411,18 @@ const Navbar = () => {
                         </Link>
                         <div className="nav_dropdown vacc_dropdown">
                             <div className="dropdown_inner">
-                                {(() => {
-                                    const mid = Math.ceil(vaccinationServices.length / 2);
-                                    const col1 = vaccinationServices.slice(0, mid);
-                                    const col2 = vaccinationServices.slice(mid);
-                                    return (
-                                        <>
-                                            <div className="dropdown_group">
-                                                {col1.map((srv, idx) => (
-                                                    <Link 
-                                                        key={srv._id || srv.slug || idx} 
-                                                        href={`/services/${srv.slug}`} 
-                                                        className="dropdown_item" 
-                                                        onClick={handleLinkClick}
-                                                    >
-                                                        {srv.title}
-                                                    </Link>
-                                                ))}
-                                            </div>
-                                            <div className="dropdown_group">
-                                                {col2.map((srv, idx) => (
-                                                    <Link 
-                                                        key={srv._id || srv.slug || idx} 
-                                                        href={`/services/${srv.slug}`} 
-                                                        className="dropdown_item" 
-                                                        onClick={handleLinkClick}
-                                                    >
-                                                        {srv.title}
-                                                    </Link>
-                                                ))}
-                                            </div>
-                                        </>
-                                    );
-                                })()}
+                                <div className="dropdown_group">
+                                    {(vaccinationServices.length > 0 ? vaccinationServices : DEFAULT_VACCINE_SERVICES).map((srv, idx) => (
+                                        <Link 
+                                            key={srv._id || srv.slug || idx} 
+                                            href={`/services/${srv.slug}`} 
+                                            className="dropdown_item" 
+                                            onClick={handleLinkClick}
+                                        >
+                                            {srv.title}
+                                        </Link>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     </div>

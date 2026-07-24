@@ -627,20 +627,12 @@
         background: #ffffff;
     }
 
-    /* Vaccination has 2 columns side by side */
+    /* Single column compact panel for Vaccination & Weight Loss */
     .vacc_dropdown {
-        min-width: 420px;
+        min-width: 260px;
     }
 
-    /* Side-by-side layout for vaccination */
-    .vacc_dropdown .dropdown_inner {
-        flex-direction: row;
-        align-items: flex-start;
-        gap: 0;
-        padding: 0 8px;
-    }
-
-    /* Single column for weight loss */
+    .vacc_dropdown .dropdown_inner,
     .wl_dropdown .dropdown_inner {
         flex-direction: column;
         gap: 0;
