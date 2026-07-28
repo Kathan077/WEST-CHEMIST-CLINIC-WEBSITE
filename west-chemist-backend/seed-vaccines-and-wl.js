@@ -172,7 +172,11 @@ async function seed() {
       const existing = await Service.findOne({ slug: service.slug });
       if (existing) {
         console.log(`Service with slug '${service.slug}' already exists. Updating it...`);
-        await Service.updateOne({ slug: service.slug }, service);
+        const updateData = { ...service };
+        if (existing.img && (existing.img.includes('/uploads/') || existing.img.startsWith('uploads/'))) {
+          delete updateData.img;
+        }
+        await Service.updateOne({ slug: service.slug }, updateData);
       } else {
         console.log(`Service with slug '${service.slug}' not found. Creating it...`);
         await Service.create(service);
