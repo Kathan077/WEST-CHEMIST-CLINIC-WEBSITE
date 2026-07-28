@@ -105,7 +105,12 @@ export default function NHSServices() {
                             }}
                         >
                             <div className="ns_card_bottom">
-                                <img src={getImageUrl(s.img)} alt={s.title} className="ns_image" />
+                                <img 
+                                    src={getImageUrl(s.img)} 
+                                    alt={s.title} 
+                                    className="ns_image" 
+                                    onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1584308919139-332c34f370d5?w=600&q=80'; }}
+                                />
                                 <div className="ns_image_gradient" />
                             </div>
                             <div className="ns_card_top">

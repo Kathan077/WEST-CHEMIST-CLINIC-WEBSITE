@@ -90,7 +90,13 @@ const VaccinationGrid = () => {
                         >
                             <div className="pro_card_visual">
                                 <div className="pro_card_tag">{item.cat || 'Vaccination'}</div>
-                                <img src={getImageUrl(item.img)} alt={item.title} className="pro_card_img" loading="lazy" />
+                                <img 
+                                    src={getImageUrl(item.img)} 
+                                    alt={item.title} 
+                                    className="pro_card_img" 
+                                    loading="lazy" 
+                                    onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1584308919139-332c34f370d5?w=600&q=80'; }}
+                                />
                                 <div className="pro_card_gradient_overlay"></div>
                             </div>
                             

@@ -202,7 +202,13 @@ export default function ServicesSection() {
                             {/* Inner Wrap - used for 3D preservation */}
                             <div className="ss_card_inner">
                                 <div className="ss_img_wrapper">
-                                    <img src={getImageUrl(service.img)} alt={service.title} className="ss_img" loading="lazy" />
+                                    <img 
+                                        src={getImageUrl(service.img)} 
+                                        alt={service.title} 
+                                        className="ss_img" 
+                                        loading="lazy" 
+                                        onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1584308919139-332c34f370d5?w=600&q=80'; }}
+                                    />
                                     <div className="ss_img_shimmer" />
                                 </div>
                                 <div className="ss_content">

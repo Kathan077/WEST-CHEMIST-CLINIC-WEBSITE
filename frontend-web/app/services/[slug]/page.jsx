@@ -396,7 +396,12 @@ export default function ServiceDetail() {
         <div className="sd_page">
             {/* Cinematic Hero */}
             <header className="sd_hero">
-                <img src={getImageUrl(service.img)} alt={service.title} className="sd_hero_bg" />
+                <img 
+                    src={getImageUrl(service.img)} 
+                    alt={service.title} 
+                    className="sd_hero_bg" 
+                    onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1584308919139-332c34f370d5?w=1200&q=80'; }}
+                />
                 <div className="sd_hero_overlay" />
                 <div className="sd_hero_content">
                     <span className="sd_eyebrow">{service.cat} Service</span>

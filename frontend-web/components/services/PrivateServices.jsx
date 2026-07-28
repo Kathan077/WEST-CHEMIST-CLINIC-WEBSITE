@@ -105,7 +105,12 @@ export default function PrivateServices() {
                             }}
                         >
                             <div className="ps_img_wrap">
-                                <img src={getImageUrl(s.img)} alt={s.title} className="ps_img" />
+                                <img 
+                                    src={getImageUrl(s.img)} 
+                                    alt={s.title} 
+                                    className="ps_img" 
+                                    onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1559839734-2b71f1536783?w=600&q=80'; }}
+                                />
                                 <div className="ps_tag">{s.cat}</div>
                             </div>
                             <div className="ps_info">

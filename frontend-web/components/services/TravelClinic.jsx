@@ -101,7 +101,12 @@ export default function TravelClinic() {
                             }}
                         >
                             <div className="tc_img_wrap">
-                                <img src={getImageUrl(s.img)} alt={s.title} className="tc_img" />
+                                <img 
+                                    src={getImageUrl(s.img)} 
+                                    alt={s.title} 
+                                    className="tc_img" 
+                                    onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1500835595300-478db374780d?w=600&q=80'; }}
+                                />
                                 <div className="tc_tag">{s.cat || 'Vaccination'}</div>
                             </div>
                             <div className="tc_info">
