@@ -68,7 +68,24 @@ const ICON_PICKER_LIBRARY = [
   { key: 'thumbsup',    label: 'Thumbs Up',    cat: 'Awards', ...IP('M7 10v12 M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z') },
   // ─ Clock & Time ─
   { key: 'clock',       label: 'Clock',        cat: 'Time', ...IP(['M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z','M12 6v6l4 2']) },
-  { key: 'calendar',    label: 'Calendar',     cat: 'Time', ...IP(['M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2z']) },
+  { key: 'calendar',    label: 'Calendar',     cat: 'Time', ...IP(['M8 2v4','M16 2v4','M3 10h18','M19 4H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Z']) },
+];
+
+const getImgUrl = (img) => {
+  if (!img) return '';
+  if (typeof img !== 'string') return img;
+  if (img.startsWith('data:')) return img;
+  const normalizedApi = API_URL.endsWith('/') ? API_URL.slice(0, -1) : API_URL;
+  const uploadsIdx = img.indexOf('uploads/');
+  if (uploadsIdx !== -1) {
+    const relativeUploadPath = img.substring(uploadsIdx);
+    return `${normalizedApi}/${relativeUploadPath}`;
+  }
+  return img;
+};
+
+const ICON_PICKER_LIBRARY_EXT = [
+  ...ICON_PICKER_LIBRARY,
   { key: 'timer',       label: 'Timer',        cat: 'Time', ...IP(['M10 2h4','M12 14l4-4','M4.6 11a8 8 0 1 0 16.4 4.7 8 8 0 0 0-16.4-4.7Z']) },
   { key: 'sunrise',     label: 'Quick Service',cat: 'Time', ...IP(['M12 2v8','M4.93 10.93l1.41 1.41','M2 18h2','M20 18h2','M19.07 10.93l-1.41 1.41','M22 22H2','M16 6l-4 4-4-4','M12 18a6 6 0 0 0 0-12v0']) },
   // ─ Fitness ─
@@ -329,7 +346,7 @@ export default function HomepageCMSPage() {
       const res = await fetch(`${API_URL}/api/blogs/upload`, { method: 'POST', body: formData });
       const data = await res.json();
       if (data.success && data.urls && data.urls.length > 0) {
-        const url = data.urls[0].startsWith('http') ? data.urls[0] : `${API_URL}${data.urls[0]}`;
+        const url = data.urls[0];
         updateSlide(slideIdx, 'image', url);
         showToast('Slide image uploaded successfully!');
       } else {
@@ -354,7 +371,7 @@ export default function HomepageCMSPage() {
       const res = await fetch(`${API_URL}/api/blogs/upload`, { method: 'POST', body: formData });
       const data = await res.json();
       if (data.success && data.urls && data.urls.length > 0) {
-        const url = data.urls[0].startsWith('http') ? data.urls[0] : `${API_URL}${data.urls[0]}`;
+        const url = data.urls[0];
         updateAppointmentCta('image', url);
         showToast('Weight Loss CTA image uploaded successfully!');
       } else {
@@ -379,7 +396,7 @@ export default function HomepageCMSPage() {
       const res = await fetch(`${API_URL}/api/blogs/upload`, { method: 'POST', body: formData });
       const data = await res.json();
       if (data.success && data.urls && data.urls.length > 0) {
-        const url = data.urls[0].startsWith('http') ? data.urls[0] : `${API_URL}${data.urls[0]}`;
+        const url = data.urls[0];
         updateAbout('image', url);
         showToast('About Section image uploaded successfully!');
       } else {
@@ -900,7 +917,7 @@ export default function HomepageCMSPage() {
                           {slide.image && (
                             <div style={{ marginBottom: '10px', borderRadius: '10px', overflow: 'hidden', height: '100px', background: '#f1f5f9', position: 'relative' }}>
                               <img
-                                src={slide.image}
+                                src={getImgUrl(slide.image)}
                                 alt="slide preview"
                                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                 onError={e => e.target.style.opacity = 0.2}
@@ -1055,7 +1072,7 @@ export default function HomepageCMSPage() {
                             flexShrink: 0
                           }}>
                             {srv.img ? (
-                              <img src={srv.img} alt={srv.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                              <img src={getImgUrl(srv.img)} alt={srv.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                             ) : (
                               <div style={{ width: '100%', height: '100%', background: 'var(--purple)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold' }}>
                                 {srv.title ? srv.title[0] : 'S'}
@@ -1317,7 +1334,7 @@ export default function HomepageCMSPage() {
                       {cmsData.appointmentCta.image && (
                         <div style={{ marginBottom: '10px', borderRadius: '10px', overflow: 'hidden', height: '180px', background: '#f1f5f9', position: 'relative', width: '320px' }}>
                           <img
-                            src={cmsData.appointmentCta.image}
+                            src={getImgUrl(cmsData.appointmentCta.image)}
                             alt="Weight Loss CTA preview"
                             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                           />
@@ -1412,7 +1429,7 @@ export default function HomepageCMSPage() {
                       {cmsData.aboutSection.image && (
                         <div style={{ marginBottom: '10px', borderRadius: '10px', overflow: 'hidden', height: '180px', background: '#f1f5f9', position: 'relative', width: '320px' }}>
                           <img
-                            src={cmsData.aboutSection.image}
+                            src={getImgUrl(cmsData.aboutSection.image)}
                             alt="About Section preview"
                             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                           />

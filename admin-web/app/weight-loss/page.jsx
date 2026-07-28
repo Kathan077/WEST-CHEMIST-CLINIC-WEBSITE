@@ -1,6 +1,6 @@
 'use client';
 
-import { API_URL, getImageUrl } from '@/config';
+import { API_URL } from '@/config';
 import React, { useState, useEffect, useRef } from 'react';
 import '../patients/dashboard.css';
 import './weight-loss.css';
@@ -51,9 +51,17 @@ const WL_TREATMENTS = [
   { label: 'BMI Assessment', color: '#0369a1' },
 ];
 
-const getImgUrl = path => {
-  if (!path) return '';
-  return getImageUrl(path);
+const getImgUrl = img => {
+  if (!img) return '';
+  if (typeof img !== 'string') return img;
+  if (img.startsWith('data:')) return img;
+  const normalizedApi = API_URL.endsWith('/') ? API_URL.slice(0, -1) : API_URL;
+  const uploadsIdx = img.indexOf('uploads/');
+  if (uploadsIdx !== -1) {
+    const relativeUploadPath = img.substring(uploadsIdx);
+    return `${normalizedApi}/${relativeUploadPath}`;
+  }
+  return img;
 };
 
 export default function AdminWeightLossPage() {

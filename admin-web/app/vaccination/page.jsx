@@ -1,6 +1,6 @@
 'use client';
 
-import { API_URL, getImageUrl } from '@/config';
+import { API_URL } from '@/config';
 import React, { useState, useEffect } from 'react';
 import '../patients/dashboard.css';
 import './vaccination.css';
@@ -80,7 +80,15 @@ export default function AdminVaccinationPage() {
 
   const getImgUrl = (img) => {
     if (!img) return 'https://images.unsplash.com/photo-1584308919139-332c34f370d5?w=600&q=80';
-    return getImageUrl(img);
+    if (typeof img !== 'string') return img;
+    if (img.startsWith('data:')) return img;
+    const normalizedApi = API_URL.endsWith('/') ? API_URL.slice(0, -1) : API_URL;
+    const uploadsIdx = img.indexOf('uploads/');
+    if (uploadsIdx !== -1) {
+      const relativeUploadPath = img.substring(uploadsIdx);
+      return `${normalizedApi}/${relativeUploadPath}`;
+    }
+    return img;
   };
 
   const uploadImage = async (file) => {

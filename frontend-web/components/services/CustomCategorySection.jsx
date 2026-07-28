@@ -27,7 +27,7 @@ export default function CustomCategorySection({ categoryName, services }) {
 
     const getImgUrl = (img) => {
         if (!img) return 'https://images.unsplash.com/photo-1559839734-2b71f1536783?w=600&q=80';
-        return getImageUrl(img);
+        return getImageUrl(img) || 'https://images.unsplash.com/photo-1559839734-2b71f1536783?w=600&q=80';
     };
 
     return (

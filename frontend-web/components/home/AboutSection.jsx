@@ -155,7 +155,7 @@ export default function AboutSection() {
                         <div className="img_ring img_ring_2"></div>
 
                         <img
-                             src={getImageUrl(aboutData.image) || aboutData.image || null}
+                             src={getImageUrl(aboutData.image) || null}
                              alt="West Chemist Clinic pharmacist"
                              className="about_img"
                         />

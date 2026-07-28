@@ -84,7 +84,7 @@ export default function ServicesList() {
 
     const getImgUrl = (img) => {
         if (!img) return 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80';
-        return getImageUrl(img);
+        return getImageUrl(img) || 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80';
     };
 
     return (
