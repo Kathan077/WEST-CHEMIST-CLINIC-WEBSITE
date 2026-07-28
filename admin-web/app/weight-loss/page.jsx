@@ -1,6 +1,6 @@
 'use client';
 
-import { API_URL } from '@/config';
+import { API_URL, getImageUrl } from '@/config';
 import React, { useState, useEffect, useRef } from 'react';
 import '../patients/dashboard.css';
 import './weight-loss.css';
@@ -53,8 +53,7 @@ const WL_TREATMENTS = [
 
 const getImgUrl = path => {
   if (!path) return '';
-  if (path.startsWith('http')) return path;
-  return `${API_URL}${path}`;
+  return getImageUrl(path);
 };
 
 export default function AdminWeightLossPage() {

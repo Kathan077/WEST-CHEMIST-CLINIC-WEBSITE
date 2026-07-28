@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
-import { API_URL } from '@/config';
+import { API_URL, getImageUrl } from '@/config';
 import './WeightLossCTA.css';
 
 const DEFAULT_WL = {
@@ -127,7 +127,7 @@ export default function WeightLossCTA() {
                 >
                     <div className="wl_image_inner">
                         <img 
-                            src={wlData.image || null} 
+                            src={getImageUrl(wlData.image) || wlData.image || null} 
                             alt="Weight Loss Consultation" 
                             className="wl_img" 
                         />

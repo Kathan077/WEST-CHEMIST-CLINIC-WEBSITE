@@ -1,6 +1,6 @@
 'use client';
 
-import { API_URL } from '@/config';
+import { API_URL, getImageUrl } from '@/config';
 import React, { useState, useEffect } from 'react';
 import '../patients/dashboard.css';
 import './services.css';
@@ -74,9 +74,7 @@ export default function AdminServicesPage() {
 
   const getImgUrl = (img) => {
     if (!img) return '/images/services/dispensing_medicines.jpg';
-    if (img.startsWith('http://') || img.startsWith('https://')) return img;
-    if (img.startsWith('/uploads')) return `${API_URL}${img}`;
-    return img;
+    return getImageUrl(img);
   };
 
   const uploadServiceImageFile = async (file) => {

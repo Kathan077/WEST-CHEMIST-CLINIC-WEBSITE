@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import Link from 'next/link';
-import { API_URL } from '@/config';
+import { API_URL, getImageUrl } from '@/config';
 import './Hero.css';
 
 // Fixed particle seed — same on server AND client (no Math.random at render time)
@@ -213,7 +213,7 @@ export default function Hero() {
                 return (
                     <div key={slide._id || slide.id} className={cls} aria-hidden={!isActive}>
                         <img
-                            src={slide.image || slide.fallback || null}
+                            src={getImageUrl(slide.image) || slide.fallback || null}
                             alt=""
                             className="slide_img"
                             onError={(e) => { e.target.src = slide.fallback; }}

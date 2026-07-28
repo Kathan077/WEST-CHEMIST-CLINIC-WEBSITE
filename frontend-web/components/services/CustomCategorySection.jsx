@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef } from 'react';
-import { API_URL } from '@/config';
+import { API_URL, getImageUrl } from '@/config';
 import '@/components/services/PrivateServices.css';
 
 export default function CustomCategorySection({ categoryName, services }) {
@@ -27,8 +27,7 @@ export default function CustomCategorySection({ categoryName, services }) {
 
     const getImgUrl = (img) => {
         if (!img) return 'https://images.unsplash.com/photo-1559839734-2b71f1536783?w=600&q=80';
-        if (img.startsWith('/uploads')) return `${API_URL}${img}`;
-        return img;
+        return getImageUrl(img);
     };
 
     return (

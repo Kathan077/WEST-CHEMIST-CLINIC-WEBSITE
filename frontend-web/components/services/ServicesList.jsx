@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { API_URL } from '@/config';
+import { API_URL, getImageUrl } from '@/config';
 import './ServicesList.css';
 
 const defaultCoreServices = [
@@ -84,8 +84,7 @@ export default function ServicesList() {
 
     const getImgUrl = (img) => {
         if (!img) return 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80';
-        if (img.startsWith('/uploads')) return `${API_URL}${img}`;
-        return img;
+        return getImageUrl(img);
     };
 
     return (

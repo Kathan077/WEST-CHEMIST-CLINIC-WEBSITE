@@ -7,10 +7,15 @@ export const API_URL = process.env.NEXT_PUBLIC_API_URL ||
 
 export const getImageUrl = (img) => {
   if (!img) return '';
+  if (typeof img !== 'string') return '';
   if (img.startsWith('http://') || img.startsWith('https://') || img.startsWith('data:')) {
     return img;
   }
-  const normalizedPath = img.startsWith('/') ? img : `/${img}`;
-  return `${API_URL}${normalizedPath}`;
+  if (img.startsWith('/uploads') || img.startsWith('uploads')) {
+    const normalizedPath = img.startsWith('/') ? img : `/${img}`;
+    return `${API_URL}${normalizedPath}`;
+  }
+  return img;
 };
+
 

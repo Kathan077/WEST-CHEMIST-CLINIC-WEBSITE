@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef } from 'react';
-import { API_URL } from '@/config';
+import { API_URL, getImageUrl } from '@/config';
 import './BlogGrid.css';
 
 export default function BlogGrid({ posts = [], loading = false, onReadClick }) {
@@ -43,8 +43,7 @@ export default function BlogGrid({ posts = [], loading = false, onReadClick }) {
 
     const getFullImgUrl = (img) => {
         if (!img) return 'https://images.unsplash.com/photo-1505751172107-160bf2a35368?w=600&q=80';
-        if (img.startsWith('http://') || img.startsWith('https://')) return img;
-        return `${API_URL}${img}`;
+        return getImageUrl(img);
     };
 
     return (
