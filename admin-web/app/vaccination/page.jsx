@@ -33,16 +33,16 @@ const slugify = (text) =>
   (text || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
 
 const VACCINE_SLUGS = [
-  'travel-meningitis',
+  'vaccine-meningitis',
   'nhs-meningitis-b',
   'chickenpox-vaccine',
-  'travel-chikungunya',
+  'vaccine-chikungunya',
   'nhs-shingles',
   'hpv-vaccine',
-  'travel-rabies',
-  'travel-hepatitis-b',
-  'travel-typhoid',
-  'travel-japanese-encephalitis'
+  'vaccine-rabies',
+  'vaccine-hepatitis-b',
+  'vaccine-typhoid',
+  'vaccine-japanese-encephalitis'
 ];
 
 const VACC_CATEGORIES = [

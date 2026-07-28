@@ -8,29 +8,29 @@ import { API_URL } from '../../config';
 import './Navbar.css';
 
 const VACCINE_SLUGS = [
-    'travel-meningitis',
+    'vaccine-meningitis',
     'nhs-meningitis-b',
     'chickenpox-vaccine',
-    'travel-chikungunya',
+    'vaccine-chikungunya',
     'nhs-shingles',
     'hpv-vaccine',
-    'travel-rabies',
-    'travel-hepatitis-b',
-    'travel-typhoid',
-    'travel-japanese-encephalitis'
+    'vaccine-rabies',
+    'vaccine-hepatitis-b',
+    'vaccine-typhoid',
+    'vaccine-japanese-encephalitis'
 ];
 
 const DEFAULT_VACCINE_SERVICES = [
-    { title: "Meningitis", slug: "travel-meningitis" },
+    { title: "Meningitis", slug: "vaccine-meningitis" },
     { title: "Meningitis B Vaccination", slug: "nhs-meningitis-b" },
     { title: "Chickenpox", slug: "chickenpox-vaccine" },
-    { title: "Chikungunya Vaccine", slug: "travel-chikungunya" },
+    { title: "Chikungunya Vaccine", slug: "vaccine-chikungunya" },
     { title: "Shingles", slug: "nhs-shingles" },
     { title: "HPV", slug: "hpv-vaccine" },
-    { title: "Rabies", slug: "travel-rabies" },
-    { title: "Hepatitis", slug: "travel-hepatitis-b" },
-    { title: "Typhoid", slug: "travel-typhoid" },
-    { title: "Japanese Encephalitis", slug: "travel-japanese-encephalitis" }
+    { title: "Rabies", slug: "vaccine-rabies" },
+    { title: "Hepatitis", slug: "vaccine-hepatitis-b" },
+    { title: "Typhoid", slug: "vaccine-typhoid" },
+    { title: "Japanese Encephalitis", slug: "vaccine-japanese-encephalitis" }
 ];
 
 const isWeightLoss = (s) => {
@@ -277,8 +277,9 @@ const Navbar = () => {
                                         const catServices = services.filter(s => {
                                             const parent = (s.parentCategory || '').toLowerCase();
                                             const cName = cat.name.toLowerCase();
+                                            if (parent === 'vaccination services') return false;
                                             if (cName.includes('travel')) {
-                                                return parent === 'travel clinic' || parent.includes('travel') || (s.slug || '').startsWith('travel-');
+                                                return parent === 'travel clinic';
                                             }
                                             return parent === cName;
                                         });
