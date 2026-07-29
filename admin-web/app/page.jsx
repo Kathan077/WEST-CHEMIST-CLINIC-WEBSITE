@@ -16,7 +16,7 @@ export default function AdminLoginPage() {
     useEffect(() => {
         const token = localStorage.getItem('adminToken');
         if (token) {
-            window.location.href = '/admin/patients';
+            window.location.href = '/patients';
         }
     }, []);
 
@@ -42,7 +42,7 @@ export default function AdminLoginPage() {
                 localStorage.setItem('adminUser', JSON.stringify(data.admin));
 
                 // Redirect to patients compliance dashboard
-                window.location.href = '/admin/patients';
+                window.location.href = '/patients';
             } else {
                 setErrorMsg(data.message || 'The username or password is incorrect');
             }
@@ -85,7 +85,7 @@ export default function AdminLoginPage() {
                     {/* Mode Navigation Tabs */}
                     <div className="auth_tabs">
                         <button type="button" className="auth_tab active">Log In</button>
-                        <a href="/admin/signup" className="auth_tab">Sign Up</a>
+                        <a href="/signup" className="auth_tab">Sign Up</a>
                     </div>
 
                     <form onSubmit={handleLogin}>
@@ -177,7 +177,7 @@ export default function AdminLoginPage() {
                     {/* Bottom Signup Navigation Container */}
                     <div className="signup_container">
                         Don't have an admin account?
-                        <a href="/admin/signup" className="signup_link">Sign Up</a>
+                        <a href="/signup" className="signup_link">Sign Up</a>
                     </div>
                 </div>
             </div>

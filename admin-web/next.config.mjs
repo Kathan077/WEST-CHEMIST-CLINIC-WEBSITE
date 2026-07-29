@@ -2,6 +2,18 @@
 const nextConfig = {
   reactStrictMode: true,
   compress: true,
+  async rewrites() {
+    return [
+      {
+        source: '/admin',
+        destination: '/',
+      },
+      {
+        source: '/admin/:path*',
+        destination: '/:path*',
+      },
+    ];
+  },
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [

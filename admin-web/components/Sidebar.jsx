@@ -30,7 +30,7 @@ export default function Sidebar({ activePage }) {
   useEffect(() => {
     const stored = localStorage.getItem('adminUser');
     if (!stored) {
-      window.location.href = '/admin';
+      window.location.href = '/';
       return;
     }
     try {
@@ -63,21 +63,21 @@ export default function Sidebar({ activePage }) {
 
   const logout = () => {
     localStorage.clear();
-    window.location.href = '/admin';
+    window.location.href = '/';
   };
 
   const nav = [
-    { label: 'Dashboard',          path: '/admin/patients',                   icon: ICONS.home,   active: activePage === 'dashboard' },
-    { label: 'Appointments',       path: '/admin/appointments',               icon: ICONS.cal,    badge: pendingCount || null, active: activePage === 'appointments' },
-    { label: 'Patients',           path: '/admin/patients?view=patients',     icon: ICONS.users,  active: activePage === 'patients' },
-    { label: 'Schedule Manager',   path: '/admin/schedule',                   icon: ICONS.cal,    active: activePage === 'schedule' },
-    { label: 'Compliance',         path: '/admin/compliance',                 icon: ICONS.shield, active: activePage === 'compliance' },
-    { label: 'Services & Content', path: '/admin/services',                   icon: ICONS.edit,   active: activePage === 'services' },
-    { label: 'Vaccination Manager',path: '/admin/vaccination',                icon: ICONS.doc,    active: activePage === 'vaccination' },
-    { label: 'Weight Loss Manager',path: '/admin/weight-loss',                icon: ICONS.doc,    active: activePage === 'weight-loss' },
-    { label: 'Homepage CMS',       path: '/admin/homepage',                   icon: ICONS.globe,  active: activePage === 'homepage' },
-    { label: 'Blog Manager',       path: '/admin/blog',                       icon: ICONS.doc,    active: activePage === 'blog' },
-    { label: 'About Page',         path: '/admin/about',                      icon: ICONS.info,   active: activePage === 'about' },
+    { label: 'Dashboard',          path: '/patients',                   icon: ICONS.home,   active: activePage === 'dashboard' },
+    { label: 'Appointments',       path: '/appointments',               icon: ICONS.cal,    badge: pendingCount || null, active: activePage === 'appointments' },
+    { label: 'Patients',           path: '/patients?view=patients',     icon: ICONS.users,  active: activePage === 'patients' },
+    { label: 'Schedule Manager',   path: '/schedule',                   icon: ICONS.cal,    active: activePage === 'schedule' },
+    { label: 'Compliance',         path: '/compliance',                 icon: ICONS.shield, active: activePage === 'compliance' },
+    { label: 'Services & Content', path: '/services',                   icon: ICONS.edit,   active: activePage === 'services' },
+    { label: 'Vaccination Manager',path: '/vaccination',                icon: ICONS.doc,    active: activePage === 'vaccination' },
+    { label: 'Weight Loss Manager',path: '/weight-loss',                icon: ICONS.doc,    active: activePage === 'weight-loss' },
+    { label: 'Homepage CMS',       path: '/homepage',                   icon: ICONS.globe,  active: activePage === 'homepage' },
+    { label: 'Blog Manager',       path: '/blog',                       icon: ICONS.doc,    active: activePage === 'blog' },
+    { label: 'About Page',         path: '/about',                      icon: ICONS.info,   active: activePage === 'about' },
   ];
 
   return (
