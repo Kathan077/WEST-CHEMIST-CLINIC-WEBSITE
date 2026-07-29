@@ -19,9 +19,29 @@ const homepageRoutes = require('./routes/homepageRoutes');
 // Initialize Express App
 const app = express();
 
-// Completely disable HTTP 304 Not Modified caching
-app.disable('etag');
+// High-Performance Middleware: Gzip/Brotli compression
+const compression = require('compression');
+app.use(compression());
+
+// Smart Cache-Control Middleware (Fast loading for public GET APIs, no-store for private/admin APIs)
 app.use((req, res, next) => {
+  if (req.method === 'GET') {
+    const isPublicGet = 
+      req.path.startsWith('/api/services') ||
+      req.path.startsWith('/api/blogs') ||
+      req.path.startsWith('/api/homepage') ||
+      req.path.startsWith('/api/categories') ||
+      req.path.startsWith('/api/about') ||
+      req.path.startsWith('/uploads') ||
+      req.path === '/' ||
+      req.path === '/health';
+
+    if (isPublicGet) {
+      res.set('Cache-Control', 'public, max-age=60, s-maxage=300, stale-while-revalidate=600');
+      return next();
+    }
+  }
+
   res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
   next();
 });

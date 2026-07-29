@@ -23,12 +23,12 @@ router.post('/upload', serviceUpload.single('image'), (req, res) => {
       });
     }
 
-    const relativePath = `/uploads/services/${req.file.filename}`;
+    const fileUrl = req.file.path || `/uploads/services/${req.file.filename}`;
     res.status(200).json({
       success: true,
       message: 'Service image uploaded successfully',
-      url: relativePath,
-      filename: req.file.filename
+      url: fileUrl,
+      filename: req.file.filename || req.file.public_id
     });
   } catch (error) {
     console.error(`💥 Error uploading service image: ${error.message}`);

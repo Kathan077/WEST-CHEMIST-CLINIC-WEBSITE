@@ -1,15 +1,23 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: '/admin',
-  async redirects() {
-    return [
+  reactStrictMode: true,
+  compress: true,
+  images: {
+    formats: ['image/avif', 'image/webp'],
+    remotePatterns: [
       {
-        source: '/',
-        destination: '/admin',
-        basePath: false,
-        permanent: false,
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
       },
-    ];
+      {
+        protocol: 'https',
+        hostname: 'west-chemist-clinic-website.onrender.com',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+      },
+    ],
   },
 };
 

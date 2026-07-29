@@ -28,8 +28,8 @@ router.post('/upload', blogUpload.array('files', 5), (req, res) => {
       });
     }
 
-    // Map files to their static access URLs
-    const filePaths = req.files.map(file => `/uploads/blogs/${file.filename}`);
+    // Map files to their static access URLs or Cloudinary URLs
+    const filePaths = req.files.map(file => file.path || `/uploads/blogs/${file.filename}`);
 
     res.status(200).json({
       success: true,

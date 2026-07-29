@@ -8,6 +8,9 @@ export const API_URL = process.env.NEXT_PUBLIC_API_URL ||
 export const getImageUrl = (img) => {
   if (!img || typeof img !== 'string') return '';
   if (img.startsWith('data:')) return img;
+  if (img.startsWith('http://') || img.startsWith('https://')) {
+    return img;
+  }
 
   const normalizedApi = API_URL.endsWith('/') ? API_URL.slice(0, -1) : API_URL;
 
@@ -15,10 +18,6 @@ export const getImageUrl = (img) => {
   if (uploadsIdx !== -1) {
     const relativeUploadPath = img.substring(uploadsIdx);
     return `${normalizedApi}/${relativeUploadPath}`;
-  }
-
-  if (img.startsWith('http://') || img.startsWith('https://')) {
-    return img;
   }
 
   return img;

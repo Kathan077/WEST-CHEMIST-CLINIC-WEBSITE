@@ -33,8 +33,8 @@ const uploadDocument = async (req, res) => {
       });
     }
 
-    // Save document path (relative path to be served statically if needed)
-    const documentUrl = `/uploads/ids/${req.file.filename}`;
+    // Save document path or Cloudinary URL
+    const documentUrl = req.file.path || `/uploads/ids/${req.file.filename}`;
 
     const verification = await Verification.create({
       patientId,
