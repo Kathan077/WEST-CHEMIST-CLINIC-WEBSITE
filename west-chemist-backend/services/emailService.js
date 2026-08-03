@@ -35,19 +35,19 @@ const createTransporter = () => {
  */
 const sendBookingConfirmation = async (appointment, patient) => {
   const transporter = createTransporter();
-  const from = process.env.EMAIL_FROM || '"West Chemist Clinic" <noreply@westchemistclinic.co.uk>';
+  const from = process.env.EMAIL_FROM || '"West Chemist" <noreply@westchemist.co.uk>';
   const to = patient.email || 'patient-notifications@westchemistclinic.co.uk';
-  const subject = `🏥 Appointment Confirmed - West Chemist Clinic`;
+  const subject = `🏥 Appointment Confirmed - West Chemist`;
   
   const htmlContent = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px;">
       <div style="text-align: center; margin-bottom: 20px;">
         <h2 style="color: #0d9488; margin: 0;">West Chemist</h2>
-        <p style="color: #666; font-size: 14px; margin: 5px 0 0 0;">Clinical Booking Confirmation</p>
+        <p style="color: #666; font-size: 14px; margin: 5px 0 0 0;">Booking Confirmation</p>
       </div>
       
       <p>Dear <strong>${patient.fullName}</strong>,</p>
-      <p>Thank you for booking with West Chemist Clinic. We are pleased to confirm that your appointment has been scheduled and your identity verification was successful.</p>
+      <p>Thank you for booking with West Chemist. We are pleased to confirm that your appointment has been scheduled and your identity verification was successful.</p>
       
       <div style="background-color: #f0fdfa; border-left: 4px solid #0d9488; padding: 15px; margin: 20px 0; border-radius: 4px;">
         <h3 style="color: #0f766e; margin-top: 0; margin-bottom: 10px;">Appointment Ticket</h3>
@@ -128,7 +128,7 @@ const sendBookingConfirmation = async (appointment, patient) => {
  */
 const sendVerificationResult = async (verification, patient) => {
   const transporter = createTransporter();
-  const from = process.env.EMAIL_FROM || '"West Chemist Clinic" <noreply@westchemistclinic.co.uk>';
+  const from = process.env.EMAIL_FROM || '"West Chemist" <noreply@westchemist.co.uk>';
   const to = patient.email || 'patient-notifications@westchemistclinic.co.uk';
   
   const isApproved = verification.status === 'approved';
@@ -208,7 +208,7 @@ const sendVerificationResult = async (verification, patient) => {
  */
 const sendBookingReceived = async (appointment, patient) => {
   const transporter = createTransporter();
-  const from = process.env.EMAIL_FROM || '"West Chemist Clinic" <noreply@westchemistclinic.co.uk>';
+  const from = process.env.EMAIL_FROM || '"West Chemist" <noreply@westchemist.co.uk>';
   const to = patient.email || 'patient-notifications@westchemistclinic.co.uk';
   const subject = `🏥 Appointment Request Received - West Chemist Clinic`;
   
@@ -297,7 +297,7 @@ const sendBookingReceived = async (appointment, patient) => {
  */
 const sendRescheduleNotice = async (appointment, patient) => {
   const transporter = createTransporter();
-  const from = process.env.EMAIL_FROM || '"West Chemist Clinic" <noreply@westchemistclinic.co.uk>';
+  const from = process.env.EMAIL_FROM || '"West Chemist" <noreply@westchemist.co.uk>';
   const to = patient.email || 'patient-notifications@westchemistclinic.co.uk';
   const subject = `⚠️ Reschedule Required - West Chemist Clinic`;
   

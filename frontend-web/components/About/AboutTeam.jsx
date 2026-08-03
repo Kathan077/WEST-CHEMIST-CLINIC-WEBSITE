@@ -6,20 +6,20 @@ import './AboutTeam.css';
 const teamMembers = [
     {
         id: 1,
-        name: "Dr. Sarah Jenkins",
-        role: "Cardiologist",
+        name: "Sarah Jenkins, MPharm",
+        role: "Superintendent Pharmacist",
         image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=600&q=90",
     },
     {
         id: 2,
-        name: "Dr. James Carter",
-        role: "Orthopedic Surgeon",
+        name: "James Carter, MPharm",
+        role: "Lead Travel Health Pharmacist",
         image: "https://plus.unsplash.com/premium_photo-1661764878654-3d0fc2eefcca?w=600&q=90",
     },
     {
         id: 3,
-        name: "Dr. Daniel Lee",
-        role: "Pediatrician",
+        name: "Daniel Lee, BSc",
+        role: "Senior Pharmacy Technician",
         image: "https://images.unsplash.com/photo-1594824436998-d89d4fb57134?w=600&q=90",
     }
 ];
@@ -43,8 +43,8 @@ export default function AboutTeam() {
         <section className="med_team_bg" ref={sectionRef}>
             <div className="med_team_header">
                 <span className="med_team_badge">Our Team</span>
-                <h2>Meet Our Specialists</h2>
-                <p>Behind every treatment is a team of experts dedicated to your well-being.</p>
+                <h2>Meet Our Pharmacy Team</h2>
+                <p>Behind every service is a qualified team of pharmacists and healthcare staff dedicated to your health and well-being.</p>
             </div>
 
             <div className="med_team_container">
@@ -74,7 +74,7 @@ export default function AboutTeam() {
             </div>
             
             <div className="med_team_action">
-                <button className="med_btn_primary">See All Specialists</button>
+                <button className="med_btn_primary">See All Pharmacy Staff</button>
             </div>
         </section>
     );

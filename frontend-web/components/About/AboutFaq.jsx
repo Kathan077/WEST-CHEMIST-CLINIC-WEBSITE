@@ -8,32 +8,32 @@ const DEFAULT_FAQS = [
     {
         _id: 'default-faq-1',
         question: "How do I book an appointment online?",
-        answer: "You can easily book an appointment through our online patient portal by selecting your preferred doctor and available time slot."
+        answer: "You can easily book an appointment through our online patient portal by selecting your required pharmacy service and preferred time slot."
     },
     {
         _id: 'default-faq-2',
-        question: "Can I access my medical records digitally?",
-        answer: "Yes, all patients can securely access their medical history, prescriptions, and reports through our online patient portal."
+        question: "Can I access my booking records digitally?",
+        answer: "Yes, all patients can securely access their appointment history, consultation notes, and booking details through our online patient portal."
     },
     {
         _id: 'default-faq-3',
-        question: "Do you accept health insurance?",
-        answer: "We accept most major health insurance plans. Please contact our billing department or check our insurance page for a full list of providers."
+        question: "What pharmacy services do you offer?",
+        answer: "We offer NHS & private prescription dispensing, travel health consultations & vaccinations, weight management treatments, ear wax removal, and health checks."
     },
     {
         _id: 'default-faq-4',
-        question: "Are online consultations available?",
-        answer: "Yes, we offer secure telehealth consultations for non-emergency medical advice and follow-ups with our specialists."
+        question: "Are consultations available at the pharmacy?",
+        answer: "Yes, we offer private, in-person consultations for health advice, weight management, and vaccinations with our qualified pharmacists."
     },
     {
         _id: 'default-faq-5',
-        question: "How secure is my medical data?",
-        answer: "Your privacy is our priority. We use industry-standard encryption and fully comply with HIPAA regulations to ensure your data is safe."
+        question: "How secure is my personal health data?",
+        answer: "Your privacy is our priority. We use industry-standard encryption and fully comply with GDPR regulations to ensure your data is safe."
     },
     {
         _id: 'default-faq-6',
         question: "What if I need to reschedule or cancel my appointment?",
-        answer: "You can reschedule or cancel your appointment via the patient portal or by calling our clinic directly at least 24 hours in advance."
+        answer: "You can reschedule or cancel your appointment via the patient portal or by calling our pharmacy directly at least 24 hours in advance."
     }
 ];
 

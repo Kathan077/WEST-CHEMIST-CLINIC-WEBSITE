@@ -91,8 +91,8 @@ export default function ServicesList() {
         <section className="sl_section" ref={sectionRef}>
             <div className="sl_container">
                 <div className="sl_header">
-                    <h2 className="sl_title">Core Clinical Services</h2>
-                    <p className="sl_subtitle">Advanced medical care delivered by experienced healthcare professionals.</p>
+                    <h2 className="sl_title">Core Pharmacy Services</h2>
+                    <p className="sl_subtitle">Advanced pharmaceutical care delivered by experienced healthcare professionals.</p>
                 </div>
 
                 <div className="sl_grid">

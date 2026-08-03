@@ -9,7 +9,7 @@ const DEFAULT_HOMEPAGE_CONTENT = {
       badgeIcon: 'stethoscope',
       words1: ['Your', 'Health,'],
       words2: ['Our', 'Priority.'],
-      desc: 'Expert pharmaceutical care and specialist health advice — all in one trusted clinic.',
+      desc: 'Expert pharmaceutical care and professional health advice — all in one trusted pharmacy.',
       cta: 'Book an Appointment',
       ctaUrl: '/book-appointment',
       secondaryCta: 'Our Services',
@@ -23,7 +23,7 @@ const DEFAULT_HOMEPAGE_CONTENT = {
       badgeIcon: 'globe',
       words1: ['Worry-Free', 'Travel'],
       words2: ['Starts', 'Here.'],
-      desc: 'Walk in for specialist travel vaccination advice and protect yourself before your next trip.',
+      desc: 'Walk in for travel vaccination advice and protect yourself before your next trip.',
       cta: 'Explore Vaccines',
       ctaUrl: '/services',
       secondaryCta: 'Our Services',
@@ -54,15 +54,15 @@ const DEFAULT_HOMEPAGE_CONTENT = {
   ],
   aboutSection: {
     title: 'Empowering Your Wellness Journey',
-    subtitle: 'ABOUT WEST CHEMIST CLINIC',
-    desc: 'At West Chemist Clinic, we are dedicated to providing the highest standard of pharmaceutical care and clinical services. With over 15 years of serving our community, our team of experienced pharmacists and healthcare practitioners offers expert guidance tailored to your unique needs.',
-    image: '/images/8df30593-83e5-4551-ab3b-4b82c1684d55.png',
-    yearsExperience: '15+',
-    experienceLabel: 'Years of clinical excellence serving WA communities.',
+    subtitle: 'YOUR TRUSTED COMMUNITY PHARMACY',
+    desc: 'With over two decades of dedicated community service, West Chemist specializes in the timely provision of prescription medicines, travel health, and comprehensive patient care. We understand that managing health and medications can feel daunting — our team of experienced pharmacists and professional pharmacy staff across Northampton and East London are here to support you and your family through all stages of life.',
+    image: '/images/about-pharmacist.jpg',
+    yearsExperience: '20+',
+    experienceLabel: 'Years of dedicated patient care.',
     features: [
-      { icon: 'award', title: 'Accredited Excellence', desc: 'GPhC registered pharmacy with fully certified NHS clinical specialists.' },
-      { icon: 'shield', title: 'Safe & Regulated Care', desc: 'Highest safety standards with robust identity verification protocols.' },
-      { icon: 'clock', title: 'Walk-In & Booking Ease', desc: 'Get fast, hassle-free care when you need it most with flexible appointments.' }
+      { icon: 'award', title: '20+ Years Experience', desc: 'Over two decades of trusted healthcare experience across Northampton & East London.' },
+      { icon: 'users', title: 'Dedicated Pharmacy Team', desc: 'Qualified pharmacists and healthcare staff committed to your family’s well-being.' },
+      { icon: 'check-square', title: 'Timely Prescriptions', desc: 'Fast, reliable prescription dispensing and professional pharmacy services.' }
     ],
     ctaText: 'Learn More About Us',
     ctaUrl: '/about',
@@ -70,40 +70,40 @@ const DEFAULT_HOMEPAGE_CONTENT = {
     secondaryCtaUrl: '/contact'
   },
   servicesSection: {
-    title: 'Clinical Services We Offer',
-    subtitle: 'WEST CHEMIST CLINICAL HUB',
+    title: 'Pharmacy Services We Offer',
+    subtitle: 'WEST CHEMIST PHARMACY HUB',
     desc: 'Access a wide range of NHS and private services designed to keep you and your family healthy. Book in advance or walk in today.'
   },
   howItWorks: {
     title: 'Your Health Journey Made Simple',
     subtitle: 'HOW WE SERVE YOU',
-    desc: 'Get expert advice and clinical services in three straightforward steps.',
+    desc: 'Get expert advice and pharmacy services in three straightforward steps.',
     steps: [
-      { stepNumber: '01', title: 'Choose Your Service', desc: 'Select from our wide range of clinical services including vaccinations, health checks, and weight management.', icon: 'search' },
-      { stepNumber: '02', title: 'Book an Appointment', desc: 'Pick a convenient date and time using our real-time calendar and securely verify your identity details.', icon: 'cal' },
-      { stepNumber: '03', title: 'Attend the Clinic', desc: 'Visit our welcoming WA location for your private consultation with our professional clinical team.', icon: 'home' }
+      { stepNumber: '01', title: 'Choose Your Service', desc: 'Select from our wide range of pharmacy services including vaccinations, health checks, and weight management.', icon: 'search' },
+      { stepNumber: '02', title: 'Book an Appointment', desc: 'Pick a convenient date and time using our real-time calendar and securely verify your details.', icon: 'cal' },
+      { stepNumber: '03', title: 'Visit the Pharmacy', desc: 'Visit our welcoming location for your private consultation with our professional pharmacy team.', icon: 'home' }
     ]
   },
   testimonials: {
     title: 'What Our Patients Say',
-    subtitle: 'TRUSTED COMMUNITY CLINIC',
-    desc: 'Discover why thousands of patients trust West Chemist for their clinical healthcare needs.',
+    subtitle: 'TRUSTED COMMUNITY PHARMACY',
+    desc: 'Discover why thousands of patients trust West Chemist for their pharmaceutical care needs.',
     reviews: [
-      { name: 'Sarah Jenkins', role: 'Northampton Resident', text: 'The travel vaccination clinic was incredibly fast and professional. The pharmacist answered all my questions and made me feel completely at ease.', rating: 5, avatar: '/images/reviews/sarah.jpg' },
-      { name: 'David Thompson', role: 'Diabetes Patient', text: 'I have been using their health monitoring services for over a year. The convenience of booking appointments online and tracking my tickets is phenomenal.', rating: 5, avatar: '/images/reviews/david.jpg' },
+      { name: 'Sarah Jenkins', role: 'Northampton Resident', text: 'The travel vaccination service was incredibly fast and professional. The pharmacist answered all my questions and made me feel completely at ease.', rating: 5, avatar: '/images/reviews/sarah.jpg' },
+      { name: 'David Thompson', role: 'Patient', text: 'I have been using their medication and health consultation services for over a year. The convenience of booking appointments online and tracking my tickets is phenomenal.', rating: 5, avatar: '/images/reviews/david.jpg' },
       { name: 'Emma Wilson', role: 'Weight Loss Client', text: 'The guided weight management program has completely changed my life. The team is supportive, highly competent, and always professional.', rating: 5, avatar: '/images/reviews/emma.jpg' }
     ]
   },
   appointmentCta: {
     title: 'Guided Weight Management',
     subtitle: 'TRANSFORM YOUR HEALTH',
-    desc: 'Are you looking to achieve and maintain a healthy weight? Our clinical team provides safe, medically supervised weight loss programs tailored to you. We offer professional advice, progress tracking, and regulation-compliant guidance.',
+    desc: 'Are you looking to achieve and maintain a healthy weight? Our pharmacy team provides safe, professional weight management support tailored to you. We offer expert advice, progress tracking, and regulation-compliant guidance.',
     image: '/images/e0dc23d6-3cb0-4a6a-9076-058313605f8d.png',
     ctaText: 'Start Weight Loss Program',
     ctaUrl: '/weight-loss',
     bullets: [
       'Personalized expert support',
-      'In-person or secure online consultations available',
+      'In-person consultations available at our pharmacy',
       'Flexible appointment options, including evening slots'
     ]
   },
@@ -113,13 +113,13 @@ const DEFAULT_HOMEPAGE_CONTENT = {
     ctaUrl: '/book-appointment'
   },
   seoSettings: {
-    metaTitle: 'West Chemist Clinic — Expert Pharmaceutical & Health Services',
-    metaDescription: 'West Chemist Clinic offers expert pharmaceutical care, travel vaccinations, weight loss programs, and specialist health advice in WA.',
-    metaKeywords: 'pharmacy, clinic, travel clinic, vaccinations, Northampton, weight loss, health check',
+    metaTitle: 'West Chemist — Expert Pharmaceutical & Health Services',
+    metaDescription: 'West Chemist offers expert pharmaceutical care, travel vaccinations, weight loss programs, and health advice.',
+    metaKeywords: 'pharmacy, travel health, vaccinations, Northampton, weight loss, health check',
     canonicalUrl: process.env.FRONTEND_URL || 'https://west-chemist-clinic-website.vercel.app/',
     logoUrl: '/images/ddfd45c4-3070-498a-9e4e-68f1fb48ad3e.png',
-    ogTitle: 'West Chemist Clinic — Expert Pharmaceutical & Health Services',
-    ogDescription: 'West Chemist Clinic offers expert pharmaceutical care, travel vaccinations, weight loss programs, and specialist health advice in WA.',
+    ogTitle: 'West Chemist — Expert Pharmaceutical & Health Services',
+    ogDescription: 'West Chemist offers expert pharmaceutical care, travel vaccinations, weight loss programs, and health advice.',
     ogImage: '/images/0a198cad-eabf-40b6-81dc-45dbd61ed432.png'
   }
 };
@@ -129,17 +129,52 @@ const DEFAULT_HOMEPAGE_CONTENT = {
 // @access  Public
 const getHomepageContent = async (req, res) => {
   try {
-    let content = await HomepageCMS.findOne({ key: 'main' });
-    
-    // Auto-seed if not found
-    if (!content) {
-      content = await HomepageCMS.create(DEFAULT_HOMEPAGE_CONTENT);
+    let cms = await HomepageCMS.findOne({ key: 'main' });
+    if (!cms) {
+      cms = await HomepageCMS.create(DEFAULT_HOMEPAGE_CONTENT);
       console.log('🌱 Homepage CMS content successfully auto-seeded!');
+    } else {
+      // Perform automated migration on existing CMS document if needed
+      let updated = false;
+      if (cms.aboutSection) {
+        cms.aboutSection.subtitle = 'YOUR TRUSTED COMMUNITY PHARMACY';
+        cms.aboutSection.desc = 'With over two decades of dedicated community service, West Chemist specializes in the timely provision of prescription medicines, travel health, and comprehensive patient care. We understand that managing health and medications can feel daunting — our team of experienced pharmacists and professional pharmacy staff across Northampton and East London are here to support you and your family through all stages of life.';
+        cms.aboutSection.image = '/images/about-pharmacist.jpg';
+        cms.aboutSection.yearsExperience = '20+';
+        cms.aboutSection.experienceLabel = 'Years of dedicated patient care.';
+        cms.aboutSection.features = [
+          { icon: 'award', title: '20+ Years Experience', desc: 'Over two decades of trusted healthcare experience across Northampton & East London.' },
+          { icon: 'users', title: 'Dedicated Pharmacy Team', desc: 'Qualified pharmacists and healthcare staff committed to your family’s well-being.' },
+          { icon: 'check-square', title: 'Timely Prescriptions', desc: 'Fast, reliable prescription dispensing and professional pharmacy services.' }
+        ];
+        cms.markModified('aboutSection');
+        updated = true;
+      }
+      if (cms.appointmentCta) {
+        cms.appointmentCta.desc = 'Are you looking to achieve and maintain a healthy weight? Our pharmacy team provides safe, professional weight management support tailored to you. We offer expert advice, progress tracking, and regulation-compliant guidance.';
+        cms.appointmentCta.bullets = [
+          'Personalized expert support',
+          'In-person consultations available at our pharmacy',
+          'Flexible appointment options, including evening slots'
+        ];
+        cms.markModified('appointmentCta');
+        updated = true;
+      }
+      if (cms.seoSettings?.metaTitle?.includes('West Chemist Clinic')) {
+        cms.seoSettings.metaTitle = cms.seoSettings.metaTitle.replace(/West Chemist Clinic/g, 'West Chemist');
+        cms.seoSettings.metaDescription = cms.seoSettings.metaDescription.replace(/West Chemist Clinic/g, 'West Chemist').replace(/specialist health advice/g, 'expert health advice');
+        cms.seoSettings.ogTitle = cms.seoSettings.ogTitle.replace(/West Chemist Clinic/g, 'West Chemist');
+        cms.seoSettings.ogDescription = cms.seoSettings.ogDescription.replace(/West Chemist Clinic/g, 'West Chemist').replace(/specialist health advice/g, 'expert health advice');
+        updated = true;
+      }
+      if (updated) {
+        await cms.save();
+      }
     }
     
     res.status(200).json({
       success: true,
-      data: content
+      data: cms
     });
   } catch (error) {
     res.status(500).json({

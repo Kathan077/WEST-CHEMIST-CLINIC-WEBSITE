@@ -13,11 +13,11 @@ const faqs = [
     },
     {
         question: "Do I need a prescription from my GP first?",
-        answer: "No. Our clinic operates a fully comprehensive service. Our specialist pharmacists are authorized to clinically assess your needs and prescribe the necessary vaccines directly during your consultation."
+        answer: "No. Our pharmacy operates a fully comprehensive service. Our qualified pharmacists are authorized to clinically assess your needs and prescribe the necessary vaccines directly during your consultation."
     },
     {
         question: "How does the travel consultation work?",
-        answer: "During your consultation, our specialist pharmacist will review your medical history, immunization records, and travel itinerary to create a personalized travel health plan tailored to your destination."
+        answer: "During your consultation, our qualified pharmacist will review your medical history, immunization records, and travel itinerary to create a personalized travel health plan tailored to your destination."
     }
 ];
 

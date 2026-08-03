@@ -301,9 +301,10 @@
     animation-delay: 0.3s;
 }
 
+/* Positioning to prevent text overlap */
 .med_stat_left {
-    top: 18%;
-    left: 10%;
+    top: 20%;
+    left: 3%;
 }
 
 .med_stat_right .med_stat_inner {
@@ -311,8 +312,8 @@
 }
 
 .med_stat_right {
-    top: 18%;
-    right: 10%;
+    top: 20%;
+    right: 3%;
 }
 
 .med_stat_bottom_left .med_stat_inner {
@@ -320,8 +321,8 @@
 }
 
 .med_stat_bottom_left {
-    bottom: 25%;
-    left: 15%;
+    bottom: 12%;
+    left: 5%;
 }
 
 .med_stat_bottom_right .med_stat_inner {
@@ -329,8 +330,8 @@
 }
 
 .med_stat_bottom_right {
-    bottom: 25%;
-    right: 15%;
+    bottom: 12%;
+    right: 5%;
 }
 
 /* --- Base Keyframes --- */
@@ -368,7 +369,7 @@
     }
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1350px) {
     .med_float_stat {
         display: none;
     }

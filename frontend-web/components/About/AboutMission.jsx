@@ -45,17 +45,17 @@ export default function AboutMission() {
     const [cards, setCards] = useState([
         {
             title: 'Mission',
-            content: 'To deliver accessible, high-quality healthcare through expert medical care, innovative solutions, and a patient-first approach that improves lives and promotes healthier communities.',
+            content: 'To deliver timely prescription dispensing, expert travel health, and accessible pharmacy services through a compassionate, patient-centered team dedicated to your family’s well-being.',
             icon: 'mission'
         },
         {
             title: 'Vision',
-            content: 'To become a trusted leader in modern healthcare by delivering exceptional care and transforming the healthcare experience for individuals and families.',
+            content: 'To remain the most trusted community pharmacy partner across every stage of life, empowering patients with expert guidance, reliable care, and total peace of mind.',
             icon: 'vision'
         },
         {
             title: 'Our Values',
-            content: 'At West Chemist Clinic, we are guided by the values of compassion, trust, excellence, and integrity, ensuring every patient receives personalized care, respect, and support at every step of their healthcare journey.',
+            content: 'At West Chemist, we are guided by compassion, clinical integrity, and community trust. We know medication management can feel overwhelming, so we treat every patient with warmth, respect, and personalized care.',
             icon: 'values'
         }
     ]);

@@ -10,7 +10,49 @@
 
 .ns_header {
     text-align: center;
-    margin-bottom: 90px;
+    margin-bottom: 70px;
+}
+
+.ns_branding_bar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    background: #ffffff;
+    padding: 22px 52px;
+    border-radius: 100px;
+    border: 2px solid #cbd5e1;
+    box-shadow: 0 16px 45px rgba(0, 90, 160, 0.1), 0 6px 18px rgba(0, 0, 0, 0.04);
+    margin-bottom: 35px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ns_branding_bar:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 22px 55px rgba(0, 90, 160, 0.14), 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+.ns_nhs_logo {
+    height: 62px;
+    width: auto;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+    display: block;
+}
+
+.ns_brand_divider {
+    width: 2px;
+    height: 54px;
+    background: #94a3b8;
+    border-radius: 2px;
+}
+
+.ns_pf_logo {
+    height: 70px;
+    width: auto;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+    display: block;
 }
 
 .ns_eyebrow {
@@ -199,6 +241,19 @@
 }
 
 @media (max-width: 768px) {
+    .ns_branding_bar {
+        padding: 16px 36px;
+        gap: 20px;
+    }
+    .ns_nhs_logo {
+        height: 48px;
+    }
+    .ns_brand_divider {
+        height: 40px;
+    }
+    .ns_pf_logo {
+        height: 54px;
+    }
     .ns_grid {
         grid-template-columns: 1fr;
         max-width: 500px;
@@ -219,6 +274,19 @@
 }
 
 @media (max-width: 425px) {
+    .ns_branding_bar {
+        padding: 12px 24px;
+        gap: 16px;
+    }
+    .ns_nhs_logo {
+        height: 38px;
+    }
+    .ns_brand_divider {
+        height: 32px;
+    }
+    .ns_pf_logo {
+        height: 42px;
+    }
     .ns_section {
         padding: 60px 20px;
     }

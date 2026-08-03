@@ -24,13 +24,13 @@ export default function MapSection() {
         allowFullScreen=""
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"
-        title="West Chemist Clinic Map Location"
+        title="West Chemist Map Location"
         className="mapIframe"
       ></iframe>
 
       {/* Floating premium detail capsule inside map view */}
       <div className="mapFloatingCard">
-        <h4 className="mapCardTitle">Northampton Clinic</h4>
+        <h4 className="mapCardTitle">West Chemist Pharmacy</h4>
         <p className="mapCardAddress">4 Kingsley Park Terrace<br />Northampton NN2 7HG, UK</p>
         <div className="mapCardButtons">
           <a 

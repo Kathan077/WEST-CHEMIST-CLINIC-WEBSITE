@@ -8,14 +8,14 @@ import './Abouthero.css';
 export default function AboutHero() {
     const heroRef = useRef(null);
     const [heroData, setHeroData] = useState({
-        title: 'About West Chemist Clinic',
-        content: 'By providing world-class medical facilities, experts, and innovation — making world-class healthcare accessible.'
+        title: 'About West Chemist',
+        content: 'Serving our communities for over 20 years, West Chemist is dedicated to providing high-quality prescription medicines, travel health, and personalized patient care. Our team of experienced pharmacists and professional healthcare staff are here to simplify medication management and support you and your family through all stages of life.'
     });
     const [stats, setStats] = useState([
-        { title: '1946+', content: 'Patients Helped' },
-        { title: '1451+', content: 'Specialists' },
-        { title: '15+', content: 'Years Experience' },
-        { title: '1500+', content: 'Successful Surgeries' }
+        { title: '20+', content: 'Years Experience' },
+        { title: '15,000+', content: 'Prescriptions Dispensed' },
+        { title: '10,000+', content: 'Patients Served' },
+        { title: '5,000+', content: 'Vaccinations Administered' }
     ]);
 
     useEffect(() => {
@@ -47,8 +47,8 @@ export default function AboutHero() {
         const handleMouseMove = (e) => {
             if (!heroRef.current) return;
             const elements = heroRef.current.querySelectorAll('.med_float_stat');
-            const x = (e.clientX / window.innerWidth - 0.5) * 40;
-            const y = (e.clientY / window.innerHeight - 0.5) * 40;
+            const x = (e.clientX / window.innerWidth - 0.5) * 15;
+            const y = (e.clientY / window.innerHeight - 0.5) * 15;
 
             elements.forEach((el, index) => {
                 const multiplier = index % 2 === 0 ? 1 : -1;

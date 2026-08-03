@@ -546,10 +546,10 @@ export default function AdminAppointmentsPage() {
   const [isMobile,     setIsMobile]      = useState(false);
 
   const CLINICS = [
-    "West Chemist — Northampton Clinic",
-    "West Chemist — Online Virtual Clinic"
+    "West Chemist — Northampton Branch",
+    "West Chemist — East London Consultation Hub"
   ];
-  const [selectedBranch, setSelectedBranch] = useState("West Chemist — Northampton Clinic");
+  const [selectedBranch, setSelectedBranch] = useState("West Chemist — Northampton Branch");
 
   useEffect(() => {
     const val = localStorage.getItem('adminSelectedBranch');
@@ -790,8 +790,8 @@ export default function AdminAppointmentsPage() {
                   boxShadow: 'var(--sh)'
                 }}
               >
-                <option value="West Chemist — Northampton Clinic">Northampton Clinic</option>
-                <option value="West Chemist — Online Virtual Clinic">Online Virtual Clinic</option>
+                <option value="West Chemist — Northampton Branch">Northampton Branch</option>
+                <option value="West Chemist — East London Consultation Hub">East London Consultation Hub</option>
               </select>
             </div>
             <div className="adm_live_dot">Live</div>

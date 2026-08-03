@@ -7,13 +7,13 @@ import './WeightLossCTA.css';
 
 const DEFAULT_WL = {
     title: 'Take the First Step Toward Better Health',
-    desc: 'Looking to achieve your weight loss goals? Begin your journey today with expert guidance and personalized care from our healthcare professionals.',
+    desc: 'Looking to achieve your weight loss goals? Begin your journey today with expert guidance and personalized care from our pharmacy team.',
     image: '/images/e0dc23d6-3cb0-4a6a-9076-058313605f8d.png',
     ctaText: 'Book Now',
     ctaUrl: '/book-appointment',
     bullets: [
         'Personalized expert support',
-        'In-person or secure online consultations available',
+        'In-person consultations available at our pharmacy',
         'Flexible appointment options, including evening slots'
     ]
 };
@@ -47,13 +47,20 @@ export default function WeightLossCTA() {
                 const json = await res.json();
                 if (json.success && json.data && json.data.appointmentCta) {
                     const sec = json.data.appointmentCta;
+                    const cleanedDesc = (sec.desc || DEFAULT_WL.desc)
+                        .replace(/clinical team/gi, 'pharmacy team')
+                        .replace(/online/gi, 'in-person');
+                    const cleanedBullets = (sec.bullets && sec.bullets.length > 0)
+                        ? sec.bullets.map(b => b.replace(/In-person or secure online consultations available/gi, 'In-person consultations available at our pharmacy').replace(/online/gi, 'in-person'))
+                        : DEFAULT_WL.bullets;
+
                     setWlData({
                         title: sec.title || DEFAULT_WL.title,
-                        desc: sec.desc || DEFAULT_WL.desc,
+                        desc: cleanedDesc,
                         image: sec.image || DEFAULT_WL.image,
                         ctaText: sec.ctaText || DEFAULT_WL.ctaText,
                         ctaUrl: sec.ctaUrl || DEFAULT_WL.ctaUrl,
-                        bullets: sec.bullets && sec.bullets.length > 0 ? sec.bullets : DEFAULT_WL.bullets
+                        bullets: cleanedBullets
                     });
                 }
             } catch (err) {

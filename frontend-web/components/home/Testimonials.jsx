@@ -36,7 +36,7 @@ export default function Testimonials() {
     const [testData, setTestData] = useState({
         title: 'Trusted by our Community',
         subtitle: 'Patient Feedback',
-        desc: 'Experience clinical excellence delivered with genuine care. Read what our patients say about their experience at West Chemist Clinic.',
+        desc: 'Experience pharmaceutical care delivered with genuine commitment. Read what our patients say about their experience at West Chemist.',
         reviews: DEFAULT_REVIEWS
     });
 

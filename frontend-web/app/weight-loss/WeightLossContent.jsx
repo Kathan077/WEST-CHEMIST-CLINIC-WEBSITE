@@ -12,7 +12,7 @@ const FAQ_ITEMS = [
     },
     {
         question: "Do I need a GP referral to start the Weight Loss program?",
-        answer: "No GP referral is required. Our GPhC-registered clinical pharmacists perform full clinical assessments, prescribe, and dispense the appropriate medication directly within our clinic as part of our private weight management service."
+        answer: "No GP referral is required. Our GPhC-registered clinical pharmacists perform full clinical assessments, prescribe, and dispense the appropriate medication directly within our pharmacy as part of our private weight management service."
     },
     {
         question: "Who is eligible for the Weight Loss injections?",
@@ -87,9 +87,9 @@ export default function WeightLossContent() {
             <section className="wl_hero_banner">
                 <div className="wl_hero_container">
                     <div className="wl_hero_info">
-                        <span className="wl_hero_tag">Specialist Clinic</span>
+                        <span className="wl_hero_tag">Pharmacy Service</span>
                         <h1 className="wl_hero_title">
-                            Clinically Proven <span>Weight Loss Clinic</span>
+                            Clinically Supervised <span>Weight Loss Program</span>
                         </h1>
                         <p className="wl_hero_description">
                             Achieve safe, sustainable weight reduction with next-generation medical treatments under professional clinical supervision. We offer tailored Wegovy and Mounjaro programs designed for your biology.

@@ -22,7 +22,7 @@ const fallbackBlogs = {
   <li><strong>Rabies:</strong> A fatal viral infection transmitted via animal bites. Recommended for long-term travelers, outdoor explorers, and those visiting remote areas.</li>
 </ul>
 <h3>When should you get vaccinated?</h3>
-<p>Most vaccines require <strong>4 to 6 weeks</strong> to become fully effective. Some require multiple doses spaced weeks apart. Therefore, it is highly recommended to consult our travel clinic specialists at West Chemist Clinic at least a month before your departure date.</p>`,
+<p>Most vaccines require <strong>4 to 6 weeks</strong> to become fully effective. Some require multiple doses spaced weeks apart. Therefore, it is highly recommended to consult our qualified pharmacists at West Chemist at least a month before your departure date.</p>`,
         images: ["https://images.unsplash.com/photo-1500835595300-478db374780d?w=1200&q=80"],
         date: new Date()
     },
@@ -44,7 +44,7 @@ const fallbackBlogs = {
 <ol>
   <li><strong>Adopt a DASH diet:</strong> Focus on whole grains, fruits, vegetables, and low-fat dairy while minimizing sodium intake.</li>
   <li><strong>Exercise regularly:</strong> Aim for at least 150 minutes of moderate-intensity aerobic exercise per week.</li>
-  <li><strong>Monitor at home:</strong> Keep track of your blood pressure using a validated home monitor or visit West Chemist Clinic for a professional screening.</li>
+  <li><strong>Monitor at home:</strong> Keep track of your blood pressure using a validated home monitor or visit West Chemist for a professional screening.</li>
 </ol>
 <p>If lifestyle modifications are insufficient, our prescribing pharmacists can guide you on appropriate antihypertensive medications to keep your cardiovascular health on track.</p>`,
         images: ["https://images.unsplash.com/photo-1628177142898-93e36e4e3a50?w=1200&q=80"],
@@ -64,7 +64,7 @@ const fallbackBlogs = {
 <h3>Clinical efficacy</h3>
 <p>Clinical trials have shown that when combined with a reduced-calorie diet and increased physical activity, participants lost an average of 15% of their body weight over a 68-week period. This significant weight reduction can dramatically lower risks for type 2 diabetes, high blood pressure, and joint pain.</p>
 <h3>Are you a candidate?</h3>
-<p>Wegovy is typically recommended for adults with a Body Mass Index (BMI) of 30 or higher (obese), or 27 or higher (overweight) with at least one weight-related medical condition such as hypertension or high cholesterol. Visit our weight management clinic at West Chemist Clinic for a comprehensive assessment to discuss a tailored treatment plan.</p>`,
+<p>Wegovy is typically recommended for adults with a Body Mass Index (BMI) of 30 or higher (obese), or 27 or higher (overweight) with at least one weight-related medical condition such as hypertension or high cholesterol. Visit our weight management service at West Chemist for a comprehensive assessment to discuss a tailored treatment plan.</p>`,
         images: ["https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=1200&q=80"],
         date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000)
     },
@@ -82,7 +82,7 @@ const fallbackBlogs = {
   <li><strong>High precision:</strong> The clinician maintains a direct line of sight throughout, ensuring safety.</li>
   <li><strong>Immediate relief:</strong> Blockages are resolved quickly, restoring normal hearing and relieving ear pressure instantly.</li>
 </ol>
-<p>At West Chemist Clinic, our accredited pharmacists perform gentle microsuction earwax removal in our dedicated clinical rooms. Book your consultation today to regain clear hearing.</p>`,
+<p>At West Chemist, our accredited pharmacists perform gentle microsuction earwax removal in our dedicated consultation rooms. Book your consultation today to regain clear hearing.</p>`,
         images: ["https://images.unsplash.com/photo-1559839734-2b71f1536783?w=1200&q=80"],
         date: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000)
     },
@@ -102,7 +102,7 @@ const fallbackBlogs = {
 <h3>3. Prioritize quality sleep</h3>
 <p>During sleep, your body releases cytokines, which are proteins that help target infection and inflammation. A consistent 7 to 8 hours of sleep per night is foundational to physical wellness.</p>
 <h3>4. Protect yourself with vaccinations</h3>
-<p>The most effective shield against seasonal viruses is vaccination. Getting your annual flu vaccine dramatically reduces your risk of catching and spreading the virus. Drop by West Chemist Clinic to receive your quick and convenient flu shot.</p>`,
+<p>The most effective shield against seasonal viruses is vaccination. Getting your annual flu vaccine dramatically reduces your risk of catching and spreading the virus. Drop by West Chemist to receive your quick and convenient flu shot.</p>`,
         images: ["https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=1200&q=80"],
         date: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000)
     }
@@ -269,8 +269,8 @@ export default function BlogDetail() {
                         <aside className="bd_sidebar">
                             <div className="bd_booking_card">
                                 <div className="bd_card_header">
-                                    <span className="bd_price_label">Premium Clinical Care</span>
-                                    <h3 className="bd_card_service_title">West Chemist Clinic</h3>
+                                    <span className="bd_price_label">Premium Pharmacy Care</span>
+                                    <h3 className="bd_card_service_title">West Chemist</h3>
                                 </div>
                                 <div className="bd_card_meta">
                                     <div className="bd_meta_item">

@@ -8,8 +8,8 @@ import Footer from '../../components/layout/Footer';
 import './Booking.css';
 
 const CLINICS = [
-    "West Chemist — Northampton Clinic",
-    "West Chemist — Online Virtual Clinic"
+    "West Chemist — Northampton Branch",
+    "West Chemist — East London Consultation Hub"
 ];
 
 const SERVICES = [
@@ -361,7 +361,7 @@ function BookingPageInner() {
         const isFake = /fake|dummy|test|sample|fail/i.test(fileName);
 
         // Push initial high-tech boot logs
-        setTimeout(() => pushLog("Initializing AI scanner GPhC-v4.2..."), 100);
+        setTimeout(() => pushLog("Initializing verification scanner GPhC-v4.2..."), 100);
         setTimeout(() => pushLog("Mounting visual extraction engines..."), 300);
 
         // Start frontend scanning visual flow (matching beautiful timer animations)
@@ -921,7 +921,7 @@ function BookingPageInner() {
                                                         Back to Profile
                                                     </button>
                                                     <button className="bk_btn_primary" disabled={!formData.fileUploaded} onClick={startVerification}>
-                                                        Initiate AI Scan & Validate
+                                                        Initiate Verification & Validate
                                                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
                                                             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                                                         </svg>

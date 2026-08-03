@@ -49,8 +49,8 @@ export default function ContactHero() {
         </motion.h1>
         
         <motion.p variants={itemVariants} className="subtitle">
-          Experience premium care with West Chemist Clinic. 
-          Reach out to our experts and discover how we can help you achieve your wellness goals.
+          Experience premium care with West Chemist. 
+          Reach out to our qualified team and discover how we can help you achieve your wellness goals.
         </motion.p>
       </motion.div>
     </div>

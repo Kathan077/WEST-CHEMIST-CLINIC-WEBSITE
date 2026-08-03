@@ -78,7 +78,7 @@ export default function AboutWhy() {
                         </svg>
                     </div>
                     <div className="med_why_text">
-                        <h4>Clinical Excellence</h4>
+                        <h4>Pharmaceutical Excellence</h4>
                         <p className="med_why_desc">Safe, evidence-based care delivered by qualified professionals.</p>
                     </div>
                 </div>

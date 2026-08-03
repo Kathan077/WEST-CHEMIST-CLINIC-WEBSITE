@@ -6,17 +6,17 @@ import { API_URL, getImageUrl } from '@/config';
 import './AboutSection.css';
 
 const DEFAULT_ABOUT = {
-    title: 'Why Choose West Chemist Clinic?',
-    subtitle: 'WHO WE ARE',
-    desc: 'West Chemist Clinic has proudly served the community for over 20 years, providing trusted healthcare services with a strong focus on prescription medicines, vaccinations, and personalized patient care. Our experienced healthcare professionals are committed to delivering timely, reliable, and compassionate support for every patient.',
+    title: 'Why Choose West Chemist?',
+    subtitle: 'YOUR TRUSTED COMMUNITY PHARMACY',
+    desc: 'With over two decades of dedicated community service, West Chemist specializes in the timely provision of prescription medicines, travel health, and comprehensive patient care. We understand that managing health and medications can feel daunting — our team of experienced pharmacists and professional pharmacy staff across Northampton and East London are here to support you and your family through all stages of life.',
     image: '/images/about-pharmacist.jpg',
     yearsExperience: '20+',
-    experienceLabel: 'Years of Care',
+    experienceLabel: 'Years of Dedicated Patient Care',
     features: [
-        { icon: 'award', title: 'Accredited Experience', desc: 'Over 20 years of trusted healthcare experience in Northampton, UK' },
-        { icon: 'users', title: 'Professional Team', desc: 'Experienced pharmacists and dedicated healthcare professionals' },
-        { icon: 'check-square', title: 'Broad Offerings', desc: 'Prescription medicines, travel vaccinations, weight management, and specialist services' },
-        { icon: 'heart', title: 'Focused Care', desc: 'Patient-focused care designed around your healthcare needs' }
+        { icon: 'award', title: 'Accredited Experience', desc: 'Over 20 years of trusted healthcare experience across Northampton & East London' },
+        { icon: 'users', title: 'Experienced Team', desc: 'Qualified pharmacists and healthcare staff dedicated to your well-being' },
+        { icon: 'check-square', title: 'Timely Prescriptions', desc: 'Fast, reliable prescription dispensing and professional pharmacy services' },
+        { icon: 'heart', title: 'Family Support', desc: 'Personalized guidance supporting you and your family through all stages of life' }
     ],
     ctaText: 'More About Us',
     ctaUrl: '/about',
@@ -89,11 +89,18 @@ export default function AboutSection() {
                         ? sec.features.map(f => ({ icon: f.icon, text: f.desc || f.title }))
                         : DEFAULT_ABOUT.features;
 
+                    const isLogoOrSlide = sec.image && (
+                        sec.image.includes('pMTyQAHrivzPxrADq') || 
+                        sec.image.includes('passport') || 
+                        sec.image.includes('8df30593')
+                    );
+                    const validImage = (!sec.image || isLogoOrSlide) ? DEFAULT_ABOUT.image : sec.image;
+
                     setAboutData({
                         title: sec.title || DEFAULT_ABOUT.title,
                         subtitle: sec.subtitle || DEFAULT_ABOUT.subtitle,
                         desc: sec.desc || DEFAULT_ABOUT.desc,
-                        image: sec.image || DEFAULT_ABOUT.image,
+                        image: validImage,
                         yearsExperience: sec.yearsExperience || DEFAULT_ABOUT.yearsExperience,
                         experienceLabel: sec.experienceLabel || DEFAULT_ABOUT.experienceLabel,
                         features: formattedFeatures,
@@ -155,8 +162,8 @@ export default function AboutSection() {
                         <div className="img_ring img_ring_2"></div>
 
                         <img
-                             src={getImageUrl(aboutData.image) || null}
-                             alt="West Chemist Clinic pharmacist"
+                             src={aboutData.image && aboutData.image.includes('uploads') ? getImageUrl(aboutData.image) : '/images/about-pharmacist.jpg'}
+                             alt="West Chemist pharmacist"
                              className="about_img"
                         />
 
@@ -172,11 +179,11 @@ export default function AboutSection() {
                     </div>
 
                     <h2 className="about_title ab_reveal" style={{ '--delay': '160ms' }}>
-                        {aboutData.title?.split('West Chemist Clinic')[0]}
-                        {aboutData.title?.includes('West Chemist Clinic') && (
-                            <span className="about_title_accent">West Chemist Clinic</span>
+                        {aboutData.title?.split('West Chemist')[0]}
+                        {aboutData.title?.includes('West Chemist') && (
+                            <span className="about_title_accent">West Chemist</span>
                         )}
-                        {aboutData.title?.split('West Chemist Clinic')[1]}
+                        {aboutData.title?.split('West Chemist')[1]}
                     </h2>
 
                     <p className="about_desc ab_reveal" style={{ '--delay': '240ms' }}>

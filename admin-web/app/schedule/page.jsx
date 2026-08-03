@@ -108,11 +108,11 @@ export default function SchedulePage() {
   };
 
   const CLINICS = [
-    "West Chemist — Northampton Clinic",
-    "West Chemist — Online Virtual Clinic"
+    "West Chemist — Northampton Branch",
+    "West Chemist — East London Consultation Hub"
   ];
 
-  const [selectedBranch, setSelectedBranch] = useState("West Chemist — Northampton Clinic");
+  const [selectedBranch, setSelectedBranch] = useState("West Chemist — Northampton Branch");
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 800);

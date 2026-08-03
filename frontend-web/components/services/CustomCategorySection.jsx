@@ -34,7 +34,7 @@ export default function CustomCategorySection({ categoryName, services }) {
         <section className="ps_section" style={{ background: '#f8fafc', borderTop: '1px solid #f1f5f9' }}>
             <div className="ps_container">
                 <div className="ps_header">
-                    <span className="ps_eyebrow">Clinical Services</span>
+                    <span className="ps_eyebrow">Pharmacy Services</span>
                     <h2 className="ps_title">{categoryName}</h2>
                     <p className="ps_desc">Explore our professional and certified healthcare solutions under {categoryName}.</p>
                 </div>

@@ -82,8 +82,8 @@ export default function ServiceBenefits() {
             <div className="sb_container">
                 <div className="sb_header">
                     <span className="sb_eyebrow">Excellence in Care</span>
-                    <h2 className="sb_title">Why Choose Our Clinic?</h2>
-                    <p className="sb_subtitle">We combine clinical expertise with patient-first convenience.</p>
+                    <h2 className="sb_title">Why Choose Our Pharmacy?</h2>
+                    <p className="sb_subtitle">We combine pharmaceutical expertise with patient-first convenience.</p>
                 </div>
                 <div className="sb_grid" ref={listRef}>
                     {benefits.map((benefit, idx) => (

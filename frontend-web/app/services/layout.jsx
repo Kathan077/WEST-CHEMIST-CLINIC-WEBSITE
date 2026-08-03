@@ -1,6 +1,6 @@
 export const metadata = {
-    title: 'Professional Clinical Services | West Chemist Clinic',
-    description: 'Explore our range of NHS and private clinical services, from vaccinations to chronic condition management.',
+    title: 'Professional Pharmacy Services | West Chemist',
+    description: 'Explore our range of NHS and private pharmacy services, from vaccinations to health checks and prescription dispensing.',
 };
 
 export default function ServicesLayout({ children }) {

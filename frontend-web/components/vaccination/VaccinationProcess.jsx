@@ -6,7 +6,7 @@ const processSteps = [
     {
         number: "01",
         title: "Clinical Consultation",
-        description: "Review your travel itinerary, medical history, and risk factors with our specialist pharmacists to determine the exact vaccines you need."
+        description: "Review your travel itinerary, medical history, and risk factors with our qualified pharmacists to determine the exact vaccines you need."
     },
     {
         number: "02",
@@ -46,7 +46,7 @@ const VaccinationProcess = () => {
         <section className="vp_section" ref={sectionRef}>
             <div className="vp_container">
                 <div className="vp_header vp_reveal">
-                    <span className="vp_eyebrow">Clinic Protocol</span>
+                    <span className="vp_eyebrow">Pharmacy Protocol</span>
                     <h2 className="vp_title">Seamless Immunity.</h2>
                     <p className="vp_lead">Getting protected shouldn't be complicated. Our 3-step streamlined clinical process ensures you get the right vaccines, fast.</p>
                 </div>

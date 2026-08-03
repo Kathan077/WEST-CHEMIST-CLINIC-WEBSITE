@@ -202,7 +202,7 @@ const Navbar = () => {
                     <Link href="/" onClick={handleLinkClick}>
                         <img
                             src="/images/ddfd45c4-3070-498a-9e4e-68f1fb48ad3e.png"
-                            alt="West Chemist Clinic Logo"
+                            alt="West Chemist Logo"
                             className="logo_img"
                         />
                     </Link>
@@ -211,7 +211,7 @@ const Navbar = () => {
                 <div className={`nav_links ${isOpen ? 'active' : ''}`}>
                     {/* Mobile Drawer Header */}
                     <div className="drawer_header">
-                        <img src="/images/ddfd45c4-3070-498a-9e4e-68f1fb48ad3e.png" alt="West Chemist Clinic" className="drawer_logo" />
+                        <img src="/images/ddfd45c4-3070-498a-9e4e-68f1fb48ad3e.png" alt="West Chemist" className="drawer_logo" />
                         <div className="close_drawer" onClick={() => setIsOpen(false)}>
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                                 <line x1="18" y1="6" x2="6" y2="18"></line>

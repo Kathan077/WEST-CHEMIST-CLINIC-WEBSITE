@@ -18,13 +18,13 @@ export default function AboutImpact() {
     const [hasIntersected, setHasIntersected] = useState(false);
     const [impactData, setImpactData] = useState({
         title: 'Our Impact in Numbers',
-        content: 'At West Chemist Clinic, we go beyond treatment.',
+        content: 'At West Chemist, we go beyond dispensing medicines to provide dedicated community healthcare.',
         icon: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&q=90',
         stat1_num: '15',
         stat1_label: 'Years of Excellence',
         stat1_suffix: '+',
-        stat2_num: '50',
-        stat2_label: 'Certified Doctors & Specialists',
+        stat2_num: '10',
+        stat2_label: 'Qualified Pharmacists & Staff',
         stat2_suffix: '+',
         stat3_num: '99',
         stat3_label: 'Patient Satisfaction',
@@ -44,13 +44,13 @@ export default function AboutImpact() {
                     if (item) {
                         setImpactData({
                             title: item.title || 'Our Impact in Numbers',
-                            content: item.content || 'At West Chemist Clinic, we go beyond treatment.',
+                            content: item.content || 'At West Chemist, we go beyond dispensing medicines to provide dedicated community healthcare.',
                             icon: item.icon || 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&q=90',
                             stat1_num: item.metadata?.stat1_num || '15',
                             stat1_label: item.metadata?.stat1_label || 'Years of Excellence',
                             stat1_suffix: item.metadata?.stat1_suffix || '+',
-                            stat2_num: item.metadata?.stat2_num || '50',
-                            stat2_label: item.metadata?.stat2_label || 'Certified Doctors & Specialists',
+                            stat2_num: item.metadata?.stat2_num || '10',
+                            stat2_label: item.metadata?.stat2_label || 'Qualified Pharmacists & Staff',
                             stat2_suffix: item.metadata?.stat2_suffix || '+',
                             stat3_num: item.metadata?.stat3_num || '99',
                             stat3_label: item.metadata?.stat3_label || 'Patient Satisfaction',

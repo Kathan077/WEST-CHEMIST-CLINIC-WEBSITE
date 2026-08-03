@@ -40,10 +40,10 @@ const serviceData = {
         features: ["Structured Pharmacist-Led Consultations", "Targeted Side-Effect Management", "Device Technique & Inhaler Training", "Improved Medication Adherence", "Direct Integration with NHS Care Pathways"]
     },
     "travel-clinic": {
-        title: "Specialist Travel Clinic",
+        title: "Travel Health Service",
         cat: "Travel Health & Vaccinations",
         img: "https://images.unsplash.com/photo-1500835595300-478db374780d?w=1200&q=80",
-        desc: "Embark on international travel with complete peace of mind. Our specialist travel clinic provides destination-specific risk assessments, individualized vaccination protocols, malaria prophylaxis, and certified health advice tailored to your medical history and itinerary.",
+        desc: "Embark on international travel with complete peace of mind. Our travel health service provides destination-specific risk assessments, individualized vaccination protocols, malaria prophylaxis, and certified health advice tailored to your medical history and itinerary.",
         duration: "30 Mins",
         features: ["Pre-Travel Destination Risk Assessment", "Comprehensive Vaccine Portfolio", "Malaria Prophylaxis Prescriptions", "Certified Yellow Fever Vaccination Centre", "Tailored Health & Hygiene Advice"]
     },
@@ -277,11 +277,11 @@ const serviceData = {
         img: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=1200&q=80",
         desc: "Safeguard against the Chikungunya virus, a mosquito-borne illness that causes severe, debilitating joint pain and fever. This advanced, recently approved vaccine is recommended for travelers visiting active transmission areas in tropical and subtropical regions.",
         duration: "15 Mins",
-        features: ["Advanced Mosquito-Borne Disease Shield", "Single-Dose Injection Protocol", "Rapid Antibody Development", "Comprehensive Tropical Disease Consultation", "Administered by Travel Clinic Specialists"]
+        features: ["Advanced Mosquito-Borne Disease Shield", "Single-Dose Injection Protocol", "Rapid Antibody Development", "Comprehensive Tropical Disease Consultation", "Administered by Qualified Pharmacists"]
     },
     "hpv-vaccine": {
         title: "Human Papillomavirus (HPV) Vaccine",
-        cat: "Specialist Immunization",
+        cat: "Routine Immunization",
         img: "https://images.unsplash.com/photo-1579154236594-c199f3768fb9?w=1200&q=80",
         desc: "Utilizing the premium Gardasil 9 vaccine, we provide comprehensive protection against nine strains of HPV. This vaccination is highly effective in preventing HPV-associated cancers, including cervical, throat, and penile cancers, as well as genital warts.",
         duration: "20 Mins",

@@ -27,13 +27,13 @@ export default function ServicesHero() {
 
             <div className="ser_hero_container">
                 <div className="ser_hero_content">
-                    <span className="ser_hero_tag">Clinic Services</span>
+                    <span className="ser_hero_tag">Pharmacy Services</span>
                     <h1 className="ser_hero_title">
                         Expert Care, <br />
                         <span className="ser_title_gradient">Personalised</span> for You
                     </h1>
                     <p className="ser_hero_description">
-                        From primary health concerns to advanced wellness programs, we provide professional medical services with a focus on patient comfort and clinical excellence.
+                        From primary health concerns to advanced wellness programs, we provide professional pharmaceutical services with a focus on patient comfort and healthcare excellence.
                     </p>
                     <div className="ser_hero_badges">
                         <div className="ser_badge">

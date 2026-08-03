@@ -490,8 +490,8 @@ function TrackBookingContent() {
                                         {/* Top Header of Ticket */}
                                         <div className="ticket_top_header">
                                             <div className="ticket_top_text_group">
-                                                <div className="ticket_top_title">West Chemist Clinic</div>
-                                                <div className="ticket_top_subtitle">Secure Medical Booking</div>
+                                                <div className="ticket_top_title">West Chemist</div>
+                                                <div className="ticket_top_subtitle">Secure Appointment Booking</div>
                                             </div>
                                             <div className={`status_badge ${apt.isRescheduleNeeded ? 'rejected' : (apt.isRescheduleRequested ? 'pending' : dynamicStatus)}`}>
                                                 <span className="status_dot"></span>

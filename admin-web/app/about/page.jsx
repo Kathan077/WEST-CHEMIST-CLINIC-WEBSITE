@@ -718,7 +718,7 @@ export default function AboutEditorPage() {
                       <input
                         type="text"
                         className="abt_input"
-                        placeholder="e.g. About West Chemist Clinic"
+                        placeholder="e.g. About West Chemist"
                         value={heroForm.title}
                         onChange={(e) => setHeroForm({ ...heroForm, title: e.target.value })}
                         required
@@ -883,7 +883,7 @@ export default function AboutEditorPage() {
                           <input
                             type="text"
                             className="abt_input"
-                            placeholder="e.g. Patients Helped or Specialists"
+                            placeholder="e.g. Prescriptions Dispensed or Patients Served"
                             value={newStat.content}
                             onChange={(e) => setNewStat({ ...newStat, content: e.target.value })}
                             required

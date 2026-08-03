@@ -43,7 +43,7 @@ export default function Footer() {
                     {/* COL 1: About & Logo */}
                     <div className="f_col">
                         <Link href="/" className="f_logo">
-                            <img src="/images/ddfd45c4-3070-498a-9e4e-68f1fb48ad3e.png" alt="West Chemist Clinic" />
+                            <img src="/images/ddfd45c4-3070-498a-9e4e-68f1fb48ad3e.png" alt="West Chemist" />
                         </Link>
                         <p className="f_desc">
                             Your trusted local pharmacy and healthcare provider in Northampton, United Kingdom.
@@ -62,7 +62,7 @@ export default function Footer() {
                         <h3 className="f_col_title">Important Links</h3>
                         <ul className="f_links">
                             <li><Link href="/">Home</Link></li>
-                            <li><Link href="/about">About Our Clinic</Link></li>
+                            <li><Link href="/about">About Us</Link></li>
                             <li><Link href="/services">Full Services List</Link></li>
                             <li><Link href="/services/wegovy">Weight Loss Program</Link></li>
                             <li><Link href="/book-appointment">Book an Appointment</Link></li>
@@ -98,7 +98,7 @@ export default function Footer() {
 
                     {/* COL 4: Opening Hours */}
                     <div className="f_col">
-                        <h3 className="f_col_title">Clinic Hours</h3>
+                        <h3 className="f_col_title">Opening Hours</h3>
                         <div className="f_hours">
                             <div className="hour_row">
                                 <span className="day">Mon - Fri</span>
@@ -121,7 +121,7 @@ export default function Footer() {
             <div className="footer_bottom">
                 <div className="f_bottom_container">
                     <p className="copyright">
-                        &copy; {new Date().getFullYear()} West Chemist Clinic. All rights reserved.
+                        &copy; {new Date().getFullYear()} West Chemist. All rights reserved.
                     </p>
                     <div className="f_legal_links">
                         <Link href="/privacy">Privacy Policy</Link>

@@ -10,8 +10,8 @@ import Footer from '../../components/layout/Footer';
 import '../book-appointment/Booking.css';
 
 const CLINICS = [
-    "West Chemist — Northampton Clinic",
-    "West Chemist — Online Virtual Clinic"
+    "West Chemist — Northampton Branch",
+    "West Chemist — East London Consultation Hub"
 ];
 
 const SERVICES = [
@@ -266,8 +266,8 @@ function BookingSuccessContent() {
     // SearchParams fallbacks as initial state
     const [fullName, setFullName] = useState(searchParams.get('fullName') || 'Patient');
     const [mobile, setMobile] = useState(searchParams.get('mobile') || '');
-    const [service, setService] = useState(searchParams.get('service') || 'Clinical Service');
-    const [clinic, setClinic] = useState(searchParams.get('clinic') || 'West Chemist Clinic');
+    const [service, setService] = useState(searchParams.get('service') || 'Pharmacy Service');
+    const [clinic, setClinic] = useState(searchParams.get('clinic') || 'West Chemist');
     const [date, setDate] = useState(searchParams.get('date') || '');
     const [time, setTime] = useState(searchParams.get('time') || '');
     const [patientId, setPatientId] = useState(searchParams.get('patientId') || '57849182');
@@ -279,7 +279,7 @@ function BookingSuccessContent() {
 
     // Reschedule & Edit details states
     const [isEditing, setIsEditing] = useState(false);
-    const [editClinic, setEditClinic] = useState(searchParams.get('clinic') || 'West Chemist Clinic');
+    const [editClinic, setEditClinic] = useState(searchParams.get('clinic') || 'West Chemist');
     const [editService, setEditService] = useState(searchParams.get('service') || 'Clinical Service');
     const [editDate, setEditDate] = useState(searchParams.get('date') || '');
     const [editTime, setEditTime] = useState(searchParams.get('time') || '');
@@ -790,8 +790,8 @@ function BookingSuccessContent() {
                                 <div className="bk_ticket" style={{ maxWidth: '480px' }}>
                                     <div className="bk_ticket_header">
                                         <div className="bk_ticket_header_left">
-                                            <div className="bk_ticket_super">Clinical Ticket</div>
-                                            <div className="bk_ticket_title">West Chemist Clinic</div>
+                                            <div className="bk_ticket_super">Service Ticket</div>
+                                            <div className="bk_ticket_title">West Chemist</div>
                                         </div>
                                         <div className="bk_ticket_status" style={{ background: statusBg, borderColor: statusBorder }}>
                                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={statusColor} strokeWidth="2.5">
@@ -881,7 +881,7 @@ function BookingSuccessContent() {
                                                     </svg>
                                                 </div>
                                                 <div className="bk_checklist_content">
-                                                    <div className="bk_checklist_headline">AI Compliance Pre-Screen</div>
+                                                    <div className="bk_checklist_headline">Compliance Pre-Screen</div>
                                                     <div className="bk_checklist_sub">MRZ extraction and tampering checks completed</div>
                                                 </div>
                                             </div>

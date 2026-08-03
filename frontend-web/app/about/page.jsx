@@ -10,8 +10,8 @@ import AboutBranches from '../../components/About/Branches';
 import AboutFaq from '../../components/About/AboutFaq';
 
 export const metadata = {
-    title: 'About Us - West Chemist Clinic',
-    description: 'Learn more about West Chemist Clinic, our mission, and our state-of-the-art healthcare facilities.',
+    title: 'About Us - West Chemist',
+    description: 'Learn more about West Chemist, our mission, and our dedicated community pharmacy services.',
 };
 
 export default function AboutPage() {

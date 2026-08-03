@@ -454,10 +454,10 @@ export default function AdminPatientsPage() {
   };
 
   const CLINICS = [
-    "West Chemist — Northampton Clinic",
-    "West Chemist — Online Virtual Clinic"
+    "West Chemist — Northampton Branch",
+    "West Chemist — East London Consultation Hub"
   ];
-  const [selectedBranch, setSelectedBranch] = useState("West Chemist — Northampton Clinic");
+  const [selectedBranch, setSelectedBranch] = useState("West Chemist — Northampton Branch");
 
   useEffect(() => {
     const val = localStorage.getItem('adminSelectedBranch');
@@ -907,8 +907,8 @@ export default function AdminPatientsPage() {
                 boxShadow: 'var(--sh)'
               }}
             >
-              <option value="West Chemist — Northampton Clinic">Northampton Clinic</option>
-              <option value="West Chemist — Online Virtual Clinic">Online Virtual Clinic</option>
+              <option value="West Chemist — Northampton Branch">Northampton Branch</option>
+              <option value="West Chemist — East London Consultation Hub">East London Consultation Hub</option>
             </select>
           </div>
         </header>

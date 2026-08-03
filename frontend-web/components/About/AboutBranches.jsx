@@ -41,7 +41,7 @@ const AboutBranches = () => {
                     </div>
 
                     <div className="br_info_block reveal_on_scroll">
-                        <span className="br_eyebrow">Our Clinical Presence</span>
+                        <span className="br_eyebrow">Our Pharmacy Location</span>
                         <h2 className="br_title">Expert Care, <br />Near You.</h2>
                         <p className="br_lead">
                             Experience healthcare at our state-of-the-art facility in Northampton. Designed for comfort, precision, and privacy.

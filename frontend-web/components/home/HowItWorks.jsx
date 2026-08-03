@@ -20,7 +20,7 @@ const DEFAULT_HOW = {
             stepNumber: '02',
             icon: 'shield',
             title: 'Security Verification',
-            desc: 'Complete a secure, GPhC-compliant identity check by uploading your passport or driving licence for an automated visual AI scan.'
+            desc: 'Complete a secure, GPhC-compliant identity check by uploading your passport or driving licence for automated identity verification.'
         },
         {
             stepNumber: '03',

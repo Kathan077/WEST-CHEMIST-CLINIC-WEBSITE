@@ -14,7 +14,7 @@ const resolveImage = (src) => {
 const DEFAULT_BRANCHES = [
     {
         _id: 'default-flagship',
-        title: "Northampton Clinic",
+        title: "Northampton Branch",
         content: "Our primary healthcare hub offering comprehensive clinical services, prescriptions, and expert advice in a state-of-the-art facility.",
         icon: "",
         metadata: {
@@ -28,18 +28,18 @@ const DEFAULT_BRANCHES = [
             stat3_num: "100%",
             stat3_label: "Quality Care",
             action_url: "https://maps.google.com/?q=4+Kingsley+Park+Terrace,+Northampton+NN2+7HG,+United+Kingdom",
-            action_text: "View Clinic & Directions"
+            action_text: "View Branch & Directions"
         }
     },
     {
         _id: 'default-virtual',
-        title: "UK Online Virtual Clinic",
-        content: "Consult with our licensed pharmacists and health experts securely via private, high-definition video calls from home.",
+        title: "East London Consultation Hub",
+        content: "Our dedicated consultation hub offering in-person health assessments, travel vaccinations, and private consultations in East London.",
         icon: "",
         metadata: {
-            address: "Accessible Nationwide",
+            address: "East London, UK",
             image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=800",
-            badge: "Fully Operational",
+            badge: "Consultation Hub",
             stat1_num: "7 Days",
             stat1_label: "Availability",
             stat2_num: "Zero",
@@ -47,7 +47,7 @@ const DEFAULT_BRANCHES = [
             stat3_num: "Secure",
             stat3_label: "Consultations",
             action_url: "/book-appointment",
-            action_text: "Book Online Consultation"
+            action_text: "Book Pharmacy Consultation"
         }
     }
 ];
@@ -137,10 +137,10 @@ const Branches = () => {
         <section className="br_section" ref={sectionRef}>
             <div className="br_container">
                 <div className="br_section_header reveal_on_scroll">
-                    <span className="br_eyebrow">Our Clinical Network</span>
+                    <span className="br_eyebrow">Our Pharmacy Locations</span>
                     <h2 className="br_main_title">Expert Care Across<br />Multiple Locations.</h2>
                     <p className="br_header_lead">
-                        Both our clinical hubs are fully operational, delivering state-of-the-art healthcare dedicated to your comfort, precision, and privacy.
+                        Both our pharmacy hubs are fully operational, delivering state-of-the-art healthcare dedicated to your comfort, precision, and privacy.
                     </p>
                 </div>
 

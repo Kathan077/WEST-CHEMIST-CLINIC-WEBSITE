@@ -2,8 +2,8 @@ import "./globals.css";
 import ClientLayoutWrapper from "@/components/layout/ClientLayoutWrapper";
 
 export const metadata = {
-  title: "West Chemist Clinic | Professional Healthcare Services",
-  description: "West Chemist Clinic offers premium healthcare, weight loss, and vaccination services. Book your appointment today.",
+  title: "West Chemist | Professional Pharmacy Services",
+  description: "West Chemist offers premium pharmacy, weight management, and vaccination services. Book your appointment today.",
 };
 
 export default function RootLayout({ children }) {

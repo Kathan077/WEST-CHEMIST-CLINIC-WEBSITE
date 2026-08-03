@@ -34,15 +34,15 @@ export default function VaccinationHero() {
                 <div className="vacc_hero_text_row">
                     <div className="vacc_hero_pill_badge">
                         <span className="pill_indicator" />
-                        <span>Travel &amp; Routine Clinic</span>
+                        <span>Travel &amp; Routine Pharmacy Services</span>
                     </div>
                     
                     <h1 className="vacc_hero_main_title">
-                        Clinical <span className="vacc_title_highlight">Vaccination Protocols</span>
+                        Pharmacy <span className="vacc_title_highlight">Vaccination Services</span>
                     </h1>
                     
                     <p className="vacc_hero_lead_text">
-                        Protect your health at home and abroad. West Chemist Clinic offers professional, clinician-administered travel vaccines, routine immunisations, and seasonal wellness support in a modern, trusted environment.
+                        Protect your health at home and abroad. West Chemist offers professional, pharmacist-administered travel vaccines, routine immunisations, and seasonal wellness support in a modern, trusted environment.
                     </p>
                     
                     <div className="vacc_hero_btn_group">

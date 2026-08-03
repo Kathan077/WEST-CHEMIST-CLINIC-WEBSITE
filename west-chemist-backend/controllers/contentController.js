@@ -37,7 +37,7 @@ const getContentByKey = async (req, res) => {
       if (key === 'clinic-hours') {
         content = await PageContent.create({
           key: 'clinic-hours',
-          title: 'West Chemist Clinic Hours',
+          title: 'West Chemist Opening Hours',
           content: 'Monday - Friday: 9:00 AM - 5:30 PM, Saturday: 9:00 AM - 1:00 PM, Sunday: Closed',
           section: 'general',
           metadata: {
