@@ -117,7 +117,6 @@ const DEFAULT_SLIDES = [
 
 const DEFAULT_STATS = [
     { number: '2K+', label: 'Happy Patients' },
-    { number: '15+', label: 'Years Experience' },
     { number: '98%', label: 'Satisfaction' }
 ];
 
