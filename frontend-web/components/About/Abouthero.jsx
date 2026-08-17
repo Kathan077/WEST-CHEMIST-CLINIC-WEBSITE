@@ -12,10 +12,8 @@ export default function AboutHero() {
         content: 'Serving our communities for over 20 years, West Chemist is dedicated to providing high-quality prescription medicines, travel health, and personalized patient care. Our team of experienced pharmacists and professional healthcare staff are here to simplify medication management and support you and your family through all stages of life.'
     });
     const [stats, setStats] = useState([
-        { title: '20+', content: 'Years Experience' },
         { title: '15,000+', content: 'Prescriptions Dispensed' },
-        { title: '10,000+', content: 'Patients Served' },
-        { title: '5,000+', content: 'Vaccinations Administered' }
+        { title: '10,000+', content: 'Patients Served' }
     ]);
 
     useEffect(() => {
@@ -88,11 +86,11 @@ export default function AboutHero() {
                         <span key={idx} className="med_word_reveal med_gradient_text">{word} </span>
                     ))}
                 </h1>
-                
+
                 <p className="med_h_desc" style={{ whiteSpace: 'pre-wrap' }}>
                     {heroData.content}
                 </p>
-                
+
                 <div className="med_h_actions">
                     <Link href="/book-appointment" className="med_btn_primary">
                         <span className="med_btn_text">Book an Appointment</span>
@@ -110,7 +108,7 @@ export default function AboutHero() {
                     </div>
                 </div>
             )}
-            
+
             {stats[1] && (
                 <div className="med_float_stat med_stat_right">
                     <div className="med_stat_inner">
@@ -119,7 +117,7 @@ export default function AboutHero() {
                     </div>
                 </div>
             )}
-            
+
             {stats[2] && (
                 <div className="med_float_stat med_stat_bottom_left">
                     <div className="med_stat_inner">
@@ -129,17 +127,8 @@ export default function AboutHero() {
                 </div>
             )}
 
-            {stats[3] && (
-                <div className="med_float_stat med_stat_bottom_right">
-                    <div className="med_stat_inner">
-                        <h3>{stats[3].title}</h3>
-                        <span>{stats[3].content}</span>
-                    </div>
-                </div>
-            )}
-
-            {/* Display extra stats if there are more than 4, positioned beautifully */}
-            {stats.slice(4).map((stat, index) => (
+            {/* Display extra stats if there are more than 3, positioned beautifully */}
+            {stats.slice(3).map((stat, index) => (
                 <div key={index} className="med_float_stat" style={{
                     position: 'absolute',
                     top: `${40 + (index * 15)}%`,

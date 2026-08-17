@@ -20,7 +20,7 @@ export default function AboutImpact() {
         title: 'Our Impact in Numbers',
         content: 'At West Chemist, we go beyond dispensing medicines to provide dedicated community healthcare.',
         icon: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&q=90',
-        stat1_num: '15',
+        stat1_num: '40',
         stat1_label: 'Years of Excellence',
         stat1_suffix: '+',
         stat2_num: '10',

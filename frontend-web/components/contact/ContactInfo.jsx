@@ -61,9 +61,9 @@ const TiltCard = ({ item, cardVariants }) => {
 };
 
 export default function ContactInfo() {
-  const [monFri, setMonFri] = React.useState('8:30 AM - 6:30 PM');
-  const [sat, setSat] = React.useState('9:00 AM - 2:00 PM');
-  const [sun, setSun] = React.useState('9:00 AM - 12:00 PM');
+  const [monFri, setMonFri] = React.useState('8.30am-6.30pm');
+  const [sat, setSat] = React.useState('9am - 2.00pm');
+  const [sun, setSun] = React.useState('9am-12pm');
 
   React.useEffect(() => {
     const fetchHours = async () => {
@@ -71,9 +71,9 @@ export default function ContactInfo() {
         const res = await fetch(`${API_URL}/api/contents/clinic-hours`);
         const data = await res.json();
         if (data.success && data.data && data.data.metadata) {
-          setMonFri(data.data.metadata.mon_fri || '8:30 AM - 6:30 PM');
-          setSat(data.data.metadata.sat || '9:00 AM - 2:00 PM');
-          setSun(data.data.metadata.sun || '9:00 AM - 12:00 PM');
+          setMonFri(data.data.metadata.mon_fri || '8.30am-6.30pm');
+          setSat(data.data.metadata.sat || '9am - 2.00pm');
+          setSun(data.data.metadata.sun || '9am-12pm');
         }
       } catch (err) {
         console.error("Error fetching opening hours:", err);
@@ -85,7 +85,7 @@ export default function ContactInfo() {
   const dynamicContactDetails = [
     {
       title: "Northampton Clinic",
-      detail: "4 Kingsley Park Terrace, Northampton\nNN2 7HG, United Kingdom",
+      detail: "West Chemist, 4 Kingsley Park Terrace\nNorthampton, NN2 7HG",
       icon: (
         <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
       )
@@ -99,7 +99,7 @@ export default function ContactInfo() {
     },
     {
       title: "General Enquiries",
-      detail: "+44 1604 713297\ninfo@westchemist.co.uk",
+      detail: "(01604) 713297\ninfo@westchemist.co.uk",
       icon: (
         <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
       )

@@ -15,11 +15,6 @@ const seedAboutDataIfEmpty = async () => {
         // Stats
         {
           type: 'stat',
-          title: '20+',
-          content: 'Years Experience'
-        },
-        {
-          type: 'stat',
           title: '15,000+',
           content: 'Prescriptions Dispensed'
         },
@@ -28,11 +23,7 @@ const seedAboutDataIfEmpty = async () => {
           title: '10,000+',
           content: 'Patients Served'
         },
-        {
-          type: 'stat',
-          title: '5,000+',
-          content: 'Vaccinations Administered'
-        },
+
         // Cards (Mission, Vision, Values)
         {
           type: 'card',
@@ -180,10 +171,9 @@ const seedAboutDataIfEmpty = async () => {
 const getAboutItems = async (req, res) => {
   try {
     // Migration helper to auto-clean outdated DB content (surgeries/specialists/clinic branding)
-    await AboutItem.updateMany(
-      { content: 'Successful Surgeries' },
-      { $set: { title: '5,000+', content: 'Vaccinations Administered' } }
-    );
+    // Delete the outdated "Vaccinations Administered" and "Years Experience" stats if they exist
+    await AboutItem.deleteMany({ content: 'Vaccinations Administered' });
+    await AboutItem.deleteMany({ content: 'Years Experience' });
     await AboutItem.updateMany(
       { content: 'Specialists' },
       { $set: { title: '10,000+', content: 'Patients Served' } }

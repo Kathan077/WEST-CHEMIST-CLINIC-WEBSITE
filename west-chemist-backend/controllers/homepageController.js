@@ -57,8 +57,6 @@ const DEFAULT_HOMEPAGE_CONTENT = {
     subtitle: 'YOUR TRUSTED COMMUNITY PHARMACY',
     desc: 'With over two decades of dedicated community service, West Chemist specializes in the timely provision of prescription medicines, travel health, and comprehensive patient care. We understand that managing health and medications can feel daunting — our team of experienced pharmacists and professional pharmacy staff across Northampton and East London are here to support you and your family through all stages of life.',
     image: '/images/about-pharmacist.jpg',
-    yearsExperience: '20+',
-    experienceLabel: 'Years of dedicated patient care.',
     features: [
       { icon: 'award', title: '20+ Years Experience', desc: 'Over two decades of trusted healthcare experience across Northampton & East London.' },
       { icon: 'users', title: 'Dedicated Pharmacy Team', desc: 'Qualified pharmacists and healthcare staff committed to your family’s well-being.' },
@@ -140,8 +138,6 @@ const getHomepageContent = async (req, res) => {
         cms.aboutSection.subtitle = 'YOUR TRUSTED COMMUNITY PHARMACY';
         cms.aboutSection.desc = 'With over two decades of dedicated community service, West Chemist specializes in the timely provision of prescription medicines, travel health, and comprehensive patient care. We understand that managing health and medications can feel daunting — our team of experienced pharmacists and professional pharmacy staff across Northampton and East London are here to support you and your family through all stages of life.';
         cms.aboutSection.image = '/images/about-pharmacist.jpg';
-        cms.aboutSection.yearsExperience = '20+';
-        cms.aboutSection.experienceLabel = 'Years of dedicated patient care.';
         cms.aboutSection.features = [
           { icon: 'award', title: '20+ Years Experience', desc: 'Over two decades of trusted healthcare experience across Northampton & East London.' },
           { icon: 'users', title: 'Dedicated Pharmacy Team', desc: 'Qualified pharmacists and healthcare staff committed to your family’s well-being.' },

@@ -543,7 +543,7 @@ const defaultPages = [
   {
     key: "contact-info",
     title: "Contact Information & Opening Hours",
-    content: "Address: 123 West Chemist Street, Northampton, NN1 1EX. Phone: +44 1234 567890. Email: support@westchemist.com. Opening Hours: Monday - Friday: 08:30 AM - 06:00 PM, Saturday: 09:00 AM - 04:00 PM, Sunday: Closed.",
+    content: "Address: West Chemist, 4 Kingsley Park Terrace, Northampton, NN2 7HG. Phone: (01604) 713297. Email: info@westchemist.co.uk. Opening Hours: Monday - Friday: 8.30am-6.30pm, Saturday: 9am - 2.00pm, Sunday: 9am-12pm.",
     section: "contact"
   },
   {
@@ -628,12 +628,12 @@ const seedServicesAndPages = async () => {
       await PageContent.create({
         key: 'clinic-hours',
         title: 'Clinic Opening Hours',
-        content: 'Mon - Fri: 8:30 AM - 6:30 PM\nSaturday: 9:00 AM - 2:00 PM\nSunday: 9:00 AM - 12:00 PM',
+        content: 'Monday - Friday: 8.30am-6.30pm\nSaturday: 9am - 2.00pm\nSunday: 9am-12pm',
         section: 'general',
         metadata: {
-          mon_fri: '8:30 AM - 6:30 PM',
-          sat: '9:00 AM - 2:00 PM',
-          sun: '9:00 AM - 12:00 PM'
+          mon_fri: '8.30am-6.30pm',
+          sat: '9am - 2.00pm',
+          sun: '9am-12pm'
         }
       });
       console.log("💎 [Database Migration] Created default 'clinic-hours' page content.");

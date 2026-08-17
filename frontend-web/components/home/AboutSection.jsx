@@ -10,8 +10,6 @@ const DEFAULT_ABOUT = {
     subtitle: 'YOUR TRUSTED COMMUNITY PHARMACY',
     desc: 'With over two decades of dedicated community service, West Chemist specializes in the timely provision of prescription medicines, travel health, and comprehensive patient care. We understand that managing health and medications can feel daunting — our team of experienced pharmacists and professional pharmacy staff across Northampton and East London are here to support you and your family through all stages of life.',
     image: '/images/about-pharmacist.jpg',
-    yearsExperience: '20+',
-    experienceLabel: 'Years of Dedicated Patient Care',
     features: [
         { icon: 'award', title: 'Accredited Experience', desc: 'Over 20 years of trusted healthcare experience across Northampton & East London' },
         { icon: 'users', title: 'Experienced Team', desc: 'Qualified pharmacists and healthcare staff dedicated to your well-being' },
@@ -101,8 +99,6 @@ export default function AboutSection() {
                         subtitle: sec.subtitle || DEFAULT_ABOUT.subtitle,
                         desc: sec.desc || DEFAULT_ABOUT.desc,
                         image: validImage,
-                        yearsExperience: sec.yearsExperience || DEFAULT_ABOUT.yearsExperience,
-                        experienceLabel: sec.experienceLabel || DEFAULT_ABOUT.experienceLabel,
                         features: formattedFeatures,
                         ctaText: sec.ctaText || DEFAULT_ABOUT.ctaText,
                         ctaUrl: sec.ctaUrl || DEFAULT_ABOUT.ctaUrl,
@@ -142,11 +138,6 @@ export default function AboutSection() {
                 {/* ── Left: Image column ── */}
                 <div className="about_image_col ab_reveal" style={{ '--delay': '0ms' }}>
                     <div className="about_img_frame">
-                        {/* Floating accent badge */}
-                        <div className="img_badge">
-                            <span className="img_badge_num">{aboutData.yearsExperience}</span>
-                            <span className="img_badge_label">{aboutData.experienceLabel?.split(' ').slice(0,2).join(' ')}<br/>{aboutData.experienceLabel?.split(' ').slice(2).join(' ')}</span>
-                        </div>
 
                         {/* Floating stats card */}
                         <div className="img_stat_card">

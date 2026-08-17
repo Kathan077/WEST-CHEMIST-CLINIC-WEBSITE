@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import "./MapSection.css";
 
 export default function MapSection() {
-  const mapAddress = "4 Kingsley Park Terrace, Northampton NN2 7HG, United Kingdom";
+  const mapAddress = "West Chemist, 4 Kingsley Park Terrace, Northampton, NN2 7HG";
   const embedUrl = `https://maps.google.com/maps?q=${encodeURIComponent(mapAddress)}&t=&z=16&ie=UTF8&iwloc=&output=embed`;
 
   return (
@@ -30,8 +30,8 @@ export default function MapSection() {
 
       {/* Floating premium detail capsule inside map view */}
       <div className="mapFloatingCard">
-        <h4 className="mapCardTitle">West Chemist Pharmacy</h4>
-        <p className="mapCardAddress">4 Kingsley Park Terrace<br />Northampton NN2 7HG, UK</p>
+        <h4 className="mapCardTitle">West Chemist</h4>
+        <p className="mapCardAddress">4 Kingsley Park Terrace<br />Northampton, NN2 7HG</p>
         <div className="mapCardButtons">
           <a 
             href={`https://maps.google.com/?q=${encodeURIComponent(mapAddress)}`}

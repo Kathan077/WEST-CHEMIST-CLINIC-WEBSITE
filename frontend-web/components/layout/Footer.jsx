@@ -8,9 +8,9 @@ import './Footer.css';
 
 export default function Footer() {
     const [hours, setHours] = useState({
-        mon_fri: '8:30 AM - 6:30 PM',
-        sat: '9:00 AM - 2:00 PM',
-        sun: '9:00 AM - 12:00 PM'
+        mon_fri: '8.30am-6.30pm',
+        sat: '9am - 2.00pm',
+        sun: '9am-12pm'
     });
 
     useEffect(() => {
@@ -20,9 +20,9 @@ export default function Footer() {
                 const data = await res.json();
                 if (data.success && data.data && data.data.metadata) {
                     setHours({
-                        mon_fri: data.data.metadata.mon_fri || '8:30 AM - 6:30 PM',
-                        sat: data.data.metadata.sat || '9:00 AM - 2:00 PM',
-                        sun: data.data.metadata.sun || '9:00 AM - 12:00 PM'
+                        mon_fri: data.data.metadata.mon_fri || '8.30am-6.30pm',
+                        sat: data.data.metadata.sat || '9am - 2.00pm',
+                        sun: data.data.metadata.sun || '9am-12pm'
                     });
                 }
             } catch (err) {
@@ -75,7 +75,7 @@ export default function Footer() {
                         <ul className="f_contact_info">
                             <li>
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
-                                <a href="tel:+441604713297" style={{ transition: 'color 0.2s ease' }} className="f_link_item">+44 1604 713297</a>
+                                <a href="tel:01604713297" style={{ transition: 'color 0.2s ease' }} className="f_link_item">(01604) 713297</a>
                             </li>
                             <li>
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>
@@ -90,7 +90,7 @@ export default function Footer() {
                                     style={{ transition: 'color 0.2s ease' }}
                                     className="f_link_item"
                                 >
-                                    4 Kingsley Park Terrace<br />Northampton NN2 7HG, UK
+                                    West Chemist<br />4 Kingsley Park Terrace<br />Northampton, NN2 7HG
                                 </a>
                             </li>
                         </ul>
