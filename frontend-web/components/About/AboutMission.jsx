@@ -55,7 +55,7 @@ export default function AboutMission() {
         },
         {
             title: 'Our Values',
-            content: 'At West Chemist, we are guided by compassion, clinical integrity, and community trust. We know medication management can feel overwhelming, so we treat every patient with warmth, respect, and personalized care.',
+            content: 'At West Chemist, we are guided by compassion, PHARMACY integrity, and community trust. We know medication management can feel overwhelming, so we treat every patient with warmth, respect, and personalized care.',
             icon: 'values'
         }
     ]);

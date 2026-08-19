@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React, { useState } from 'react';
 import './ServiceFAQ.css';
 
@@ -29,7 +29,7 @@ export default function ServiceFAQ() {
             <div className="faq_container">
                 <div className="faq_header">
                     <h2 className="faq_title">Frequently Asked Questions</h2>
-                    <p className="faq_subtitle">Answers to common queries about our clinical services.</p>
+                    <p className="faq_subtitle">Answers to common queries about our PHARMACY services.</p>
                 </div>
                 <div className="faq_list">
                     {faqs.map((faq, idx) => (
@@ -56,3 +56,4 @@ export default function ServiceFAQ() {
         </section>
     );
 }
+

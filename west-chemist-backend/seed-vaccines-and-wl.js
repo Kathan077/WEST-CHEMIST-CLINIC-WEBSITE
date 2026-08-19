@@ -1,4 +1,4 @@
-require('dotenv').config();
+﻿require('dotenv').config();
 const mongoose = require('mongoose');
 const Service = require('./models/Service');
 
@@ -21,7 +21,7 @@ const defaultServices = [
     title: 'Wegovy Injections',
     cat: 'Weight Loss',
     parentCategory: 'Weight Loss',
-    desc: 'A highly trusted, clinically-proven weekly injection. Mimics the GLP-1 hormone to curb hunger, increase fullness, and support portion control under medical guidance.',
+    desc: 'A highly trusted, PHARMACYly-proven weekly injection. Mimics the GLP-1 hormone to curb hunger, increase fullness, and support portion control under medical guidance.',
     duration: '30 Mins',
     features: ['Once-weekly subcutaneous injection', 'Mimics natural satiety GLP-1 hormone', 'Average weight loss of 15% of body weight', 'Comprehensive lifestyle & nutritional support'],
     img: '/images/wegovy_pen.png',
@@ -35,7 +35,7 @@ const defaultServices = [
     parentCategory: 'Weight Loss',
     desc: 'Oral weight management medication providing appetite regulation and weight loss support for patients preferring tablets over injections.',
     duration: '15 Mins',
-    features: ['Daily oral capsule option', 'Regulates appetite & food intake', 'Clinical health & BMI monitoring', 'In-clinic prescribing & dispensing'],
+    features: ['Daily oral capsule option', 'Regulates appetite & food intake', 'PHARMACY health & BMI monitoring', 'In-clinic prescribing & dispensing'],
     img: 'https://images.unsplash.com/photo-1584308919139-332c34f370d5?w=600&q=80',
     color: '#b45309',
     onHome: true
@@ -109,7 +109,7 @@ const defaultServices = [
     cat: "Specialist Immunization",
     parentCategory: "Vaccination Services",
     duration: "15 Mins",
-    features: ["Gardasil 9 high-protection vaccine", "Guards against cervical & other cancers", "Recommended for adolescents and young adults", "Professional clinical settings"],
+    features: ["Gardasil 9 high-protection vaccine", "Guards against cervical & other cancers", "Recommended for adolescents and young adults", "Professional PHARMACY settings"],
     color: '#4B2D71',
     onHome: true
   },
@@ -192,3 +192,4 @@ async function seed() {
 }
 
 seed();
+

@@ -17,7 +17,7 @@ const benefits = [
     },
     {
         title: "Digital Scripts",
-        desc: "Seamless integration with your NHS records for fast and accurate medication management.",
+        desc: "Secure and accurate prescription management for reliable medication support.",
         icon: (
             <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />

@@ -40,7 +40,7 @@ const seedAboutDataIfEmpty = async () => {
         {
           type: 'card',
           title: 'Our Values',
-          content: 'At West Chemist, we are guided by compassion, clinical integrity, and community trust. We know medication management can feel overwhelming, so we treat every patient with warmth, respect, and personalized care.',
+          content: 'At West Chemist, we are guided by compassion, PHARMACY integrity, and community trust. We know medication management can feel overwhelming, so we treat every patient with warmth, respect, and personalized care.',
           icon: 'values'
         }
       ];
@@ -180,7 +180,7 @@ const getAboutItems = async (req, res) => {
     );
     await AboutItem.updateMany(
       { type: 'hero' },
-      { $set: { title: 'About West Chemist', content: 'Serving our communities for over 20 years, West Chemist is dedicated to providing high-quality prescription medicines, travel health, and personalized patient care. Our team of experienced pharmacists and professional healthcare staff are here to simplify medication management and support you and your family through all stages of life.' } }
+      { $set: { title: 'About West Chemist', content: 'Serving our communities for over 40 years, West Chemist is dedicated to providing high-quality prescription medicines, travel health, and personalized patient care. Our team of experienced pharmacists and professional healthcare staff are here to simplify medication management and support you and your family through all stages of life.' } }
     );
     await AboutItem.updateMany(
       { type: 'card', title: 'Mission' },
@@ -192,7 +192,7 @@ const getAboutItems = async (req, res) => {
     );
     await AboutItem.updateMany(
       { type: 'card', title: 'Our Values' },
-      { $set: { content: 'At West Chemist, we are guided by compassion, clinical integrity, and community trust. We know medication management can feel overwhelming, so we treat every patient with warmth, respect, and personalized care.' } }
+      { $set: { content: 'At West Chemist, we are guided by compassion, PHARMACY integrity, and community trust. We know medication management can feel overwhelming, so we treat every patient with warmth, respect, and personalized care.' } }
     );
     await AboutItem.updateMany(
       { 'metadata.stat2_label': 'Certified Doctors & Specialists' },
@@ -335,3 +335,4 @@ module.exports = {
   updateAboutItem,
   deleteAboutItem
 };
+

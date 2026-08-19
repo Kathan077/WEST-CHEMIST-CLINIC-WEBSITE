@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { API_URL } from '@/config';
 
@@ -216,7 +216,7 @@ function TrackBookingContent() {
                 setPatient(data.patient);
                 setAppointments(data.appointments);
             } else {
-                setError(data.message || 'No active clinical bookings found.');
+                setError(data.message || 'No active PHARMACY bookings found.');
                 setPatient(null);
                 setAppointments([]);
             }
@@ -250,7 +250,7 @@ function TrackBookingContent() {
 
     // Handle Appointment Cancellation
     const handleCancelAppointment = async (appointmentId) => {
-        if (!window.confirm('Are you sure you want to cancel this clinical appointment reservation? This slot will be released back to the general public.')) {
+        if (!window.confirm('Are you sure you want to cancel this PHARMACY appointment reservation? This slot will be released back to the general public.')) {
             return;
         }
 
@@ -263,7 +263,7 @@ function TrackBookingContent() {
             });
             const result = await res.json();
             if (result.success) {
-                setSuccessMessage('Your clinical slot was successfully cancelled.');
+                setSuccessMessage('Your PHARMACY slot was successfully cancelled.');
                 // Update local status without full refetch
                 setAppointments(prev => 
                     prev.map(apt => apt._id === appointmentId ? { ...apt, status: 'cancelled' } : apt)
@@ -320,7 +320,7 @@ function TrackBookingContent() {
             });
             const result = await res.json();
             if (result.success) {
-                setSuccessMessage('Your clinical reschedule request has been registered. Superintendent Pharmacist will audit shortly.');
+                setSuccessMessage('Your PHARMACY reschedule request has been registered. Superintendent Pharmacist will audit shortly.');
                 setAppointments(prev => 
                     prev.map(apt => apt._id === appointmentId ? { 
                         ...apt, 
@@ -329,7 +329,7 @@ function TrackBookingContent() {
                         isRescheduleNeeded: false,
                         rescheduledDate: rescheduleDate,
                         rescheduledTime: rescheduleTime,
-                        adminNote: 'Patient requested reschedule. Awaiting clinical verification.'
+                        adminNote: 'Patient requested reschedule. Awaiting PHARMACY verification.'
                     } : apt)
                 );
                 setReschedulingId(null);
@@ -398,7 +398,7 @@ function TrackBookingContent() {
                 <div className="track_header">
                     <h1 className="track_page_title">Patient Tracking Center</h1>
                     <p className="track_page_desc">
-                        Retrieve, download, print, or manage active clinical boarding tickets registered under your name.
+                        Retrieve, download, print, or manage active PHARMACY boarding tickets registered under your name.
                     </p>
                 </div>
 
@@ -520,7 +520,7 @@ function TrackBookingContent() {
                                             </div>
                                             
                                             <div className="bk_ticket_row">
-                                                <span>Clinical Service</span>
+                                                <span>PHARMACY Service</span>
                                                 <strong className="service_highlight">{apt.service}</strong>
                                             </div>
 
@@ -742,3 +742,4 @@ export default function TrackBooking() {
         </Suspense>
     );
 }
+

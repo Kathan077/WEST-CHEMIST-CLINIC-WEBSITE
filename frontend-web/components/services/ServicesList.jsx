@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { API_URL, getImageUrl } from '@/config';
@@ -9,7 +9,7 @@ const defaultCoreServices = [
         title: "Weight Loss Clinic",
         tag: "Specialised Clinic",
         img: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80",
-        desc: "Clinically proven medical weight loss programs including Wegovy and Mounjaro, with full clinical support.",
+        desc: "PHARMACYly proven medical weight loss programs including Wegovy and Mounjaro, with full PHARMACY support.",
         color: "var(--primary)",
         link: "/services/wegovy"
     },
@@ -131,3 +131,4 @@ export default function ServicesList() {
         </section>
     );
 }
+

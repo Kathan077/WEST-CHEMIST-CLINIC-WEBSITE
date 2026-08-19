@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { API_URL } from '@/config';
 import React, { useState, useEffect, useRef } from 'react';
@@ -112,14 +112,14 @@ const BADGE_PICKER_OPTIONS = [
   { label: '✦ Award-Winning Pharmacy', value: '✦ Award-Winning Pharmacy' },
   { label: '✦ GPhC Regulated Service', value: '✦ GPhC Regulated Service' },
   { label: '✦ NHS Partner Pharmacy', value: '✦ NHS Partner Pharmacy' },
-  { label: '✦ Trusted Clinical Care', value: '✦ Trusted Clinical Care' },
+  { label: '✦ Trusted PHARMACY Care', value: '✦ Trusted PHARMACY Care' },
   { label: '✦ Book Online Today', value: '✦ Book Online Today' },
   { label: '✦ Same-Day Appointments', value: '✦ Same-Day Appointments' },
   { label: '✦ Expert Health Advice', value: '✦ Expert Health Advice' },
   { label: '✦ Safe & Confidential', value: '✦ Safe & Confidential' },
   { label: '🏆 Award-Winning Care', value: '🏆 Award-Winning Care' },
   { label: '💊 Prescription Services', value: '💊 Prescription Services' },
-  { label: '🩺 Clinical Excellence', value: '🩺 Clinical Excellence' },
+  { label: '🩺 PHARMACY Excellence', value: '🩺 PHARMACY Excellence' },
   { label: '⭐ 5-Star Rated Pharmacy', value: '⭐ 5-Star Rated Pharmacy' },
   { label: '🔬 Evidence-Based Care', value: '🔬 Evidence-Based Care' },
   { label: '🛡️ Patient Safety First', value: '🛡️ Patient Safety First' },
@@ -1047,7 +1047,7 @@ export default function HomepageCMSPage() {
                     Manage Homepage Services
                   </div>
                   <div className="cnt_form_sub">
-                    Toggle which clinical services are displayed on the frontend homepage.
+                    Toggle which PHARMACY services are displayed on the frontend homepage.
                   </div>
 
                   <div className="homepage_services_list" style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '16px' }}>
@@ -1407,7 +1407,7 @@ export default function HomepageCMSPage() {
                   </div>
 
                   {/* About Section Form fields merged here */}
-                  <div className="cnt_form_title" style={{ marginTop: '40px', borderTop: '2px solid #e2e8f0', paddingTop: '30px' }}>About Section / Clinical Credibility Info</div>
+                  <div className="cnt_form_title" style={{ marginTop: '40px', borderTop: '2px solid #e2e8f0', paddingTop: '30px' }}>About Section / PHARMACY Credibility Info</div>
                   <div className="cnt_form_sub">Modify history, statistics, features, and main graphics.</div>
 
                   <div className="srv_form_grid">
@@ -1603,3 +1603,4 @@ export default function HomepageCMSPage() {
     </div>
   );
 }
+

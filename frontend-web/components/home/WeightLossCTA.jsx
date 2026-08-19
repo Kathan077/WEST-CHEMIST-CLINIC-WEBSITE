@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
@@ -48,7 +48,7 @@ export default function WeightLossCTA() {
                 if (json.success && json.data && json.data.appointmentCta) {
                     const sec = json.data.appointmentCta;
                     const cleanedDesc = (sec.desc || DEFAULT_WL.desc)
-                        .replace(/clinical team/gi, 'pharmacy team')
+                        .replace(/PHARMACY team/gi, 'pharmacy team')
                         .replace(/online/gi, 'in-person');
                     const cleanedBullets = (sec.bullets && sec.bullets.length > 0)
                         ? sec.bullets.map(b => b.replace(/In-person or secure online consultations available/gi, 'In-person consultations available at our pharmacy').replace(/online/gi, 'in-person'))
@@ -153,3 +153,4 @@ export default function WeightLossCTA() {
         </section>
     );
 }
+

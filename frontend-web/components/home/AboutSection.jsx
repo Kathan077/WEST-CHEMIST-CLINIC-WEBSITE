@@ -8,7 +8,7 @@ import './AboutSection.css';
 const DEFAULT_ABOUT = {
     title: 'Why Choose West Chemist?',
     subtitle: 'YOUR TRUSTED COMMUNITY PHARMACY',
-    desc: 'With over two decades of dedicated community service, West Chemist specializes in the timely provision of prescription medicines, travel health, and comprehensive patient care. We understand that managing health and medications can feel daunting — our team of experienced pharmacists and professional pharmacy staff across Northampton and East London are here to support you and your family through all stages of life.',
+    desc: 'With over two decades of dedicated community service, West Chemist specializes in the timely provision of prescription medicines, travel health, and comprehensive patient care. We understand that managing health and medications can feel daunting  our team of experienced pharmacists and professional pharmacy staff across Northampton and East London are here to support you and your family through all stages of life.',
     image: '/images/about-pharmacist.jpg',
     features: [
         { icon: 'award', title: 'Accredited Experience', desc: 'Over 20 years of trusted healthcare experience across Northampton & East London' },

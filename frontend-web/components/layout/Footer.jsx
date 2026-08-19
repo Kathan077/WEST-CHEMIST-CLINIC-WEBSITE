@@ -34,7 +34,7 @@ export default function Footer() {
 
     return (
         <footer className="footer_sec">
-            {/* Soft clinical wave/gradient boundary */}
+            {/* Soft PHARMACY wave/gradient boundary */}
             <div className="footer_top_border"></div>
 
             <div className="footer_container">
@@ -47,13 +47,13 @@ export default function Footer() {
                         </Link>
                         <p className="f_desc">
                             Your trusted local pharmacy and healthcare provider in Northampton, United Kingdom.
-                            Delivering clinical excellence, expert advice, and genuine care.
+                            Delivering PHARMACY excellence, expert advice, and genuine care.
                         </p>
 
                         {/* Trust Badges */}
                         <div className="f_trust_badges">
-                            <div className="trust_badge">✔ Quality Care Pharmacy</div>
-                            <div className="trust_badge">✔ Certified Immunisers</div>
+                            <div className="trust_badge">✔ GPhC Reg No: 1035465</div>
+                            <div className="trust_badge">✔ Superintendent: Viren Bhatia</div>
                         </div>
                     </div>
 
@@ -121,7 +121,7 @@ export default function Footer() {
             <div className="footer_bottom">
                 <div className="f_bottom_container">
                     <p className="copyright">
-                        &copy; {new Date().getFullYear()} West Chemist. All rights reserved.
+                        &copy; {new Date().getFullYear()} West Chemist. Registered in UK | GPhC Reg No: 1035465 | Superintendent Pharmacist: Viren Bhatia
                     </p>
                     <div className="f_legal_links">
                         <Link href="/privacy">Privacy Policy</Link>
@@ -132,3 +132,4 @@ export default function Footer() {
         </footer>
     );
 }
+

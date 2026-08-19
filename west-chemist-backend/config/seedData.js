@@ -14,7 +14,7 @@ const defaultServices = [
     desc: "Plan your period safely for holidays, weddings, sports events, or other important occasions. Our pharmacist provides a confidential consultation to assess whether period delay medication is suitable for you.",
     duration: "15 Mins",
     features: [
-      "Confidential Clinical Consultation",
+      "Confidential PHARMACY Consultation",
       "Period Delay Medication Assessment",
       "Convenient & Safe Cycle Planning",
       "Qualified Pharmacist Expert Guidance",
@@ -32,7 +32,7 @@ const defaultServices = [
     desc: "Receive professional support to help you achieve your weight loss goals. We provide personalized advice, lifestyle guidance, and treatment options tailored to your individual needs.",
     duration: "30 Mins",
     features: [
-      "Clinical Weight Loss Consultation",
+      "PHARMACY Weight Loss Consultation",
       "Personalised Advice & Lifestyle Guidance",
       "MHRA-Approved Treatment Options",
       "Ongoing Weight & BMI Progress Tracking",
@@ -44,7 +44,7 @@ const defaultServices = [
   {
     slug: "ear-wax-removal",
     title: "Ear Wax Removal Service",
-    cat: "Clinical Ear Care",
+    cat: "PHARMACY Ear Care",
     parentCategory: "Private Services",
     img: "https://images.unsplash.com/photo-1559839734-2b71f1536783?w=600&q=80",
     desc: "Blocked ears can affect hearing and cause discomfort. Our safe and effective ear wax removal service helps restore hearing while reducing pain and irritation.",
@@ -53,7 +53,7 @@ const defaultServices = [
       "Professional Otoscopic Examination",
       "Gentle Microsuction Ear Care Technology",
       "Immediate Pressure & Discomfort Relief",
-      "Accredited Clinical Care Delivery",
+      "Accredited PHARMACY Care Delivery",
       "Complete Ear Canal Assessment"
     ],
     color: "#FF6B35",
@@ -62,7 +62,7 @@ const defaultServices = [
   {
     slug: "cryotherapy",
     title: "Cryotherapy Service",
-    cat: "Clinical Dermatology",
+    cat: "PHARMACY Dermatology",
     parentCategory: "Private Services",
     img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=600&q=80",
     desc: "Cryotherapy is a quick and effective treatment for removing common skin lesions such as warts, verrucas, skin tags, and other benign skin conditions with minimal discomfort.",
@@ -107,7 +107,7 @@ const defaultServices = [
     duration: "15 Mins",
     features: [
       "Otoscopic Middle Ear Examination",
-      "Pediatric-Focused Clinical Care Protocol",
+      "Pediatric-Focused PHARMACY Care Protocol",
       "NHS Treatment or Antibiotics (if indicated)",
       "Fully Funded NHS Pharmacy First Service",
       "No GP Appointment Required"
@@ -122,7 +122,7 @@ const defaultServices = [
     desc: "Fast assessment and treatment for impetigo, a common contagious skin infection. Early treatment helps reduce symptoms and prevent the infection from spreading.",
     duration: "15 Mins",
     features: [
-      "Clinical Skin Diagnosis Assessment",
+      "PHARMACY Skin Diagnosis Assessment",
       "Prescription Antibiotic Creams or Oral Therapy",
       "Contagion & Spread Prevention Guidance",
       "Fully Funded NHS Pharmacy First Service",
@@ -138,7 +138,7 @@ const defaultServices = [
     desc: "If an insect bite becomes red, swollen, painful, or infected, our pharmacists can assess your symptoms and provide suitable NHS treatment when appropriate.",
     duration: "15 Mins",
     features: [
-      "Bite Site Clinical Examination",
+      "Bite Site PHARMACY Examination",
       "Infection Severity Assessment",
       "NHS Antibiotics or Topical Treatments",
       "Fully Funded NHS Pharmacy First",
@@ -167,7 +167,7 @@ const defaultServices = [
     cat: "NHS Pharmacy First",
     parentCategory: "NHS Services (Pharmacy First)",
     img: "https://images.unsplash.com/photo-1559839734-2b71f1536783?w=600&q=80",
-    desc: "Get relief from blocked nose, facial pain, headaches, and sinus pressure with expert advice and NHS treatment where clinically appropriate.",
+    desc: "Get relief from blocked nose, facial pain, headaches, and sinus pressure with expert advice and NHS treatment where PHARMACYly appropriate.",
     duration: "15 Mins",
     features: [
       "Comprehensive Nasal & Sinus Assessment",
@@ -285,7 +285,7 @@ const defaultServices = [
       "Meningococcal Group B Defense",
       "Child & Adult Dosing Protocols",
       "NHS and Private Dosing Options",
-      "Fully Qualified Clinical Delivery",
+      "Fully Qualified PHARMACY Delivery",
       "Pre-Vaccination Health Checks"
     ]
   },
@@ -367,7 +367,7 @@ const defaultServices = [
       "Measles, Mumps & Rubella Combined",
       "Highly Recommended for Students/Travelers",
       "Multi-Dose Lifelong Immunity Course",
-      "Clinical Suitability Check",
+      "PHARMACY Suitability Check",
       "Certified Dosing Entries"
     ]
   },
@@ -432,7 +432,7 @@ const defaultServices = [
       "Official Hajj/Umrah Certificate Included",
       "Mandatory for Certain University Visas",
       "Provides 5 Years of Immunity",
-      "Safe Clinical Delivery"
+      "Safe PHARMACY Delivery"
     ]
   },
   {
@@ -480,7 +480,7 @@ const defaultServices = [
       "Recommended for Forest/Outdoor Activities",
       "Course of 2 to 3 Injections",
       "Tick Removal/Bite Prevention Tips",
-      "Safe Clinical Administration"
+      "Safe PHARMACY Administration"
     ]
   },
   {
@@ -537,7 +537,7 @@ const defaultPages = [
   {
     key: "about-us",
     title: "About West Chemist Clinic",
-    content: "West Chemist Clinic is a leading private healthcare provider offering a comprehensive suite of clinical treatments, diagnostics, vaccinations, and weight management services. Run by GPhC registered clinical pharmacists, we combine clinical excellence with patient-centered care to deliver top-tier clinical solutions directly in your community. Our state-of-the-art facilities offer a welcoming environment with private consulting rooms and same-day availability.",
+    content: "West Chemist Clinic is a leading private healthcare provider offering a comprehensive suite of PHARMACY treatments, diagnostics, vaccinations, and weight management services. Run by GPhC registered PHARMACY pharmacists, we combine PHARMACY excellence with patient-centered care to deliver top-tier PHARMACY solutions directly in your community. Our state-of-the-art facilities offer a welcoming environment with private consulting rooms and same-day availability.",
     section: "about"
   },
   {
@@ -549,7 +549,7 @@ const defaultPages = [
   {
     key: "terms-conditions",
     title: "Terms and Conditions of Service",
-    content: "All medical assessments and clinical services provided by West Chemist Clinic are subject to professional verification. Patients must present valid identification for verification audits. Booking cancellations or reschedule requests can be made up to 24 hours prior to the scheduled slot.",
+    content: "All medical assessments and PHARMACY services provided by West Chemist Clinic are subject to professional verification. Patients must present valid identification for verification audits. Booking cancellations or reschedule requests can be made up to 24 hours prior to the scheduled slot.",
     section: "terms"
   },
   {
@@ -720,7 +720,7 @@ const seedServicesAndPages = async () => {
 <h3>Key risk factors</h3>
 <p>While age and genetics play a role, lifestyle factors are primary drivers. These include high salt consumption, lack of physical activity, excessive alcohol intake, smoking, and chronic stress.</p>
 <h3>How to manage and prevent high blood pressure</h3>
-<p>Fortunately, hypertension is highly manageable. Here are clinical recommendations:</p>
+<p>Fortunately, hypertension is highly manageable. Here are PHARMACY recommendations:</p>
 <ol>
   <li><strong>Adopt a DASH diet:</strong> Focus on whole grains, fruits, vegetables, and low-fat dairy while minimizing sodium intake.</li>
   <li><strong>Exercise regularly:</strong> Aim for at least 150 minutes of moderate-intensity aerobic exercise per week.</li>
@@ -734,7 +734,7 @@ const seedServicesAndPages = async () => {
         title: "The Science of Medical Weight Loss: Is Wegovy Right for You?",
         subject: "Weight Loss",
         slug: "science-of-medical-weight-loss-wegovy",
-        description: `<p>Achieving sustainable weight loss can be an uphill battle, especially when addressing obesity as a complex, biological condition rather than a simple failure of willpower. Over recent years, medical weight loss programs utilizing Wegovy (semaglutide) have emerged as highly effective, clinically-proven solutions.</p>
+        description: `<p>Achieving sustainable weight loss can be an uphill battle, especially when addressing obesity as a complex, biological condition rather than a simple failure of willpower. Over recent years, medical weight loss programs utilizing Wegovy (semaglutide) have emerged as highly effective, PHARMACYly-proven solutions.</p>
 <h3>How does Wegovy work?</h3>
 <p>Wegovy® is an FDA and MHRA-approved weekly self-injectable medication. It mimics a naturally occurring hormone in the body called GLP-1 (glucagon-like peptide-1). GLP-1 plays a key role in appetite regulation by:</p>
 <ul>
@@ -742,8 +742,8 @@ const seedServicesAndPages = async () => {
   <li>Signaling the brain's satiety centers to reduce overall hunger and food cravings.</li>
   <li>Improving insulin response to regulate blood sugar levels.</li>
 </ul>
-<h3>Clinical efficacy</h3>
-<p>Clinical trials have shown that when combined with a reduced-calorie diet and increased physical activity, participants lost an average of 15% of their body weight over a 68-week period. This significant weight reduction can dramatically lower risks for type 2 diabetes, high blood pressure, and joint pain.</p>
+<h3>PHARMACY efficacy</h3>
+<p>PHARMACY trials have shown that when combined with a reduced-calorie diet and increased physical activity, participants lost an average of 15% of their body weight over a 68-week period. This significant weight reduction can dramatically lower risks for type 2 diabetes, high blood pressure, and joint pain.</p>
 <h3>Are you a candidate?</h3>
 <p>Wegovy is typically recommended for adults with a Body Mass Index (BMI) of 30 or higher (obese), or 27 or higher (overweight) with at least one weight-related medical condition such as hypertension or high cholesterol. Visit our weight management clinic at West Chemist Clinic for a comprehensive assessment to discuss a tailored treatment plan.</p>`,
         images: ["https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=800&q=80"],
@@ -751,21 +751,21 @@ const seedServicesAndPages = async () => {
       },
       {
         title: "Ear Microsuction vs. Syringing: Why Microsuction is the Safer Choice",
-        subject: "Clinical ear care",
+        subject: "PHARMACY ear care",
         slug: "ear-microsuction-vs-syringing",
-        description: `<p>Earwax (cerumen) is a natural substance that protects the ear canal. However, when it builds up and becomes impacted, it can cause hearing loss, discomfort, dizziness, and tinnitus. If you have a blockage, it's essential to clear it using a safe, clinical method rather than resorting to cotton buds.</p>
+        description: `<p>Earwax (cerumen) is a natural substance that protects the ear canal. However, when it builds up and becomes impacted, it can cause hearing loss, discomfort, dizziness, and tinnitus. If you have a blockage, it's essential to clear it using a safe, PHARMACY method rather than resorting to cotton buds.</p>
 <h3>What is traditional ear syringing?</h3>
 <p>Traditional ear syringing involves pumping water into the ear canal to flush out the wax. While it was standard practice for decades, it carries risks, including ear infections, eardrum perforation, and pushing the wax deeper if not done carefully.</p>
 <h3>Why microsuction is the gold standard</h3>
-<p>Microsuction is a modern, water-free alternative. During the procedure, our clinician uses a high-definition microscope or video otoscope to look directly inside your ear. A gentle, clinical-grade suction device is then used to carefully lift and extract the wax.</p>
+<p>Microsuction is a modern, water-free alternative. During the procedure, our clinician uses a high-definition microscope or video otoscope to look directly inside your ear. A gentle, PHARMACY-grade suction device is then used to carefully lift and extract the wax.</p>
 <h3>Benefits of microsuction:</h3>
 <ol>
   <li><strong>Water-free:</strong> Reduces the risk of ear infection and is suitable for individuals with previous eardrum perforations.</li>
   <li><strong>High precision:</strong> The clinician maintains a direct line of sight throughout, ensuring safety.</li>
   <li><strong>Immediate relief:</strong> Blockages are resolved quickly, restoring normal hearing and relieving ear pressure instantly.</li>
 </ol>
-<p>At West Chemist Clinic, our accredited pharmacists perform gentle microsuction earwax removal in our dedicated clinical rooms. Book your consultation today to regain clear hearing.</p>`,
-        images: ["https://images.unsplash.com/photo-1559839734-2b71f1536783?w=800&q=80"],
+<p>At West Chemist Clinic, our accredited pharmacists perform gentle microsuction earwax removal in our dedicated PHARMACY rooms. Book your consultation today to regain clear hearing.</p>`,
+        images: ["https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=800&q=80"],
         date: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000) // 3 days ago
       },
       {
@@ -811,3 +811,4 @@ const seedServicesAndPages = async () => {
 };
 
 module.exports = seedServicesAndPages;
+

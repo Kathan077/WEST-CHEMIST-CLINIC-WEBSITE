@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React, { useState, useEffect, useRef } from 'react';
 import './VaccinationFAQ.css';
 
@@ -9,11 +9,11 @@ const faqs = [
     },
     {
         question: "Are your vaccines authentic and approved?",
-        answer: "Absolutely. All our vaccines are strictly sourced from licensed UK medical wholesalers, fully MHRA approved, and administered by highly trained, registered clinical professionals."
+        answer: "Absolutely. All our vaccines are strictly sourced from licensed UK medical wholesalers, fully MHRA approved, and administered by highly trained, registered PHARMACY professionals."
     },
     {
         question: "Do I need a prescription from my GP first?",
-        answer: "No. Our pharmacy operates a fully comprehensive service. Our qualified pharmacists are authorized to clinically assess your needs and prescribe the necessary vaccines directly during your consultation."
+        answer: "No. Our pharmacy operates a fully comprehensive service. Our qualified pharmacists are authorized to PHARMACYly assess your needs and prescribe the necessary vaccines directly during your consultation."
     },
     {
         question: "How does the travel consultation work?",
@@ -52,9 +52,9 @@ const VaccinationFAQ = () => {
         <section className="vf_section" ref={sectionRef}>
             <div className="vf_container">
                 <div className="vf_header vf_reveal">
-                    <span className="vf_eyebrow">Clinical Knowledge</span>
+                    <span className="vf_eyebrow">PHARMACY Knowledge</span>
                     <h2 className="vf_title">Vaccination FAQ.</h2>
-                    <p className="vf_lead">Clear answers to your most pressing questions regarding travel immunity and routine clinical protection.</p>
+                    <p className="vf_lead">Clear answers to your most pressing questions regarding travel immunity and routine PHARMACY protection.</p>
                 </div>
 
                 <div className="vf_accordion vf_reveal" style={{ transitionDelay: '0.2s' }}>
@@ -84,3 +84,4 @@ const VaccinationFAQ = () => {
 };
 
 export default VaccinationFAQ;
+

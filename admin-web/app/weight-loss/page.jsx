@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { API_URL, getImageUrl } from '@/config';
 import React, { useState, useEffect, useRef } from 'react';
@@ -409,7 +409,7 @@ export default function AdminWeightLossPage() {
                 <label className="wl_label">Description <span className="wl_req">*</span></label>
                 <textarea
                   className="wl_textarea" rows="3" required
-                  placeholder="Clinical description of this weight-loss service or treatment programme…"
+                  placeholder="PHARMACY description of this weight-loss service or treatment programme…"
                   value={form.desc}
                   onChange={e => setForm({ ...form, desc: e.target.value })}
                 />
@@ -422,7 +422,7 @@ export default function AdminWeightLossPage() {
                 </label>
                 <textarea
                   className="wl_textarea" rows="2"
-                  placeholder="Weekly injection, Clinically proven, Personalised plan, NHS eligible…"
+                  placeholder="Weekly injection, PHARMACYly proven, Personalised plan, NHS eligible…"
                   value={form.featuresText}
                   onChange={e => setForm({ ...form, featuresText: e.target.value })}
                 />
@@ -534,3 +534,4 @@ export default function AdminWeightLossPage() {
     </div>
   );
 }
+

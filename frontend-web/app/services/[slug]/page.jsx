@@ -13,11 +13,11 @@ const serviceData = {
         img: "https://images.unsplash.com/photo-1579154236594-c199f3768fb9?w=1200&q=80",
         desc: "Our advanced private blood testing service offers comprehensive, clinician-led diagnostic screenings with rapid, confidential reporting. From full blood counts and kidney function profiles to hormone panels and metabolic tracking, we provide the deep biological insights needed to optimize your health.",
         duration: "15-20 Mins",
-        features: ["GPhC Registered Pharmacist Oversight", "ISO-Accredited Laboratory Analysis", "Comprehensive Health Marker Panels", "Confidential Digital Results Report", "Post-Test Clinical Guidance"]
+        features: ["GPhC Registered Pharmacist Oversight", "ISO-Accredited Laboratory Analysis", "Comprehensive Health Marker Panels", "Confidential Digital Results Report", "Post-Test PHARMACY Guidance"]
     },
     "earwax-removal": {
         title: "Earwax Removal (Microsuction)",
-        cat: "Clinical Ear Care",
+        cat: "PHARMACY Ear Care",
         img: "https://images.unsplash.com/photo-1559839734-2b71f1536783?w=1200&q=80",
         desc: "Regain auditory clarity with our state-of-the-art microsuction earwax removal service. Widely recognized as the safest and most effective method, microsuction uses gentle suction under high-definition visualization to clear blockages without water or mess. Ideal for resolving discomfort, hearing loss, and tinnitus caused by impacted cerumen.",
         duration: "30 Mins",
@@ -25,9 +25,9 @@ const serviceData = {
     },
     "discharge-medicines-service": {
         title: "Discharge Medicines Service (DMS)",
-        cat: "NHS Clinical Integration",
+        cat: "NHS PHARMACY Integration",
         img: "https://plus.unsplash.com/premium_photo-1661633534346-601931818296?w=1200&q=80",
-        desc: "A specialized NHS clinical service designed to support patients transitioning from hospital care back to the community. Our pharmacists perform a rigorous medication reconciliation to resolve discrepancies, educate you on new therapeutic regimens, and coordinate directly with your GP to prevent adverse drug events and reduce readmission rates.",
+        desc: "A specialized NHS PHARMACY service designed to support patients transitioning from hospital care back to the community. Our pharmacists perform a rigorous medication reconciliation to resolve discrepancies, educate you on new therapeutic regimens, and coordinate directly with your GP to prevent adverse drug events and reduce readmission rates.",
         duration: "20 Mins",
         features: ["Comprehensive Medication Reconciliation", "Post-Hospital Transition Support", "Discrepancy & Side-Effect Identification", "Direct GP & Care Team Liaison", "One-on-One Patient Education"]
     },
@@ -35,7 +35,7 @@ const serviceData = {
         title: "New Medicine Service (NMS)",
         cat: "NHS Advanced Care",
         img: "https://images.unsplash.com/photo-1550572017-ed200f5e6399?w=1200&q=80",
-        desc: "Get the most out of your newly prescribed therapy for chronic conditions. This structured NHS service provides expert clinical consultation over several weeks for conditions like asthma, COPD, type 2 diabetes, hypertension, and anticoagulation therapy, helping you manage side effects, master administration techniques, and build confidence.",
+        desc: "Get the most out of your newly prescribed therapy for chronic conditions. This structured NHS service provides expert PHARMACY consultation over several weeks for conditions like asthma, COPD, type 2 diabetes, hypertension, and anticoagulation therapy, helping you manage side effects, master administration techniques, and build confidence.",
         duration: "15 Mins",
         features: ["Structured Pharmacist-Led Consultations", "Targeted Side-Effect Management", "Device Technique & Inhaler Training", "Improved Medication Adherence", "Direct Integration with NHS Care Pathways"]
     },
@@ -49,15 +49,15 @@ const serviceData = {
     },
     "cryotherapy": {
         title: "Cryotherapy Treatment",
-        cat: "Clinical Dermatology",
+        cat: "PHARMACY Dermatology",
         img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1200&q=80",
-        desc: "Remove benign skin lesions safely and effectively with our advanced cryotherapy service. Utilizing clinical-grade liquid nitrogen or nitrous oxide, we precisely freeze target tissues (such as warts, verrucae, skin tags, and solar keratoses), initiating a natural shedding process that preserves surrounding healthy skin.",
+        desc: "Remove benign skin lesions safely and effectively with our advanced cryotherapy service. Utilizing PHARMACY-grade liquid nitrogen or nitrous oxide, we precisely freeze target tissues (such as warts, verrucae, skin tags, and solar keratoses), initiating a natural shedding process that preserves surrounding healthy skin.",
         duration: "15 Mins",
         features: ["Precise Cryo-Pen Technology", "Effective for Warts, Verrucae & Tags", "Dermatological Lesion Assessment", "Minimal Discomfort & Scarring Risk", "Post-Treatment Care Protocol"]
     },
     "microneedling": {
         title: "Medical-Grade Microneedling",
-        cat: "Clinical Aesthetics",
+        cat: "PHARMACY Aesthetics",
         img: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=1200&q=80",
         desc: "Revitalize your skin's texture and tone with our premium medical-grade microneedling service. Utilizing sterile, automated micro-needling technology, this treatment stimulates the body's natural collagen and elastin synthesis. Highly effective for reducing acne scarring, fine lines, hyperpigmentation, and enlarged pores.",
         duration: "45 Mins",
@@ -69,18 +69,18 @@ const serviceData = {
         img: "https://plus.unsplash.com/premium_photo-1664303017917-71feb142f30c?w=1200&q=80",
         desc: "Determine the cause of severe throat infections rapidly with our point-of-care Strep A diagnostics. We conduct a rapid antigen swab test to detect Group A Streptococcus in minutes. If positive, our qualified prescribing pharmacists can issue appropriate antibiotic therapy immediately, saving you a visit to the GP.",
         duration: "10 Mins",
-        features: ["Rapid Antigen Throat Swab Test", "Results in Less Than 10 Minutes", "Clinical Sore Throat Scoring (FeverPAIN)", "Immediate Prescribing & Dispensing", "Professional Self-Care Guidance"]
+        features: ["Rapid Antigen Throat Swab Test", "Results in Less Than 10 Minutes", "PHARMACY Sore Throat Scoring (FeverPAIN)", "Immediate Prescribing & Dispensing", "Professional Self-Care Guidance"]
     },
     "dispensing-medicines": {
         title: "Prescription Dispensing Service",
-        cat: "Essential Clinical Care",
+        cat: "Essential PHARMACY Care",
         img: "https://plus.unsplash.com/premium_photo-1663040149075-8178a9c4038a?w=1200&q=80",
-        desc: "Enjoy reliable, accurate, and rapid dispensing of your NHS and private prescriptions. Every prescription undergoes a thorough clinical check by our registered pharmacists to ensure safety, identify potential drug interactions, and provide you with clear guidance on dosage and administration.",
+        desc: "Enjoy reliable, accurate, and rapid dispensing of your NHS and private prescriptions. Every prescription undergoes a thorough PHARMACY check by our registered pharmacists to ensure safety, identify potential drug interactions, and provide you with clear guidance on dosage and administration.",
         duration: "Variable",
         features: ["Accurate Electronic NHS Prescription Service (EPS)", "Thorough Pharmacist Safety Reviews", "Private Prescription Fulfillment", "Compliance & Dosette Box Preparation", "Home Delivery & Repeat Reminders"]
     },
     "blood-pressure": {
-        title: "Clinical Blood Pressure Screening",
+        title: "PHARMACY Blood Pressure Screening",
         cat: "Cardiovascular NHS Care",
         img: "https://images.unsplash.com/photo-1628177142898-93e36e4e3a50?w=1200&q=80",
         desc: "Identify and monitor cardiovascular risks with our professional blood pressure screening service. High blood pressure (hypertension) often has no symptoms but is a major cause of stroke and heart disease. We provide accurate measurements, risk explanation, and direct referral pathways if intervention is required.",
@@ -91,7 +91,7 @@ const serviceData = {
         title: "UTI Treatment (Pharmacy First)",
         cat: "NHS Pharmacy First",
         img: "https://images.unsplash.com/photo-1576091160550-217359f4bd08?w=1200&q=80",
-        desc: "Access prompt assessment and effective treatment for uncomplicated urinary tract infections (UTIs). Under the NHS Pharmacy First scheme, women aged 16-64 experiencing UTI symptoms can receive a private clinical consultation and, if indicated, a course of prescription antibiotics directly from our pharmacist.",
+        desc: "Access prompt assessment and effective treatment for uncomplicated urinary tract infections (UTIs). Under the NHS Pharmacy First scheme, women aged 16-64 experiencing UTI symptoms can receive a private PHARMACY consultation and, if indicated, a course of prescription antibiotics directly from our pharmacist.",
         duration: "15 Mins",
         features: ["Private, Confidential Consultation", "Rapid Symptomatic Assessment", "Prescription Antibiotics (if appropriate)", "NHS Pharmacy First Fully Funded", "Urinary Health Education"]
     },
@@ -99,7 +99,7 @@ const serviceData = {
         title: "Shingles Treatment Service",
         cat: "NHS Pharmacy First",
         img: "https://images.unsplash.com/photo-1584308919139-332c34f370d5?w=1200&q=80",
-        desc: "Prompt clinical intervention for shingles (herpes zoster). Under the NHS Pharmacy First service, patients aged 18 and over presenting with shingles symptoms can be assessed immediately. If appropriate, antiviral medication can be prescribed to reduce the severity, duration, and risk of post-herpetic neuralgia.",
+        desc: "Prompt PHARMACY intervention for shingles (herpes zoster). Under the NHS Pharmacy First service, patients aged 18 and over presenting with shingles symptoms can be assessed immediately. If appropriate, antiviral medication can be prescribed to reduce the severity, duration, and risk of post-herpetic neuralgia.",
         duration: "15 Mins",
         features: ["Rapid Antiviral Prescribing", "Pain Management & Relief Advice", "Prevention of Neuralgic Complications", "NHS Pharmacy First Fully Funded", "Ongoing Care & Follow-Up Support"]
     },
@@ -107,7 +107,7 @@ const serviceData = {
         title: "Sinusitis Treatment Service",
         cat: "NHS Pharmacy First",
         img: "https://images.unsplash.com/photo-1559839734-2b71f1536783?w=1200&q=80",
-        desc: "Professional assessment and relief from acute sinusitis symptoms. For individuals aged 12 and over, our prescribing clinical pharmacists can evaluate nasal congestion, facial pain, and pressure to determine the appropriate treatment, which may include nasal sprays, pain relief, or antibiotics if clinically indicated.",
+        desc: "Professional assessment and relief from acute sinusitis symptoms. For individuals aged 12 and over, our prescribing PHARMACY pharmacists can evaluate nasal congestion, facial pain, and pressure to determine the appropriate treatment, which may include nasal sprays, pain relief, or antibiotics if PHARMACYly indicated.",
         duration: "15 Mins",
         features: ["Comprehensive Nasal & Sinus Evaluation", "Prescription Antibiotics & Sprays", "Symptom Management Solutions", "NHS Pharmacy First Fully Funded", "Guidance on Complication Signs"]
     },
@@ -115,17 +115,17 @@ const serviceData = {
         title: "Sore Throat Treatment Service",
         cat: "NHS Pharmacy First",
         img: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=1200&q=80",
-        desc: "Fast relief and clinical diagnostic evaluation for acute sore throats. Using the FeverPAIN or Centor clinical scoring criteria, we assess children and adults aged 5 and over. Our clinical pharmacists can advise on pain management or prescribe antibiotics if a bacterial infection is highly likely.",
+        desc: "Fast relief and PHARMACY diagnostic evaluation for acute sore throats. Using the FeverPAIN or Centor PHARMACY scoring criteria, we assess children and adults aged 5 and over. Our PHARMACY pharmacists can advise on pain management or prescribe antibiotics if a bacterial infection is highly likely.",
         duration: "10 Mins",
-        features: ["FeverPAIN Clinical Swab & Scoring", "Targeted Symptom Relief Advice", "Antibiotic Prescribing for Bacterial Cases", "NHS Pharmacy First Fully Funded", "Prevention of Unnecessary Antibiotic Use"]
+        features: ["FeverPAIN PHARMACY Swab & Scoring", "Targeted Symptom Relief Advice", "Antibiotic Prescribing for Bacterial Cases", "NHS Pharmacy First Fully Funded", "Prevention of Unnecessary Antibiotic Use"]
     },
     "otitis-media-service": {
         title: "Acute Ear Infection (Otitis Media)",
         cat: "NHS Pharmacy First",
         img: "https://images.unsplash.com/photo-1559839734-2b71f1536783?w=1200&q=80",
-        desc: "Clinical otoscopic examination and treatment for acute middle ear infections in children aged 1 to 17. Our trained pharmacists evaluate ear pain, fever, and fluid build-up to provide clinical management, pain relief options, and prescription antibiotics when necessary under NHS Pharmacy First.",
+        desc: "PHARMACY otoscopic examination and treatment for acute middle ear infections in children aged 1 to 17. Our trained pharmacists evaluate ear pain, fever, and fluid build-up to provide PHARMACY management, pain relief options, and prescription antibiotics when necessary under NHS Pharmacy First.",
         duration: "20 Mins",
-        features: ["Accredited Otoscopic Ear Examination", "Pediatric-Focused Clinical Care", "Antibiotic Treatment (when indicated)", "NHS Pharmacy First Fully Funded", "Safety-Netting & Red-Flag Guidance"]
+        features: ["Accredited Otoscopic Ear Examination", "Pediatric-Focused PHARMACY Care", "Antibiotic Treatment (when indicated)", "NHS Pharmacy First Fully Funded", "Safety-Netting & Red-Flag Guidance"]
     },
     "flu-vaccination": {
         title: "Influenza Vaccination Service",
@@ -133,7 +133,7 @@ const serviceData = {
         img: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=1200&q=80",
         desc: "Protect yourself, your family, and your workforce against seasonal influenza. We offer both NHS-funded vaccines for eligible vulnerable groups and a rapid private vaccination service. Safeguard your winter health and prevent viral transmission with our professional vaccination service.",
         duration: "10 Mins",
-        features: ["Certified Clinical Immunizers", "Latest Seasonal Quadrivalent Vaccines", "NHS and Private Options Available", "Corporate Flu Vaccination Programs", "Safe, Hygienic Clinic Environment"]
+        features: ["Certified PHARMACY Immunizers", "Latest Seasonal Quadrivalent Vaccines", "NHS and Private Options Available", "Corporate Flu Vaccination Programs", "Safe, Hygienic Clinic Environment"]
     },
     "heart-check": {
         title: "Cardiovascular Health Check",
@@ -141,15 +141,15 @@ const serviceData = {
         img: "https://images.unsplash.com/photo-1576091160550-217359f4bd08?w=1200&q=80",
         desc: "Gain a complete understanding of your cardiovascular health with our multi-marker screening. This premium assessment includes a lipid panel (total cholesterol, HDL, LDL, triglycerides), blood glucose test, blood pressure evaluation, and body composition analysis to calculate your Q-Risk score and optimize heart longevity.",
         duration: "40 Mins",
-        features: ["Point-of-Care Lipid & Glucose Panel", "Cardiovascular Q-Risk Assessment", "Comprehensive Clinical Report", "Expert Cardiovascular Lifestyle Coaching", "Physician Referral Support"]
+        features: ["Point-of-Care Lipid & Glucose Panel", "Cardiovascular Q-Risk Assessment", "Comprehensive PHARMACY Report", "Expert Cardiovascular Lifestyle Coaching", "Physician Referral Support"]
     },
     "aesthetics": {
         title: "Advanced Medical Aesthetics",
         cat: "Non-Surgical Rejuvenation",
         img: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=1200&q=80",
-        desc: "Enhance your natural features with our bespoke medical aesthetic treatments. Performed exclusively by qualified, registered clinical professionals in a sterile environment, we offer customized treatment plans utilizing premium dermal fillers, skin boosters, and anti-aging injections.",
+        desc: "Enhance your natural features with our bespoke medical aesthetic treatments. Performed exclusively by qualified, registered PHARMACY professionals in a sterile environment, we offer customized treatment plans utilizing premium dermal fillers, skin boosters, and anti-aging injections.",
         duration: "30-60 Mins",
-        features: ["Clinically Qualified Aesthetic Practitioners", "Premium, Approved Product Range", "Sterile, Medical-Grade Environment", "Bespoke Facial Rejuvenation Plans", "Comprehensive Post-Treatment Support"]
+        features: ["PHARMACYly Qualified Aesthetic Practitioners", "Premium, Approved Product Range", "Sterile, Medical-Grade Environment", "Bespoke Facial Rejuvenation Plans", "Comprehensive Post-Treatment Support"]
     },
     "travel-vaccinations": {
         title: "Comprehensive Travel Vaccinations",
@@ -165,7 +165,7 @@ const serviceData = {
         img: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=1200&q=80",
         desc: "Ensure complete protection against three highly serious bacterial and viral infections. This single combined injection booster is recommended every 10 years or prior to traveling to countries with limited public sanitation and healthcare infrastructure.",
         duration: "15 Mins",
-        features: ["3-in-1 Combined Booster Formulation", "Provides Up to 10 Years of Immunity", "Fast & Virtually Painless Administration", "Included in Official Travel Records", "Clinical Eligibility Screening"]
+        features: ["3-in-1 Combined Booster Formulation", "Provides Up to 10 Years of Immunity", "Fast & Virtually Painless Administration", "Included in Official Travel Records", "PHARMACY Eligibility Screening"]
     },
     "typhoid-injection": {
         title: "Typhoid Injection Vaccine",
@@ -181,7 +181,7 @@ const serviceData = {
         img: "https://images.unsplash.com/photo-1550572017-ed200f5e6399?w=1200&q=80",
         desc: "An alternative, needle-free typhoid vaccine consisting of a course of oral capsules. This live attenuated vaccine stimulates mucosal immunity in the gut, offering excellent protection against typhoid fever for travelers who prefer oral administration.",
         duration: "10 Mins",
-        features: ["No-Needle Oral Capsule Course", "Stimulates Localized Gut Immunity", "Protects for Up to 3 Years", "Convenient Self-Administration Schedule", "Full Clinical Guidance Provided"]
+        features: ["No-Needle Oral Capsule Course", "Stimulates Localized Gut Immunity", "Protects for Up to 3 Years", "Convenient Self-Administration Schedule", "Full PHARMACY Guidance Provided"]
     },
     "hepatitis-a-typhoid-combined": {
         title: "Hepatitis A & Typhoid Combined",
@@ -229,7 +229,7 @@ const serviceData = {
         img: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=1200&q=80",
         desc: "Build protective antibody levels against Rabies prior to travel. Essential for travelers visiting countries where rabies is endemic, especially those participating in outdoor activities, working with animals, or traveling to remote regions far from medical care.",
         duration: "20 Mins",
-        features: ["3-Dose Pre-Exposure Vaccination Course", "Crucial for Remote & Wildlife Travel", "Simplifies Post-Bite Medical Care", "WHO-Recommended Immunization Protocol", "Professional Clinical Administration"]
+        features: ["3-Dose Pre-Exposure Vaccination Course", "Crucial for Remote & Wildlife Travel", "Simplifies Post-Bite Medical Care", "WHO-Recommended Immunization Protocol", "Professional PHARMACY Administration"]
     },
     "meningitis-acwy": {
         title: "Meningitis ACWY Vaccine",
@@ -253,7 +253,7 @@ const serviceData = {
         img: "https://images.unsplash.com/photo-1584308919139-332c34f370d5?w=1200&q=80",
         desc: "Protect yourself against Japanese Encephalitis, a serious viral infection of the brain spread by infected mosquitoes in rural and agricultural regions of Asia and the Western Pacific. This 2-dose vaccine is essential for long-term travelers and outdoor adventurers.",
         duration: "20 Mins",
-        features: ["2-Dose Immunization Course", "Essential for Rural & Outdoor Asian Travel", "Highly Effective Viral Brain Shield", "Detailed Mosquito Avoidance Counseling", "Clinical Health Assessment"]
+        features: ["2-Dose Immunization Course", "Essential for Rural & Outdoor Asian Travel", "Highly Effective Viral Brain Shield", "Detailed Mosquito Avoidance Counseling", "PHARMACY Health Assessment"]
     },
     "tick-borne-encephalitis": {
         title: "Tick-Borne Encephalitis Vaccine",
@@ -261,7 +261,7 @@ const serviceData = {
         img: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=1200&q=80",
         desc: "Provides critical defense against Tick-Borne Encephalitis (TBE), a viral infection of the central nervous system transmitted by ticks in forested and rural areas of Central, Eastern, and Northern Europe, as well as Northern Asia.",
         duration: "20 Mins",
-        features: ["Crucial for Hiking & Forest Activities", "Course of 2 to 3 Injections", "Provides Multi-Year Central Nervous System Shielding", "Tick Avoidance Clinical Guidance", "Certified Clinical Delivery"]
+        features: ["Crucial for Hiking & Forest Activities", "Course of 2 to 3 Injections", "Provides Multi-Year Central Nervous System Shielding", "Tick Avoidance PHARMACY Guidance", "Certified PHARMACY Delivery"]
     },
     "chickenpox-vaccine": {
         title: "Chickenpox (Varicella) Vaccine",
@@ -285,29 +285,29 @@ const serviceData = {
         img: "https://images.unsplash.com/photo-1579154236594-c199f3768fb9?w=1200&q=80",
         desc: "Utilizing the premium Gardasil 9 vaccine, we provide comprehensive protection against nine strains of HPV. This vaccination is highly effective in preventing HPV-associated cancers, including cervical, throat, and penile cancers, as well as genital warts.",
         duration: "20 Mins",
-        features: ["Gardasil 9 Premium Protection", "Substantially Lowers Cancer Risks", "Multi-Dose Schedule for Full Protection", "Gender-Neutral Clinical Care", "Accredited Pharmacist Administration"]
+        features: ["Gardasil 9 Premium Protection", "Substantially Lowers Cancer Risks", "Multi-Dose Schedule for Full Protection", "Gender-Neutral PHARMACY Care", "Accredited Pharmacist Administration"]
     },
     "wegovy": {
         title: "Wegovy Weight Management",
         cat: "Weight Loss",
         img: "/images/wegovy_pen.png",
-        desc: "Wegovy® (semaglutide) is an MHRA-approved weekly injection for effective, clinical weight management. Designed to mimic the GLP-1 hormone, it regulates your appetite, reduces cravings, and delays stomach emptying. Our program combines this highly effective medication with continuous clinician support to ensure safe, sustainable weight loss.",
+        desc: "Wegovy® (semaglutide) is an MHRA-approved weekly injection for effective, PHARMACY weight management. Designed to mimic the GLP-1 hormone, it regulates your appetite, reduces cravings, and delays stomach emptying. Our program combines this highly effective medication with continuous clinician support to ensure safe, sustainable weight loss.",
         duration: "30 Mins",
-        features: ["Once-Weekly Injectable Medication", "Clinically Proven GLP-1 Hormone Analog", "Appetite Regulation & Craving Reduction", "Comprehensive Clinical Consultation Required", "Tailored Support & Titration Plan"]
+        features: ["Once-Weekly Injectable Medication", "PHARMACYly Proven GLP-1 Hormone Analog", "Appetite Regulation & Craving Reduction", "Comprehensive PHARMACY Consultation Required", "Tailored Support & Titration Plan"]
     },
     "mounjaro": {
         title: "Mounjaro Weight Management",
         cat: "Weight Loss",
         img: "/images/mounjaro_pen.png",
-        desc: "Mounjaro® (tirzepatide) represents the latest innovation in metabolic science. Acting as a dual GIP and GLP-1 receptor agonist, it offers advanced efficacy in weight reduction. Under strict clinical supervision, our program provides personalized dosage schedules and tracking to maximize weight loss outcomes.",
+        desc: "Mounjaro® (tirzepatide) represents the latest innovation in metabolic science. Acting as a dual GIP and GLP-1 receptor agonist, it offers advanced efficacy in weight reduction. Under strict PHARMACY supervision, our program provides personalized dosage schedules and tracking to maximize weight loss outcomes.",
         duration: "45 Mins",
-        features: ["Innovative Dual Receptor Agonist (GIP & GLP-1)", "Advanced Weight Reduction Efficacy", "Personalized Clinical Titration Schedules", "Direct Professional Prescribing & Dispensing", "Continuous Progress Monitoring & Guidance"]
+        features: ["Innovative Dual Receptor Agonist (GIP & GLP-1)", "Advanced Weight Reduction Efficacy", "Personalized PHARMACY Titration Schedules", "Direct Professional Prescribing & Dispensing", "Continuous Progress Monitoring & Guidance"]
     },
     "weight-loss-management": {
         title: "Weight Loss Management Service",
         cat: "Weight Loss",
         img: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=1200&q=80",
-        desc: "Comprehensive clinical and lifestyle guidance, including weight monitoring, side-effect management, and supportive care for your journey.",
+        desc: "Comprehensive PHARMACY and lifestyle guidance, including weight monitoring, side-effect management, and supportive care for your journey.",
         duration: "30 Mins",
         features: ["Personalised lifestyle guidance", "Regular progress reviews", "Clinician-backed support", "Continuous health tracking"]
     }
@@ -371,7 +371,7 @@ export default function ServiceDetail() {
             <div style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--t3)', fontFamily: 'inherit' }}>
                 <div style={{ textAlign: 'center' }}>
                     <div style={{ fontSize: '1.5rem', fontWeight: 700, color: '#4B2D71', marginBottom: '12px' }}>Loading service...</div>
-                    <p>Fetching clinical details and credentials...</p>
+                    <p>Fetching PHARMACY details and credentials...</p>
                 </div>
             </div>
         );
@@ -383,7 +383,7 @@ export default function ServiceDetail() {
                 <div style={{ textAlign: 'center', padding: '24px', maxWidth: '400px' }}>
                     <div style={{ fontSize: '3rem', marginBottom: '16px' }}>🔍</div>
                     <div style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--t1)', marginBottom: '12px' }}>Service Not Found</div>
-                    <p style={{ marginBottom: '24px' }}>The requested clinical service does not exist or has been moved.</p>
+                    <p style={{ marginBottom: '24px' }}>The requested PHARMACY service does not exist or has been moved.</p>
                     <Link href="/" style={{ background: '#4B2D71', color: 'white', padding: '10px 20px', borderRadius: '8px', textDecoration: 'none', fontWeight: 700 }}>
                         Return to Homepage
                     </Link>
@@ -422,8 +422,8 @@ export default function ServiceDetail() {
                             <div className="sd_benefits_grid">
                                 <div className="sd_benefit_card">
                                     <div className="sd_benefit_icon">✦</div>
-                                    <h3>Clinical Excellence</h3>
-                                    <p>Delivered by GPHC registered pharmacists with years of specialized clinical experience.</p>
+                                    <h3>PHARMACY Excellence</h3>
+                                    <p>Delivered by GPHC registered pharmacists with years of specialized PHARMACY experience.</p>
                                 </div>
                                 <div className="sd_benefit_card">
                                     <div className="sd_benefit_icon">✦</div>
@@ -448,7 +448,7 @@ export default function ServiceDetail() {
                         <aside className="sd_sidebar">
                             <div className="sd_booking_card">
                                 <div className="sd_card_header">
-                                    <span className="sd_price_label">Premium Clinical Care</span>
+                                    <span className="sd_price_label">Premium PHARMACY Care</span>
                                     <h3 className="sd_card_service_title">{service.title}</h3>
                                 </div>
                                 <div className="sd_card_meta">

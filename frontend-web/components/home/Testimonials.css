@@ -1,12 +1,12 @@
-/* ============================================================
-   TESTIMONIALS.CSS — PURE CLINICAL HOSPITAL VIBE
+﻿/* ============================================================
+   TESTIMONIALS.CSS — PURE PHARMACY HOSPITAL VIBE
    ============================================================ */
 
 .testimonials_section {
     position: relative;
     padding: 120px 5%;
     background: transparent;
-    /* Clinical light grey/blue removed for transparency */
+    /* PHARMACY light grey/blue removed for transparency */
     overflow: hidden;
     isolation: isolate;
 }
@@ -257,4 +257,5 @@
         padding: 80px 5%;
     }
 }
+
 

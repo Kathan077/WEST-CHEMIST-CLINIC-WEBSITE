@@ -36,7 +36,7 @@ const SERVICES = [
         ] 
     },
     { 
-        group: "NHS Services — Clinical", 
+        group: "NHS Services — PHARMACY", 
         items: [
             "Blood Pressure Testing",
             "Contraception Service",
@@ -544,7 +544,7 @@ function BookingPageInner() {
                             </div>
                             <div>
                                 <div className="bk_brand_name">West Chemist</div>
-                                <div className="bk_brand_sub">Clinical Booking Portal</div>
+                                <div className="bk_brand_sub">PHARMACY Booking Portal</div>
                             </div>
                         </div>
 
@@ -617,7 +617,14 @@ function BookingPageInner() {
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--secondary)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                                 </svg>
-                                GPhC Registered (Reg. 12948)
+                                GPhC Registered (Reg. 1035465)
+                            </div>
+                            <div className="bk_trust_item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary-light)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                    <circle cx="12" cy="7" r="4" />
+                                </svg>
+                                Superintendent: Viren Bhatia
                             </div>
                             <div className="bk_trust_item">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--secondary)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
@@ -660,7 +667,7 @@ function BookingPageInner() {
                             <div className="bk_panel anim_in" key="s1">
                                 <div className="bk_panel_head">
                                     <h1 className="bk_title">Patient Profile Registration</h1>
-                                    <p className="bk_desc">Please provide your details below to map your security record and clinical request.</p>
+                                    <p className="bk_desc">Please provide your details below to map your security record and PHARMACY request.</p>
                                 </div>
 
                                 <div className="bk_form">
@@ -703,7 +710,7 @@ function BookingPageInner() {
                                         <label className="bk_label">Select Clinic Location</label>
                                         <div className="bk_field_icon_wrapper">
                                             <select className="bk_input" name="clinic" value={formData.clinic} onChange={handle}>
-                                                <option value="">Choose clinical facility...</option>
+                                                <option value="">Choose PHARMACY facility...</option>
                                                 {CLINICS.map(c => <option key={c}>{c}</option>)}
                                             </select>
                                             <span className="bk_input_icon">
@@ -718,7 +725,7 @@ function BookingPageInner() {
                                     <div className="bk_form_divider" style={{ marginTop: '20px' }}>Medical Mapping</div>
 
                                     <div className="bk_field bk_full">
-                                        <label className="bk_label">Required Clinical Service</label>
+                                        <label className="bk_label">Required PHARMACY Service</label>
                                         <div className="bk_field_icon_wrapper">
                                             <select className="bk_input" name="service" value={formData.service} onChange={handle}>
                                                 <option value="">Select healthcare appointment type...</option>
@@ -752,7 +759,7 @@ function BookingPageInner() {
                         {step === 2 && (
                             <div className="bk_panel anim_in" key="s2">
                                 <div className="bk_panel_head">
-                                    <h1 className="bk_title">Clinical Compliance Verification</h1>
+                                    <h1 className="bk_title">PHARMACY Compliance Verification</h1>
                                     <p className="bk_desc">To comply with GPhC regulations, please complete an secure identity document scan.</p>
                                 </div>
 
@@ -777,7 +784,7 @@ function BookingPageInner() {
                                         </div>
                                         <h2 className="bk_bypass_title">Identity Securely Verified</h2>
                                         <p className="bk_bypass_desc">
-                                            Welcome back, <strong>{formData.fullName}</strong>. Our clinical system has retrieved your approved GPhC statutory verification. No further documents are required.
+                                            Welcome back, <strong>{formData.fullName}</strong>. Our PHARMACY system has retrieved your approved GPhC statutory verification. No further documents are required.
                                         </p>
                                         <div className="bk_footer" style={{ borderTop: 'none', padding: '0', justifyContent: 'center', gap: '16px' }}>
                                             <button className="bk_btn_ghost" onClick={() => setStep(1)}>
@@ -815,7 +822,7 @@ function BookingPageInner() {
                                         </div>
                                         <h2 style={{ fontSize: '1.5rem', color: '#0f172a', fontWeight: '800', marginBottom: '12px' }}>Verification Pending Audit</h2>
                                         <p style={{ color: '#64748b', fontSize: '0.95rem', maxWidth: '440px', margin: '0 auto 30px', lineHeight: '1.6' }}>
-                                            Your previously uploaded identity document is currently undergoing clinical audit. You can proceed to schedule your slot; confirmation will follow verification completion.
+                                            Your previously uploaded identity document is currently undergoing PHARMACY audit. You can proceed to schedule your slot; confirmation will follow verification completion.
                                         </p>
                                         <div className="bk_footer" style={{ borderTop: 'none', padding: '0', justifyContent: 'center', gap: '16px' }}>
                                             <button className="bk_btn_ghost" onClick={() => setStep(1)}>
@@ -1003,7 +1010,7 @@ function BookingPageInner() {
                                                     <div className="bk_footer anim_in" style={{ gridColumn: '1 / -1', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '24px' }}>
                                                         <div style={{ color: '#34d399', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.95rem' }}>
                                                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
-                                                            UK Clinical Compliance Verified Successfully.
+                                                            UK PHARMACY Compliance Verified Successfully.
                                                         </div>
                                                         <button className="bk_btn_primary" onClick={() => setStep(3)}>
                                                             Open Scheduler & Select Slot
@@ -1242,7 +1249,7 @@ function BookingPageInner() {
                                                                 onClick={handleBookAppointment}
                                                                 style={{ flex: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}
                                                             >
-                                                                {loading ? 'Securing Slot...' : 'Book Clinical Appointment'}
+                                                                {loading ? 'Securing Slot...' : 'Book PHARMACY Appointment'}
                                                                 <svg className="bk_btn_arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                                                                     <line x1="5" y1="12" x2="19" y2="12"></line>
                                                                     <polyline points="12 5 19 12 12 19"></polyline>
@@ -1356,3 +1363,4 @@ export default function BookingPage() {
         </Suspense>
     );
 }
+

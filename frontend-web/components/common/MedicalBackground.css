@@ -8,7 +8,7 @@
     overflow: hidden;
     pointer-events: none;
     contain: strict;
-    /* Professional Clinical Base — Soft, clean grey-white atmosphere */
+    /* Professional PHARMACY Base — Soft, clean grey-white atmosphere */
     background: linear-gradient(145deg,
             #ffffff 0%,
             #f8fafc 35%,
@@ -20,18 +20,18 @@
 .blob-container {
     position: absolute;
     inset: 0;
-    opacity: 0.8;
+    opacity: 0.3;
 }
 
 .blob {
     position: absolute;
     border-radius: 50%;
     will-change: transform;
-    filter: blur(80px);
-    /* Enhanced softness */
-
+    filter: blur(90px);
+    /* Soft ambient glow */
     transform: translate3d(0, 0, 0);
-    backface-visibility: hidden;}
+    backface-visibility: hidden;
+}
 
 /* Primary — Purple Accent (Brand: --primary) */
 .blob-1 {
@@ -40,10 +40,10 @@
     top: -200px;
     right: -150px;
     background: radial-gradient(circle,
-            rgba(75, 45, 113, 0.08) 0%,
-            rgba(75, 45, 113, 0.03) 50%,
+            rgba(75, 45, 113, 0.04) 0%,
+            rgba(75, 45, 113, 0.01) 50%,
             transparent 70%);
-    animation: bOrb1 32s infinite ease-in-out alternate;
+    animation: bOrb1 40s infinite ease-in-out alternate;
 }
 
 /* Secondary — Teal Accent (Brand: --accent) */
@@ -53,10 +53,10 @@
     bottom: -150px;
     left: -100px;
     background: radial-gradient(circle,
-            rgba(0, 132, 115, 0.06) 0%,
-            rgba(0, 132, 115, 0.02) 50%,
+            rgba(0, 132, 115, 0.03) 0%,
+            rgba(0, 132, 115, 0.01) 50%,
             transparent 70%);
-    animation: bOrb2 38s infinite ease-in-out alternate;
+    animation: bOrb2 45s infinite ease-in-out alternate;
 }
 
 /* Subtle Mid — Soft Green (Brand: --secondary) */
@@ -66,9 +66,9 @@
     top: 40%;
     right: 5%;
     background: radial-gradient(circle,
-            rgba(32, 107, 94, 0.05) 0%,
+            rgba(32, 107, 94, 0.02) 0%,
             transparent 70%);
-    animation: bOrb3 25s infinite ease-in-out alternate;
+    animation: bOrb3 35s infinite ease-in-out alternate;
 }
 
 .blob-4 {
@@ -77,18 +77,17 @@
     top: 10%;
     left: 15%;
     background: radial-gradient(circle,
-            rgba(120, 89, 163, 0.04) 0%,
+            rgba(120, 89, 163, 0.02) 0%,
             transparent 70%);
-    animation: bOrb4 20s infinite ease-in-out alternate;
+    animation: bOrb4 30s infinite ease-in-out alternate;
 }
 
 @keyframes bOrb1 {
     0% {
         transform: translate3d(0, 0, 0) scale(1);
     }
-
     100% {
-        transform: translate3d(-60px, 80px, 0) scale(1.05);
+        transform: translate3d(-40px, 50px, 0) scale(1.03);
     }
 }
 
@@ -96,9 +95,8 @@
     0% {
         transform: translate3d(0, 0, 0) scale(1);
     }
-
     100% {
-        transform: translate3d(50px, -60px, 0) scale(1.1);
+        transform: translate3d(40px, -40px, 0) scale(1.05);
     }
 }
 
@@ -106,9 +104,8 @@
     0% {
         transform: translate3d(0, 0, 0);
     }
-
     100% {
-        transform: translate3d(-40px, 40px, 0);
+        transform: translate3d(-25px, 25px, 0);
     }
 }
 
@@ -116,9 +113,8 @@
     0% {
         transform: translate3d(0, 0, 0);
     }
-
     100% {
-        transform: translate3d(30px, 40px, 0);
+        transform: translate3d(20px, 25px, 0);
     }
 }
 
@@ -126,9 +122,9 @@
 .medical-grid-fixed {
     position: absolute;
     inset: 0;
-    background-image: radial-gradient(circle, rgba(75, 45, 113, 0.05) 1px, transparent 1px);
-    background-size: 60px 60px;
-    opacity: 0.6;
+    background-image: radial-gradient(circle, rgba(75, 45, 113, 0.03) 1px, transparent 1px);
+    background-size: 70px 70px;
+    opacity: 0.25;
 }
 
 /* ─── HUD Scan Line (Subtler) ─── */
@@ -139,24 +135,22 @@
     height: 1px;
     background: linear-gradient(90deg,
             transparent 0%,
-            rgba(0, 132, 115, 0.2) 50%,
+            rgba(0, 132, 115, 0.08) 50%,
             transparent 100%);
-    animation: hudScan 15s infinite linear;
+    animation: hudScan 25s infinite linear;
     will-change: transform, opacity;
-
-    transform: translate3d(0, 0, 0);}
+    transform: translate3d(0, 0, 0);
+}
 
 @keyframes hudScan {
     0% {
         transform: translate3d(0, 0, 0);
         opacity: 0;
     }
-
     5%,
     95% {
-        opacity: 1;
+        opacity: 0.15;
     }
-
     100% {
         transform: translate3d(0, 100vh, 0);
         opacity: 0;
@@ -173,8 +167,8 @@
 
 .ecg-line {
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(75, 45, 113, 0.1), transparent);
-    animation: ecgFlow 20s infinite linear;
+    background: linear-gradient(90deg, transparent, rgba(75, 45, 113, 0.04), transparent);
+    animation: ecgFlow 30s infinite linear;
     will-change: transform;
 }
 
@@ -182,7 +176,6 @@
     from {
         transform: translate3d(-50%, 0, 0);
     }
-
     to {
         transform: translate3d(0, 0, 0);
     }
@@ -218,14 +211,13 @@
 
     .medical-grid-fixed {
         background-size: 40px 40px;
-        opacity: 0.4;
+        opacity: 0.3;
     }
 
     .hud-scan {
-        animation-duration: 20s;
-        /* Slower on mobile */
-    
-    transform: translate3d(0, 0, 0);}
+        animation-duration: 30s;
+        transform: translate3d(0, 0, 0);
+    }
 
     .ecg-container {
         bottom: 10%;

@@ -1,4 +1,4 @@
-const nodemailer = require('nodemailer');
+﻿const nodemailer = require('nodemailer');
 
 const getFrontendUrl = () => {
   // Use FRONTEND_URL from environment or fallback to production URL
@@ -61,7 +61,7 @@ const sendBookingConfirmation = async (appointment, patient) => {
             <td><strong>${patient.mobile}</strong></td>
           </tr>
           <tr>
-            <td style="color: #666; padding: 4px 0;">Clinical Service:</td>
+            <td style="color: #666; padding: 4px 0;">PHARMACY Service:</td>
             <td><strong>${appointment.service}</strong></td>
           </tr>
           <tr>
@@ -92,7 +92,7 @@ const sendBookingConfirmation = async (appointment, patient) => {
       
       <div style="text-align: center; color: #999; font-size: 12px;">
         <p>This is an automated message, please do not reply directly to this email.</p>
-        <p>🔒 Secure & NHS Accredited Clinical Services</p>
+        <p>🔒 Secure & NHS Accredited PHARMACY Services</p>
       </div>
     </div>
   `;
@@ -216,7 +216,7 @@ const sendBookingReceived = async (appointment, patient) => {
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px;">
       <div style="text-align: center; margin-bottom: 20px;">
         <h2 style="color: #d97706; margin: 0;">West Chemist</h2>
-        <p style="color: #666; font-size: 14px; margin: 5px 0 0 0;">Clinical Booking Under Review</p>
+        <p style="color: #666; font-size: 14px; margin: 5px 0 0 0;">PHARMACY Booking Under Review</p>
       </div>
       
       <p>Dear <strong>${patient.fullName}</strong>,</p>
@@ -230,7 +230,7 @@ const sendBookingReceived = async (appointment, patient) => {
             <td><strong>${patient.fullName}</strong></td>
           </tr>
           <tr>
-            <td style="color: #666; padding: 4px 0;">Clinical Service:</td>
+            <td style="color: #666; padding: 4px 0;">PHARMACY Service:</td>
             <td><strong>${appointment.service}</strong></td>
           </tr>
           <tr>
@@ -253,14 +253,14 @@ const sendBookingReceived = async (appointment, patient) => {
       </div>
       
       <p style="font-size: 13px; color: #666;">
-        Once approved, you will receive a confirmation email with your secured clinical slot details. You can track the status of your booking at any time via the patient portal.
+        Once approved, you will receive a confirmation email with your secured PHARMACY slot details. You can track the status of your booking at any time via the patient portal.
       </p>
       
       <hr style="border: 0; border-top: 1px solid #e0e0e0; margin: 20px 0;">
       
       <div style="text-align: center; color: #999; font-size: 12px;">
         <p>This is an automated message, please do not reply directly to this email.</p>
-        <p>🔒 Secure & NHS Accredited Clinical Services</p>
+        <p>🔒 Secure & NHS Accredited PHARMACY Services</p>
       </div>
     </div>
   `;
@@ -305,7 +305,7 @@ const sendRescheduleNotice = async (appointment, patient) => {
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px;">
       <div style="text-align: center; margin-bottom: 20px;">
         <h2 style="color: #ef4444; margin: 0;">West Chemist</h2>
-        <p style="color: #666; font-size: 14px; margin: 5px 0 0 0;">Clinical Booking Action Required</p>
+        <p style="color: #666; font-size: 14px; margin: 5px 0 0 0;">PHARMACY Booking Action Required</p>
       </div>
       
       <p>Dear <strong>${patient.fullName}</strong>,</p>
@@ -315,7 +315,7 @@ const sendRescheduleNotice = async (appointment, patient) => {
         <h3 style="color: #9f1239; margin-top: 0; margin-bottom: 10px;">Affected Appointment Details</h3>
         <table style="width: 100%; font-size: 14px;">
           <tr>
-            <td style="color: #666; padding: 4px 0; width: 120px;">Clinical Service:</td>
+            <td style="color: #666; padding: 4px 0; width: 120px;">PHARMACY Service:</td>
             <td><strong>${appointment.service}</strong></td>
           </tr>
           <tr>
@@ -347,7 +347,7 @@ const sendRescheduleNotice = async (appointment, patient) => {
       
       <div style="text-align: center; color: #999; font-size: 12px;">
         <p>This is an automated message, please do not reply directly to this email.</p>
-        <p>🔒 Secure & NHS Accredited Clinical Services</p>
+        <p>🔒 Secure & NHS Accredited PHARMACY Services</p>
       </div>
     </div>
   `;
@@ -382,3 +382,4 @@ module.exports = {
   sendBookingReceived,
   sendRescheduleNotice
 };
+

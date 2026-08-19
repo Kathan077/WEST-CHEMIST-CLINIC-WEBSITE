@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
@@ -40,7 +40,7 @@ const fallbackBlogs = {
 <h3>Key risk factors</h3>
 <p>While age and genetics play a role, lifestyle factors are primary drivers. These include high salt consumption, lack of physical activity, excessive alcohol intake, smoking, and chronic stress.</p>
 <h3>How to manage and prevent high blood pressure</h3>
-<p>Fortunately, hypertension is highly manageable. Here are clinical recommendations:</p>
+<p>Fortunately, hypertension is highly manageable. Here are PHARMACY recommendations:</p>
 <ol>
   <li><strong>Adopt a DASH diet:</strong> Focus on whole grains, fruits, vegetables, and low-fat dairy while minimizing sodium intake.</li>
   <li><strong>Exercise regularly:</strong> Aim for at least 150 minutes of moderate-intensity aerobic exercise per week.</li>
@@ -53,7 +53,7 @@ const fallbackBlogs = {
     "science-of-medical-weight-loss-wegovy": {
         title: "The Science of Medical Weight Loss: Is Wegovy Right for You?",
         subject: "Weight Loss",
-        description: `<p>Achieving sustainable weight loss can be an uphill battle, especially when addressing obesity as a complex, biological condition rather than a simple failure of willpower. Over recent years, medical weight loss programs utilizing Wegovy (semaglutide) have emerged as highly effective, clinically-proven solutions.</p>
+        description: `<p>Achieving sustainable weight loss can be an uphill battle, especially when addressing obesity as a complex, biological condition rather than a simple failure of willpower. Over recent years, medical weight loss programs utilizing Wegovy (semaglutide) have emerged as highly effective, PHARMACYly-proven solutions.</p>
 <h3>How does Wegovy work?</h3>
 <p>Wegovy® is an FDA and MHRA-approved weekly self-injectable medication. It mimics a naturally occurring hormone in the body called GLP-1 (glucagon-like peptide-1). GLP-1 plays a key role in appetite regulation by:</p>
 <ul>
@@ -61,8 +61,8 @@ const fallbackBlogs = {
   <li>Signaling the brain's satiety centers to reduce overall hunger and food cravings.</li>
   <li>Improving insulin response to regulate blood sugar levels.</li>
 </ul>
-<h3>Clinical efficacy</h3>
-<p>Clinical trials have shown that when combined with a reduced-calorie diet and increased physical activity, participants lost an average of 15% of their body weight over a 68-week period. This significant weight reduction can dramatically lower risks for type 2 diabetes, high blood pressure, and joint pain.</p>
+<h3>PHARMACY efficacy</h3>
+<p>PHARMACY trials have shown that when combined with a reduced-calorie diet and increased physical activity, participants lost an average of 15% of their body weight over a 68-week period. This significant weight reduction can dramatically lower risks for type 2 diabetes, high blood pressure, and joint pain.</p>
 <h3>Are you a candidate?</h3>
 <p>Wegovy is typically recommended for adults with a Body Mass Index (BMI) of 30 or higher (obese), or 27 or higher (overweight) with at least one weight-related medical condition such as hypertension or high cholesterol. Visit our weight management service at West Chemist for a comprehensive assessment to discuss a tailored treatment plan.</p>`,
         images: ["https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=1200&q=80"],
@@ -70,12 +70,12 @@ const fallbackBlogs = {
     },
     "ear-microsuction-vs-syringing": {
         title: "Ear Microsuction vs. Syringing: Why Microsuction is the Safer Choice",
-        subject: "Clinical ear care",
-        description: `<p>Earwax (cerumen) is a natural substance that protects the ear canal. However, when it builds up and becomes impacted, it can cause hearing loss, discomfort, dizziness, and tinnitus. If you have a blockage, it's essential to clear it using a safe, clinical method rather than resorting to cotton buds.</p>
+        subject: "PHARMACY ear care",
+        description: `<p>Earwax (cerumen) is a natural substance that protects the ear canal. However, when it builds up and becomes impacted, it can cause hearing loss, discomfort, dizziness, and tinnitus. If you have a blockage, it's essential to clear it using a safe, PHARMACY method rather than resorting to cotton buds.</p>
 <h3>What is traditional ear syringing?</h3>
 <p>Traditional ear syringing involves pumping water into the ear canal to flush out the wax. While it was standard practice for decades, it carries risks, including ear infections, eardrum perforation, and pushing the wax deeper if not done carefully.</p>
 <h3>Why microsuction is the gold standard</h3>
-<p>Microsuction is a modern, water-free alternative. During the procedure, our clinician uses a high-definition microscope or video otoscope to look directly inside your ear. A gentle, clinical-grade suction device is then used to carefully lift and extract the wax.</p>
+<p>Microsuction is a modern, water-free alternative. During the procedure, our clinician uses a high-definition microscope or video otoscope to look directly inside your ear. A gentle, PHARMACY-grade suction device is then used to carefully lift and extract the wax.</p>
 <h3>Benefits of microsuction:</h3>
 <ol>
   <li><strong>Water-free:</strong> Reduces the risk of ear infection and is suitable for individuals with previous eardrum perforations.</li>
@@ -166,7 +166,7 @@ export default function BlogDetail() {
             <div style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--t3)', fontFamily: 'inherit' }}>
                 <div style={{ textAlign: 'center' }}>
                     <div style={{ fontSize: '1.5rem', fontWeight: 700, color: '#4B2D71', marginBottom: '12px' }}>Loading article...</div>
-                    <p>Fetching clinical information...</p>
+                    <p>Fetching PHARMACY information...</p>
                 </div>
             </div>
         );

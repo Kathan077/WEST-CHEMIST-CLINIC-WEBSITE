@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { API_URL } from '@/config';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
@@ -694,7 +694,7 @@ export default function AboutEditorPage() {
                 <I d={ICONS.mission} s={14} /> Mission & Values ({cards.length})
               </button>
               <button className={`abt_tab_btn ${activeTab === 'branches' ? 'active' : ''}`} onClick={() => setActiveTab('branches')}>
-                <I d={ICONS.map} s={14} /> Clinical Network ({branches.length})
+                <I d={ICONS.map} s={14} /> PHARMACY Network ({branches.length})
               </button>
               <button className={`abt_tab_btn ${activeTab === 'faqs' ? 'active' : ''}`} onClick={() => setActiveTab('faqs')}>
                 <I d={ICONS.help} s={14} /> FAQs ({faqs.length})
@@ -1014,7 +1014,7 @@ export default function AboutEditorPage() {
                 <section className="abt_card anim_fade">
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
                     <h3 className="abt_title">
-                      📍 Clinical Network & Locations
+                      📍 PHARMACY Network & Locations
                     </h3>
                     <button className="abt_btn_add" onClick={() => setShowAddBranch(!showAddBranch)} style={{ marginTop: 0 }}>
                       <I d={ICONS.plus} s={14} />
@@ -1769,3 +1769,4 @@ function ImageUploader({ label, value, onChange }) {
     </div>
   );
 }
+

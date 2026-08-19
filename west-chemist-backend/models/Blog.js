@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+﻿const mongoose = require('mongoose');
 
 const BlogSchema = new mongoose.Schema({
   title: {
@@ -32,7 +32,7 @@ const BlogSchema = new mongoose.Schema({
   },
   verificationSubtitle: {
     type: String,
-    default: 'By Clinical Team'
+    default: 'By PHARMACY Team'
   },
   date: {
     type: Date,
@@ -43,3 +43,4 @@ const BlogSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('Blog', BlogSchema);
+

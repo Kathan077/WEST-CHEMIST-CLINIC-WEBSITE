@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React, { useEffect, useRef } from 'react';
 import { API_URL } from '@/config';
 import './BlogHero.css';
@@ -27,11 +27,11 @@ export default function BlogHero({ featuredPost, onReadClick }) {
 
     // Determine values based on whether featuredPost is present
     const isFeatured = !!featuredPost;
-   const badgeText = isFeatured ? " " : "CLINICAL BLOG";
+   const badgeText = isFeatured ? " " : "PHARMACY BLOG";
     const titleText = isFeatured ? featuredPost.title : <>Digital <span className="bh_highlight">Health</span> & Medical <span className="bh_highlight">Innovation</span></>;
     
     // Strip HTML for description
-    const rawDesc = isFeatured ? featuredPost.description?.replace(/<[^>]*>/g, '') : "Insights from the intersection of pharmaceutical expertise and modern wellness. Stay ahead with clinical advice that matters for your daily life.";
+    const rawDesc = isFeatured ? featuredPost.description?.replace(/<[^>]*>/g, '') : "Insights from the intersection of pharmaceutical expertise and modern wellness. Stay ahead with PHARMACY advice that matters for your daily life.";
     const descText = isFeatured && rawDesc?.length > 180 ? `${rawDesc.substring(0, 185)}...` : rawDesc;
 
     const imgUrl = isFeatured && featuredPost.images && featuredPost.images.length > 0 
@@ -116,7 +116,7 @@ export default function BlogHero({ featuredPost, onReadClick }) {
                                 </div>
                                 <div className="bh_stat_text">
                                     <strong>{featuredPost?.verificationTitle || "Medically Verified"}</strong>
-                                    <span>{featuredPost?.verificationSubtitle || "By Clinical Team"}</span>
+                                    <span>{featuredPost?.verificationSubtitle || "By PHARMACY Team"}</span>
                                 </div>
                             </div>
                         </div>
@@ -126,3 +126,4 @@ export default function BlogHero({ featuredPost, onReadClick }) {
         </section>
     );
 }
+

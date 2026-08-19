@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
@@ -148,7 +148,7 @@ const Navbar = () => {
                     );
                     setVaccinationServices(vSrvs);
 
-                    // General clinical services for Services hover dropdown (non-weight-loss, includes Travel Clinic)
+                    // General PHARMACY services for Services hover dropdown (non-weight-loss, includes Travel Clinic)
                     const filteredSrvs = allSrvs.filter(s => !isWeightLoss(s));
                     setServices(filteredSrvs);
                 }
@@ -467,3 +467,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

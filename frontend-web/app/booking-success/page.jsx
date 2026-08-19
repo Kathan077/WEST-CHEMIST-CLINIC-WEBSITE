@@ -38,7 +38,7 @@ const SERVICES = [
         ] 
     },
     { 
-        group: "NHS Services — Clinical", 
+        group: "NHS Services — PHARMACY", 
         items: [
             "Blood Pressure Testing",
             "Contraception Service",
@@ -280,7 +280,7 @@ function BookingSuccessContent() {
     // Reschedule & Edit details states
     const [isEditing, setIsEditing] = useState(false);
     const [editClinic, setEditClinic] = useState(searchParams.get('clinic') || 'West Chemist');
-    const [editService, setEditService] = useState(searchParams.get('service') || 'Clinical Service');
+    const [editService, setEditService] = useState(searchParams.get('service') || 'PHARMACY Service');
     const [editDate, setEditDate] = useState(searchParams.get('date') || '');
     const [editTime, setEditTime] = useState(searchParams.get('time') || '');
     const [editSlots, setEditSlots] = useState([]);
@@ -524,7 +524,7 @@ function BookingSuccessContent() {
         statusBorder = 'rgba(100, 116, 139, 0.2)';
         
         headingTitle = 'Booking Cancelled';
-        headingSubtitle = 'This clinical booking reservation has been cancelled. The time slot has been released.';
+        headingSubtitle = 'This PHARMACY booking reservation has been cancelled. The time slot has been released.';
         iconGradient = 'linear-gradient(135deg, #64748b, #475569)';
         iconShadow = '0 10px 30px rgba(100, 116, 139, 0.35)';
         topIcon = (
@@ -598,7 +598,7 @@ function BookingSuccessContent() {
                         </div>
                         <div>
                             <div className="bk_brand_name">West Chemist</div>
-                            <div className="bk_brand_sub">Clinical Booking Portal</div>
+                            <div className="bk_brand_sub">PHARMACY Booking Portal</div>
                         </div>
                     </div>
 
@@ -641,7 +641,14 @@ function BookingSuccessContent() {
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--secondary)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                             </svg>
-                            GPhC Registered (Reg. 12948)
+                            GPhC Registered (Reg. 1035465)
+                        </div>
+                        <div className="bk_trust_item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary-light)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                <circle cx="12" cy="7" r="4" />
+                            </svg>
+                            Superintendent: Viren Bhatia
                         </div>
                         <div className="bk_trust_item">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--secondary)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
@@ -692,7 +699,7 @@ function BookingSuccessContent() {
                                         </div>
                                     </div>
                                     <div className="bk_field bk_full" style={{ marginBottom: 0 }}>
-                                        <label className="bk_label">Required Clinical Service</label>
+                                        <label className="bk_label">Required PHARMACY Service</label>
                                         <div className="bk_field_icon_wrapper">
                                             <select 
                                                 className="bk_input" 
@@ -786,7 +793,7 @@ function BookingSuccessContent() {
                                     {headingSubtitle}
                                 </p>
 
-                                {/* Boarding Pass Clinical Ticket with Punch Holes */}
+                                {/* Boarding Pass PHARMACY Ticket with Punch Holes */}
                                 <div className="bk_ticket" style={{ maxWidth: '480px' }}>
                                     <div className="bk_ticket_header">
                                         <div className="bk_ticket_header_left">
@@ -982,3 +989,4 @@ export default function BookingSuccessPage() {
         </>
     );
 }
+

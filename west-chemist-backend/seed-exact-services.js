@@ -1,4 +1,4 @@
-// Load environment variables first
+﻿// Load environment variables first
 require('dotenv').config();
 
 const mongoose = require('mongoose');
@@ -48,7 +48,7 @@ const exactServices = [
     cat: "Weight Loss",
     parentCategory: "Weight Loss",
     img: "/images/wegovy_pen.png",
-    desc: "A highly trusted, clinically-proven weekly injection. Mimics the GLP-1 hormone to curb hunger, increase fullness, and support portion control under medical guidance.",
+    desc: "A highly trusted, PHARMACYly-proven weekly injection. Mimics the GLP-1 hormone to curb hunger, increase fullness, and support portion control under medical guidance.",
     duration: "30 Mins",
     features: [
       "Once-weekly subcutaneous injection",
@@ -70,7 +70,7 @@ const exactServices = [
     features: [
       "Daily oral capsule option",
       "Regulates appetite & food intake",
-      "Clinical health & BMI monitoring",
+      "PHARMACY health & BMI monitoring",
       "In-clinic prescribing & dispensing"
     ],
     color: "#b45309",
@@ -79,15 +79,15 @@ const exactServices = [
   {
     slug: "ear-wax-removal",
     title: "Ear Wax Removal service",
-    cat: "Clinical Ear Care",
+    cat: "PHARMACY Ear Care",
     parentCategory: "Private Services",
     img: "https://images.unsplash.com/photo-1559839734-2b71f1536783?w=600&q=80",
-    desc: "Safe and effective ear wax removal using gentle microsuction techniques performed by qualified clinical specialists.",
+    desc: "Safe and effective ear wax removal using gentle microsuction techniques performed by qualified PHARMACY specialists.",
     duration: "30 Mins",
     features: [
       "High-definition video otoscopy review",
       "Gentle water-free microsuction method",
-      "Accredited clinical practitioners",
+      "Accredited PHARMACY practitioners",
       "Immediate pressure and hearing relief"
     ],
     color: "#FF6B35",
@@ -96,13 +96,13 @@ const exactServices = [
   {
     slug: "cryotherapy",
     title: "Cryotherapy service",
-    cat: "Clinical Dermatology",
+    cat: "PHARMACY Dermatology",
     parentCategory: "Private Services",
     img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=600&q=80",
     desc: "Professional freezing treatments for rapid and safe removal of warts, verrucae, skin tags, and benign skin lesions.",
     duration: "15 Mins",
     features: [
-      "Precise clinical-grade freezing pens",
+      "Precise PHARMACY-grade freezing pens",
       "Effective skin lesion removal",
       "Minimal downtime and scarring risk",
       "Dermatological tissue suitability checks"
@@ -135,7 +135,7 @@ const exactServices = [
     cat: "NHS Pharmacy First",
     parentCategory: "NHS Services (Pharmacy First)",
     img: "https://images.unsplash.com/photo-1559839734-2b71f1536783?w=600&q=80",
-    desc: "Free NHS clinical otoscopic ear assessment and prescription treatment (if indicated) for children aged 1 to 17 under Pharmacy First.",
+    desc: "Free NHS PHARMACY otoscopic ear assessment and prescription treatment (if indicated) for children aged 1 to 17 under Pharmacy First.",
     duration: "15-20 Mins",
     features: [
       "Otoscope ear inspection by pharmacist",
@@ -180,10 +180,10 @@ const exactServices = [
     cat: "NHS Pharmacy First",
     parentCategory: "NHS Services (Pharmacy First)",
     img: "https://images.unsplash.com/photo-1584308919139-332c34f370d5?w=600&q=80",
-    desc: "Free NHS clinical assessment and rapid antiviral prescribing (if appropriate) for shingles to reduce pain and complications.",
+    desc: "Free NHS PHARMACY assessment and rapid antiviral prescribing (if appropriate) for shingles to reduce pain and complications.",
     duration: "15 Mins",
     features: [
-      "Urgent clinical rash evaluation",
+      "Urgent PHARMACY rash evaluation",
       "Prescription antivirals within key window",
       "Neuralgia risk prevention advice",
       "NHS Pharmacy First funded service"
@@ -200,7 +200,7 @@ const exactServices = [
     features: [
       "Sinus pressure and symptom duration check",
       "Nasal spray and steroid option assessment",
-      "Antibiotic treatments if clinically indicated",
+      "Antibiotic treatments if PHARMACYly indicated",
       "NHS Pharmacy First funded service"
     ]
   },
@@ -210,11 +210,11 @@ const exactServices = [
     cat: "NHS Pharmacy First",
     parentCategory: "NHS Services (Pharmacy First)",
     img: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=600&q=80",
-    desc: "Free NHS FeverPAIN evaluation and clinical throat swabs, with prescribing of antibiotics for confirmed bacterial sore throats.",
+    desc: "Free NHS FeverPAIN evaluation and PHARMACY throat swabs, with prescribing of antibiotics for confirmed bacterial sore throats.",
     duration: "10 Mins",
     features: [
       "FeverPAIN diagnostic score assessment",
-      "Clinical swab verification if needed",
+      "PHARMACY swab verification if needed",
       "Direct antibiotic prescribing if positive",
       "NHS Pharmacy First funded service"
     ]
@@ -243,7 +243,7 @@ const exactServices = [
     desc: "Free NHS cardiovascular blood pressure checks and ambulatory monitoring to identify and prevent hypertension risks.",
     duration: "10 Mins",
     features: [
-      "Validated clinical sphygmomanometers",
+      "Validated PHARMACY sphygmomanometers",
       "Lifestyle and heart health guidance",
       "Direct GP integration for elevated levels",
       "Fully funded NHS screening service"
@@ -290,7 +290,7 @@ const exactServices = [
     features: [
       "Latest approved covid vaccine variants",
       "NHS and private vaccine slots",
-      "Safe, sterile clinical environment",
+      "Safe, sterile PHARMACY environment",
       "Certified pharmacist administration"
     ]
   },
@@ -304,7 +304,7 @@ const exactServices = [
     duration: "15 Mins",
     features: [
       "High-efficacy meningococcal B defense",
-      "Pediatric and adult clinical care",
+      "Pediatric and adult PHARMACY care",
       "NHS scheduling and private bookings",
       "Post-vaccine counseling and advice"
     ]
@@ -407,7 +407,7 @@ const exactServices = [
     cat: "Travel Immunization",
     parentCategory: "Travel Clinic",
     img: "https://images.unsplash.com/photo-1559839734-2b71f1536783?w=600&q=80",
-    desc: "Prevent blood-borne viral Hepatitis B infection, recommended for long-term travel or clinical exposure.",
+    desc: "Prevent blood-borne viral Hepatitis B infection, recommended for long-term travel or PHARMACY exposure.",
     duration: "15 Mins",
     features: [
       "3-dose standard immunization series",
@@ -457,7 +457,7 @@ const exactServices = [
     features: [
       "Strengthens meningococcal immunity",
       "Recommended for students entering halls",
-      "Clean clinical injection",
+      "Clean PHARMACY injection",
       "Official vaccine booklet records"
     ]
   },
@@ -527,10 +527,10 @@ const exactServices = [
     cat: "Travel Medication",
     parentCategory: "Travel Clinic",
     img: "https://images.unsplash.com/photo-1550572017-ed200f5e6399?w=600&q=80",
-    desc: "Clinical consulting and prescription of malaria prophylaxis tablets (Atovaquone/Proguanil, Doxycycline, Lariam) for travel to malaria-endemic zones.",
+    desc: "PHARMACY consulting and prescription of malaria prophylaxis tablets (Atovaquone/Proguanil, Doxycycline, Lariam) for travel to malaria-endemic zones.",
     duration: "15 Mins",
     features: [
-      "Clinical choice of suitable antimalarials",
+      "PHARMACY choice of suitable antimalarials",
       "Calculated dosing matching travel timeline",
       "Side effect profile overview",
       "Direct dispensing of prophylaxis medication"
@@ -582,3 +582,4 @@ const seedExactServices = async () => {
 };
 
 seedExactServices();
+

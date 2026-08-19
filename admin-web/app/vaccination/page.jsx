@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { API_URL, getImageUrl } from '@/config';
 import React, { useState, useEffect } from 'react';
@@ -406,7 +406,7 @@ export default function AdminVaccinationPage() {
                   <textarea
                     className="vacc_textarea"
                     rows="3"
-                    placeholder="Brief clinical description of this vaccination..."
+                    placeholder="Brief PHARMACY description of this vaccination..."
                     value={form.desc}
                     onChange={e => setForm({ ...form, desc: e.target.value })}
                     required
@@ -527,3 +527,4 @@ export default function AdminVaccinationPage() {
     </div>
   );
 }
+

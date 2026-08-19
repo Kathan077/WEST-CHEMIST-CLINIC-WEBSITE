@@ -126,25 +126,37 @@ export default function AboutImpact() {
                 </div>
 
                 <div className="med_impact_text_col">
+                    <span className="med_impact_eyebrow">
+                        <span className="med_impact_dot"></span>
+                        Community Healthcare Excellence
+                    </span>
                     <h2>{impactData.title}</h2>
                     <p>{impactData.content}</p>
 
                     <div className="med_impact_grid">
                         <div className="med_stat_box">
-                            <h3>{counts.years}<span className="med_plus">{impactData.stat1_suffix}</span></h3>
-                            <span>{impactData.stat1_label}</span>
+                            <div className="med_stat_icon_badge">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                    <circle cx="12" cy="8" r="6"/>
+                                    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
+                                </svg>
+                            </div>
+                            <div className="med_stat_info">
+                                <h3>{counts.years}<span className="med_plus">{impactData.stat1_suffix}</span></h3>
+                                <span>{impactData.stat1_label}</span>
+                            </div>
                         </div>
+
                         <div className="med_stat_box">
-                            <h3>{counts.docs}<span className="med_plus">{impactData.stat2_suffix}</span></h3>
-                            <span>{impactData.stat2_label}</span>
-                        </div>
-                        <div className="med_stat_box">
-                            <h3>{counts.satisfaction}<span className="med_plus">{impactData.stat3_suffix}</span></h3>
-                            <span>{impactData.stat3_label}</span>
-                        </div>
-                        <div className="med_stat_box">
-                            <h3>{counts.clients}<span className="med_plus">{impactData.stat4_suffix}</span></h3>
-                            <span>{impactData.stat4_label}</span>
+                            <div className="med_stat_icon_badge med_accent_icon">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                                </svg>
+                            </div>
+                            <div className="med_stat_info">
+                                <h3>{counts.satisfaction}<span className="med_plus">{impactData.stat3_suffix}</span></h3>
+                                <span>{impactData.stat3_label}</span>
+                            </div>
                         </div>
                     </div>
                 </div>

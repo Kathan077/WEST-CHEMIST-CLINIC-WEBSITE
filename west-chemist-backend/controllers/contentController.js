@@ -38,12 +38,12 @@ const getContentByKey = async (req, res) => {
         content = await PageContent.create({
           key: 'clinic-hours',
           title: 'West Chemist Opening Hours',
-          content: 'Monday - Friday: 9:00 AM - 5:30 PM, Saturday: 9:00 AM - 1:00 PM, Sunday: Closed',
+          content: 'Monday - Friday: 8.30am-6.30pm, Saturday: 9am - 2.00pm, Sunday: 9am-12pm',
           section: 'general',
           metadata: {
-            mon_fri: '9:00 AM - 5:30 PM',
-            sat: '9:00 AM - 1:00 PM',
-            sun: 'Closed'
+            mon_fri: '8.30am-6.30pm',
+            sat: '9am - 2.00pm',
+            sun: '9am-12pm'
           }
         });
       } else if (key === 'clinic-holidays') {

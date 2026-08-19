@@ -114,12 +114,6 @@ export default function NHSServices() {
                             alt="NHS Logo" 
                             className="ns_nhs_logo" 
                         />
-                        <div className="ns_brand_divider" />
-                        <img 
-                            src="/images/pMTyQAHrivzPxrADq_fYE2BCVPz6zSg2WrYdv7FaCDwK7EcNXZ-f8WaevsLxA58Vf_4CCm6fySbw0a9-tNJVSo2UrJlYwXbIC3aNQqNNw5fD9Y2G2kamoUsMMvMVWODtZUiTKKQ.jpg" 
-                            alt="NHS Pharmacy First" 
-                            className="ns_pf_logo" 
-                        />
                     </div>
                     <span className="ns_eyebrow">Official NHS Healthcare Partner</span>
                     <h2 className="ns_title">NHS Pharmacy First Services</h2>

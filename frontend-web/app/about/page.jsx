@@ -5,7 +5,7 @@ import AboutHero from '../../components/About/Abouthero';
 import AboutMission from '../../components/About/AboutMission';
 import AboutWhy from '../../components/About/AboutValues'; // using AboutValues.jsx as AboutWhy internally
 import AboutImpact from '../../components/About/AboutImpact';
-import AboutTeam from '../../components/About/AboutTeam';
+
 import AboutBranches from '../../components/About/Branches';
 import AboutFaq from '../../components/About/AboutFaq';
 
@@ -23,8 +23,7 @@ export default function AboutPage() {
             <AboutBranches />
             <AboutWhy />
             <AboutImpact />
-         
-            <AboutFaq />
+         <AboutFaq />
            
         </main>
     );

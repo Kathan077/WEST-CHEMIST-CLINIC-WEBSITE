@@ -118,7 +118,7 @@ export default function Testimonials() {
                                         </svg>
                                     ))}
                                 </div>
-                                <div className="t_service_tag">{r.service || 'Clinical Service'}</div>
+                                <div className="t_service_tag">{r.service || 'PHARMACY Service'}</div>
                             </div>
 
                             <p className="t_review_text">"{r.text}"</p>
@@ -147,3 +147,4 @@ export default function Testimonials() {
         </section>
     );
 }
+

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React, { useEffect, useRef, useState } from 'react';
 import { API_URL } from '@/config';
 import './AboutBranches.css';
@@ -15,7 +15,7 @@ const DEFAULT_BRANCHES = [
     {
         _id: 'default-flagship',
         title: "Northampton Branch",
-        content: "Our primary healthcare hub offering comprehensive clinical services, prescriptions, and expert advice in a state-of-the-art facility.",
+        content: "Our primary healthcare hub offering comprehensive PHARMACY services, prescriptions, and expert advice in a state-of-the-art facility.",
         icon: "",
         metadata: {
             address: "4 Kingsley Park Terrace, NN2 7HG",
@@ -311,3 +311,4 @@ const Branches = () => {
 };
 
 export default Branches;
+

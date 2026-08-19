@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
@@ -8,13 +8,13 @@ import './HowItWorks.css';
 const DEFAULT_HOW = {
     title: 'How Does It All Work?',
     subtitle: 'Simple Process',
-    desc: 'From profile setup to securing your clinical slot in just three simple steps.',
+    desc: 'From profile setup to securing your PHARMACY slot in just three simple steps.',
     steps: [
         {
             stepNumber: '01',
             icon: 'search',
             title: 'Patient Profile',
-            desc: 'Register your personal details, select your preferred clinic location, and choose the clinical or NHS service you need.'
+            desc: 'Register your personal details, select your preferred clinic location, and choose the PHARMACY or NHS service you need.'
         },
         {
             stepNumber: '02',
@@ -26,7 +26,7 @@ const DEFAULT_HOW = {
             stepNumber: '03',
             icon: 'cal',
             title: 'Appointment Scheduler',
-            desc: 'Access our live calendar, choose your preferred time slot, and instantly secure your booking with a verified NHS-standard clinical ticket.'
+            desc: 'Access our live calendar, choose your preferred time slot, and instantly secure your booking with a verified NHS-standard PHARMACY ticket.'
         }
     ]
 };
@@ -230,3 +230,4 @@ export default function HowItWorks() {
         </section>
     );
 }
+

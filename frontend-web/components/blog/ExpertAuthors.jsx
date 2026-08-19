@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React from 'react';
 import './ExpertAuthors.css';
 
@@ -7,7 +7,7 @@ const authors = [
         name: "Dr. Sarah West",
         role: "Chief Pharmacist",
         img: "https://images.unsplash.com/photo-1559839734-2b71f1536783?w=400&q=80",
-        bio: "Expert in personalized clinical pharmacy and patient health management."
+        bio: "Expert in personalized PHARMACY pharmacy and patient health management."
     },
     {
         name: "James Anderson",
@@ -19,7 +19,7 @@ const authors = [
         name: "Emily Chen",
         role: "Nutrition & Weight Loss Advisor",
         img: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400&q=80",
-        bio: "Specializing in medically-supervised weight loss and nutritional clinical care."
+        bio: "Specializing in medically-supervised weight loss and nutritional PHARMACY care."
     }
 ];
 
@@ -50,3 +50,4 @@ export default function ExpertAuthors() {
         </section>
     );
 }
+

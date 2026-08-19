@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React from 'react';
 import Link from 'next/link';
 import './VaccinationHero.css';
@@ -100,7 +100,7 @@ export default function VaccinationHero() {
                         </div>
                         <h3 className="vacc_card_title">Routine Immunisations</h3>
                         <p className="vacc_card_description">
-                            Shingles, Chickenpox, HPV, and Pneumonia. Keep your clinical vaccine record up to date under pharmacist care.
+                            Shingles, Chickenpox, HPV, and Pneumonia. Keep your PHARMACY vaccine record up to date under pharmacist care.
                         </p>
                     </div>
                 </div>
@@ -108,3 +108,4 @@ export default function VaccinationHero() {
         </section>
     );
 }
+

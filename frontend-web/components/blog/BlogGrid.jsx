@@ -42,7 +42,9 @@ export default function BlogGrid({ posts = [], loading = false, onReadClick }) {
     };
 
     const getFullImgUrl = (img) => {
-        if (!img) return 'https://images.unsplash.com/photo-1505751172107-160bf2a35368?w=600&q=80';
+        if (!img || img === 'https://images.unsplash.com/photo-1559839734-2b71f1536783?w=800&q=80') {
+            return 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=800&q=80';
+        }
         return getImageUrl(img);
     };
 
@@ -71,7 +73,7 @@ export default function BlogGrid({ posts = [], loading = false, onReadClick }) {
                         </div>
                         <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--foreground)', margin: 0 }}>Articles Coming Soon</h3>
                         <p style={{ fontSize: '0.94rem', color: '#64748b', lineHeight: 1.6, margin: 0 }}>
-                            Our registered clinical team is currently preparing medically verified guides, wellness updates, and pharmaceutical advice for you. Stay tuned!
+                            Our registered PHARMACY team is currently preparing medically verified guides, wellness updates, and pharmaceutical advice for you. Stay tuned!
                         </p>
                         <button className="bh_cta_btn" style={{ padding: '12px 30px', fontSize: '.9rem', marginTop: '8px' }} onClick={() => window.location.href = '/book-appointment'}>
                             Book Consultation
@@ -103,7 +105,7 @@ export default function BlogGrid({ posts = [], loading = false, onReadClick }) {
                                                 src={getFullImgUrl(postImg)} 
                                                 alt={post.title} 
                                                 className="bg_img" 
-                                                onError={(e) => e.target.src = 'https://images.unsplash.com/photo-1505751172107-160bf2a35368?w=600&q=80'}
+                                                onError={(e) => e.target.src = 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=800&q=80'}
                                             />
                                             <span className="bg_category_tag">{post.subject || post.category}</span>
                                         </div>
@@ -126,3 +128,4 @@ export default function BlogGrid({ posts = [], loading = false, onReadClick }) {
         </section>
     );
 }
+

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { API_URL, getImageUrl } from '@/config';
 import React, { useState, useEffect } from 'react';
@@ -570,7 +570,7 @@ export default function AdminServicesPage() {
         <header className="dash_hdr">
           <div className="dash_hdr_left">
             <h2>Services & Content Hub ⚙️</h2>
-            <p>Modify clinic clinical offerings and update dynamic portal subpage contents.</p>
+            <p>Modify clinic PHARMACY offerings and update dynamic portal subpage contents.</p>
           </div>
         </header>
 
@@ -580,7 +580,7 @@ export default function AdminServicesPage() {
             className={`tab_btn ${activeTab === 'services' ? 'active' : ''}`}
             onClick={() => setActiveTab('services')}
           >
-            Clinical Services ({services.length})
+            PHARMACY Services ({services.length})
           </button>
           <button 
             className={`tab_btn ${activeTab === 'categories' ? 'active' : ''}`}
@@ -596,7 +596,7 @@ export default function AdminServicesPage() {
           </button>
         </div>
 
-        {/* Tab 1: Clinical Services Management */}
+        {/* Tab 1: PHARMACY Services Management */}
         {activeTab === 'services' && (
           <>
             <div className="srv_toolbar">
@@ -646,7 +646,7 @@ export default function AdminServicesPage() {
               </div>
             ) : filteredServices.length === 0 ? (
               <div style={{ padding: '60px', textAlign: 'center', background: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', color: '#64748b' }}>
-                <h3>No Clinical Services Found</h3>
+                <h3>No PHARMACY Services Found</h3>
                 <p>Try clearing your search or add a new service to start.</p>
               </div>
             ) : (
@@ -761,7 +761,7 @@ export default function AdminServicesPage() {
             <div className="cat_form_card">
               <div className="cnt_form_title" style={{ fontSize: '1.05rem' }}>Create New Category Group</div>
               <div className="cnt_form_sub" style={{ marginBottom: 16 }}>
-                Add a new parent category for your clinical offerings.
+                Add a new parent category for your PHARMACY offerings.
               </div>
 
               <form onSubmit={handleAddCategory}>
@@ -1139,7 +1139,7 @@ export default function AdminServicesPage() {
                   <label className="srv_label">Short Description</label>
                   <textarea
                     className="srv_textarea"
-                    placeholder="Brief description showing on clinical tiles..."
+                    placeholder="Brief description showing on PHARMACY tiles..."
                     value={serviceForm.desc}
                     onChange={(e) => setServiceForm({ ...serviceForm, desc: e.target.value })}
                     required
@@ -1300,3 +1300,4 @@ export default function AdminServicesPage() {
     </div>
   );
 }
+

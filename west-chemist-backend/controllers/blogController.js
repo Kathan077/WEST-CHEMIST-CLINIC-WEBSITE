@@ -3,6 +3,21 @@ const Blog = require('../models/Blog');
 // Get all blogs
 const getAllBlogs = async (req, res) => {
   try {
+    // Cleanup: Purge non-health dummy test blogs (e.g. VCX, website navigation headers)
+    await Blog.deleteMany({
+      $or: [
+        { title: { $regex: /^vcx$/i } },
+        { title: { $regex: /test|dummy|xyz/i } },
+        { description: { $regex: /navigation headers|sub-mark|favicon/i } }
+      ]
+    });
+
+    // Migration helper: fix any blog with broken/empty images in database
+    await Blog.updateMany(
+      { $or: [ { images: { $size: 0 } }, { images: "https://images.unsplash.com/photo-1559839734-2b71f1536783?w=800&q=80" } ] },
+      { $set: { images: ["https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=800&q=80"] } }
+    );
+
     const blogs = await Blog.find().sort({ date: -1 });
     res.status(200).json({
       success: true,
@@ -53,6 +68,13 @@ const createBlog = async (req, res) => {
       });
     }
 
+    if (title.trim().length < 3 || subject.trim().length < 2) {
+      return res.status(400).json({
+        success: false,
+        message: 'Blog title and category must be valid health topics'
+      });
+    }
+
     const trimmedSlug = slug.trim().toLowerCase();
 
     // Check if slug is unique
@@ -64,14 +86,19 @@ const createBlog = async (req, res) => {
       });
     }
 
+    // High quality medical fallback image if none provided
+    const validImages = Array.isArray(images) && images.length > 0 && images[0]
+      ? images 
+      : ["https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=800&q=80"];
+
     const blog = await Blog.create({
       title: title.trim(),
       slug: trimmedSlug,
       subject: subject.trim(),
       description,
-      images: images || [],
+      images: validImages,
       verificationTitle: verificationTitle ? verificationTitle.trim() : 'Medically Verified',
-      verificationSubtitle: verificationSubtitle ? verificationSubtitle.trim() : 'By Clinical Team',
+      verificationSubtitle: verificationSubtitle ? verificationSubtitle.trim() : 'By Pharmacy Team',
       date: date || new Date()
     });
 
@@ -170,3 +197,4 @@ module.exports = {
   updateBlog,
   deleteBlog
 };
+

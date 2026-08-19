@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
@@ -8,15 +8,15 @@ import './WeightLoss.css';
 const FAQ_ITEMS = [
     {
         question: "How do Mounjaro and Wegovy differ?",
-        answer: "Wegovy (semaglutide) acts as a GLP-1 receptor agonist, mimicking the body's natural satiety hormone to regulate appetite. Mounjaro (tirzepatide) is a dual GIP and GLP-1 receptor agonist, targeting two metabolic pathways. Clinical studies show Mounjaro generally yields slightly higher average weight reduction, but both are exceptionally effective options."
+        answer: "Wegovy (semaglutide) acts as a GLP-1 receptor agonist, mimicking the body's natural satiety hormone to regulate appetite. Mounjaro (tirzepatide) is a dual GIP and GLP-1 receptor agonist, targeting two metabolic pathways. PHARMACY studies show Mounjaro generally yields slightly higher average weight reduction, but both are exceptionally effective options."
     },
     {
         question: "Do I need a GP referral to start the Weight Loss program?",
-        answer: "No GP referral is required. Our GPhC-registered clinical pharmacists perform full clinical assessments, prescribe, and dispense the appropriate medication directly within our pharmacy as part of our private weight management service."
+        answer: "No GP referral is required. Our GPhC-registered PHARMACY pharmacists perform full PHARMACY assessments, prescribe, and dispense the appropriate medication directly within our pharmacy as part of our private weight management service."
     },
     {
         question: "Who is eligible for the Weight Loss injections?",
-        answer: "Generally, individuals with a BMI (Body Mass Index) of 30 or above are eligible. Alternatively, individuals with a BMI of 27 or above who have weight-related health conditions (such as high blood pressure, type 2 diabetes, or high cholesterol) may also qualify after a clinical consultation."
+        answer: "Generally, individuals with a BMI (Body Mass Index) of 30 or above are eligible. Alternatively, individuals with a BMI of 27 or above who have weight-related health conditions (such as high blood pressure, type 2 diabetes, or high cholesterol) may also qualify after a PHARMACY consultation."
     },
     {
         question: "What are the common side effects of these treatments?",
@@ -89,10 +89,10 @@ export default function WeightLossContent() {
                     <div className="wl_hero_info">
                         <span className="wl_hero_tag">Pharmacy Service</span>
                         <h1 className="wl_hero_title">
-                            Clinically Supervised <span>Weight Loss Program</span>
+                            PHARMACYly Supervised <span>Weight Loss Program</span>
                         </h1>
                         <p className="wl_hero_description">
-                            Achieve safe, sustainable weight reduction with next-generation medical treatments under professional clinical supervision. We offer tailored Wegovy and Mounjaro programs designed for your biology.
+                            Achieve safe, sustainable weight reduction with next-generation medical treatments under professional PHARMACY supervision. We offer tailored Wegovy and Mounjaro programs designed for your biology.
                         </p>
                         <div className="wl_hero_buttons">
                             <Link href="/book-appointment?service=Weight%20Loss%20Clinic" className="wl_btn_primary">
@@ -114,7 +114,7 @@ export default function WeightLossContent() {
             <section className="wl_treatments_section">
                 <div className="wl_section_container">
                     <div className="wl_section_header">
-                        <span className="wl_section_subtitle">Clinical Treatments</span>
+                        <span className="wl_section_subtitle">PHARMACY Treatments</span>
                         <h2 className="wl_section_title">Our Weight Management Options</h2>
                         <p className="wl_section_desc">
                             We provide MHRA-approved medications and comprehensive health coaching to support your metabolic health journey.
@@ -239,7 +239,7 @@ export default function WeightLossContent() {
                         </div>
                         <div className="wl_timeline_step">
                             <div className="wl_step_num">2</div>
-                            <h3 className="wl_step_title">Clinical Review</h3>
+                            <h3 className="wl_step_title">PHARMACY Review</h3>
                             <p className="wl_step_desc">Complete an in-person weight, BMI assessment, and medical history review.</p>
                         </div>
                         <div className="wl_timeline_step">
@@ -303,7 +303,7 @@ export default function WeightLossContent() {
                     <span className="wl_cta_eyebrow">Start Today</span>
                     <h2 className="wl_cta_title">Ready to Begin Your Weight Loss Journey?</h2>
                     <p className="wl_cta_desc">
-                        Take control of your health. Book an in-person clinical assessment today with our professional team.
+                        Take control of your health. Book an in-person PHARMACY assessment today with our professional team.
                     </p>
                     <Link href="/book-appointment?service=Weight%20Loss%20Clinic" className="wl_cta_btn">
                         Book Your Consultation Now
@@ -312,9 +312,10 @@ export default function WeightLossContent() {
                             <polyline points="12 5 19 12 12 19"></polyline>
                         </svg>
                     </Link>
-                    <p className="wl_cta_note">Subject to clinical suitability assessment. Patients must be aged 18 or over.</p>
+                    <p className="wl_cta_note">Subject to PHARMACY suitability assessment. Patients must be aged 18 or over.</p>
                 </div>
             </section>
         </div>
     );
 }
+

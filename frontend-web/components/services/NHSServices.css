@@ -1,6 +1,7 @@
 .ns_section {
     padding: 120px 5% 150px;
-    background: #ffffff;
+    background: transparent;
+    position: relative;
 }
 
 .ns_container {
@@ -17,9 +18,9 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 32px;
+    gap: 0;
     background: #ffffff;
-    padding: 22px 52px;
+    padding: 14px 40px;
     border-radius: 100px;
     border: 2px solid #cbd5e1;
     box-shadow: 0 16px 45px rgba(0, 90, 160, 0.1), 0 6px 18px rgba(0, 0, 0, 0.04);

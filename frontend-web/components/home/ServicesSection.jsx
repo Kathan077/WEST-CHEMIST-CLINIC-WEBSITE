@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
@@ -102,7 +102,7 @@ export default function ServicesSection() {
                     });
                 }
 
-                // Load clinical services
+                // Load PHARMACY services
                 const resSrv = await fetch(`${API_URL}/api/services`);
                 const jsonSrv = await resSrv.json();
                 if (jsonSrv.success && Array.isArray(jsonSrv.data)) {
@@ -245,3 +245,4 @@ export default function ServicesSection() {
         </section>
     );
 }
+

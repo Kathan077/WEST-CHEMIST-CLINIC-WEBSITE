@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { API_URL } from '@/config';
 import React, { useState, useEffect, useRef } from 'react';
@@ -90,7 +90,7 @@ const SUBJECT_OPTIONS = [
   'Weight Loss',
   'Pharmacy News',
   'Wellness',
-  'Clinical ear care',
+  'PHARMACY ear care',
   'Aesthetics'
 ];
 
@@ -313,7 +313,7 @@ export default function BlogManagerPage() {
   const [images, setImages] = useState([]);
   const [externalUrl, setExternalUrl] = useState('');
   const [verificationTitle, setVerificationTitle] = useState('Medically Verified');
-  const [verificationSubtitle, setVerificationSubtitle] = useState('By Clinical Team');
+  const [verificationSubtitle, setVerificationSubtitle] = useState('By PHARMACY Team');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [uploading, setUploading] = useState(false);
 
@@ -784,7 +784,7 @@ export default function BlogManagerPage() {
       setDescription(blog.description);
       setImages(blog.images || []);
       setVerificationTitle(blog.verificationTitle || 'Medically Verified');
-      setVerificationSubtitle(blog.verificationSubtitle || 'By Clinical Team');
+      setVerificationSubtitle(blog.verificationSubtitle || 'By PHARMACY Team');
       setActivePreviewImgIdx(0);
       
       // Seed contentEditable block
@@ -801,7 +801,7 @@ export default function BlogManagerPage() {
       setDescription('');
       setImages([]);
       setVerificationTitle('Medically Verified');
-      setVerificationSubtitle('By Clinical Team');
+      setVerificationSubtitle('By PHARMACY Team');
       setActivePreviewImgIdx(0);
 
       // Seed contentEditable block
@@ -988,7 +988,7 @@ export default function BlogManagerPage() {
                 {loading ? (
                   <div className="dash_loading">
                     <div className="spin"></div>
-                    <p>Loading clinical articles...</p>
+                    <p>Loading PHARMACY articles...</p>
                   </div>
                 ) : filteredBlogs.length === 0 ? (
                   <div className="tbl_wrap" style={{ padding: '60px 40px', textAlignment: 'center', color: 'var(--t3)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
@@ -1335,7 +1335,7 @@ export default function BlogManagerPage() {
                     <label className="form_label">Verification Badge Subtitle</label>
                     <input
                       type="text"
-                      placeholder="e.g. By Clinical Team"
+                      placeholder="e.g. By PHARMACY Team"
                       className="form_input"
                       value={verificationSubtitle}
                       onChange={(e) => setVerificationSubtitle(e.target.value)}
@@ -1467,7 +1467,7 @@ export default function BlogManagerPage() {
                     autoCapitalize="sentences"
                     id="blog_description_editor"
                     className="editor_content_editable"
-                    placeholder="Write your clinical article content here... (Drag & drop images here)"
+                    placeholder="Write your PHARMACY article content here... (Drag & drop images here)"
                     onInput={(e) => setDescription(e.target.innerHTML)}
                     onDragOver={(e) => {
                       e.preventDefault();
@@ -1570,7 +1570,7 @@ export default function BlogManagerPage() {
                                 </div>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', textAlign: 'left' }}>
                                   <strong style={{ fontSize: '0.72rem', fontWeight: 800, color: 'var(--t1)' }}>{verificationTitle || 'Medically Verified'}</strong>
-                                  <span style={{ fontSize: '0.64rem', color: '#64748b', fontWeight: 600 }}>{verificationSubtitle || 'By Clinical Team'}</span>
+                                  <span style={{ fontSize: '0.64rem', color: '#64748b', fontWeight: 600 }}>{verificationSubtitle || 'By PHARMACY Team'}</span>
                                 </div>
                               </div>
                             </div>
@@ -1606,7 +1606,7 @@ export default function BlogManagerPage() {
                     <div className="preview_sidebar_col">
                       <div className="preview_booking_card">
                         <div className="preview_booking_header">
-                          <span className="preview_price_label">Premium Clinical Care</span>
+                          <span className="preview_price_label">Premium PHARMACY Care</span>
                           <h3 className="preview_card_title" style={{ height: 'auto', display: 'block', overflow: 'visible', margin: 0 }}>West Chemist Clinic</h3>
                         </div>
                         <div className="preview_booking_meta">
@@ -1752,3 +1752,4 @@ export default function BlogManagerPage() {
     </div>
   );
 }
+

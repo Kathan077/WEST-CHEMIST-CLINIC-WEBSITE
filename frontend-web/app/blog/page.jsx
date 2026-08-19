@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { API_URL } from '@/config';
 import BlogHero from '@/components/blog/BlogHero';
 import BlogGrid from '@/components/blog/BlogGrid';
-import HealthTools from '@/components/blog/HealthTools';
 import CTASection from '@/components/home/CTASection';
 import '@/components/blog/BlogGrid.css';
 
@@ -48,9 +47,6 @@ export default function BlogPage() {
                 featuredPost={featuredPost} 
                 onReadClick={() => featuredPost && openReader(featuredPost)} 
             />
-
-            {/* Health Tools Section */}
-            <HealthTools />
 
             {/* Main Blog Content Grid */}
             <BlogGrid 

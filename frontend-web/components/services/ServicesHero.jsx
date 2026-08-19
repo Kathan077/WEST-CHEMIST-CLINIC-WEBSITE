@@ -27,7 +27,7 @@ export default function ServicesHero() {
 
             <div className="ser_hero_container">
                 <div className="ser_hero_content">
-                    <span className="ser_hero_tag">Pharmacy Services</span>
+                    <span className="ser_hero_tag">CLINICAL HUB</span>
                     <h1 className="ser_hero_title">
                         Expert Care, <br />
                         <span className="ser_title_gradient">Personalised</span> for You
@@ -87,3 +87,4 @@ export default function ServicesHero() {
         </section>
     );
 }
+

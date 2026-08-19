@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+﻿const mongoose = require('mongoose');
 
 const AppointmentSchema = new mongoose.Schema(
   {
@@ -15,7 +15,7 @@ const AppointmentSchema = new mongoose.Schema(
     },
     service: {
       type: String,
-      required: [true, 'Clinical service is required'],
+      required: [true, 'PHARMACY service is required'],
       trim: true
     },
     date: {
@@ -71,3 +71,4 @@ const AppointmentSchema = new mongoose.Schema(
 // AppointmentSchema.index({ clinic: 1, date: 1, time: 1 }, { unique: true });
 
 module.exports = mongoose.model('Appointment', AppointmentSchema);
+

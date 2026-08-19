@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { API_URL } from '@/config';
 
@@ -276,7 +276,7 @@ function ViewApptModal({ appointment, onClose, onApprove, onReject, onReschedule
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', padding: '16px', background: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f1f5f9', paddingBottom: '8px' }}>
-                <span style={{ fontSize: '0.85rem', color: 'var(--t3)', fontWeight: '600' }}>Clinical Service</span>
+                <span style={{ fontSize: '0.85rem', color: 'var(--t3)', fontWeight: '600' }}>PHARMACY Service</span>
                 <span className={`adm_service_tag ${getServiceClass(appointment.service)}`} style={{ margin: 0 }}>
                   {appointment.service}
                 </span>
@@ -1086,3 +1086,4 @@ export default function AdminAppointmentsPage() {
     </div>
   );
 }
+

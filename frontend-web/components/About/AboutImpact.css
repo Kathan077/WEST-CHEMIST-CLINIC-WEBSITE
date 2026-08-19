@@ -51,27 +51,52 @@
     transform: scale(1);
 }
 
-/* Text Reveal Staggering */
-.med_impact_text_col {
-    flex: 1;
+/* Eyebrow badge */
+.med_impact_eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--primary);
+    background: rgba(75, 45, 113, 0.06);
+    border: 1px solid rgba(75, 45, 113, 0.12);
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 16px;
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
+}
+
+.med_impact_dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 0 rgba(0, 132, 115, 0.4);
+    animation: medRadarPulse 2s infinite;
 }
 
 .med_impact_text_col h2 {
-    font-size: clamp(2.2rem, 4vw, 3rem);
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
     font-weight: 800;
-    color: #1a1a2e;
-    margin-bottom: 20px;
-    letter-spacing: -0.02em;
+    color: #0f172a;
+    margin-bottom: 18px;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
     opacity: 0;
     transform: translate3d(0, 30px, 0);
     transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
 }
 
 .med_impact_text_col p {
-    font-size: 1.15rem;
-    color: #64748b;
-    line-height: 1.6;
-    margin-bottom: 50px;
+    font-size: 1.1rem;
+    color: #475569;
+    line-height: 1.65;
+    margin-bottom: 36px;
     opacity: 0;
     transform: translate3d(0, 20px, 0);
     transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
@@ -79,17 +104,95 @@
 
 .med_impact_grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
 }
 
 .med_stat_box {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    background: #ffffff;
+    border: 1px solid rgba(75, 45, 113, 0.1);
+    border-radius: 20px;
+    padding: 22px 24px;
+    box-shadow: 0 12px 30px -8px rgba(75, 45, 113, 0.08);
     opacity: 0;
-    transform: translate3d(0, 30px, 0) scale(0.9);
-    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform: translate3d(0, 30px, 0) scale(0.95);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.med_stat_box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--primary) 0%, var(--accent) 100%);
+    border-radius: 4px 0 0 4px;
+}
+
+.med_stat_box:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 20px 40px -10px rgba(75, 45, 113, 0.16);
+    border-color: rgba(75, 45, 113, 0.25);
+}
+
+.med_stat_icon_badge {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: rgba(75, 45, 113, 0.08);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+
+.med_accent_icon {
+    background: rgba(0, 132, 115, 0.08);
+    color: var(--accent);
+}
+
+.med_stat_box:hover .med_stat_icon_badge {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.med_stat_info h3 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 4px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    display: flex;
+    align-items: baseline;
+    white-space: nowrap;
+}
+
+.med_plus {
+    color: var(--accent);
+    margin-left: 2px;
+    display: inline;
+}
+
+.med_stat_info span {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    display: block;
+    line-height: 1.3;
 }
 
 /* Animate triggers */
+.med_animate .med_impact_eyebrow,
 .med_animate .med_impact_text_col h2,
 .med_animate .med_impact_text_col p {
     opacity: 1;
@@ -103,29 +206,6 @@
 
 .med_animate .med_stat_box:nth-child(1) { transition-delay: 0.4s; }
 .med_animate .med_stat_box:nth-child(2) { transition-delay: 0.5s; }
-.med_animate .med_stat_box:nth-child(3) { transition-delay: 0.6s; }
-.med_animate .med_stat_box:nth-child(4) { transition-delay: 0.7s; }
-
-/* Box Styles */
-.med_stat_box h3 {
-    font-size: 2.8rem;
-    font-weight: 800;
-    color: var(--primary);
-    margin-bottom: 5px;
-    line-height: 1;
-}
-
-.med_plus {
-    color: var(--accent);
-}
-
-.med_stat_box span {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: #64748b;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-}
 
 /* ============================================================
    RESPONSIVE — 900px (Tablet)
@@ -191,82 +271,91 @@
 }
 
 /* ============================================================
-   RESPONSIVE — 425px (Large Mobile)
+   RESPONSIVE — 550px & Below
    ============================================================ */
-@media (max-width: 425px) {
-    .med_impact_bg {
-        padding: 60px 4%;
-    }
-
-    .med_impact_container {
-        gap: 28px;
-    }
-
-    .med_impact_img_col {
-        height: 240px;
-        border-radius: 16px;
-    }
-
-    .med_impact_text_col h2 {
-        font-size: 1.6rem;
-        margin-bottom: 14px;
-    }
-
-    .med_impact_text_col p {
-        font-size: 0.98rem;
-        margin-bottom: 28px;
+@media (max-width: 550px) {
+    .med_impact_eyebrow {
+        font-size: 0.72rem;
+        padding: 5px 12px;
+        letter-spacing: 0.05em;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .med_impact_grid {
-        gap: 18px;
+        grid-template-columns: 1fr;
+        gap: 14px;
     }
 
-    .med_stat_box h3 {
-        font-size: 2rem;
+    .med_stat_box {
+        padding: 16px 18px;
+        gap: 14px;
     }
 
-    .med_stat_box span {
-        font-size: 0.8rem;
-        letter-spacing: 0.05em;
+    .med_stat_icon_badge {
+        width: 42px;
+        height: 48px;
+        border-radius: 12px;
     }
 }
 
 /* ============================================================
-   RESPONSIVE — 345px (Small Mobile)
+   RESPONSIVE — 425px (Large Mobile)
    ============================================================ */
-@media (max-width: 345px) {
+@media (max-width: 425px) {
     .med_impact_bg {
         padding: 50px 4%;
     }
 
     .med_impact_container {
-        gap: 22px;
+        gap: 24px;
     }
 
     .med_impact_img_col {
-        height: 200px;
-        border-radius: 14px;
+        height: 220px;
+        border-radius: 16px;
     }
 
     .med_impact_text_col h2 {
-        font-size: 1.35rem;
+        font-size: 1.6rem;
+        margin-bottom: 12px;
     }
 
     .med_impact_text_col p {
-        font-size: 0.92rem;
-        margin-bottom: 22px;
+        font-size: 0.95rem;
+        margin-bottom: 24px;
     }
 
-    .med_impact_grid {
-        gap: 14px;
+    .med_stat_info h3 {
+        font-size: 1.8rem;
     }
 
-    .med_stat_box h3 {
-        font-size: 1.75rem;
-    }
-
-    .med_stat_box span {
+    .med_stat_info span {
         font-size: 0.75rem;
+        letter-spacing: 0.05em;
+    }
+}
+
+/* ============================================================
+   RESPONSIVE — 375px (Medium Mobile)
+   ============================================================ */
+@media (max-width: 375px) {
+    .med_impact_eyebrow {
+        font-size: 0.68rem;
+        padding: 4px 10px;
+        letter-spacing: 0.03em;
+    }
+
+    .med_impact_text_col h2 {
+        font-size: 1.45rem;
+    }
+
+    .med_stat_info h3 {
+        font-size: 1.6rem;
+    }
+
+    .med_stat_info span {
+        font-size: 0.72rem;
     }
 }
 
@@ -288,7 +377,7 @@
     }
 
     .med_impact_text_col h2 {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
         letter-spacing: -0.01em;
     }
 
@@ -297,16 +386,22 @@
         margin-bottom: 18px;
     }
 
-    .med_impact_grid {
+    .med_stat_box {
+        padding: 14px 14px;
         gap: 12px;
     }
 
-    .med_stat_box h3 {
-        font-size: 1.55rem;
+    .med_stat_icon_badge {
+        width: 36px;
+        height: 36px;
     }
 
-    .med_stat_box span {
-        font-size: 0.7rem;
-        letter-spacing: 0.04em;
+    .med_stat_info h3 {
+        font-size: 1.4rem;
+    }
+
+    .med_stat_info span {
+        font-size: 0.68rem;
+        letter-spacing: 0.03em;
     }
 }

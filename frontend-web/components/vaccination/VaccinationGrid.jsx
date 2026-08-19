@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import React, { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import { API_URL, getImageUrl } from '@/config';
@@ -78,7 +78,7 @@ const VaccinationGrid = () => {
                 <div className="vacc_grid_pro_header">
                     <span className="vacc_section_badge">Our Protocols</span>
                     <h2>Premium Vaccinations</h2>
-                    <p>Discover our comprehensive suite of advanced clinical immunizations.</p>
+                    <p>Discover our comprehensive suite of advanced PHARMACY immunizations.</p>
                 </div>
 
                 <div className="vacc_grid_pro_wrapper">
@@ -123,3 +123,4 @@ const VaccinationGrid = () => {
 };
 
 export default VaccinationGrid;
+

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { API_URL } from '@/config';
 import { useState, useEffect, useCallback, useMemo } from 'react';
@@ -916,7 +916,7 @@ export default function AdminPatientsPage() {
         {/* Welcome Banner */}
         {currentView === 'dashboard' && (
           <div className="dash_banner">
-            <div className="banner_tag">⚕ West Chemist Clinical Portal</div>
+            <div className="banner_tag">⚕ West Chemist PHARMACY Portal</div>
             <h1 className="banner_h1">
               Manage Patients &<br/><span>Appointments Smartly</span>
             </h1>
@@ -1258,5 +1258,6 @@ export default function AdminPatientsPage() {
     </div>
   );
 }
+
 
 
