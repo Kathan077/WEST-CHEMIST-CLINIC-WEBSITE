@@ -34,8 +34,8 @@ const TiltCard = ({ item, cardVariants }) => {
   };
 
   return (
-    <motion.div 
-      variants={cardVariants} 
+    <motion.div
+      variants={cardVariants}
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
@@ -84,14 +84,14 @@ export default function ContactInfo() {
 
   const dynamicContactDetails = [
     {
-      title: "Northampton Clinic",
+      title: "Northampton Pharmacy",
       detail: "West Chemist, 4 Kingsley Park Terrace\nNorthampton, NN2 7HG",
       icon: (
         <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
       )
     },
     {
-      title: "Clinic Hours",
+      title: "Pharmacy Hours",
       detail: `Mon - Fri: ${monFri}\nSaturday: ${sat}\nSunday: ${sun}`,
       icon: (
         <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
@@ -137,7 +137,7 @@ export default function ContactInfo() {
   };
 
   return (
-    <motion.div 
+    <motion.div
       className="infoContainer"
       variants={containerVariants}
       initial="hidden"
