@@ -1,17 +1,16 @@
-﻿/* ==========================================================================
-   VACCINATION HERO STYLES (CLEAN, PRO & BALANCED HORIZONTAL GRID)
+/* ==========================================================================
+   VACCINATION HERO STYLES (CLEAN, MODERN & ELEVATED DESIGN)
    ========================================================================== */
 
 .vacc_hero_section {
     position: relative;
-    padding: 100px 4% 80px;
+    padding: 64px 5% 72px;
     background: transparent;
     overflow: hidden;
     font-family: 'Outfit', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: auto;
 }
 
 /* Subtle Technical grid overlay */
@@ -19,20 +18,21 @@
     position: absolute;
     inset: 0;
     z-index: 1;
-    background-image: none;
+    background-image: radial-gradient(rgba(75, 45, 113, 0.04) 1px, transparent 1px);
+    background-size: 32px 32px;
     pointer-events: none;
 }
 
 /* Smooth ambient mesh color blur in background */
 .vacc_hero_mesh {
     position: absolute;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(75, 45, 113, 0.04) 0%, transparent 70%);
-    top: -200px;
+    width: 650px;
+    height: 650px;
+    background: radial-gradient(circle, rgba(75, 45, 113, 0.06) 0%, rgba(0, 132, 115, 0.03) 50%, transparent 70%);
+    top: -150px;
     right: -100px;
     z-index: 1;
-    filter: blur(80px);
+    filter: blur(90px);
     pointer-events: none;
 }
 
@@ -41,7 +41,7 @@
     position: relative;
     z-index: 2;
     width: 100%;
-    max-width: 1440px;
+    max-width: 1280px;
     display: flex;
     flex-direction: column;
     gap: 48px;
@@ -56,7 +56,7 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    max-width: 860px;
+    max-width: 840px;
     width: 100%;
 }
 
@@ -65,40 +65,53 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 8px 16px;
+    padding: 7px 18px;
     background: rgba(75, 45, 113, 0.06);
-    border: 1px solid rgba(75, 45, 113, 0.12);
+    border: 1px solid rgba(75, 45, 113, 0.14);
     border-radius: 100px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--primary);
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--primary, #4B2D71);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 20px;
+    letter-spacing: 0.08em;
+    margin-bottom: 22px;
+    box-shadow: 0 2px 8px rgba(75, 45, 113, 0.04);
 }
 
 .pill_indicator {
-    width: 6px;
-    height: 6px;
-    background: var(--accent);
+    width: 7px;
+    height: 7px;
+    background: var(--accent, #008473);
     border-radius: 50%;
     display: inline-block;
+    box-shadow: 0 0 8px rgba(0, 132, 115, 0.6);
+    animation: pillPulse 2s infinite ease-in-out;
+}
+
+@keyframes pillPulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(0.85);
+    }
 }
 
 /* Hero Title styling */
 .vacc_hero_main_title {
-    font-size: clamp(2.4rem, 4.5vw, 3.8rem);
-    font-weight: 700;
+    font-size: clamp(2.5rem, 5vw, 3.8rem);
+    font-weight: 800;
     line-height: 1.15;
-    color: var(--foreground);
+    color: #1e293b;
     margin-bottom: 18px;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
     text-align: center;
 }
 
 .vacc_title_highlight {
-    color: var(--primary);
-    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    background: linear-gradient(135deg, #4B2D71 0%, #008473 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     display: inline-block;
@@ -106,13 +119,13 @@
 
 /* Paragraph text */
 .vacc_hero_lead_text {
-    font-size: 1.18rem;
-    line-height: 1.6;
+    font-size: 1.12rem;
+    line-height: 1.65;
     color: #475569;
-    margin-bottom: 32px;
+    margin-bottom: 34px;
     font-weight: 400;
     text-align: center;
-    max-width: 780px;
+    max-width: 740px;
 }
 
 /* Buttons section */
@@ -131,16 +144,16 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--highlight-purple) 100%);
+    background: linear-gradient(135deg, #4B2D71 0%, #683b9e 100%);
     color: #ffffff;
     height: 52px;
     padding: 0 32px;
-    border-radius: 26px;
+    border-radius: 9999px;
     font-weight: 700;
     font-size: 0.95rem;
     text-decoration: none;
-    box-shadow: 0 8px 24px rgba(75, 45, 113, 0.25);
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+    box-shadow: 0 10px 24px -4px rgba(75, 45, 113, 0.3);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     box-sizing: border-box;
     letter-spacing: 0.02em;
 }
@@ -164,19 +177,20 @@
 }
 
 .vacc_btn_cta_primary:hover {
-    background: var(--highlight-purple);
-    transform: translate3d(0, -4px, 0) scale(1.03);
-    box-shadow: 0 16px 36px rgba(75, 45, 113, 0.35);
+    background: linear-gradient(135deg, #3d235e 0%, #582f8a 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 16px 32px -4px rgba(75, 45, 113, 0.4);
+    color: #ffffff;
 }
 
 .arrow_icon {
-    transition: transform 0.2s ease;
+    transition: transform 0.25s ease;
     width: 18px;
     height: 18px;
 }
 
 .vacc_btn_cta_primary:hover .arrow_icon {
-    transform: translate3d(4px, 0, 0);
+    transform: translateX(4px);
 }
 
 .vacc_btn_cta_secondary {
@@ -185,42 +199,26 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.6);
-    color: var(--primary);
+    background: #ffffff;
+    color: var(--primary, #4B2D71);
     height: 52px;
     padding: 0 32px;
-    border-radius: 26px;
+    border-radius: 9999px;
     font-weight: 700;
     font-size: 0.95rem;
     border: 1.5px solid rgba(75, 45, 113, 0.2);
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease, border-color 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     cursor: pointer;
     box-sizing: border-box;
     letter-spacing: 0.02em;
 }
 
-.vacc_btn_cta_secondary::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -60%;
-    width: 20%;
-    height: 200%;
-    background: rgba(75, 45, 113, 0.05);
-    transform: rotate(30deg);
-    transition: none;
-    pointer-events: none;
-}
-
-.vacc_btn_cta_secondary:hover::before {
-    left: 140%;
-    transition: left 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-}
-
 .vacc_btn_cta_secondary:hover {
-    background: rgba(75, 45, 113, 0.05);
-    border-color: var(--primary);
-    transform: translate3d(0, -4px, 0) scale(1.03);
+    background: rgba(75, 45, 113, 0.04);
+    border-color: var(--primary, #4B2D71);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(75, 45, 113, 0.1);
 }
 
 /* --------------------------------------------------------------------------
@@ -234,39 +232,78 @@
 }
 
 .vacc_hero_info_card {
+    position: relative;
     background: #ffffff;
-    border: 1px solid rgba(226, 232, 240, 0.8);
+    border: 1px solid rgba(226, 232, 240, 0.9);
     border-radius: 20px;
-    padding: 28px;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.02);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 30px 26px;
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.02);
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     text-align: left;
     height: 100%;
+    overflow: hidden;
+}
+
+/* Top accent gradient border on cards */
+.vacc_hero_info_card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3.5px;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+.card_type_travel::before {
+    background: linear-gradient(90deg, #0284c7, #38bdf8);
+}
+
+.card_type_seasonal::before {
+    background: linear-gradient(90deg, #059669, #34d399);
+}
+
+.card_type_routine::before {
+    background: linear-gradient(90deg, #7c3aed, #a78bfa);
 }
 
 .vacc_hero_info_card:hover {
-    transform: translate3d(0, -4px, 0);
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.05);
+    transform: translateY(-5px);
+    box-shadow: 0 20px 35px -10px rgba(75, 45, 113, 0.1), 0 0 0 1px rgba(75, 45, 113, 0.08);
+}
+
+.vacc_hero_info_card:hover::before {
+    height: 5px;
+    opacity: 1;
 }
 
 /* Header line of card */
 .vacc_card_header {
     display: flex;
     align-items: center;
-    gap: 14px;
-    margin-bottom: 16px;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 18px;
+    width: 100%;
 }
 
 .vacc_card_icon_box {
-    width: 48px;
-    height: 48px;
-    border-radius: 14px;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.vacc_hero_info_card:hover .vacc_card_icon_box {
+    transform: scale(1.06);
 }
 
 .vacc_card_icon {
@@ -275,37 +312,66 @@
 }
 
 .vacc_card_badge {
-    font-size: 0.76rem;
+    font-size: 0.72rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    padding: 4px 12px;
-    border-radius: 6px;
+    padding: 5px 12px;
+    border-radius: 100px;
+    white-space: nowrap;
 }
 
 /* Theme color specifications */
-.icon_blue { background: rgba(56, 189, 248, 0.1); color: #0284c7; }
-.badge_blue { background: rgba(56, 189, 248, 0.08); color: #0369a1; }
-.card_type_travel:hover { border-color: rgba(56, 189, 248, 0.4); }
+.icon_blue { 
+    background: rgba(2, 132, 199, 0.1); 
+    color: #0284c7; 
+}
+.badge_blue { 
+    background: rgba(2, 132, 199, 0.08); 
+    color: #0284c7; 
+    border: 1px solid rgba(2, 132, 199, 0.2); 
+}
+.card_type_travel:hover { 
+    border-color: rgba(2, 132, 199, 0.4); 
+}
 
-.icon_green { background: rgba(16, 185, 129, 0.1); color: #059669; }
-.badge_green { background: rgba(16, 185, 129, 0.08); color: #047857; }
-.card_type_seasonal:hover { border-color: rgba(16, 185, 129, 0.4); }
+.icon_green { 
+    background: rgba(5, 150, 105, 0.1); 
+    color: #059669; 
+}
+.badge_green { 
+    background: rgba(5, 150, 105, 0.08); 
+    color: #059669; 
+    border: 1px solid rgba(5, 150, 105, 0.2); 
+}
+.card_type_seasonal:hover { 
+    border-color: rgba(5, 150, 105, 0.4); 
+}
 
-.icon_purple { background: rgba(139, 92, 246, 0.1); color: #7c3aed; }
-.badge_purple { background: rgba(139, 92, 246, 0.08); color: #6d28d9; }
-.card_type_routine:hover { border-color: rgba(139, 92, 246, 0.4); }
+.icon_purple { 
+    background: rgba(124, 58, 237, 0.1); 
+    color: #7c3aed; 
+}
+.badge_purple { 
+    background: rgba(124, 58, 237, 0.08); 
+    color: #7c3aed; 
+    border: 1px solid rgba(124, 58, 237, 0.2); 
+}
+.card_type_routine:hover { 
+    border-color: rgba(124, 58, 237, 0.4); 
+}
 
 .vacc_card_title {
     font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--foreground);
+    font-weight: 700;
+    color: #0f172a;
     margin: 0 0 8px 0;
+    line-height: 1.3;
 }
 
 .vacc_card_description {
-    font-size: 1.02rem;
-    line-height: 1.55;
+    font-size: 0.96rem;
+    line-height: 1.6;
     color: #64748b;
     margin: 0;
 }
@@ -316,8 +382,8 @@
 
 @media (max-width: 1024px) {
     .vacc_hero_section {
-        padding-top: 80px;
-        padding-bottom: 60px;
+        padding-top: 56px;
+        padding-bottom: 56px;
     }
 
     .vacc_hero_cards_row {
@@ -328,8 +394,8 @@
 
 @media (max-width: 768px) {
     .vacc_hero_section {
-        padding-top: 60px;
-        padding-bottom: 50px;
+        padding-top: 48px;
+        padding-bottom: 48px;
         padding-left: 5%;
         padding-right: 5%;
     }
@@ -344,8 +410,8 @@
     }
 
     .vacc_hero_lead_text {
-        font-size: 1.08rem;
-        margin-bottom: 28px;
+        font-size: 1.02rem;
+        margin-bottom: 26px;
     }
 
     .vacc_hero_btn_group {
@@ -353,6 +419,7 @@
         align-items: stretch;
         gap: 12px;
         width: 100%;
+        max-width: 360px;
     }
 
     .vacc_btn_cta_primary,
@@ -373,8 +440,8 @@
 
 @media (max-width: 480px) {
     .vacc_hero_section {
-        padding-top: 48px;
-        padding-bottom: 40px;
+        padding-top: 40px;
+        padding-bottom: 36px;
     }
 
     .vacc_hero_main_title {
@@ -382,11 +449,10 @@
     }
 
     .vacc_hero_lead_text {
-        font-size: 0.98rem;
+        font-size: 0.95rem;
     }
 
     .vacc_card_title {
         font-size: 1.15rem;
     }
 }
-
