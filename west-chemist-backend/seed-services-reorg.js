@@ -1,4 +1,4 @@
-﻿require('dotenv').config();
+require('dotenv').config();
 const mongoose = require('mongoose');
 const Service = require('./models/Service');
 
@@ -13,7 +13,7 @@ const alignedServices = [
     desc: "Professional private consultation and prescription for delaying your period, ideal for holidays, exams, or special events.",
     duration: "15 Mins",
     features: [
-      "Private clinician consultation",
+      "Private pharmacists consultation",
       "Assessment of suitability",
       "Direct prescription issued if safe",
       "Tailored administration guidance"
@@ -41,7 +41,7 @@ const alignedServices = [
   {
     slug: "ear-wax-removal",
     title: "Ear Wax Removal service",
-    cat: "PHARMACY Ear Care",
+    cat: "Pharmaceutical Ear Care",
     parentCategory: "Private Services",
     img: "https://images.unsplash.com/photo-1559839734-2b71f1536783?w=600&q=80",
     desc: "Safe and effective ear wax removal using gentle microsuction techniques performed by qualified PHARMACY specialists.",
@@ -58,7 +58,7 @@ const alignedServices = [
   {
     slug: "cryotherapy",
     title: "Cryotherapy service",
-    cat: "PHARMACY Dermatology",
+    cat: "Pharmaceutical Dermatology",
     parentCategory: "Private Services",
     img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=600&q=80",
     desc: "Professional freezing treatments for rapid and safe removal of warts, verrucae, skin tags, and benign skin lesions.",
@@ -277,7 +277,7 @@ const alignedServices = [
     duration: "15 Mins",
     features: [
       "High-efficacy meningococcal B defense",
-      "Pediatric and adult PHARMACY care",
+      "Pediatric and adult pharmaceutical care",
       "NHS scheduling and private bookings",
       "Post-vaccine counseling and advice"
     ],

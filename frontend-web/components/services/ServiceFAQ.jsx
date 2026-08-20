@@ -13,7 +13,7 @@ const faqs = [
     },
     {
         q: "Is the weight loss program medically supervised?",
-        a: "Yes, our weight loss programs are supervised by qualified clinicians who will monitor your progress and provide professional guidance."
+        a: "Yes, our weight loss programs are supervised by qualified pharmacists who will monitor your progress and provide professional guidance."
     },
     {
         q: "How long does a typical consultation take?",
@@ -33,15 +33,15 @@ export default function ServiceFAQ() {
                 </div>
                 <div className="faq_list">
                     {faqs.map((faq, idx) => (
-                        <div 
-                            className={`faq_item ${activeIndex === idx ? 'faq_active' : ''}`} 
+                        <div
+                            className={`faq_item ${activeIndex === idx ? 'faq_active' : ''}`}
                             key={idx}
                             onClick={() => setActiveIndex(activeIndex === idx ? null : idx)}
                         >
                             <div className="faq_question">
                                 <span>{faq.q}</span>
                                 <div className="faq_icon_toggle">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6" /></svg>
                                 </div>
                             </div>
                             <div className="faq_answer">

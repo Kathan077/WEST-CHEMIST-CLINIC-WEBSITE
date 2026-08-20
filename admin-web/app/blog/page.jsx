@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { API_URL } from '@/config';
 import React, { useState, useEffect, useRef } from 'react';
@@ -90,7 +90,7 @@ const SUBJECT_OPTIONS = [
   'Weight Loss',
   'Pharmacy News',
   'Wellness',
-  'PHARMACY ear care',
+  'Pharmaceutical Ear Care',
   'Aesthetics'
 ];
 

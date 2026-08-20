@@ -125,9 +125,9 @@ export default function WeightLossContent() {
                         {displayServices.map(s => (
                             <div className="wl_treatment_card" key={s._id}>
                                 <div className="wl_card_image_wrapper">
-                                    <img 
-                                        src={getImageUrl(s.img)} 
-                                        alt={s.title} 
+                                    <img
+                                        src={getImageUrl(s.img)}
+                                        alt={s.title}
                                         className="wl_card_image"
                                         onError={(e) => {
                                             e.target.src = "https://images.unsplash.com/photo-1584308919139-332c34f370d5?w=600&q=80";
@@ -227,7 +227,7 @@ export default function WeightLossContent() {
                         <span className="wl_section_subtitle">Your Journey</span>
                         <h2 className="wl_section_title">How Our Weight Loss Program Works</h2>
                         <p className="wl_section_desc">
-                            A simple, secure, and clinician-led process to help you get started safely.
+                            A simple, secure, and pharmacist-led process to help you get started safely.
                         </p>
                     </div>
 
@@ -272,14 +272,14 @@ export default function WeightLossContent() {
                             <div className={`wl_faq_item ${faqActive[idx] ? 'active' : ''}`} key={idx}>
                                 <button className="wl_faq_question" onClick={() => toggleFaq(idx)}>
                                     <span>{item.question}</span>
-                                    <svg 
-                                        width="16" 
-                                        height="16" 
-                                        viewBox="0 0 24 24" 
-                                        fill="none" 
-                                        stroke="currentColor" 
-                                        strokeWidth="3" 
-                                        strokeLinecap="round" 
+                                    <svg
+                                        width="16"
+                                        height="16"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="3"
+                                        strokeLinecap="round"
                                         strokeLinejoin="round"
                                         className="wl_faq_arrow"
                                     >

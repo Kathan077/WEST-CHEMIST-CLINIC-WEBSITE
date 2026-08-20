@@ -17,7 +17,7 @@ const serviceData = {
     },
     "earwax-removal": {
         title: "Earwax Removal (Microsuction)",
-        cat: "PHARMACY Ear Care",
+        cat: "Pharmaceutical Ear Care",
         img: "https://images.unsplash.com/photo-1559839734-2b71f1536783?w=1200&q=80",
         desc: "Regain auditory clarity with our state-of-the-art microsuction earwax removal service. Widely recognized as the safest and most effective method, microsuction uses gentle suction under high-definition visualization to clear blockages without water or mess. Ideal for resolving discomfort, hearing loss, and tinnitus caused by impacted cerumen.",
         duration: "30 Mins",
@@ -49,7 +49,7 @@ const serviceData = {
     },
     "cryotherapy": {
         title: "Cryotherapy Treatment",
-        cat: "PHARMACY Dermatology",
+        cat: "Pharmaceutical Dermatology",
         img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1200&q=80",
         desc: "Remove benign skin lesions safely and effectively with our advanced cryotherapy service. Utilizing PHARMACY-grade liquid nitrogen or nitrous oxide, we precisely freeze target tissues (such as warts, verrucae, skin tags, and solar keratoses), initiating a natural shedding process that preserves surrounding healthy skin.",
         duration: "15 Mins",

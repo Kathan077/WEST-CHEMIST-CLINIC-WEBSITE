@@ -9,11 +9,11 @@ const faqs = [
     },
     {
         question: "Are your vaccines authentic and approved?",
-        answer: "Absolutely. All our vaccines are strictly sourced from licensed UK medical wholesalers, fully MHRA approved, and administered by highly trained, registered PHARMACY professionals."
+        answer: "Absolutely. All our vaccines are strictly sourced from licensed UK medical wholesalers, fully MHRA approved, and administered by highly trained, registered pharmacy professionals."
     },
     {
         question: "Do I need a prescription from my GP first?",
-        answer: "No. Our pharmacy operates a fully comprehensive service. Our qualified pharmacists are authorized to PHARMACYly assess your needs and prescribe the necessary vaccines directly during your consultation."
+        answer: "No. Our pharmacy operates a fully comprehensive service. Our qualified pharmacists are authorized to pharmacy assess your needs and prescribe the necessary vaccines directly during your consultation."
     },
     {
         question: "How does the travel consultation work?",
@@ -59,8 +59,8 @@ const VaccinationFAQ = () => {
 
                 <div className="vf_accordion vf_reveal" style={{ transitionDelay: '0.2s' }}>
                     {faqs.map((faq, index) => (
-                        <div 
-                            key={index} 
+                        <div
+                            key={index}
                             className={`vf_item ${activeIndex === index ? 'active' : ''}`}
                             onClick={() => toggleFaq(index)}
                         >

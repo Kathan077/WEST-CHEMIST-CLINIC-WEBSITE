@@ -14,9 +14,9 @@ const isVaccination = (s) => {
     const cat = (s.cat || '').toLowerCase();
     const parentCat = (s.parentCategory || '').toLowerCase();
     const title = (s.title || '').toLowerCase();
-    
+
     if (slug === 'travel-clinic' || title === 'travel clinic' || slug === 'travel-clinic-service') return false;
-    
+
     return (
         parentCat === 'vaccination services' ||
         parentCat.includes('vacc') ||
@@ -91,24 +91,24 @@ export default function PrivateServices() {
                 <div className="ps_header">
                     <span className="ps_eyebrow">Private Healthcare</span>
                     <h2 className="ps_title">Personalised Pharmacy Solutions</h2>
-                    <p className="ps_desc">Period delay, weight loss management, ear wax removal, cryotherapy and travel clinic — premium private treatments delivered by qualified pharmacists.</p>
+                    <p className="ps_desc">Period delay, weight loss management, ear wax removal, cryotherapy and travel pharmacy — premium private treatments delivered by qualified pharmacists.</p>
                 </div>
 
                 <div className="ps_grid" ref={listRef}>
                     {services.map((s, idx) => (
-                        <div 
-                            className="ps_card" 
-                            key={s._id || idx} 
-                            style={{ 
+                        <div
+                            className="ps_card"
+                            key={s._id || idx}
+                            style={{
                                 '--delay': `${idx * 0.1}s`,
                                 '--bg': s.color || '#4B2D71'
                             }}
                         >
                             <div className="ps_img_wrap">
-                                <img 
-                                    src={getImageUrl(s.img)} 
-                                    alt={s.title} 
-                                    className="ps_img" 
+                                <img
+                                    src={getImageUrl(s.img)}
+                                    alt={s.title}
+                                    className="ps_img"
                                     onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1559839734-2b71f1536783?w=600&q=80'; }}
                                 />
                                 <div className="ps_tag">{s.cat}</div>
@@ -117,13 +117,13 @@ export default function PrivateServices() {
                                 <h3 className="ps_card_title">{s.title}</h3>
                                 <p className="ps_card_desc">{s.desc}</p>
                                 <div className="ps_actions">
-                                    <button 
+                                    <button
                                         className="ps_btn_view"
                                         onClick={() => window.location.href = `/services/${s.slug}`}
                                     >
                                         View
                                     </button>
-                                    <button 
+                                    <button
                                         className="ps_btn_book"
                                         onClick={() => window.location.href = `/book-appointment?service=${encodeURIComponent(s.title)}`}
                                     >

@@ -44,7 +44,7 @@ const defaultServices = [
   {
     slug: "ear-wax-removal",
     title: "Ear Wax Removal Service",
-    cat: "PHARMACY Ear Care",
+    cat: "Pharmaceutical Ear Care",
     parentCategory: "Private Services",
     img: "https://images.unsplash.com/photo-1559839734-2b71f1536783?w=600&q=80",
     desc: "Blocked ears can affect hearing and cause discomfort. Our safe and effective ear wax removal service helps restore hearing while reducing pain and irritation.",
@@ -62,7 +62,7 @@ const defaultServices = [
   {
     slug: "cryotherapy",
     title: "Cryotherapy Service",
-    cat: "PHARMACY Dermatology",
+    cat: "Pharmaceutical Dermatology",
     parentCategory: "Private Services",
     img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=600&q=80",
     desc: "Cryotherapy is a quick and effective treatment for removing common skin lesions such as warts, verrucas, skin tags, and other benign skin conditions with minimal discomfort.",
@@ -751,7 +751,7 @@ const seedServicesAndPages = async () => {
       },
       {
         title: "Ear Microsuction vs. Syringing: Why Microsuction is the Safer Choice",
-        subject: "PHARMACY ear care",
+        subject: "Pharmaceutical Ear Care",
         slug: "ear-microsuction-vs-syringing",
         description: `<p>Earwax (cerumen) is a natural substance that protects the ear canal. However, when it builds up and becomes impacted, it can cause hearing loss, discomfort, dizziness, and tinnitus. If you have a blockage, it's essential to clear it using a safe, PHARMACY method rather than resorting to cotton buds.</p>
 <h3>What is traditional ear syringing?</h3>

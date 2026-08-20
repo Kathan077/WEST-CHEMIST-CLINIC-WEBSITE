@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
@@ -70,7 +70,7 @@ const fallbackBlogs = {
     },
     "ear-microsuction-vs-syringing": {
         title: "Ear Microsuction vs. Syringing: Why Microsuction is the Safer Choice",
-        subject: "PHARMACY ear care",
+        subject: "Pharmaceutical Ear Care",
         description: `<p>Earwax (cerumen) is a natural substance that protects the ear canal. However, when it builds up and becomes impacted, it can cause hearing loss, discomfort, dizziness, and tinnitus. If you have a blockage, it's essential to clear it using a safe, PHARMACY method rather than resorting to cotton buds.</p>
 <h3>What is traditional ear syringing?</h3>
 <p>Traditional ear syringing involves pumping water into the ear canal to flush out the wax. While it was standard practice for decades, it carries risks, including ear infections, eardrum perforation, and pushing the wax deeper if not done carefully.</p>
