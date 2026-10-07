@@ -79,7 +79,7 @@ export default function Footer() {
                             </li>
                             <li>
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>
-                                <a href="mailto:info@westchemist.co.uk" style={{ transition: 'color 0.2s ease' }} className="f_link_item">info@westchemist.co.uk</a>
+                                <a href="mailto:kalkihealthltd@gmail.com" style={{ transition: 'color 0.2s ease' }} className="f_link_item">kalkihealthltd@gmail.com</a>
                             </li>
                             <li className="location_li">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>

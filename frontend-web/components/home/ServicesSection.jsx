@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
@@ -77,9 +77,6 @@ const getServiceLink = (service) => {
     if (s === 'weight-loss' || s === 'weight-loss-management-service') return '/weight-loss';
     if (s === 'vaccinations' || s === 'travel-clinic' || s === 'travel-clinic-service') return '/vaccination';
     
-    if (isVaccination(service)) {
-        return `/vaccination/${service.slug}`;
-    }
     return `/services/${service.slug}`;
 };
 

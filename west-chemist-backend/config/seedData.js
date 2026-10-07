@@ -543,7 +543,7 @@ const defaultPages = [
   {
     key: "contact-info",
     title: "Contact Information & Opening Hours",
-    content: "Address: West Chemist, 4 Kingsley Park Terrace, Northampton, NN2 7HG. Phone: (01604) 713297. Email: info@westchemist.co.uk. Opening Hours: Monday - Friday: 8.30am-6.30pm, Saturday: 9am - 2.00pm, Sunday: 9am-12pm.",
+    content: "Address: West Chemist, 4 Kingsley Park Terrace, Northampton, NN2 7HG. Phone: (01604) 713297. Email: kalkihealthltd@gmail.com. Opening Hours: Monday - Friday: 8.30am-6.30pm, Saturday: 9am - 2.00pm, Sunday: 9am-12pm.",
     section: "contact"
   },
   {
