@@ -345,11 +345,14 @@ function BookingSuccessContent() {
                 if (res.ok && json.success && json.data.length > 0) {
                     const groups = {};
                     json.data.forEach(s => {
+                        if (!s.title) return;
                         const cat = s.parentCategory || s.cat || "General Service";
                         if (!groups[cat]) {
                             groups[cat] = [];
                         }
-                        groups[cat].push(s.title);
+                        if (!groups[cat].includes(s.title)) {
+                            groups[cat].push(s.title);
+                        }
                     });
                     const formatted = Object.keys(groups).map(g => ({
                         group: g,
@@ -708,9 +711,9 @@ function BookingSuccessContent() {
                                                 onChange={(e) => setEditService(e.target.value)}
                                                 required
                                             >
-                                                {dynamicServices.map(g => (
-                                                    <optgroup key={g.group} label={`── ${g.group}`}>
-                                                        {g.items.map(s => <option key={s} value={s}>{s}</option>)}
+                                                {dynamicServices.map((g, gIdx) => (
+                                                    <optgroup key={`${g.group}-${gIdx}`} label={`── ${g.group}`}>
+                                                        {g.items.map((s, sIdx) => <option key={`${g.group}-${s}-${sIdx}`} value={s}>{s}</option>)}
                                                     </optgroup>
                                                 ))}
                                             </select>

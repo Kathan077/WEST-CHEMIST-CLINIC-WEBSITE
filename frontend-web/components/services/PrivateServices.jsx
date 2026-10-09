@@ -91,7 +91,7 @@ export default function PrivateServices() {
                 <div className="ps_header">
                     <span className="ps_eyebrow">Private Healthcare</span>
                     <h2 className="ps_title">Personalised Pharmacy Solutions</h2>
-                    <p className="ps_desc">Period delay, weight loss management, ear wax removal, cryotherapy and travel pharmacy — premium private treatments delivered by qualified pharmacists.</p>
+                    <p className="ps_desc">Specialist ear care, medical dermatology, women's health, and travel protection — premium private clinical treatments delivered by trained practitioners.</p>
                 </div>
 
                 <div className="ps_grid" ref={listRef}>

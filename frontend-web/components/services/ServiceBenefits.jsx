@@ -4,7 +4,7 @@ import './ServiceBenefits.css';
 
 const benefits = [
     {
-        title: "Qualified Pharmacists",
+        title: "Trained Practitioners",
         desc: "Our team consists of highly trained healthcare professionals ready to provide expert advice.",
         icon: (
             <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">

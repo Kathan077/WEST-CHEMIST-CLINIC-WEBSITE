@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import React, { useState } from 'react';
 import './ServiceFAQ.css';
 
@@ -13,7 +13,7 @@ const faqs = [
     },
     {
         q: "Is the weight loss program medically supervised?",
-        a: "Yes, our weight loss programs are supervised by qualified pharmacists who will monitor your progress and provide professional guidance."
+        a: "Yes, our weight loss programs are supervised by trained practitioners who will monitor your progress and provide professional guidance."
     },
     {
         q: "How long does a typical consultation take?",

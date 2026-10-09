@@ -27,18 +27,28 @@ export default function ServicesHero() {
 
             <div className="ser_hero_container">
                 <div className="ser_hero_content">
-                    <span className="ser_hero_tag">Pharmaceutical HUB</span>
+                    <span className="ser_hero_tag">Clinical Pharmacy & Healthcare Hub</span>
                     <h1 className="ser_hero_title">
-                        Expert Care, <br />
+                        Expert Clinical Care, <br />
                         <span className="ser_title_gradient">Personalised</span> for You
                     </h1>
                     <p className="ser_hero_description">
-                        From primary health concerns to advanced wellness programs, we provide professional pharmaceutical services with a focus on patient comfort and healthcare excellence.
+                        From NHS Pharmacy First treatments and travel immunisations to private clinical consultations, our trained practitioners deliver fast, evidence-based healthcare tailored to your wellbeing.
                     </p>
                     <div className="ser_hero_badges">
                         <div className="ser_badge">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                <path d="m9 12 2 2 4-4" />
+                            </svg>
+                            <span>Trained Clinical Practitioners</span>
                         </div>
                         <div className="ser_badge">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
+                            </svg>
+                            <span>Same-Day Consultations & Walk-Ins</span>
                         </div>
                     </div>
                 </div>
@@ -49,8 +59,8 @@ export default function ServicesHero() {
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m12 14 4-4" /><path d="M3.34 19a10 10 0 1 1 17.32 0" /><path d="m9.05 12.55 1.5 1.5 4-4" /></svg>
                         </div>
                         <div className="ser_card_text">
-                            <h4>Vaccinations</h4>
-                            <p>Global protection</p>
+                            <h4>Travel & Vaccinations</h4>
+                            <p>Complete immunisation clinic</p>
                         </div>
                     </div>
 
@@ -59,8 +69,8 @@ export default function ServicesHero() {
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M11 2a2 2 0 0 0-2 2v5H4a2 2 0 0 0-2 2v2c0 1.1.9 2 2 2h5v5c0 1.1.9 2 2 2h2a2 2 0 0 0 2-2v-5h5a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-5V4a2 2 0 0 0-2-2h-2z" /></svg>
                         </div>
                         <div className="ser_card_text">
-                            <h4>Expert Advice</h4>
-                            <p>Professional support</p>
+                            <h4>Trained Practitioners</h4>
+                            <p>NHS & Private consultations</p>
                         </div>
                     </div>
 

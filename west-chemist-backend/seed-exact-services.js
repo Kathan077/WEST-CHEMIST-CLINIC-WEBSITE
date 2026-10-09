@@ -13,10 +13,10 @@ const exactServices = [
     cat: "Women's Health",
     parentCategory: "Private Services",
     img: "https://images.unsplash.com/photo-1550572017-ed200f5e6399?w=600&q=80",
-    desc: "Professional private consultation and prescription for delaying your period, ideal for holidays, exams, or special events.",
+    desc: "Discreet consultation and same-day prescription medication (Norethisterone) to safely postpone your period for holidays, special events, or travel.",
     duration: "15 Mins",
     features: [
-      "Private pharmacists consultation",
+      "Private consultation with trained practitioners",
       "Assessment of suitability",
       "Direct prescription issued if safe",
       "Tailored administration guidance"
@@ -31,13 +31,13 @@ const exactServices = [
     cat: "Weight Loss",
     parentCategory: "Weight Loss",
     img: "/images/mounjaro_pen.png",
-    desc: "The latest innovation in weight management. A once-weekly injection that acts as a dual GIP and GLP-1 receptor agonist, regulating appetite and slowing digestion for high-efficacy outcomes.",
+    desc: "Breakthrough once-weekly dual GIP & GLP-1 injection clinically proven to deliver up to 20.9% average weight reduction with continuous guidance from trained practitioners.",
     duration: "45 Mins",
     features: [
       "Once-weekly subcutaneous injection",
       "Dual hormone GIP/GLP-1 activation",
       "Average weight reduction up to 20.9%",
-      "Full pharmacist-led dosage titration"
+      "Dosage titration led by trained practitioners"
     ],
     color: "#4338ca",
     onHome: true
@@ -48,7 +48,7 @@ const exactServices = [
     cat: "Weight Loss",
     parentCategory: "Weight Loss",
     img: "/images/wegovy_pen.png",
-    desc: "A highly trusted, PHARMACYly-proven weekly injection. Mimics the GLP-1 hormone to curb hunger, increase fullness, and support portion control under medical guidance.",
+    desc: "Clinically proven once-weekly semaglutide injection that mimics natural fullness hormones to curb appetite and control portions, supported by trained practitioners.",
     duration: "30 Mins",
     features: [
       "Once-weekly subcutaneous injection",
@@ -65,7 +65,7 @@ const exactServices = [
     cat: "Weight Loss",
     parentCategory: "Weight Loss",
     img: "https://images.unsplash.com/photo-1584308919139-332c34f370d5?w=600&q=80",
-    desc: "Oral weight management medication providing appetite regulation and weight loss support for patients preferring tablets over injections.",
+    desc: "Convenient daily oral GLP-1 tablet therapy providing effective appetite regulation and steady weight reduction for patients preferring a needle-free option under trained practitioners.",
     duration: "15 Mins",
     features: [
       "Daily oral capsule option",
@@ -82,7 +82,7 @@ const exactServices = [
     cat: "Pharmaceutical Ear Care",
     parentCategory: "Private Services",
     img: "https://images.unsplash.com/photo-1559839734-2b71f1536783?w=600&q=80",
-    desc: "Safe and effective ear wax removal using gentle microsuction techniques performed by qualified PHARMACY specialists.",
+    desc: "Gentle, water-free microsuction performed under HD video otoscopy for instant, safe relief from earwax build-up, blocked ears, and muffled hearing.",
     duration: "30 Mins",
     features: [
       "High-definition video otoscopy review",
@@ -99,7 +99,7 @@ const exactServices = [
     cat: "Pharmaceutical Dermatology",
     parentCategory: "Private Services",
     img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=600&q=80",
-    desc: "Professional freezing treatments for rapid and safe removal of warts, verrucae, skin tags, and benign skin lesions.",
+    desc: "Targeted sub-zero cryotherapy for fast, pain-free removal of stubborn warts, verrucas, and skin tags — restoring clear skin with no downtime.",
     duration: "15 Mins",
     features: [
       "Precise PHARMACY-grade freezing pens",
@@ -116,7 +116,7 @@ const exactServices = [
     cat: "Travel Health & Vaccinations",
     parentCategory: "Private Services",
     img: "https://images.unsplash.com/photo-1500835595300-478db374780d?w=600&q=80",
-    desc: "Destination-specific travel risk assessments, routine travel vaccinations, malaria prophylaxis, and certified health advice.",
+    desc: "Personalised destination health assessments, travel vaccinations, and prescription antimalarials to ensure complete protection for your upcoming journey.",
     duration: "30 Mins",
     features: [
       "Individualized itinerary risk assessment",
@@ -138,7 +138,7 @@ const exactServices = [
     desc: "Free NHS PHARMACY otoscopic ear assessment and prescription treatment (if indicated) for children aged 1 to 17 under Pharmacy First.",
     duration: "15-20 Mins",
     features: [
-      "Otoscope ear inspection by pharmacist",
+      "Otoscope ear inspection by trained practitioners",
       "Symptom and fever scoring",
       "NHS fully funded diagnostic check",
       "Antibiotics dispensed if criteria met"
@@ -150,7 +150,7 @@ const exactServices = [
     cat: "NHS Pharmacy First",
     parentCategory: "NHS Services (Pharmacy First)",
     img: "https://images.unsplash.com/photo-1584308919139-332c34f370d5?w=600&q=80",
-    desc: "Free NHS assessment and prescription treatment for impetigo, a common contagious bacterial skin infection.",
+    desc: "Fast clinical assessment and prescription antibiotics or creams to clear bacterial skin sores without a GP appointment.",
     duration: "15 Mins",
     features: [
       "Private skin assessment",
@@ -165,7 +165,7 @@ const exactServices = [
     cat: "NHS Pharmacy First",
     parentCategory: "NHS Services (Pharmacy First)",
     img: "https://images.unsplash.com/photo-1576091160550-217359f4bd08?w=600&q=80",
-    desc: "Free NHS assessment and prescription antibiotic treatment for infected insect or spider bites.",
+    desc: "Clinical review to treat secondary bacterial bite infections, with rapid prescription antibiotics to prevent spreading.",
     duration: "15 Mins",
     features: [
       "Local skin swelling and infection review",
@@ -180,7 +180,7 @@ const exactServices = [
     cat: "NHS Pharmacy First",
     parentCategory: "NHS Services (Pharmacy First)",
     img: "https://images.unsplash.com/photo-1584308919139-332c34f370d5?w=600&q=80",
-    desc: "Free NHS PHARMACY assessment and rapid antiviral prescribing (if appropriate) for shingles to reduce pain and complications.",
+    desc: "Urgent clinical assessment and prescription antiviral medication to halt rash progression and relieve nerve pain.",
     duration: "15 Mins",
     features: [
       "Urgent PHARMACY rash evaluation",
@@ -195,7 +195,7 @@ const exactServices = [
     cat: "NHS Pharmacy First",
     parentCategory: "NHS Services (Pharmacy First)",
     img: "https://images.unsplash.com/photo-1559839734-2b71f1536783?w=600&q=80",
-    desc: "Free NHS assessment and relief for nasal congestion and facial pain caused by acute sinusitis, including prescription options.",
+    desc: "Expert evaluation for persistent sinus pain and congestion, providing prescription sprays or antibiotics for fast relief.",
     duration: "15 Mins",
     features: [
       "Sinus pressure and symptom duration check",
@@ -210,7 +210,7 @@ const exactServices = [
     cat: "NHS Pharmacy First",
     parentCategory: "NHS Services (Pharmacy First)",
     img: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=600&q=80",
-    desc: "Free NHS FeverPAIN evaluation and PHARMACY throat swabs, with prescribing of antibiotics for confirmed bacterial sore throats.",
+    desc: "Clinical FeverPAIN throat assessment with immediate prescription antibiotics dispensed for confirmed bacterial infections.",
     duration: "10 Mins",
     features: [
       "FeverPAIN diagnostic score assessment",
@@ -225,11 +225,11 @@ const exactServices = [
     cat: "NHS Pharmacy First",
     parentCategory: "NHS Services (Pharmacy First)",
     img: "https://images.unsplash.com/photo-1576091160550-217359f4bd08?w=600&q=80",
-    desc: "Free NHS Pharmacy First private consultation and prescription antibiotic treatment for uncomplicated UTIs in women aged 16-64.",
+    desc: "Confidential same-day assessment and prescription antibiotic treatment for uncomplicated cystitis in women aged 16–64.",
     duration: "15 Mins",
     features: [
       "Confidential urine sample evaluation",
-      "Accredited pharmacist diagnostics",
+      "Diagnostics by trained practitioners",
       "Immediate antibiotic dispensing if suitable",
       "NHS Pharmacy First fully funded"
     ]
@@ -240,7 +240,7 @@ const exactServices = [
     cat: "NHS Advanced Care",
     parentCategory: "NHS Services (Pharmacy First)",
     img: "https://images.unsplash.com/photo-1628177142898-93e36e4e3a50?w=600&q=80",
-    desc: "Free NHS cardiovascular blood pressure checks and ambulatory monitoring to identify and prevent hypertension risks.",
+    desc: "Free NHS cardiovascular check in a private room, with on-the-spot readings and free 24-hour ambulatory monitoring.",
     duration: "10 Mins",
     features: [
       "Validated PHARMACY sphygmomanometers",
@@ -276,7 +276,7 @@ const exactServices = [
       "Quadrivalent seasonal vaccines",
       "Free NHS vaccine for eligible cohorts",
       "Rapid private vaccination option",
-      "Qualified immunizing pharmacists"
+      "Delivery by trained practitioners"
     ]
   },
   {
@@ -291,7 +291,7 @@ const exactServices = [
       "Latest approved covid vaccine variants",
       "NHS and private vaccine slots",
       "Safe, sterile PHARMACY environment",
-      "Certified pharmacist administration"
+      "Administration by trained practitioners"
     ]
   },
   {
@@ -317,7 +317,7 @@ const exactServices = [
     cat: "Travel Immunization",
     parentCategory: "Travel Clinic",
     img: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&q=80",
-    desc: "Vaccination against the mosquito-borne Chikungunya virus, recommended for travelers heading to active transmission areas.",
+    desc: "Single-dose vaccine protecting against mosquito-borne Chikungunya virus, preventing debilitating joint pain and fever in endemic tropical destinations.",
     duration: "15 Mins",
     features: [
       "Advanced immunization formulation",
@@ -332,7 +332,7 @@ const exactServices = [
     cat: "Travel Immunization",
     parentCategory: "Travel Clinic",
     img: "https://images.unsplash.com/photo-1576091160550-217359f4bd08?w=600&q=80",
-    desc: "Drinkable oral cholera vaccine providing defense against cholera and ETEC traveler's diarrhea.",
+    desc: "Drinkable oral vaccine (Dukoral) providing vital protection against cholera and severe traveler's diarrhea in areas with compromised water sanitation.",
     duration: "10 Mins",
     features: [
       "Needle-free drinkable oral vaccine",
@@ -347,7 +347,7 @@ const exactServices = [
     cat: "Travel Immunization",
     parentCategory: "Travel Clinic",
     img: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&q=80",
-    desc: "Protection against the Dengue virus transmitted by mosquitoes, recommended for high-risk or frequent travelers.",
+    desc: "Modern 2-dose vaccine (Qdenga) protecting against all four mosquito-borne dengue virus strains in tropical travel destinations.",
     duration: "15 Mins",
     features: [
       "Living attenuated dengue vaccine option",
@@ -362,7 +362,7 @@ const exactServices = [
     cat: "Travel Immunization",
     parentCategory: "Travel Clinic",
     img: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&q=80",
-    desc: "Booster vaccination ensuring protection against Diphtheria, Tetanus, and Polio.",
+    desc: "Combined 3-in-1 booster vaccine reinforcing 10-year active immunity against tetanus, diphtheria, and polio before traveling abroad.",
     duration: "15 Mins",
     features: [
       "3-in-1 combined routine booster",
@@ -377,13 +377,13 @@ const exactServices = [
     cat: "Travel Immunization",
     parentCategory: "Travel Clinic",
     img: "https://images.unsplash.com/photo-1584308919139-332c34f370d5?w=600&q=80",
-    desc: "Protect against Measles, Mumps, and Rubella before embarking on international travel.",
+    desc: "Combined booster vaccine closing immunity gaps and safeguarding against highly contagious measles outbreaks during international travel.",
     duration: "15 Mins",
     features: [
       "Combined vaccine formulation",
       "Essential protection for group travel",
       "Fills childhood immunization gaps",
-      "Certified nurse/pharmacist delivery"
+      "Delivery by trained practitioners"
     ]
   },
   {
@@ -392,7 +392,7 @@ const exactServices = [
     cat: "Travel Immunization",
     parentCategory: "Travel Clinic",
     img: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=600&q=80",
-    desc: "Shield yourself against Hepatitis A, a food and water-borne viral infection.",
+    desc: "Fast-acting pre-travel vaccine protecting against contaminated food and water, providing long-lasting immunity for up to 25 years with a booster.",
     duration: "15 Mins",
     features: [
       "Highly effective travel vaccine",
@@ -407,7 +407,7 @@ const exactServices = [
     cat: "Travel Immunization",
     parentCategory: "Travel Clinic",
     img: "https://images.unsplash.com/photo-1559839734-2b71f1536783?w=600&q=80",
-    desc: "Prevent blood-borne viral Hepatitis B infection, recommended for long-term travel or PHARMACY exposure.",
+    desc: "Essential protective vaccine series safeguarding against blood and fluid transmission for extended stays, healthcare work, and adventure travel abroad.",
     duration: "15 Mins",
     features: [
       "3-dose standard immunization series",
@@ -422,7 +422,7 @@ const exactServices = [
     cat: "Travel Immunization",
     parentCategory: "Travel Clinic",
     img: "https://images.unsplash.com/photo-1584308919139-332c34f370d5?w=600&q=80",
-    desc: "Secure protection against Japanese Encephalitis, recommended for rural or outdoor stays in Asia.",
+    desc: "2-dose vaccine providing reliable defense against mosquito-borne encephalitis for travellers spending time in rural and agricultural parts of Asia.",
     duration: "20 Mins",
     features: [
       "2-dose primary series",
@@ -437,7 +437,7 @@ const exactServices = [
     cat: "Travel Immunization",
     parentCategory: "Travel Clinic",
     img: "https://images.unsplash.com/photo-1550572017-ed200f5e6399?w=600&q=80",
-    desc: "Mandatory Hajj, Umrah, and student travel vaccination against four deadly strains of meningitis.",
+    desc: "Official quadrivalent vaccine with stamped certification required for Hajj, Umrah pilgrimages, and international university admissions.",
     duration: "20 Mins",
     features: [
       "Official certificate issued for visa purposes",
@@ -452,7 +452,7 @@ const exactServices = [
     cat: "Travel Immunization",
     parentCategory: "Travel Clinic",
     img: "https://images.unsplash.com/photo-1579154236594-c199f3768fb9?w=600&q=80",
-    desc: "General meningococcal defense boosting your immune response before international study or travel.",
+    desc: "Specialist meningococcal vaccination providing robust defense against invasive bacterial meningitis strains before international group travel.",
     duration: "15 Mins",
     features: [
       "Strengthens meningococcal immunity",
@@ -467,7 +467,7 @@ const exactServices = [
     cat: "Travel Immunization",
     parentCategory: "Travel Clinic",
     img: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&q=80",
-    desc: "Essential pre-exposure immunization against rabies for travel to remote or animal-dense areas.",
+    desc: "3-dose preventative immunization course protecting against the fatal rabies virus in high-risk regions with stray animal and wildlife exposure.",
     duration: "20 Mins",
     features: [
       "3-dose pre-exposure vaccination protocol",
@@ -482,7 +482,7 @@ const exactServices = [
     cat: "Travel Immunization",
     parentCategory: "Travel Clinic",
     img: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=600&q=80",
-    desc: "Critical vaccine defense against Tick-Borne Encephalitis for outdoor activities in European forests.",
+    desc: "Specialist preventative vaccine protecting against tick bites in rural forests, woodlands, and hiking trails across Central and Eastern Europe.",
     duration: "20 Mins",
     features: [
       "Guards against TBE virus",
@@ -497,7 +497,7 @@ const exactServices = [
     cat: "Travel Immunization",
     parentCategory: "Travel Clinic",
     img: "https://images.unsplash.com/photo-1584308919139-332c34f370d5?w=600&q=80",
-    desc: "Protection against typhoid fever, highly recommended for travel to South Asia and Africa.",
+    desc: "High-efficacy single-dose immunization protecting against food- and water-borne typhoid bacteria across South Asia, Africa, and South America.",
     duration: "15 Mins",
     features: [
       "Injectable single-dose protection",
@@ -512,7 +512,7 @@ const exactServices = [
     cat: "Travel Immunization",
     parentCategory: "Travel Clinic",
     img: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&q=80",
-    desc: "Critical yellow fever vaccination, complete with official International Certificate of Vaccination (ICVP).",
+    desc: "Official single-dose yellow fever vaccination with mandatory WHO certificate (ICVP), providing lifelong immunity for international border entry.",
     duration: "20 Mins",
     features: [
       "Certified Yellow Fever Centre administration",
@@ -527,7 +527,7 @@ const exactServices = [
     cat: "Travel Medication",
     parentCategory: "Travel Clinic",
     img: "https://images.unsplash.com/photo-1550572017-ed200f5e6399?w=600&q=80",
-    desc: "PHARMACY consulting and prescription of malaria prophylaxis tablets (Atovaquone/Proguanil, Doxycycline, Lariam) for travel to malaria-endemic zones.",
+    desc: "Clinical consultation and prescription antimalarial tablets (such as Atovaquone/Proguanil or Doxycycline) matched to your destination's risk profile.",
     duration: "15 Mins",
     features: [
       "PHARMACY choice of suitable antimalarials",

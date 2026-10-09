@@ -3,62 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { API_URL, getImageUrl } from '@/config';
 import './NHSServices.css';
 
-const DEFAULT_NHS_SERVICES = [
-    {
-        _id: 'nhs-1',
-        title: 'Uncomplicated UTI',
-        cat: 'NHS Pharmacy First',
-        desc: 'NHS consultation & treatment for lower urinary tract infections in women aged 16-64 without GP referral.',
-        slug: 'uncomplicated-uti-treatment',
-        img: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80',
-        color: '#008473'
-    },
-    {
-        _id: 'nhs-2',
-        title: 'Shingles Treatment',
-        cat: 'NHS Pharmacy First',
-        desc: 'Rapid clinical assessment and prescription antiviral medication for shingles in adults aged 18 and over.',
-        slug: 'shingles-treatment',
-        img: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=600&q=80',
-        color: '#4B2D71'
-    },
-    {
-        _id: 'nhs-3',
-        title: 'Sore Throat Service',
-        cat: 'NHS Pharmacy First',
-        desc: 'Clinical examination and antibiotic prescribing for bacterial throat infections under NHS Pharmacy First.',
-        slug: 'sore-throat-service',
-        img: 'https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?w=600&q=80',
-        color: '#008473'
-    },
-    {
-        _id: 'nhs-4',
-        title: 'Earache & Ear Infection',
-        cat: 'NHS Pharmacy First',
-        desc: 'Otoscopic ear examination and treatment for acute middle ear infections in children aged 1-17 years.',
-        slug: 'acute-otitis-media-service',
-        img: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=600&q=80',
-        color: '#4B2D71'
-    },
-    {
-        _id: 'nhs-5',
-        title: 'Sinusitis Relief',
-        cat: 'NHS Pharmacy First',
-        desc: 'Professional nasal and sinus evaluation with prescription sprays or antibiotics for persistent sinusitis.',
-        slug: 'sinusitis-service',
-        img: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&q=80',
-        color: '#008473'
-    },
-    {
-        _id: 'nhs-6',
-        title: 'Infected Insect Bites',
-        cat: 'NHS Pharmacy First',
-        desc: 'Clinical assessment of insect bites and immediate prescription antibiotic treatment for infected skin areas.',
-        slug: 'infected-insect-bites',
-        img: 'https://images.unsplash.com/photo-1584308919139-332c34f370d5?w=600&q=80',
-        color: '#4B2D71'
-    }
-];
+
 
 const isWeightLoss = (s) => {
     const slug = (s.slug || '').toLowerCase();
@@ -67,7 +12,7 @@ const isWeightLoss = (s) => {
 
 export default function NHSServices() {
     const gridRef = useRef(null);
-    const [services, setServices] = useState(DEFAULT_NHS_SERVICES);
+    const [services, setServices] = useState([]);
 
     useEffect(() => {
         const fetchServices = async () => {
@@ -118,7 +63,7 @@ export default function NHSServices() {
                     <span className="ns_eyebrow">Official NHS Healthcare Partner</span>
                     <h2 className="ns_title">NHS Pharmacy First Services</h2>
                     <p className="ns_desc">
-                        Get expert advice and treatment directly from our qualified pharmacists for common health conditions  no GP appointment or referral required.
+                        Access prompt, NHS-funded clinical assessments and prescription treatments directly from our trained practitioners — without the need for a GP appointment.
                     </p>
                 </div>
 
@@ -128,7 +73,7 @@ export default function NHSServices() {
                             className="ns_card ns_revealed" 
                             key={s._id || idx}
                             style={{ 
-                                '--bg': s.color || (idx % 2 === 0 ? '#008473' : '#4B2D71'),
+                                '--bg': '#4B2D71',
                                 '--delay': `${idx * 0.1}s`
                             }}
                         >

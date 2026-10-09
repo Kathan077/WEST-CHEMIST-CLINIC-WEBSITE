@@ -1,4 +1,4 @@
-﻿require('dotenv').config();
+require('dotenv').config();
 const mongoose = require('mongoose');
 const Service = require('./models/Service');
 
@@ -44,7 +44,7 @@ const defaultServices = [
   {
     title: "Meningitis",
     slug: "vaccine-meningitis",
-    desc: "General meningococcal defense boosting your immune response before international study or travel.",
+    desc: "Broad-spectrum meningococcal vaccine protecting students and international travellers against invasive bacterial meningitis, septicaemia, and ACWY strains.",
     img: "https://images.unsplash.com/photo-1579154236594-c199f3768fb9?w=600&q=80",
     cat: "Vaccination Care",
     parentCategory: "Vaccination Services",
@@ -56,7 +56,7 @@ const defaultServices = [
   {
     title: "Meningitis B Vaccination",
     slug: "nhs-meningitis-b",
-    desc: "Highly effective protection against Meningococcal Group B bacteria, recommended for children and young adults.",
+    desc: "Recombinant vaccine safeguarding infants, children, and young adults against invasive Group B meningococcal disease and bacterial meningitis, administered by trained practitioners.",
     img: "https://images.unsplash.com/photo-1550572017-ed200f5e6399?w=600&q=80",
     cat: "NHS & Private Vaccination",
     parentCategory: "Vaccination Services",
@@ -68,7 +68,7 @@ const defaultServices = [
   {
     title: "Chickenpox",
     slug: "chickenpox-vaccine",
-    desc: "Varicella vaccine providing long-term active immunity against chickenpox and reducing shingles risk later in life.",
+    desc: "Two-dose varicella immunisation conferring lasting protective immunity against chickenpox, safeguarding children and non-immune adults from severe complications.",
     img: "https://images.unsplash.com/photo-1584308919139-332c34f370d5?w=600&q=80",
     cat: "Routine Immunization",
     parentCategory: "Vaccination Services",
@@ -80,19 +80,19 @@ const defaultServices = [
   {
     title: "Chikungunya Vaccine",
     slug: "vaccine-chikungunya",
-    desc: "Advanced single-dose protection against the mosquito-borne Chikungunya virus in tropical regions.",
+    desc: "Specialised single-dose vaccination providing rapid, long-lasting antibody protection against mosquito-borne Chikungunya virus and debilitating joint pain in tropical regions.",
     img: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&q=80",
     cat: "Vaccination Care",
     parentCategory: "Vaccination Services",
     duration: "15 Mins",
-    features: ["Single-dose travel vaccination", "Highly effective travel protection", "Recommended for tropical destinations", "Expert pharmacist pre-travel assessment"],
+    features: ["Single-dose travel vaccination", "Highly effective travel protection", "Recommended for tropical destinations", "Trained practitioners pre-travel assessment"],
     color: '#4B2D71',
     onHome: true
   },
   {
     title: "Shingles",
     slug: "nhs-shingles",
-    desc: "Protect yourself against shingles and post-herpetic neuralgia with our professional shingles vaccination.",
+    desc: "Targeted shingles vaccine protecting adults against reactivation of the varicella-zoster virus and debilitating chronic nerve pain (post-herpetic neuralgia).",
     img: "https://images.unsplash.com/photo-1584308919139-332c34f370d5?w=600&q=80",
     cat: "NHS & Private Services",
     parentCategory: "Vaccination Services",
@@ -104,19 +104,19 @@ const defaultServices = [
   {
     title: "HPV",
     slug: "hpv-vaccine",
-    desc: "Gardasil 9 vaccine protecting against nine high-risk strains of HPV-associated cancers and genital warts.",
+    desc: "Nine-valent Gardasil 9 immunisation providing robust clinical defence against high-risk human papillomavirus strains linked to cervical dysplasia, cancers, and genital warts.",
     img: "https://images.unsplash.com/photo-1579154236594-c199f3768fb9?w=600&q=80",
     cat: "Specialist Immunization",
     parentCategory: "Vaccination Services",
     duration: "15 Mins",
-    features: ["Gardasil 9 high-protection vaccine", "Guards against cervical & other cancers", "Recommended for adolescents and young adults", "Professional PHARMACY settings"],
+    features: ["Gardasil 9 high-protection vaccine", "Guards against cervical & other cancers", "Recommended for adolescents and young adults", "Professional clinical settings"],
     color: '#4B2D71',
     onHome: true
   },
   {
     title: "Rabies",
     slug: "vaccine-rabies",
-    desc: "Essential pre-exposure rabies vaccine protocol for travel to remote, high-risk or animal-dense areas.",
+    desc: "Comprehensive three-dose pre-exposure vaccination protocol conferring critical antibody protection against fatal rabies virus exposure in high-risk destinations.",
     img: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&q=80",
     cat: "Vaccination Care",
     parentCategory: "Vaccination Services",
@@ -140,7 +140,7 @@ const defaultServices = [
   {
     title: "Typhoid",
     slug: "vaccine-typhoid",
-    desc: "Critical protection against typhoid fever, highly recommended for travel to South Asia, Africa, and South America.",
+    desc: "High-efficacy immunisation safeguarding travellers against food- and water-borne Salmonella Typhi bacterial infection across endemic global regions.",
     img: "https://images.unsplash.com/photo-1584308919139-332c34f370d5?w=600&q=80",
     cat: "Vaccination Care",
     parentCategory: "Vaccination Services",
@@ -152,7 +152,7 @@ const defaultServices = [
   {
     title: "Japanese Encephalitis",
     slug: "vaccine-japanese-encephalitis",
-    desc: "Secure protection against Japanese Encephalitis virus spread by infected mosquitoes in rural Asia.",
+    desc: "Protective two-dose vaccine regimen safeguarding travellers against mosquito-borne flavivirus encephalitis during stays in rural and agricultural regions of Asia.",
     img: "https://images.unsplash.com/photo-1584308919139-332c34f370d5?w=600&q=80",
     cat: "Vaccination Care",
     parentCategory: "Vaccination Services",
