@@ -1128,3 +1128,118 @@
     }
 }
 
+/* ── Services CMS Tabs & Forms ── */
+.dash_main > .scms_card_wrap {
+    padding-left: 36px !important;
+    padding-right: 36px !important;
+    box-sizing: border-box !important;
+    margin-bottom: 40px;
+}
+
+.scms_card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.scms_header {
+    margin-bottom: 20px;
+}
+
+.scms_title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0 0 6px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.scms_sub {
+    font-size: 0.88rem;
+    color: #64748b;
+    margin: 0;
+}
+
+.scms_grid_2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+@media (max-width: 768px) {
+    .scms_grid_2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+.scms_subcard {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.scms_subcard_title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #334155;
+    margin: 0 0 12px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.scms_btn_del {
+    background: none;
+    border: none;
+    color: #ef4444;
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.scms_btn_del:hover {
+    background: #fee2e2;
+}
+
+.scms_btn_add_item {
+    background: #f1f5f9;
+    border: 1px dashed #cbd5e1;
+    color: #206b5e;
+    font-weight: 600;
+    font-size: 0.85rem;
+    border-radius: 8px;
+    padding: 10px;
+    width: 100%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.2s;
+    margin-top: 10px;
+}
+
+.scms_btn_add_item:hover {
+    background: #e6f4f1;
+    border-color: #206b5e;
+}
+
+.scms_save_bar {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid #f1f5f9;
+}
+

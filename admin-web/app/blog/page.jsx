@@ -305,6 +305,24 @@ export default function BlogManagerPage() {
   const [toolsHeader, setToolsHeader] = useState({ title: '', content: '' });
   const [toolsList, setToolsList] = useState([]);
 
+  // Hero CMS State
+  const [heroForm, setHeroForm] = useState({
+    mode: 'auto',
+    selectedPostId: '',
+    tag: 'LATEST HEALTH ADVICE',
+    title: 'Expert Health Guidance & Pharmacy Insights',
+    description: 'Stay informed with evidence-based articles, wellness tips, and clinic updates from our registered UK pharmacists.',
+    date: '',
+    btnText: 'Read Featured Article',
+    btnLink: '',
+    image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&q=80',
+    verificationTitle: 'Medically Verified',
+    verificationSubtitle: 'By West Chemist Pharmacy Team'
+  });
+  const [isSavingHero, setIsSavingHero] = useState(false);
+  const [uploadingHeroImg, setUploadingHeroImg] = useState(false);
+  const heroFileInputRef = useRef(null);
+
   // Form States
   const [title, setTitle] = useState('');
   const [slug, setSlug] = useState('');
@@ -384,6 +402,7 @@ export default function BlogManagerPage() {
     fetchCategories();
     fetchBlogs();
     fetchSettings();
+    fetchHeroCMS();
   }, []);
 
   const fetchCategories = async () => {
@@ -621,6 +640,101 @@ export default function BlogManagerPage() {
     } catch (err) {
       console.error(err);
       showToast("Error saving social settings", "error");
+    }
+  };
+
+  // ── Hero Section CMS Handlers ──
+  const fetchHeroCMS = async () => {
+    try {
+      const res = await fetch(`${API_URL}/api/blogs-cms`);
+      const data = await res.json();
+      if (data.success && data.data?.hero) {
+        setHeroForm(prev => ({
+          ...prev,
+          ...data.data.hero
+        }));
+      }
+    } catch (err) {
+      console.error('Error fetching blog CMS hero:', err);
+    }
+  };
+
+  const handleHeroImageUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('files', file);
+
+    setUploadingHeroImg(true);
+    try {
+      const res = await fetch(`${API_URL}/api/blogs/upload`, {
+        method: 'POST',
+        body: formData
+      });
+      const data = await res.json();
+      if (data.success && data.urls && data.urls.length > 0) {
+        setHeroForm(prev => ({ ...prev, image: data.urls[0] }));
+        showToast('Hero image uploaded successfully!');
+      } else {
+        showToast(data.message || 'File upload failed', 'error');
+      }
+    } catch (err) {
+      console.error(err);
+      showToast('Network error during file upload', 'error');
+    } finally {
+      setUploadingHeroImg(false);
+      if (e.target) e.target.value = '';
+    }
+  };
+
+  const handleAutoFillFromPost = (postId) => {
+    const post = blogs.find(b => b._id === postId);
+    if (!post) return;
+    setHeroForm(prev => ({
+      ...prev,
+      mode: 'custom',
+      selectedPostId: post._id,
+      tag: post.subject || 'HEALTH INSIGHTS',
+      title: post.title || '',
+      description: post.description ? post.description.replace(/<[^>]*>/g, '').substring(0, 190) : '',
+      date: post.date ? new Date(post.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : '',
+      btnText: 'Read Featured Article',
+      btnLink: `/blog/${post.slug}`,
+      image: post.images && post.images.length > 0 ? post.images[0] : prev.image,
+      verificationTitle: post.verificationTitle || prev.verificationTitle || 'Medically Verified',
+      verificationSubtitle: post.verificationSubtitle || prev.verificationSubtitle || 'By West Chemist Pharmacy Team'
+    }));
+    showToast(`Hero fields filled from "${post.title}"!`);
+  };
+
+  const handleSaveHeroCMS = async (e) => {
+    if (e) e.preventDefault();
+    setIsSavingHero(true);
+    const token = localStorage.getItem('adminToken');
+    try {
+      const res = await fetch(`${API_URL}/api/blogs-cms`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ hero: heroForm })
+      });
+      const data = await res.json();
+      if (data.success) {
+        showToast('Hero section updated successfully!');
+        if (data.data?.hero) {
+          setHeroForm(prev => ({ ...prev, ...data.data.hero }));
+        }
+      } else {
+        showToast(data.message || 'Failed to update hero section', 'error');
+      }
+    } catch (err) {
+      console.error(err);
+      showToast('Error saving hero section', 'error');
+    } finally {
+      setIsSavingHero(false);
     }
   };
 
@@ -945,6 +1059,7 @@ export default function BlogManagerPage() {
           <div className="blog_tabs_row">
             {[
               { key: 'articles', label: 'Articles',         icon: ICONS.doc   },
+              { key: 'hero',     label: 'Hero Section',     icon: ICONS.globe },
               { key: 'hours',    label: 'Clinic Hours',     icon: ICONS.clock },
               { key: 'tools',    label: 'Interactive Tools',icon: ICONS.tool  },
             ].map(({ key, label, icon }) => (
@@ -1243,6 +1358,337 @@ export default function BlogManagerPage() {
               </form>
             )}
 
+            {/* ══ HERO SECTION CMS TAB ══ */}
+            {activeTab === 'hero' && (
+              <form onSubmit={handleSaveHeroCMS} className="bcms_hero_form">
+                {/* Hero Header Card */}
+                <div className="bcms_hero_header_card">
+                  <div className="bcms_hero_hdr_info">
+                    <span className="bcms_hero_tag">BLOG HERO BANNER</span>
+                    <h3>Hero Spotlight Banner Editor</h3>
+                    <p>Customize the primary showcase banner displayed at the top of the public Blog page. Choose automatic article synchronization or craft a fully bespoke banner.</p>
+                  </div>
+                  <button 
+                    type="submit" 
+                    className="form_btn_save bcms_save_top_btn" 
+                    disabled={isSavingHero}
+                  >
+                    {isSavingHero ? 'Saving Changes...' : 'Save Hero Settings'}
+                  </button>
+                </div>
+
+                <div className="bcms_hero_grid">
+                  {/* Left Column: Configuration Controls */}
+                  <div className="bcms_hero_controls_col">
+                    {/* Mode Selector Card */}
+                    <div className="bcms_card">
+                      <h4 className="bcms_card_title">
+                        <I d={ICONS.globe} s={16} />
+                        <span>Display Mode</span>
+                      </h4>
+                      <p className="bcms_card_sub">Select how the hero spotlight banner determines its content.</p>
+
+                      <div className="bcms_mode_toggle_grid">
+                        <button
+                          type="button"
+                          className={`bcms_mode_btn ${heroForm.mode === 'auto' ? 'active' : ''}`}
+                          onClick={() => setHeroForm(prev => ({ ...prev, mode: 'auto' }))}
+                        >
+                          <div className="bcms_mode_radio">
+                            <div className="bcms_mode_radio_dot" />
+                          </div>
+                          <div className="bcms_mode_info">
+                            <strong>Auto / Featured Article</strong>
+                            <span>Pulls headline, description & photo from a published article</span>
+                          </div>
+                        </button>
+
+                        <button
+                          type="button"
+                          className={`bcms_mode_btn ${heroForm.mode === 'custom' ? 'active' : ''}`}
+                          onClick={() => setHeroForm(prev => ({ ...prev, mode: 'custom' }))}
+                        >
+                          <div className="bcms_mode_radio">
+                            <div className="bcms_mode_radio_dot" />
+                          </div>
+                          <div className="bcms_mode_info">
+                            <strong>Custom Hero Banner</strong>
+                            <span>Set independent custom headline, excerpt, image & CTA link</span>
+                          </div>
+                        </button>
+                      </div>
+
+                      {/* Article Selector in Auto Mode */}
+                      {heroForm.mode === 'auto' && (
+                        <div className="bcms_article_selector_box">
+                          <label className="form_label">Article to Feature</label>
+                          <div className="bcms_select_row">
+                            <select
+                              className="form_input"
+                              value={heroForm.selectedPostId || ''}
+                              onChange={(e) => {
+                                const val = e.target.value;
+                                setHeroForm(prev => ({ ...prev, selectedPostId: val }));
+                              }}
+                            >
+                              <option value="">[Auto] Most Recent Published Article</option>
+                              {blogs.map(b => (
+                                <option key={b._id} value={b._id}>
+                                  {b.title} ({b.subject})
+                                </option>
+                              ))}
+                            </select>
+                            {heroForm.selectedPostId && (
+                              <button
+                                type="button"
+                                className="bcms_prefill_btn"
+                                title="Copy this article's data into custom fields and switch to custom mode"
+                                onClick={() => handleAutoFillFromPost(heroForm.selectedPostId)}
+                              >
+                                Pre-fill to Custom
+                              </button>
+                            )}
+                          </div>
+                          <span className="bcms_hint">
+                            In Auto mode, title, description, and date sync directly with the chosen article.
+                          </span>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Content Configuration Card */}
+                    <div className="bcms_card">
+                      <h4 className="bcms_card_title">
+                        <I d={ICONS.edit} s={16} />
+                        <span>Banner Content & Headlines</span>
+                      </h4>
+                      <p className="bcms_card_sub">
+                        {heroForm.mode === 'custom' 
+                          ? 'Customize the title, badge, excerpt description, and action button.' 
+                          : 'Custom values below will be displayed in custom mode or as fallbacks.'}
+                      </p>
+
+                      <div className="form_field_group">
+                        <label className="form_label">Eyebrow Tag / Badge Text</label>
+                        <input
+                          type="text"
+                          className="form_input"
+                          value={heroForm.tag || ''}
+                          onChange={(e) => setHeroForm({ ...heroForm, tag: e.target.value })}
+                          placeholder="e.g. LATEST HEALTH ADVICE or PHARMACY BLOG"
+                        />
+                      </div>
+
+                      <div className="form_field_group">
+                        <label className="form_label">Spotlight Headline Title <span style={{ color: '#ef4444' }}>*</span></label>
+                        <input
+                          type="text"
+                          className="form_input"
+                          required={heroForm.mode === 'custom'}
+                          value={heroForm.title || ''}
+                          onChange={(e) => setHeroForm({ ...heroForm, title: e.target.value })}
+                          placeholder="e.g. Expert Health Guidance & Pharmacy Insights"
+                        />
+                      </div>
+
+                      <div className="form_field_group">
+                        <label className="form_label">Hero Description / Excerpt</label>
+                        <textarea
+                          className="form_input"
+                          rows={4}
+                          value={heroForm.description || ''}
+                          onChange={(e) => setHeroForm({ ...heroForm, description: e.target.value })}
+                          placeholder="e.g. Stay informed with evidence-based articles, wellness tips, and clinic updates from our registered UK pharmacists."
+                        />
+                        <span className="bcms_hint" style={{ textAlign: 'right' }}>
+                          {(heroForm.description || '').length} characters (recommended ~150-185)
+                        </span>
+                      </div>
+
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
+                        <div className="form_field_group">
+                          <label className="form_label">Display Date (Optional)</label>
+                          <input
+                            type="text"
+                            className="form_input"
+                            value={heroForm.date || ''}
+                            onChange={(e) => setHeroForm({ ...heroForm, date: e.target.value })}
+                            placeholder="e.g. 12 Oct 2026 (or blank)"
+                          />
+                        </div>
+                        <div className="form_field_group">
+                          <label className="form_label">CTA Button Text</label>
+                          <input
+                            type="text"
+                            className="form_input"
+                            value={heroForm.btnText || ''}
+                            onChange={(e) => setHeroForm({ ...heroForm, btnText: e.target.value })}
+                            placeholder="e.g. Read Featured Article"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="form_field_group">
+                        <label className="form_label">Button Destination URL / Link</label>
+                        <input
+                          type="text"
+                          className="form_input"
+                          value={heroForm.btnLink || ''}
+                          onChange={(e) => setHeroForm({ ...heroForm, btnLink: e.target.value })}
+                          placeholder="e.g. /blog or /blog/article-slug or https://..."
+                        />
+                        <span className="bcms_hint">Leave blank to open the featured article or scroll to blog grid.</span>
+                      </div>
+                    </div>
+
+                    {/* Hero Media / Image Card */}
+                    <div className="bcms_card">
+                      <h4 className="bcms_card_title">
+                        <I d={ICONS.upload} s={16} />
+                        <span>Hero Showcase Image</span>
+                      </h4>
+                      <p className="bcms_card_sub">Provide an image web address or upload an image file from your device.</p>
+
+                      <div className="form_field_group">
+                        <label className="form_label">Image Web URL</label>
+                        <input
+                          type="text"
+                          className="form_input"
+                          value={heroForm.image || ''}
+                          onChange={(e) => setHeroForm({ ...heroForm, image: e.target.value })}
+                          placeholder="https://images.unsplash.com/... or /uploads/..."
+                        />
+                      </div>
+
+                      <div className="bcms_upload_box">
+                        <input
+                          type="file"
+                          ref={heroFileInputRef}
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={handleHeroImageUpload}
+                        />
+                        <button
+                          type="button"
+                          className="bcms_upload_trigger_btn"
+                          onClick={() => heroFileInputRef.current?.click()}
+                          disabled={uploadingHeroImg}
+                        >
+                          <I d={ICONS.upload} s={18} />
+                          <span>{uploadingHeroImg ? 'Uploading Photo...' : 'Upload Image from Computer'}</span>
+                        </button>
+                        <span className="bcms_hint">JPG, PNG, WebP supported (recommended 1200x800).</span>
+                      </div>
+                    </div>
+
+                    {/* Verification Floating Badge Card */}
+                    <div className="bcms_card">
+                      <h4 className="bcms_card_title">
+                        <I d={ICONS.shield} s={16} />
+                        <span>Floating Verification Badge</span>
+                      </h4>
+                      <p className="bcms_card_sub">Floating badge positioned on the showcase image corner to establish medical authority.</p>
+
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
+                        <div className="form_field_group">
+                          <label className="form_label">Badge Title</label>
+                          <input
+                            type="text"
+                            className="form_input"
+                            value={heroForm.verificationTitle || ''}
+                            onChange={(e) => setHeroForm({ ...heroForm, verificationTitle: e.target.value })}
+                            placeholder="e.g. Medically Verified"
+                          />
+                        </div>
+                        <div className="form_field_group">
+                          <label className="form_label">Badge Subtitle</label>
+                          <input
+                            type="text"
+                            className="form_input"
+                            value={heroForm.verificationSubtitle || ''}
+                            onChange={(e) => setHeroForm({ ...heroForm, verificationSubtitle: e.target.value })}
+                            placeholder="e.g. By West Chemist Pharmacy Team"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Right Column: Live Interactive Preview */}
+                  <div className="bcms_hero_preview_col">
+                    <div className="bcms_preview_sticky">
+                      <div className="bcms_card bcms_preview_card">
+                        <div className="bcms_preview_hdr">
+                          <span className="bcms_live_pill">LIVE PREVIEW</span>
+                          <span className="bcms_preview_mode_label">
+                            Mode: {heroForm.mode === 'auto' ? 'Auto (Article Sync)' : 'Custom Banner'}
+                          </span>
+                        </div>
+
+                        <div className="bcms_mock_hero">
+                          <div className="bcms_mock_content">
+                            {heroForm.tag && (
+                              <span className="bcms_mock_tag">
+                                {heroForm.mode === 'auto' && heroForm.selectedPostId
+                                  ? (blogs.find(b => b._id === heroForm.selectedPostId)?.subject || heroForm.tag)
+                                  : heroForm.tag}
+                              </span>
+                            )}
+                            <h3 className="bcms_mock_title">
+                              {heroForm.mode === 'auto' && heroForm.selectedPostId
+                                ? (blogs.find(b => b._id === heroForm.selectedPostId)?.title || heroForm.title)
+                                : (heroForm.title || 'Hero Banner Title')}
+                            </h3>
+                            <p className="bcms_mock_desc">
+                              {heroForm.mode === 'auto' && heroForm.selectedPostId
+                                ? (blogs.find(b => b._id === heroForm.selectedPostId)?.description?.replace(/<[^>]*>/g, '').substring(0, 160) || heroForm.description)
+                                : (heroForm.description || 'Description of the spotlight health topic will appear here.')}
+                            </p>
+                            <div className="bcms_mock_btn_row">
+                              <div className="bcms_mock_btn">
+                                {heroForm.btnText || 'Read Featured Article'}
+                              </div>
+                              {heroForm.date && (
+                                <span className="bcms_mock_date">
+                                  {heroForm.date}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+
+                          <div className="bcms_mock_img_wrap">
+                            <img
+                              src={getFullImgUrl(heroForm.image)}
+                              alt="Hero Preview"
+                              className="bcms_mock_img"
+                              onError={(e) => e.target.src = 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&q=80'}
+                            />
+                            <div className="bcms_mock_float_stat">
+                              <I d={ICONS.shield} s={16} />
+                              <div>
+                                <strong>{heroForm.verificationTitle || 'Medically Verified'}</strong>
+                                <span>{heroForm.verificationSubtitle || 'By West Chemist Pharmacy Team'}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="bcms_save_card_bottom">
+                          <button
+                            type="submit"
+                            className="form_btn_save"
+                            style={{ width: '100%', height: '46px', borderRadius: '12px', fontSize: '0.95rem' }}
+                            disabled={isSavingHero}
+                          >
+                            {isSavingHero ? 'Saving Changes...' : 'Save All Hero Changes'}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            )}
 
           </div>
         ) : (

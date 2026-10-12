@@ -12,31 +12,52 @@ const resolveImage = (src) => {
     return `${API_URL}${src.startsWith('/') ? '' : '/'}${src}`;
 };
 
-export default function AboutImpact() {
+const DEFAULT_IMPACT = {
+    title: 'Our Impact in Numbers',
+    content: 'At West Chemist, we go beyond dispensing medicines to provide dedicated community healthcare.',
+    icon: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&q=90',
+    stat1_num: '40',
+    stat1_label: 'Years of Excellence',
+    stat1_suffix: '+',
+    stat2_num: '10',
+    stat2_label: 'Qualified Pharmacists & Staff',
+    stat2_suffix: '+',
+    stat3_num: '99',
+    stat3_label: 'Patient Satisfaction',
+    stat3_suffix: '%',
+    stat4_num: '2000',
+    stat4_label: 'Happy Clients',
+    stat4_suffix: '+'
+};
+
+export default function AboutImpact({ initialImpact }) {
     const sectionRef = useRef(null);
     const [counts, setCounts] = useState({ years: 0, docs: 0, satisfaction: 0, clients: 0 });
     const [hasIntersected, setHasIntersected] = useState(false);
-    const [impactData, setImpactData] = useState({
-        title: 'Our Impact in Numbers',
-        content: 'At West Chemist, we go beyond dispensing medicines to provide dedicated community healthcare.',
-        icon: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&q=90',
-        stat1_num: '40',
-        stat1_label: 'Years of Excellence',
-        stat1_suffix: '+',
-        stat2_num: '10',
-        stat2_label: 'Qualified Pharmacists & Staff',
-        stat2_suffix: '+',
-        stat3_num: '99',
-        stat3_label: 'Patient Satisfaction',
-        stat3_suffix: '%',
-        stat4_num: '2000',
-        stat4_label: 'Happy Clients',
-        stat4_suffix: '+'
+    const [impactData, setImpactData] = useState(() => {
+        if (!initialImpact) return DEFAULT_IMPACT;
+        return {
+            title: initialImpact.title || DEFAULT_IMPACT.title,
+            content: initialImpact.content || DEFAULT_IMPACT.content,
+            icon: initialImpact.icon || DEFAULT_IMPACT.icon,
+            stat1_num: initialImpact.metadata?.stat1_num || '15',
+            stat1_label: initialImpact.metadata?.stat1_label || 'Years of Excellence',
+            stat1_suffix: initialImpact.metadata?.stat1_suffix || '+',
+            stat2_num: initialImpact.metadata?.stat2_num || '10',
+            stat2_label: initialImpact.metadata?.stat2_label || 'Qualified Pharmacists & Staff',
+            stat2_suffix: initialImpact.metadata?.stat2_suffix || '+',
+            stat3_num: initialImpact.metadata?.stat3_num || '99',
+            stat3_label: initialImpact.metadata?.stat3_label || 'Patient Satisfaction',
+            stat3_suffix: initialImpact.metadata?.stat3_suffix || '%',
+            stat4_num: initialImpact.metadata?.stat4_num || '2000',
+            stat4_label: initialImpact.metadata?.stat4_label || 'Happy Clients',
+            stat4_suffix: initialImpact.metadata?.stat4_suffix || '+'
+        };
     });
 
     useEffect(() => {
         // Fetch dynamic content from backend
-        fetch(`${API_URL}/api/about`)
+        fetch(`${API_URL}/api/about`, { cache: 'no-store' })
             .then(res => res.json())
             .then(data => {
                 if (data.success && data.data) {

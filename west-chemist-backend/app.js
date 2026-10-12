@@ -15,6 +15,10 @@ const blogRoutes = require('./routes/blogRoutes');
 const aboutRoutes = require('./routes/aboutRoutes');
 const scheduleRoutes = require('./routes/scheduleRoutes');
 const homepageRoutes = require('./routes/homepageRoutes');
+const weightLossRoutes = require('./routes/weightLossRoutes');
+const servicesCMSRoutes = require('./routes/servicesCMSRoutes');
+const vaccinationCMSRoutes = require('./routes/vaccinationCMSRoutes');
+const blogCMSRoutes = require('./routes/blogCMSRoutes');
 
 // Initialize Express App
 const app = express();
@@ -28,6 +32,8 @@ app.use((req, res, next) => {
   if (req.method === 'GET') {
     const isPublicGet = 
       req.path.startsWith('/api/services') ||
+      req.path.startsWith('/api/services-cms') ||
+      req.path.startsWith('/api/vaccination-cms') ||
       req.path.startsWith('/api/blogs') ||
       req.path.startsWith('/api/homepage') ||
       req.path.startsWith('/api/categories') ||
@@ -130,6 +136,10 @@ app.use('/api/blogs', blogRoutes);
 app.use('/api/about', aboutRoutes);
 app.use('/api/schedule', scheduleRoutes);
 app.use('/api/homepage', homepageRoutes);
+app.use('/api/weight-loss', weightLossRoutes);
+app.use('/api/services-cms', servicesCMSRoutes);
+app.use('/api/vaccination-cms', vaccinationCMSRoutes);
+app.use('/api/blogs-cms', blogCMSRoutes);
 
 // Fallback 404 handler for unmatched routes
 app.use((req, res, next) => {

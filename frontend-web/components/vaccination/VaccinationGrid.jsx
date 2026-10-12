@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import React, { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import { API_URL, getImageUrl } from '@/config';
@@ -17,10 +17,26 @@ const VACCINE_SLUGS = [
     'vaccine-japanese-encephalitis'
 ];
 
-const VaccinationGrid = () => {
+const DEFAULT_GRID_HEADER = {
+    badge: 'Our Protocols',
+    title: 'Premium Vaccinations',
+    desc: 'Discover our comprehensive suite of advanced PHARMACY immunizations.'
+};
+
+const VaccinationGrid = ({ initialGridHeader }) => {
     const gridRef = useRef(null);
+    const [header, setHeader] = useState(() => ({
+        ...DEFAULT_GRID_HEADER,
+        ...(initialGridHeader || {})
+    }));
     const [vaccines, setVaccines] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if (initialGridHeader) {
+            setHeader(prev => ({ ...prev, ...initialGridHeader }));
+        }
+    }, [initialGridHeader]);
 
     useEffect(() => {
         const fetchVaccines = async () => {
@@ -76,9 +92,9 @@ const VaccinationGrid = () => {
             
             <div className="vacc_grid_pro_container">
                 <div className="vacc_grid_pro_header">
-                    <span className="vacc_section_badge">Our Protocols</span>
-                    <h2>Premium Vaccinations</h2>
-                    <p>Discover our comprehensive suite of advanced PHARMACY immunizations.</p>
+                    <span className="vacc_section_badge">{header.badge}</span>
+                    <h2>{header.title}</h2>
+                    <p>{header.desc}</p>
                 </div>
 
                 <div className="vacc_grid_pro_wrapper">

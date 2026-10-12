@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Service = require('../models/Service');
 
 // @desc    Get all services
@@ -5,6 +6,7 @@ const Service = require('../models/Service');
 // @access  Public
 const getAllServices = async (req, res) => {
   try {
+    res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
     const services = await Service.find();
     res.status(200).json({
       success: true,
@@ -165,11 +167,19 @@ const updateService = async (req, res) => {
 // @access  Private/Admin
 const deleteService = async (req, res) => {
   try {
-    const service = await Service.findById(req.params.id);
+    const { id } = req.params;
+    let service = null;
+    if (mongoose.Types.ObjectId.isValid(id)) {
+      service = await Service.findById(id);
+    }
     if (!service) {
-      return res.status(404).json({
-        success: false,
-        message: 'Service not found'
+      service = await Service.findOne({ slug: id });
+    }
+
+    if (!service) {
+      return res.status(200).json({
+        success: true,
+        message: 'Service already deleted'
       });
     }
 

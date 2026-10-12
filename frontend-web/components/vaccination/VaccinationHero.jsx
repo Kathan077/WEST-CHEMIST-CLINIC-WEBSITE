@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import React from 'react';
 import Link from 'next/link';
 import './VaccinationHero.css';
@@ -22,7 +22,40 @@ const ProtectionIcon = () => (
     </svg>
 );
 
-export default function VaccinationHero() {
+const DEFAULT_HERO = {
+    pillBadge: 'Travel & Routine Pharmacy Services',
+    titlePrefix: 'Pharmacy ',
+    titleHighlight: 'Vaccination Services',
+    leadText: 'Protect your health at home and abroad. West Chemist offers professional, pharmacist-administered travel vaccines, routine immunisations, and seasonal wellness support in a modern, trusted environment.',
+    primaryBtnText: 'Book Consultation',
+    primaryBtnLink: '/book-appointment',
+    secondaryBtnText: 'Explore Vaccines',
+    card1Badge: 'World Health Approved',
+    card1Title: 'Travel Health Service',
+    card1Desc: 'Yellow Fever, Rabies, Hep A & B, Meningitis ACWY. Certified travel immunisation with official certificates.',
+    card2Badge: 'NHS & Private',
+    card2Title: 'Seasonal Wellness',
+    card2Desc: 'Flu and COVID-19 vaccination program to protect your family and workplace during winter seasons.',
+    card3Badge: 'Schedule Support',
+    card3Title: 'Routine Immunisations',
+    card3Desc: 'Shingles, Chickenpox, HPV, and Pneumonia. Keep your PHARMACY vaccine record up to date under pharmacist care.'
+};
+
+export default function VaccinationHero({ initialHero }) {
+    const [hero, setHero] = React.useState(() => ({
+        ...DEFAULT_HERO,
+        ...(initialHero || {})
+    }));
+
+    React.useEffect(() => {
+        if (initialHero) {
+            setHero(prev => ({
+                ...prev,
+                ...initialHero
+            }));
+        }
+    }, [initialHero]);
+
     return (
         <section className="vacc_hero_section" aria-label="Vaccination Service Introduction">
             {/* Ambient Background Elements */}
@@ -34,20 +67,20 @@ export default function VaccinationHero() {
                 <div className="vacc_hero_text_row">
                     <div className="vacc_hero_pill_badge">
                         <span className="pill_indicator" />
-                        <span>Travel &amp; Routine Pharmacy Services</span>
+                        <span>{hero.pillBadge}</span>
                     </div>
                     
                     <h1 className="vacc_hero_main_title">
-                        Pharmacy <span className="vacc_title_highlight">Vaccination Services</span>
+                        {hero.titlePrefix}<span className="vacc_title_highlight">{hero.titleHighlight}</span>
                     </h1>
                     
                     <p className="vacc_hero_lead_text">
-                        Protect your health at home and abroad. West Chemist offers professional, pharmacist-administered travel vaccines, routine immunisations, and seasonal wellness support in a modern, trusted environment.
+                        {hero.leadText}
                     </p>
                     
                     <div className="vacc_hero_btn_group">
-                        <Link href="/book-appointment" className="vacc_btn_cta_primary">
-                            <span>Book Consultation</span>
+                        <Link href={hero.primaryBtnLink || '/book-appointment'} className="vacc_btn_cta_primary">
+                            <span>{hero.primaryBtnText}</span>
                             <svg className="arrow_icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                                 <line x1="5" y1="12" x2="19" y2="12"></line>
                                 <polyline points="12 5 19 12 12 19"></polyline>
@@ -58,7 +91,7 @@ export default function VaccinationHero() {
                             className="vacc_btn_cta_secondary"
                             onClick={() => document.getElementById('vacc_grid')?.scrollIntoView({ behavior: 'smooth' })}
                         >
-                            <span>Explore Vaccines</span>
+                            <span>{hero.secondaryBtnText}</span>
                         </button>
                     </div>
                 </div>
@@ -70,11 +103,11 @@ export default function VaccinationHero() {
                             <div className="vacc_card_icon_box icon_blue">
                                 <TravelBadgeIcon />
                             </div>
-                            <span className="vacc_card_badge badge_blue">World Health Approved</span>
+                            <span className="vacc_card_badge badge_blue">{hero.card1Badge}</span>
                         </div>
-                        <h3 className="vacc_card_title">Travel Health Service</h3>
+                        <h3 className="vacc_card_title">{hero.card1Title}</h3>
                         <p className="vacc_card_description">
-                            Yellow Fever, Rabies, Hep A &amp; B, Meningitis ACWY. Certified travel immunisation with official certificates.
+                            {hero.card1Desc}
                         </p>
                     </div>
 
@@ -83,11 +116,11 @@ export default function VaccinationHero() {
                             <div className="vacc_card_icon_box icon_green">
                                 <SeasonalIcon />
                             </div>
-                            <span className="vacc_card_badge badge_green">NHS &amp; Private</span>
+                            <span className="vacc_card_badge badge_green">{hero.card2Badge}</span>
                         </div>
-                        <h3 className="vacc_card_title">Seasonal Wellness</h3>
+                        <h3 className="vacc_card_title">{hero.card2Title}</h3>
                         <p className="vacc_card_description">
-                            Flu and COVID-19 vaccination program to protect your family and workplace during winter seasons.
+                            {hero.card2Desc}
                         </p>
                     </div>
 
@@ -96,11 +129,11 @@ export default function VaccinationHero() {
                             <div className="vacc_card_icon_box icon_purple">
                                 <ProtectionIcon />
                             </div>
-                            <span className="vacc_card_badge badge_purple">Schedule Support</span>
+                            <span className="vacc_card_badge badge_purple">{hero.card3Badge}</span>
                         </div>
-                        <h3 className="vacc_card_title">Routine Immunisations</h3>
+                        <h3 className="vacc_card_title">{hero.card3Title}</h3>
                         <p className="vacc_card_description">
-                            Shingles, Chickenpox, HPV, and Pneumonia. Keep your PHARMACY vaccine record up to date under pharmacist care.
+                            {hero.card3Desc}
                         </p>
                     </div>
                 </div>

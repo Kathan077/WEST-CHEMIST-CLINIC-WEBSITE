@@ -170,38 +170,8 @@ const seedAboutDataIfEmpty = async () => {
 // @access  Public
 const getAboutItems = async (req, res) => {
   try {
-    // Migration helper to auto-clean outdated DB content (surgeries/specialists/clinic branding)
-    // Delete the outdated "Vaccinations Administered" and "Years Experience" stats if they exist
-    await AboutItem.deleteMany({ content: 'Vaccinations Administered' });
-    await AboutItem.deleteMany({ content: 'Years Experience' });
-    await AboutItem.updateMany(
-      { content: 'Specialists' },
-      { $set: { title: '10,000+', content: 'Patients Served' } }
-    );
-    await AboutItem.updateMany(
-      { type: 'hero' },
-      { $set: { title: 'About West Chemist', content: 'Serving our communities for over 40 years, West Chemist is dedicated to providing high-quality prescription medicines, travel health, and personalized patient care. Our team of experienced pharmacists and professional healthcare staff are here to simplify medication management and support you and your family through all stages of life.' } }
-    );
-    await AboutItem.updateMany(
-      { type: 'card', title: 'Mission' },
-      { $set: { content: 'To deliver timely prescription dispensing, expert travel health, and accessible pharmacy services through a compassionate, patient-centered team dedicated to your family’s well-being.' } }
-    );
-    await AboutItem.updateMany(
-      { type: 'card', title: 'Vision' },
-      { $set: { content: 'To remain the most trusted community pharmacy partner across every stage of life, empowering patients with expert guidance, reliable care, and total peace of mind.' } }
-    );
-    await AboutItem.updateMany(
-      { type: 'card', title: 'Our Values' },
-      { $set: { content: 'At West Chemist, we are guided by compassion, PHARMACY integrity, and community trust. We know medication management can feel overwhelming, so we treat every patient with warmth, respect, and personalized care.' } }
-    );
-    await AboutItem.updateMany(
-      { 'metadata.stat2_label': 'Certified Doctors & Specialists' },
-      { $set: { 'metadata.stat2_label': 'Qualified Pharmacists & Staff' } }
-    );
-    await AboutItem.updateMany(
-      { title: { $in: ['UK Online Virtual Clinic', 'UK Online Virtual Pharmacy', 'West Chemist — Online Virtual Clinic'] } },
-      { $set: { title: 'East London Consultation Hub', content: 'Our dedicated consultation hub offering in-person health assessments, travel vaccinations, and private consultations in East London.', 'metadata.address': 'East London, UK', 'metadata.badge': 'Consultation Hub' } }
-    );
+    // Seed default items only if database has no items yet
+    await seedAboutDataIfEmpty();
 
     const items = await AboutItem.find();
     res.status(200).json({

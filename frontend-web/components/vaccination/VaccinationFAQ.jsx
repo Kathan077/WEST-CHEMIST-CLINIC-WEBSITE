@@ -1,29 +1,50 @@
-﻿"use client";
+"use client";
 import React, { useState, useEffect, useRef } from 'react';
 import './VaccinationFAQ.css';
 
-const faqs = [
-    {
-        question: "When should I book my travel vaccinations?",
-        answer: "We strongly recommend booking your consultation at least 6-8 weeks before your departure. Some vaccines require multiple doses spread across several weeks to build full immunity."
-    },
-    {
-        question: "Are your vaccines authentic and approved?",
-        answer: "Absolutely. All our vaccines are strictly sourced from licensed UK medical wholesalers, fully MHRA approved, and administered by highly trained, registered pharmacy professionals."
-    },
-    {
-        question: "Do I need a prescription from my GP first?",
-        answer: "No. Our pharmacy operates a fully comprehensive service. Our qualified pharmacists are authorized to pharmacy assess your needs and prescribe the necessary vaccines directly during your consultation."
-    },
-    {
-        question: "How does the travel consultation work?",
-        answer: "During your consultation, our qualified pharmacist will review your medical history, immunization records, and travel itinerary to create a personalized travel health plan tailored to your destination."
-    }
-];
+const DEFAULT_FAQS = {
+    eyebrow: "PHARMACY Knowledge",
+    title: "Vaccination FAQ.",
+    lead: "Clear answers to your most pressing questions regarding travel immunity and routine PHARMACY protection.",
+    items: [
+        {
+            question: "When should I book my travel vaccinations?",
+            answer: "We strongly recommend booking your consultation at least 6-8 weeks before your departure. Some vaccines require multiple doses spread across several weeks to build full immunity."
+        },
+        {
+            question: "Are your vaccines authentic and approved?",
+            answer: "Absolutely. All our vaccines are strictly sourced from licensed UK medical wholesalers, fully MHRA approved, and administered by highly trained, registered pharmacy professionals."
+        },
+        {
+            question: "Do I need a prescription from my GP first?",
+            answer: "No. Our pharmacy operates a fully comprehensive service. Our qualified pharmacists are authorized to pharmacy assess your needs and prescribe the necessary vaccines directly during your consultation."
+        },
+        {
+            question: "How does the travel consultation work?",
+            answer: "During your consultation, our qualified pharmacist will review your medical history, immunization records, and travel itinerary to create a personalized travel health plan tailored to your destination."
+        }
+    ]
+};
 
-const VaccinationFAQ = () => {
+const VaccinationFAQ = ({ initialFaqs }) => {
     const [activeIndex, setActiveIndex] = useState(0);
     const sectionRef = useRef(null);
+
+    const [faqData, setFaqData] = useState(() => ({
+        ...DEFAULT_FAQS,
+        ...(initialFaqs || {}),
+        items: initialFaqs?.items?.length ? initialFaqs.items : DEFAULT_FAQS.items
+    }));
+
+    useEffect(() => {
+        if (initialFaqs) {
+            setFaqData({
+                ...DEFAULT_FAQS,
+                ...initialFaqs,
+                items: initialFaqs.items?.length ? initialFaqs.items : DEFAULT_FAQS.items
+            });
+        }
+    }, [initialFaqs]);
 
     const toggleFaq = (index) => {
         setActiveIndex(activeIndex === index ? -1 : index);
@@ -46,21 +67,21 @@ const VaccinationFAQ = () => {
         elements.forEach((el) => observer.observe(el));
 
         return () => observer.disconnect();
-    }, []);
+    }, [faqData.items]);
 
     return (
         <section className="vf_section" ref={sectionRef}>
             <div className="vf_container">
                 <div className="vf_header vf_reveal">
-                    <span className="vf_eyebrow">PHARMACY Knowledge</span>
-                    <h2 className="vf_title">Vaccination FAQ.</h2>
-                    <p className="vf_lead">Clear answers to your most pressing questions regarding travel immunity and routine PHARMACY protection.</p>
+                    <span className="vf_eyebrow">{faqData.eyebrow}</span>
+                    <h2 className="vf_title">{faqData.title}</h2>
+                    <p className="vf_lead">{faqData.lead}</p>
                 </div>
 
                 <div className="vf_accordion vf_reveal" style={{ transitionDelay: '0.2s' }}>
-                    {faqs.map((faq, index) => (
+                    {(faqData.items || []).map((faq, index) => (
                         <div
-                            key={index}
+                            key={faq._id || index}
                             className={`vf_item ${activeIndex === index ? 'active' : ''}`}
                             onClick={() => toggleFaq(index)}
                         >
@@ -84,4 +105,3 @@ const VaccinationFAQ = () => {
 };
 
 export default VaccinationFAQ;
-

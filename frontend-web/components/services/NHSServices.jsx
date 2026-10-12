@@ -3,16 +3,28 @@ import React, { useState, useEffect, useRef } from 'react';
 import { API_URL, getImageUrl } from '@/config';
 import './NHSServices.css';
 
-
+const DEFAULT_NHS_HEADER = {
+    eyebrow: 'Official NHS Healthcare Partner',
+    title: 'NHS Pharmacy First Services',
+    desc: 'Access prompt, NHS-funded clinical assessments and prescription treatments directly from our trained practitioners without the need for a GP appointment.',
+    logo: '/images/nhs-logo.svg'
+};
 
 const isWeightLoss = (s) => {
     const slug = (s.slug || '').toLowerCase();
     return slug === 'wegovy' || slug === 'mounjaro' || slug === 'wegovy-pills';
 };
 
-export default function NHSServices() {
+export default function NHSServices({ initialHeader }) {
     const gridRef = useRef(null);
     const [services, setServices] = useState([]);
+    const [header, setHeader] = useState(() => ({ ...DEFAULT_NHS_HEADER, ...(initialHeader || {}) }));
+
+    useEffect(() => {
+        if (initialHeader) {
+            setHeader(prev => ({ ...prev, ...initialHeader }));
+        }
+    }, [initialHeader]);
 
     useEffect(() => {
         const fetchServices = async () => {
@@ -49,21 +61,24 @@ export default function NHSServices() {
         return () => observer.disconnect();
     }, [services]);
 
+    const rawLogo = header.logo ? getImageUrl(header.logo) : '/images/nhs-logo.svg';
+    const logoSrc = (!rawLogo || rawLogo === '/images/passport.jpg') ? '/images/nhs-logo.svg' : rawLogo;
+
     return (
         <section className="ns_section">
             <div className="ns_container">
                 <div className="ns_header">
                     <div className="ns_branding_bar">
                         <img 
-                            src="/images/passport.jpg" 
+                            src={logoSrc} 
                             alt="NHS Logo" 
                             className="ns_nhs_logo" 
                         />
                     </div>
-                    <span className="ns_eyebrow">Official NHS Healthcare Partner</span>
-                    <h2 className="ns_title">NHS Pharmacy First Services</h2>
+                    {header.eyebrow && <span className="ns_eyebrow">{header.eyebrow}</span>}
+                    <h2 className="ns_title">{header.title}</h2>
                     <p className="ns_desc">
-                        Access prompt, NHS-funded clinical assessments and prescription treatments directly from our trained practitioners — without the need for a GP appointment.
+                        {header.desc}
                     </p>
                 </div>
 
@@ -103,7 +118,7 @@ export default function NHSServices() {
                                         className="ns_btn_book"
                                         onClick={() => window.location.href = `/book-appointment?service=${encodeURIComponent(s.title)}`}
                                     >
-                                        Book Consultation
+                                        Book Now
                                     </button>
                                 </div>
                             </div>
@@ -114,5 +129,3 @@ export default function NHSServices() {
         </section>
     );
 }
-
-

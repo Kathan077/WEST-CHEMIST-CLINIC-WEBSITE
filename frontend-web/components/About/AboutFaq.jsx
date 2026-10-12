@@ -37,27 +37,35 @@ const DEFAULT_FAQS = [
     }
 ];
 
-export default function AboutFaq() {
-    const [faqs, setFaqs] = useState(DEFAULT_FAQS);
-    const [openId, setOpenId] = useState('default-faq-2'); // ID 2 is open by default in screenshot
+const formatFaqsList = (faqItems) => {
+    return faqItems.map(item => ({
+        _id: item._id,
+        question: item.title,
+        answer: item.content
+    }));
+};
+
+export default function AboutFaq({ initialFaqs }) {
+    const [faqs, setFaqs] = useState(() => (
+        initialFaqs && initialFaqs.length > 0 ? formatFaqsList(initialFaqs) : DEFAULT_FAQS
+    ));
+    const [openId, setOpenId] = useState(() => (
+        initialFaqs && initialFaqs.length > 0 ? initialFaqs[0]._id : 'default-faq-2'
+    ));
     const sectionRef = useRef(null);
 
     useEffect(() => {
         // Fetch FAQs from backend API
-        fetch(`${API_URL}/api/about`)
+        fetch(`${API_URL}/api/about`, { cache: 'no-store' })
             .then(res => res.json())
             .then(data => {
                 if (data.success && data.data) {
                     const faqItems = data.data.filter(item => item.type === 'faq');
                     if (faqItems.length > 0) {
-                        const formatted = faqItems.map(item => ({
-                            _id: item._id,
-                            question: item.title,
-                            answer: item.content
-                        }));
+                        const formatted = formatFaqsList(faqItems);
                         setFaqs(formatted);
-                        // Open first FAQ by default when loaded
-                        if (formatted.length > 0) {
+                        // Open first FAQ by default when loaded if not already set
+                        if (formatted.length > 0 && !openId) {
                             setOpenId(formatted[0]._id);
                         }
                     }

@@ -1,10 +1,12 @@
-﻿"use client";
+"use client";
 import React, { useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import { API_URL } from '@/config';
 import './BlogHero.css';
 
-export default function BlogHero({ featuredPost, onReadClick }) {
+export default function BlogHero({ featuredPost, heroCMS, onReadClick }) {
     const heroRef = useRef(null);
+    const router = useRouter();
 
     useEffect(() => {
         const observer = new IntersectionObserver((entries) => {
@@ -20,27 +22,65 @@ export default function BlogHero({ featuredPost, onReadClick }) {
     }, []);
 
     const getFullImgUrl = (img) => {
-        if (!img) return 'https://images.unsplash.com/photo-1576091160550-217359f4bd8c?w=1200&q=80';
+        if (!img) return '';
         if (img.startsWith('http://') || img.startsWith('https://')) return img;
-        return `${API_URL}${img}`;
+        const normalizedImg = img.startsWith('/') ? img : `/${img}`;
+        const normalizedApi = API_URL.endsWith('/') ? API_URL.slice(0, -1) : API_URL;
+        return `${normalizedApi}${normalizedImg}`;
     };
 
-    // Determine values based on whether featuredPost is present
-    const isFeatured = !!featuredPost;
-   const badgeText = isFeatured ? " " : "PHARMACY BLOG";
-    const titleText = isFeatured ? featuredPost.title : <>Digital <span className="bh_highlight">Health</span> & Medical <span className="bh_highlight">Innovation</span></>;
-    
-    // Strip HTML for description
-    const rawDesc = isFeatured ? featuredPost.description?.replace(/<[^>]*>/g, '') : "Insights from the intersection of pharmaceutical expertise and modern wellness. Stay ahead with PHARMACY advice that matters for your daily life.";
-    const descText = isFeatured && rawDesc?.length > 180 ? `${rawDesc.substring(0, 185)}...` : rawDesc;
+    // Determine values based on whether heroCMS is custom or featuredPost is present
+    const isCustom = heroCMS && heroCMS.mode === 'custom';
+    const isFeatured = !!featuredPost || isCustom;
 
-    const imgUrl = isFeatured && featuredPost.images && featuredPost.images.length > 0 
-        ? getFullImgUrl(featuredPost.images[0]) 
-        : "https://images.unsplash.com/photo-1576091160550-217359f4bd8c?w=1200&q=80";
+    let badgeText = "PHARMACY BLOG";
+    let titleText = <>Digital <span className="bh_highlight">Health</span> & Medical <span className="bh_highlight">Innovation</span></>;
+    let descText = "Insights from the intersection of pharmaceutical expertise and modern wellness. Stay ahead with PHARMACY advice that matters for your daily life.";
+    let imgUrl = "https://tse3.mm.bing.net/th/id/OIP.BQEZ1jkolGpcXEArQspFzwAAAA?r=0&w=435&h=270&rs=1&pid=ImgDetMain&o=7&rm=3";
+    let displayDate = null;
+    let btnText = "Read Featured Article";
+    let btnLink = "";
+    let verificationTitle = "Medically Verified";
+    let verificationSubtitle = "By Pharmaceutical Team";
 
-    const displayDate = isFeatured 
-        ? new Date(featuredPost.date || featuredPost.createdAt).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })
-        : null;
+    if (isCustom) {
+        badgeText = heroCMS.tag || "LATEST HEALTH ADVICE";
+        titleText = heroCMS.title || "Expert Health Guidance & Pharmacy Insights";
+        descText = heroCMS.description || "";
+        imgUrl = getFullImgUrl(heroCMS.image);
+        displayDate = heroCMS.date || null;
+        btnText = heroCMS.btnText || "Read Featured Article";
+        btnLink = heroCMS.btnLink || "";
+        verificationTitle = heroCMS.verificationTitle || "Medically Verified";
+        verificationSubtitle = heroCMS.verificationSubtitle || "By Pharmaceutical Team";
+    } else if (featuredPost) {
+        badgeText = featuredPost.subject || " ";
+        titleText = featuredPost.title;
+        const rawDesc = featuredPost.description?.replace(/<[^>]*>/g, '') || "";
+        descText = rawDesc.length > 185 ? `${rawDesc.substring(0, 185)}...` : rawDesc;
+        const postImg = featuredPost.images && featuredPost.images.length > 0 ? featuredPost.images[0] : null;
+        imgUrl = postImg ? getFullImgUrl(postImg) : getFullImgUrl(heroCMS?.image);
+        displayDate = new Date(featuredPost.date || featuredPost.createdAt).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
+        btnText = "Read Featured Article";
+        btnLink = `/blog/${featuredPost.slug}`;
+        verificationTitle = featuredPost.verificationTitle || "Medically Verified";
+        verificationSubtitle = featuredPost.verificationSubtitle || "By Pharmaceutical Team";
+    }
+
+    const handleCtaClick = () => {
+        if (btnLink) {
+            if (btnLink.startsWith('http://') || btnLink.startsWith('https://')) {
+                window.location.href = btnLink;
+            } else {
+                router.push(btnLink);
+            }
+        } else if (onReadClick && featuredPost) {
+            onReadClick();
+        } else {
+            const grid = document.querySelector('.bg_grid');
+            if (grid) grid.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
 
     return (
         <section className="bh_section" ref={heroRef}>
@@ -67,9 +107,11 @@ export default function BlogHero({ featuredPost, onReadClick }) {
                         {isFeatured ? (
                             <div style={{ display: 'flex', flexDirection: 'column', gap: 20, alignItems: 'flex-start', width: '100%' }}>
                                 <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
-                                    <span style={{ fontSize: '.84rem', fontWeight: 800, color: 'var(--primary)', textTransform: 'uppercase', background: 'rgba(75, 45, 113, 0.08)', padding: '4px 12px', borderRadius: 100 }}>
-                                        {featuredPost.subject}
-                                    </span>
+                                    {badgeText && badgeText.trim() !== '' && (
+                                        <span style={{ fontSize: '.84rem', fontWeight: 800, color: 'var(--primary)', textTransform: 'uppercase', background: 'rgba(75, 45, 113, 0.08)', padding: '4px 12px', borderRadius: 100 }}>
+                                            {badgeText}
+                                        </span>
+                                    )}
                                     {displayDate && (
                                         <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '.84rem', color: '#64748b', fontWeight: 600 }}>
                                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--primary, #4b2d71)' }}>
@@ -82,8 +124,8 @@ export default function BlogHero({ featuredPost, onReadClick }) {
                                         </span>
                                     )}
                                 </div>
-                                <button className="bh_cta_btn" onClick={onReadClick}>
-                                    Read Featured Article
+                                <button className="bh_cta_btn" onClick={handleCtaClick}>
+                                    {btnText}
                                 </button>
                             </div>
                         ) : (
@@ -104,7 +146,16 @@ export default function BlogHero({ featuredPost, onReadClick }) {
                                     src={imgUrl} 
                                     alt="Health Innovation" 
                                     className="bh_hero_img" 
-                                    onError={(e) => e.target.src = 'https://images.unsplash.com/photo-1576091160550-217359f4bd8c?w=1200&q=80'}
+                                    referrerPolicy="no-referrer"
+                                    onError={(e) => {
+                                        if (!e.target.dataset.fallbackStep) {
+                                            e.target.dataset.fallbackStep = '1';
+                                            e.target.src = 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&q=80';
+                                        } else if (e.target.dataset.fallbackStep === '1') {
+                                            e.target.dataset.fallbackStep = '2';
+                                            e.target.src = '/images/about-pharmacist.jpg';
+                                        }
+                                    }}
                                 />
                                 <div className="bh_glass_overlay" />
                             </div>
@@ -115,8 +166,8 @@ export default function BlogHero({ featuredPost, onReadClick }) {
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                                 </div>
                                 <div className="bh_stat_text">
-                                    <strong>{featuredPost?.verificationTitle || "Medically Verified"}</strong>
-                                    <span>{featuredPost?.verificationSubtitle || "By PHARMACY Team"}</span>
+                                    <strong>{verificationTitle}</strong>
+                                    <span>{verificationSubtitle}</span>
                                 </div>
                             </div>
                         </div>

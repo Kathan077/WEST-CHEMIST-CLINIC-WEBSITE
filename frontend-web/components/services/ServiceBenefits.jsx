@@ -1,24 +1,44 @@
 "use client";
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './ServiceBenefits.css';
 
-const benefits = [
-    {
-        title: "Trained Practitioners",
-        desc: "Our team consists of highly trained healthcare professionals ready to provide expert advice.",
-        icon: (
+const DEFAULT_BENEFITS = {
+    eyebrow: 'Excellence in Care',
+    title: 'Why Choose Our Pharmacy?',
+    subtitle: 'We combine pharmaceutical expertise with patient-first convenience.',
+    items: [
+        {
+            title: "Trained Practitioners",
+            desc: "Our team consists of highly trained healthcare professionals ready to provide expert advice.",
+            icon: 'practitioner'
+        },
+        {
+            title: "Digital Scripts",
+            desc: "Secure and accurate prescription management for reliable medication support.",
+            icon: 'script'
+        },
+        {
+            title: "Private Consultation",
+            desc: "Discuss your health in complete confidence in our dedicated private consultation rooms.",
+            icon: 'shield'
+        }
+    ]
+};
+
+const renderBenefitIcon = (iconName, idx) => {
+    const key = (iconName || '').toLowerCase();
+    if (key.includes('practitioner') || key.includes('team') || key.includes('user') || idx === 0) {
+        return (
             <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M4.5 16.5c-1.5 1.26-2.5 3-2.5 5h20c0-2-1-3.74-2.5-5" />
                 <circle cx="12" cy="7" r="4" />
                 <path d="M12 11v6" />
                 <path d="M9 14h6" />
             </svg>
-        )
-    },
-    {
-        title: "Digital Scripts",
-        desc: "Secure and accurate prescription management for reliable medication support.",
-        icon: (
+        );
+    }
+    if (key.includes('script') || key.includes('doc') || key.includes('prescript') || idx === 1) {
+        return (
             <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
                 <polyline points="14 2 14 8 20 8" />
@@ -26,23 +46,34 @@ const benefits = [
                 <line x1="16" y1="17" x2="8" y2="17" />
                 <polyline points="10 9 9 9 8 9" />
             </svg>
-        )
-    },
-    {
-        title: "Private Consultation",
-        desc: "Discuss your health in complete confidence in our dedicated private consultation rooms.",
-        icon: (
-            <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                <circle cx="12" cy="11" r="2" />
-                <path d="M12 13v3" />
-            </svg>
-        )
+        );
     }
-];
+    return (
+        <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            <circle cx="12" cy="11" r="2" />
+            <path d="M12 13v3" />
+        </svg>
+    );
+};
 
-export default function ServiceBenefits() {
+export default function ServiceBenefits({ initialBenefits }) {
     const listRef = useRef(null);
+    const [benefitsData, setBenefitsData] = useState(() => ({
+        ...DEFAULT_BENEFITS,
+        ...(initialBenefits || {}),
+        items: initialBenefits?.items?.length ? initialBenefits.items : DEFAULT_BENEFITS.items
+    }));
+
+    useEffect(() => {
+        if (initialBenefits) {
+            setBenefitsData({
+                ...DEFAULT_BENEFITS,
+                ...initialBenefits,
+                items: initialBenefits.items?.length ? initialBenefits.items : DEFAULT_BENEFITS.items
+            });
+        }
+    }, [initialBenefits]);
 
     useEffect(() => {
         const observer = new IntersectionObserver((entries) => {
@@ -53,11 +84,11 @@ export default function ServiceBenefits() {
             });
         }, { threshold: 0.1 });
 
-        const cards = listRef.current.querySelectorAll('.sb_card');
+        const cards = listRef.current?.querySelectorAll('.sb_card') || [];
         cards.forEach(card => observer.observe(card));
 
         return () => observer.disconnect();
-    }, []);
+    }, [benefitsData]);
 
     const handleMouseMove = (e, card) => {
         const rect = card.getBoundingClientRect();
@@ -81,12 +112,12 @@ export default function ServiceBenefits() {
         <section className="sb_section">
             <div className="sb_container">
                 <div className="sb_header">
-                    <span className="sb_eyebrow">Excellence in Care</span>
-                    <h2 className="sb_title">Why Choose Our Pharmacy?</h2>
-                    <p className="sb_subtitle">We combine pharmaceutical expertise with patient-first convenience.</p>
+                    {benefitsData.eyebrow && <span className="sb_eyebrow">{benefitsData.eyebrow}</span>}
+                    <h2 className="sb_title">{benefitsData.title}</h2>
+                    <p className="sb_subtitle">{benefitsData.subtitle}</p>
                 </div>
                 <div className="sb_grid" ref={listRef}>
-                    {benefits.map((benefit, idx) => (
+                    {(benefitsData.items || []).map((benefit, idx) => (
                         <div 
                             className="sb_card" 
                             key={idx} 
@@ -96,7 +127,7 @@ export default function ServiceBenefits() {
                         >
                             <div className="sb_card_inner">
                                 <div className="sb_shadow" />
-                                <div className="sb_icon">{benefit.icon}</div>
+                                <div className="sb_icon">{renderBenefitIcon(benefit.icon, idx)}</div>
                                 <h3 className="sb_card_title">{benefit.title}</h3>
                                 <p className="sb_card_desc">{benefit.desc}</p>
                             </div>

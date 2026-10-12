@@ -3,45 +3,22 @@ import React, { useState, useEffect, useRef } from 'react';
 import { API_URL, getImageUrl } from '@/config';
 import './TravelClinic.css';
 
-const isVaccination = (s) => {
-    const slug = (s.slug || '').toLowerCase();
-    const cat = (s.cat || '').toLowerCase();
-    const parentCat = (s.parentCategory || '').toLowerCase();
-    const title = (s.title || '').toLowerCase();
-    
-    const isWeightLoss = parentCat.includes('weight') || cat.includes('weight') || slug === 'wegovy' || slug === 'mounjaro' || title.includes('weight') || title.includes('wegovy') || title.includes('mounjaro');
-    if (isWeightLoss) return false;
-    if (slug === 'travel-clinic' || title === 'travel clinic' || slug === 'travel-clinic-service') return false;
-    
-    return (
-        parentCat === 'vaccination services' ||
-        cat.includes('vacc') ||
-        cat.includes('immuniz') ||
-        title.includes('vaccin') ||
-        title.includes('immunis') ||
-        title.includes('immuniz') ||
-        title.includes('flu') ||
-        title.includes('covid') ||
-        title.includes('meningitis') ||
-        title.includes('shingles') ||
-        title.includes('chickenpox') ||
-        title.includes('hpv') ||
-        title.includes('rabies') ||
-        title.includes('hepatitis') ||
-        title.includes('typhoid') ||
-        title.includes('yellow fever') ||
-        title.includes('dengue') ||
-        title.includes('chikungunya') ||
-        title.includes('encephalitis') ||
-        title.includes('dtp') ||
-        title.includes('mmr') ||
-        title.includes('cholera')
-    );
+const DEFAULT_TRAVEL_HEADER = {
+    eyebrow: 'Health Abroad',
+    title: 'Travel Clinic',
+    desc: 'Destination-specific travel health advice and essential vaccinations for your safety abroad. Book a private consultation with our travel health experts.'
 };
 
-export default function TravelClinic() {
+export default function TravelClinic({ initialHeader }) {
     const listRef = useRef(null);
     const [services, setServices] = useState([]);
+    const [header, setHeader] = useState(() => ({ ...DEFAULT_TRAVEL_HEADER, ...(initialHeader || {}) }));
+
+    useEffect(() => {
+        if (initialHeader) {
+            setHeader(prev => ({ ...prev, ...initialHeader }));
+        }
+    }, [initialHeader]);
 
     useEffect(() => {
         const fetchServices = async () => {
@@ -85,9 +62,9 @@ export default function TravelClinic() {
         <section className="tc_section">
             <div className="tc_container">
                 <div className="tc_header">
-                    <span className="tc_eyebrow">Health Abroad</span>
-                    <h2 className="tc_title">Travel Clinic</h2>
-                    <p className="tc_desc">Destination-specific travel health advice and essential vaccinations for your safety abroad. Book a private consultation with our travel health experts.</p>
+                    {header.eyebrow && <span className="tc_eyebrow">{header.eyebrow}</span>}
+                    <h2 className="tc_title">{header.title}</h2>
+                    <p className="tc_desc">{header.desc}</p>
                 </div>
 
                 <div className="tc_grid" ref={listRef}>
@@ -109,15 +86,17 @@ export default function TravelClinic() {
                                 />
                                 <div className="tc_tag">{s.cat || 'Vaccination'}</div>
                             </div>
-                            <div className="tc_info">
-                                <h3 className="tc_card_title">{s.title}</h3>
-                                <p className="tc_card_desc">{s.desc}</p>
+
+                            <div className="tc_content">
+                                <h3 className="tc_name">{s.title}</h3>
+                                <p className="tc_brief">{s.desc}</p>
+
                                 <div className="tc_actions">
                                     <button 
                                         className="tc_btn_view"
                                         onClick={() => window.location.href = `/services/${s.slug}`}
                                     >
-                                        View
+                                        View Details
                                     </button>
                                     <button 
                                         className="tc_btn_book"

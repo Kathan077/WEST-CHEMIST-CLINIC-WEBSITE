@@ -40,28 +40,32 @@ const renderCardIcon = (iconName) => {
     }
 };
 
-export default function AboutMission() {
+const DEFAULT_CARDS = [
+    {
+        title: 'Mission',
+        content: 'To deliver timely prescription dispensing, expert travel health, and accessible pharmacy services through a compassionate, patient-centered team dedicated to your family’s well-being.',
+        icon: 'mission'
+    },
+    {
+        title: 'Vision',
+        content: 'To remain the most trusted community pharmacy partner across every stage of life, empowering patients with expert guidance, reliable care, and total peace of mind.',
+        icon: 'vision'
+    },
+    {
+        title: 'Our Values',
+        content: 'At West Chemist, we are guided by compassion, PHARMACY integrity, and community trust. We know medication management can feel overwhelming, so we treat every patient with warmth, respect, and personalized care.',
+        icon: 'values'
+    }
+];
+
+export default function AboutMission({ initialCards }) {
     const containerRef = useRef(null);
-    const [cards, setCards] = useState([
-        {
-            title: 'Mission',
-            content: 'To deliver timely prescription dispensing, expert travel health, and accessible pharmacy services through a compassionate, patient-centered team dedicated to your family’s well-being.',
-            icon: 'mission'
-        },
-        {
-            title: 'Vision',
-            content: 'To remain the most trusted community pharmacy partner across every stage of life, empowering patients with expert guidance, reliable care, and total peace of mind.',
-            icon: 'vision'
-        },
-        {
-            title: 'Our Values',
-            content: 'At West Chemist, we are guided by compassion, PHARMACY integrity, and community trust. We know medication management can feel overwhelming, so we treat every patient with warmth, respect, and personalized care.',
-            icon: 'values'
-        }
-    ]);
+    const [cards, setCards] = useState(() => (
+        initialCards && initialCards.length > 0 ? initialCards : DEFAULT_CARDS
+    ));
 
     useEffect(() => {
-        fetch(`${API_URL}/api/about`)
+        fetch(`${API_URL}/api/about`, { cache: 'no-store' })
             .then(res => res.json())
             .then(data => {
                 if (data.success && data.data) {

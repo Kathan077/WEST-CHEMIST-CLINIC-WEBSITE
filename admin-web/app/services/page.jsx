@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { API_URL, getImageUrl } from '@/config';
 import React, { useState, useEffect } from 'react';
@@ -23,6 +23,7 @@ const ICONS = {
   trash:   "M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2",
   doc:     "M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z M14 2v6h6 M16 13H8 M16 17H8 M10 9H8",
   info:    "M12 16v-4 M12 8h.01 M12 2a10 10 0 1010 10A10 10 0 0012 2z",
+  star:    "M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z",
   globe:   "M12 2a10 10 0 1010 10A10 10 0 0012 2zM2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
 };
 
@@ -41,6 +42,69 @@ export default function AdminServicesPage() {
   // Search & Filtering
   const [searchQuery, setSearchQuery] = useState('');
   const [catFilter, setCatFilter] = useState('all');
+
+  // CMS State for Services Page Sections
+  const [loadingCMS, setLoadingCMS] = useState(true);
+  const [isSavingCMS, setIsSavingCMS] = useState(false);
+  const [cmsForm, setCmsForm] = useState({
+    hero: {
+      tag: 'Clinical Pharmacy & Healthcare Hub',
+      title: 'Expert Clinical Care,',
+      highlight: 'Personalised',
+      titleSuffix: 'for You',
+      desc: 'From NHS Pharmacy First treatments and travel immunisations to private clinical consultations, our trained practitioners deliver fast, evidence-based healthcare tailored to your wellbeing.',
+      badge1: 'Trained Clinical Practitioners',
+      badge2: 'Same-Day Consultations & Walk-Ins',
+      card1Title: 'Travel & Vaccinations',
+      card1Desc: 'Complete immunisation clinic',
+      card2Title: 'Trained Practitioners',
+      card2Desc: 'NHS & Private consultations',
+      image: '/images/service-hero.png'
+    },
+    sectionHeaders: {
+      nhs: {
+        eyebrow: 'Official NHS Healthcare Partner',
+        title: 'NHS Pharmacy First Services',
+        desc: 'Access prompt, NHS-funded clinical assessments and prescription treatments directly from our trained practitioners without the need for a GP appointment.',
+        logo: '/images/nhs-logo.svg'
+      },
+      privateServices: {
+        eyebrow: 'Private Healthcare',
+        title: 'Personalised Pharmacy Solutions',
+        desc: 'Specialist ear care, medical dermatology, women\'s health, and travel protection — premium private clinical treatments delivered by trained practitioners.'
+      },
+      travelClinic: {
+        eyebrow: 'Health Abroad',
+        title: 'Travel Clinic',
+        desc: 'Destination-specific travel health advice and essential vaccinations for your safety abroad. Book a private consultation with our travel health experts.'
+      }
+    },
+    benefits: {
+      eyebrow: 'Excellence in Care',
+      title: 'Why Choose Our Pharmacy?',
+      subtitle: 'We combine pharmaceutical expertise with patient-first convenience.',
+      items: [
+        { title: 'Trained Practitioners', desc: 'Our team consists of highly trained healthcare professionals ready to provide expert advice.', icon: 'practitioner' },
+        { title: 'Digital Scripts', desc: 'Secure and accurate prescription management for reliable medication support.', icon: 'script' },
+        { title: 'Private Consultation', desc: 'Discuss your health in complete confidence in our dedicated private consultation rooms.', icon: 'shield' }
+      ]
+    },
+    faqs: {
+      title: 'Frequently Asked Questions',
+      subtitle: 'Answers to common queries about our pharmacy services.',
+      items: [
+        { q: 'Do I need a GP referral for Pharmacy First services?', a: 'No, you can walk in or book directly for Pharmacy First conditions. We can assess and treat you without needing to see your GP first.' },
+        { q: 'Are the vaccinations suitable for children?', a: 'We offer various vaccinations for adults and children. Please contact us or check individual service details for specific age requirements.' },
+        { q: 'Is the weight loss program medically supervised?', a: 'Yes, our weight loss programs are supervised by trained practitioners who will monitor your progress and provide professional guidance.' },
+        { q: 'How long does a typical consultation take?', a: 'Most consultations take between 10 to 20 minutes, depending on the complexity of the service and your individual health needs.' }
+      ]
+    },
+    cta: {
+      title: 'Ready to take the next step?',
+      btnText: 'Book Now',
+      btnUrl: '/book-appointment'
+    }
+  });
 
   // Category management inputs
   const [newCatName, setNewCatName] = useState('');
@@ -225,10 +289,10 @@ export default function AdminServicesPage() {
 
     try {
       const [resSrv, resCnt, resApp, resCats] = await Promise.all([
-        fetch(`${API_URL}/api/services`),
-        fetch(`${API_URL}/api/contents`),
-        fetch(`${API_URL}/api/appointments/admin/all`, { headers: { Authorization: `Bearer ${token}` } }),
-        fetch(`${API_URL}/api/categories`)
+        fetch(`${API_URL}/api/services?t=${Date.now()}`, { cache: 'no-store' }),
+        fetch(`${API_URL}/api/contents?t=${Date.now()}`, { cache: 'no-store' }),
+        fetch(`${API_URL}/api/appointments/admin/all?t=${Date.now()}`, { headers: { Authorization: `Bearer ${token}` }, cache: 'no-store' }),
+        fetch(`${API_URL}/api/categories?t=${Date.now()}`, { cache: 'no-store' })
       ]);
 
       const dataSrv = await resSrv.json();
@@ -259,11 +323,121 @@ export default function AdminServicesPage() {
         }
       }
       if (dataApp.success) setAppts(dataApp.data || []);
+      await fetchCMS();
     } catch (err) {
       console.error('Failed to load dashboard services data:', err);
       showToast('Network error loading database records', 'error');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchCMS = async () => {
+    try {
+      setLoadingCMS(true);
+      const res = await fetch(`${API_URL}/api/services-cms?t=${Date.now()}`, { cache: 'no-store' });
+      const data = await res.json();
+      if (data.success && data.data) {
+        setCmsForm(prev => ({
+          hero: { ...prev.hero, ...(data.data.hero || {}) },
+          sectionHeaders: {
+            nhs: { ...prev.sectionHeaders.nhs, ...(data.data.sectionHeaders?.nhs || {}) },
+            privateServices: { ...prev.sectionHeaders.privateServices, ...(data.data.sectionHeaders?.privateServices || {}) },
+            travelClinic: { ...prev.sectionHeaders.travelClinic, ...(data.data.sectionHeaders?.travelClinic || {}) },
+          },
+          benefits: {
+            ...prev.benefits,
+            ...(data.data.benefits || {}),
+            items: Array.isArray(data.data.benefits?.items) && data.data.benefits.items.length > 0
+              ? data.data.benefits.items
+              : prev.benefits.items
+          },
+          faqs: {
+            ...prev.faqs,
+            ...(data.data.faqs || {}),
+            items: Array.isArray(data.data.faqs?.items) && data.data.faqs.items.length > 0
+              ? data.data.faqs.items
+              : prev.faqs.items
+          },
+          cta: { ...prev.cta, ...(data.data.cta || {}) }
+        }));
+      }
+    } catch (e) {
+      console.error('Error fetching Services CMS:', e);
+    } finally {
+      setLoadingCMS(false);
+    }
+  };
+
+  const handleSaveCMS = async (sectionKey, customPayload) => {
+    setIsSavingCMS(true);
+    const token = localStorage.getItem('adminToken');
+    try {
+      const payload = customPayload || { [sectionKey]: cmsForm[sectionKey] };
+      const res = await fetch(`${API_URL}/api/services-cms`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        showToast('Services CMS section updated successfully!');
+        if (data.data) {
+          setCmsForm(prev => ({
+            ...prev,
+            hero: { ...prev.hero, ...(data.data.hero || {}) },
+            sectionHeaders: {
+              nhs: { ...prev.sectionHeaders.nhs, ...(data.data.sectionHeaders?.nhs || {}) },
+              privateServices: { ...prev.sectionHeaders.privateServices, ...(data.data.sectionHeaders?.privateServices || {}) },
+              travelClinic: { ...prev.sectionHeaders.travelClinic, ...(data.data.sectionHeaders?.travelClinic || {}) },
+            },
+            benefits: {
+              ...prev.benefits,
+              ...(data.data.benefits || {}),
+              items: Array.isArray(data.data.benefits?.items) ? data.data.benefits.items : prev.benefits.items
+            },
+            faqs: {
+              ...prev.faqs,
+              ...(data.data.faqs || {}),
+              items: Array.isArray(data.data.faqs?.items) ? data.data.faqs.items : prev.faqs.items
+            },
+            cta: { ...prev.cta, ...(data.data.cta || {}) }
+          }));
+        }
+      } else {
+        showToast(data.message || 'Failed to update section', 'error');
+      }
+    } catch (err) {
+      console.error(err);
+      showToast('Network error saving section', 'error');
+    } finally {
+      setIsSavingCMS(false);
+    }
+  };
+
+  const uploadCMSImage = async (file, onUploaded) => {
+    if (!file) return;
+    const formData = new FormData();
+    formData.append('image', file);
+    try {
+      showToast('Uploading image...', 'info');
+      const res = await fetch(`${API_URL}/api/services/upload`, {
+        method: 'POST',
+        body: formData
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        onUploaded(data.url);
+        showToast('Image uploaded successfully!', 'success');
+      } else {
+        showToast(data.message || 'Image upload failed', 'error');
+      }
+    } catch (err) {
+      console.error(err);
+      showToast('Network error uploading image', 'error');
     }
   };
 
@@ -575,7 +749,7 @@ export default function AdminServicesPage() {
         </header>
 
         {/* Tabs */}
-        <div className="tabs_container">
+        <div className="tabs_container" style={{ flexWrap: 'wrap' }}>
           <button 
             className={`tab_btn ${activeTab === 'services' ? 'active' : ''}`}
             onClick={() => setActiveTab('services')}
@@ -587,6 +761,36 @@ export default function AdminServicesPage() {
             onClick={() => setActiveTab('categories')}
           >
             Category Groups ({categories.length})
+          </button>
+          <button 
+            className={`tab_btn ${activeTab === 'hero' ? 'active' : ''}`}
+            onClick={() => setActiveTab('hero')}
+          >
+            Hero Section
+          </button>
+          <button 
+            className={`tab_btn ${activeTab === 'headers' ? 'active' : ''}`}
+            onClick={() => setActiveTab('headers')}
+          >
+            Section Headlines
+          </button>
+          <button 
+            className={`tab_btn ${activeTab === 'benefits' ? 'active' : ''}`}
+            onClick={() => setActiveTab('benefits')}
+          >
+            Why Choose Us ({cmsForm.benefits?.items?.length || 0})
+          </button>
+          <button 
+            className={`tab_btn ${activeTab === 'faqs' ? 'active' : ''}`}
+            onClick={() => setActiveTab('faqs')}
+          >
+            Services FAQs ({cmsForm.faqs?.items?.length || 0})
+          </button>
+          <button 
+            className={`tab_btn ${activeTab === 'cta' ? 'active' : ''}`}
+            onClick={() => setActiveTab('cta')}
+          >
+            Bottom CTA Banner
           </button>
           <button 
             className={`tab_btn ${activeTab === 'contents' ? 'active' : ''}`}
@@ -1072,6 +1276,699 @@ export default function AdminServicesPage() {
                   Select a section from the left menu to start editing.
                 </div>
               )}
+            </div>
+          </div>
+        )}
+
+        {/* Tab 3: Hero Section */}
+        {activeTab === 'hero' && (
+          <div className="scms_card_wrap">
+            <div className="scms_card">
+              <div className="scms_header">
+                <h3 className="scms_title"><I d={ICONS.edit} s={18} /> Hero Banner Section</h3>
+                <p className="scms_sub">Customize the main hero title, badges, description, and floating cards on the Services page.</p>
+              </div>
+
+              <form onSubmit={e => { e.preventDefault(); handleSaveCMS('hero'); }}>
+                <div className="scms_grid_2">
+                  <div className="srv_form_group">
+                    <label className="srv_label">Top Badge / Tag</label>
+                    <input
+                      type="text"
+                      className="srv_input"
+                      value={cmsForm.hero.tag}
+                      onChange={e => setCmsForm({ ...cmsForm, hero: { ...cmsForm.hero, tag: e.target.value } })}
+                      placeholder="e.g. Clinical Pharmacy & Healthcare Hub"
+                    />
+                  </div>
+                  <div className="srv_form_group">
+                    <label className="srv_label">Headline Prefix</label>
+                    <input
+                      type="text"
+                      className="srv_input"
+                      value={cmsForm.hero.title}
+                      onChange={e => setCmsForm({ ...cmsForm, hero: { ...cmsForm.hero, title: e.target.value } })}
+                      placeholder="e.g. Expert Clinical Care,"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="scms_grid_2">
+                  <div className="srv_form_group">
+                    <label className="srv_label">Headline Highlight (Gradient Accent)</label>
+                    <input
+                      type="text"
+                      className="srv_input"
+                      value={cmsForm.hero.highlight}
+                      onChange={e => setCmsForm({ ...cmsForm, hero: { ...cmsForm.hero, highlight: e.target.value } })}
+                      placeholder="e.g. Personalised"
+                    />
+                  </div>
+                  <div className="srv_form_group">
+                    <label className="srv_label">Headline Suffix</label>
+                    <input
+                      type="text"
+                      className="srv_input"
+                      value={cmsForm.hero.titleSuffix}
+                      onChange={e => setCmsForm({ ...cmsForm, hero: { ...cmsForm.hero, titleSuffix: e.target.value } })}
+                      placeholder="e.g. for You"
+                    />
+                  </div>
+                </div>
+
+                <div className="srv_form_group">
+                  <label className="srv_label">Main Description</label>
+                  <textarea
+                    className="srv_textarea"
+                    rows="3"
+                    value={cmsForm.hero.desc}
+                    onChange={e => setCmsForm({ ...cmsForm, hero: { ...cmsForm.hero, desc: e.target.value } })}
+                    placeholder="Describe your clinic services..."
+                    required
+                  />
+                </div>
+
+                <div className="scms_grid_2">
+                  <div className="srv_form_group">
+                    <label className="srv_label">Trust Badge 1</label>
+                    <input
+                      type="text"
+                      className="srv_input"
+                      value={cmsForm.hero.badge1}
+                      onChange={e => setCmsForm({ ...cmsForm, hero: { ...cmsForm.hero, badge1: e.target.value } })}
+                    />
+                  </div>
+                  <div className="srv_form_group">
+                    <label className="srv_label">Trust Badge 2</label>
+                    <input
+                      type="text"
+                      className="srv_input"
+                      value={cmsForm.hero.badge2}
+                      onChange={e => setCmsForm({ ...cmsForm, hero: { ...cmsForm.hero, badge2: e.target.value } })}
+                    />
+                  </div>
+                </div>
+
+                <div className="scms_subcard" style={{ marginTop: 12 }}>
+                  <div className="scms_subcard_title">Floating Info Cards &amp; Illustration</div>
+                  <div className="scms_grid_2">
+                    <div className="srv_form_group">
+                      <label className="srv_label">Floating Card 1 - Title</label>
+                      <input
+                        type="text"
+                        className="srv_input"
+                        value={cmsForm.hero.card1Title}
+                        onChange={e => setCmsForm({ ...cmsForm, hero: { ...cmsForm.hero, card1Title: e.target.value } })}
+                      />
+                      <label className="srv_label" style={{ marginTop: 8 }}>Floating Card 1 - Text</label>
+                      <input
+                        type="text"
+                        className="srv_input"
+                        value={cmsForm.hero.card1Desc}
+                        onChange={e => setCmsForm({ ...cmsForm, hero: { ...cmsForm.hero, card1Desc: e.target.value } })}
+                      />
+                    </div>
+                    <div className="srv_form_group">
+                      <label className="srv_label">Floating Card 2 - Title</label>
+                      <input
+                        type="text"
+                        className="srv_input"
+                        value={cmsForm.hero.card2Title}
+                        onChange={e => setCmsForm({ ...cmsForm, hero: { ...cmsForm.hero, card2Title: e.target.value } })}
+                      />
+                      <label className="srv_label" style={{ marginTop: 8 }}>Floating Card 2 - Text</label>
+                      <input
+                        type="text"
+                        className="srv_input"
+                        value={cmsForm.hero.card2Desc}
+                        onChange={e => setCmsForm({ ...cmsForm, hero: { ...cmsForm.hero, card2Desc: e.target.value } })}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="srv_form_group" style={{ marginTop: 12 }}>
+                    <label className="srv_label">Hero Image URL or Upload</label>
+                    <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+                      <input
+                        type="text"
+                        className="srv_input"
+                        value={cmsForm.hero.image}
+                        onChange={e => setCmsForm({ ...cmsForm, hero: { ...cmsForm.hero, image: e.target.value } })}
+                        placeholder="/images/service-hero.png"
+                      />
+                      <label className="srv_btn_save" style={{ cursor: 'pointer', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: 4, padding: '8px 14px' }}>
+                        Upload
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={e => {
+                            if (e.target.files && e.target.files[0]) {
+                              uploadCMSImage(e.target.files[0], url => setCmsForm(prev => ({ ...prev, hero: { ...prev.hero, image: url } })));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="scms_save_bar">
+                  <button type="submit" className="srv_btn_save" disabled={isSavingCMS}>
+                    {isSavingCMS ? 'Saving...' : 'Save Hero Changes'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {/* Tab 4: Section Headlines */}
+        {activeTab === 'headers' && (
+          <div className="scms_card_wrap">
+            <div className="scms_card">
+              <div className="scms_header">
+                <h3 className="scms_title"><I d={ICONS.doc} s={18} /> Category Section Headlines</h3>
+                <p className="scms_sub">Customize the headings, subtitles, and descriptions that introduce NHS Pharmacy First, Private Services, and Travel Clinic.</p>
+              </div>
+
+              <form onSubmit={e => { e.preventDefault(); handleSaveCMS('sectionHeaders'); }}>
+                {/* 1. NHS Pharmacy First */}
+                <div className="scms_subcard">
+                  <div className="scms_subcard_title">1. NHS Pharmacy First Mega Section</div>
+                  <div className="scms_grid_2">
+                    <div className="srv_form_group">
+                      <label className="srv_label">Eyebrow Tag</label>
+                      <input
+                        type="text"
+                        className="srv_input"
+                        value={cmsForm.sectionHeaders.nhs.eyebrow}
+                        onChange={e => setCmsForm({
+                          ...cmsForm,
+                          sectionHeaders: {
+                            ...cmsForm.sectionHeaders,
+                            nhs: { ...cmsForm.sectionHeaders.nhs, eyebrow: e.target.value }
+                          }
+                        })}
+                      />
+                    </div>
+                    <div className="srv_form_group">
+                      <label className="srv_label">Section Title</label>
+                      <input
+                        type="text"
+                        className="srv_input"
+                        value={cmsForm.sectionHeaders.nhs.title}
+                        onChange={e => setCmsForm({
+                          ...cmsForm,
+                          sectionHeaders: {
+                            ...cmsForm.sectionHeaders,
+                            nhs: { ...cmsForm.sectionHeaders.nhs, title: e.target.value }
+                          }
+                        })}
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="srv_form_group">
+                    <label className="srv_label">Description</label>
+                    <textarea
+                      className="srv_textarea"
+                      rows="2"
+                      value={cmsForm.sectionHeaders.nhs.desc}
+                      onChange={e => setCmsForm({
+                        ...cmsForm,
+                        sectionHeaders: {
+                          ...cmsForm.sectionHeaders,
+                          nhs: { ...cmsForm.sectionHeaders.nhs, desc: e.target.value }
+                        }
+                      })}
+                    />
+                  </div>
+                  <div className="srv_form_group">
+                    <label className="srv_label">Official Logo URL or Upload</label>
+                    <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+                      <input
+                        type="text"
+                        className="srv_input"
+                        value={cmsForm.sectionHeaders.nhs.logo}
+                        onChange={e => setCmsForm({
+                          ...cmsForm,
+                          sectionHeaders: {
+                            ...cmsForm.sectionHeaders,
+                            nhs: { ...cmsForm.sectionHeaders.nhs, logo: e.target.value }
+                          }
+                        })}
+                      />
+                      <label className="srv_btn_save" style={{ cursor: 'pointer', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: 4, padding: '8px 14px' }}>
+                        Upload
+                        <input
+                          type="file"
+                          accept="image/*"
+                          style={{ display: 'none' }}
+                          onChange={e => {
+                            if (e.target.files && e.target.files[0]) {
+                              uploadCMSImage(e.target.files[0], url => setCmsForm(prev => ({
+                                ...prev,
+                                sectionHeaders: {
+                                  ...prev.sectionHeaders,
+                                  nhs: { ...prev.sectionHeaders.nhs, logo: url }
+                                }
+                              })));
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 2. Private Services */}
+                <div className="scms_subcard">
+                  <div className="scms_subcard_title">2. Private Clinical Services Section</div>
+                  <div className="scms_grid_2">
+                    <div className="srv_form_group">
+                      <label className="srv_label">Eyebrow Tag</label>
+                      <input
+                        type="text"
+                        className="srv_input"
+                        value={cmsForm.sectionHeaders.privateServices.eyebrow}
+                        onChange={e => setCmsForm({
+                          ...cmsForm,
+                          sectionHeaders: {
+                            ...cmsForm.sectionHeaders,
+                            privateServices: { ...cmsForm.sectionHeaders.privateServices, eyebrow: e.target.value }
+                          }
+                        })}
+                      />
+                    </div>
+                    <div className="srv_form_group">
+                      <label className="srv_label">Section Title</label>
+                      <input
+                        type="text"
+                        className="srv_input"
+                        value={cmsForm.sectionHeaders.privateServices.title}
+                        onChange={e => setCmsForm({
+                          ...cmsForm,
+                          sectionHeaders: {
+                            ...cmsForm.sectionHeaders,
+                            privateServices: { ...cmsForm.sectionHeaders.privateServices, title: e.target.value }
+                          }
+                        })}
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="srv_form_group">
+                    <label className="srv_label">Description</label>
+                    <textarea
+                      className="srv_textarea"
+                      rows="2"
+                      value={cmsForm.sectionHeaders.privateServices.desc}
+                      onChange={e => setCmsForm({
+                        ...cmsForm,
+                        sectionHeaders: {
+                          ...cmsForm.sectionHeaders,
+                          privateServices: { ...cmsForm.sectionHeaders.privateServices, desc: e.target.value }
+                        }
+                      })}
+                    />
+                  </div>
+                </div>
+
+                {/* 3. Travel Clinic */}
+                <div className="scms_subcard">
+                  <div className="scms_subcard_title">3. Travel Clinic Section</div>
+                  <div className="scms_grid_2">
+                    <div className="srv_form_group">
+                      <label className="srv_label">Eyebrow Tag</label>
+                      <input
+                        type="text"
+                        className="srv_input"
+                        value={cmsForm.sectionHeaders.travelClinic.eyebrow}
+                        onChange={e => setCmsForm({
+                          ...cmsForm,
+                          sectionHeaders: {
+                            ...cmsForm.sectionHeaders,
+                            travelClinic: { ...cmsForm.sectionHeaders.travelClinic, eyebrow: e.target.value }
+                          }
+                        })}
+                      />
+                    </div>
+                    <div className="srv_form_group">
+                      <label className="srv_label">Section Title</label>
+                      <input
+                        type="text"
+                        className="srv_input"
+                        value={cmsForm.sectionHeaders.travelClinic.title}
+                        onChange={e => setCmsForm({
+                          ...cmsForm,
+                          sectionHeaders: {
+                            ...cmsForm.sectionHeaders,
+                            travelClinic: { ...cmsForm.sectionHeaders.travelClinic, title: e.target.value }
+                          }
+                        })}
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="srv_form_group">
+                    <label className="srv_label">Description</label>
+                    <textarea
+                      className="srv_textarea"
+                      rows="2"
+                      value={cmsForm.sectionHeaders.travelClinic.desc}
+                      onChange={e => setCmsForm({
+                        ...cmsForm,
+                        sectionHeaders: {
+                          ...cmsForm.sectionHeaders,
+                          travelClinic: { ...cmsForm.sectionHeaders.travelClinic, desc: e.target.value }
+                        }
+                      })}
+                    />
+                  </div>
+                </div>
+
+                <div className="scms_save_bar">
+                  <button type="submit" className="srv_btn_save" disabled={isSavingCMS}>
+                    {isSavingCMS ? 'Saving...' : 'Save Section Headlines'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {/* Tab 5: Why Choose Us (Benefits) */}
+        {activeTab === 'benefits' && (
+          <div className="scms_card_wrap">
+            <div className="scms_card">
+              <div className="scms_header">
+                <h3 className="scms_title"><I d={ICONS.shield} s={18} /> "Why Choose Us" Benefits Section</h3>
+                <p className="scms_sub">Manage the section headline, subtitle, and individual benefit cards shown on the Services page.</p>
+              </div>
+
+              <form onSubmit={e => { e.preventDefault(); handleSaveCMS('benefits'); }}>
+                <div className="scms_grid_2">
+                  <div className="srv_form_group">
+                    <label className="srv_label">Eyebrow Badge</label>
+                    <input
+                      type="text"
+                      className="srv_input"
+                      value={cmsForm.benefits.eyebrow}
+                      onChange={e => setCmsForm({
+                        ...cmsForm,
+                        benefits: { ...cmsForm.benefits, eyebrow: e.target.value }
+                      })}
+                    />
+                  </div>
+                  <div className="srv_form_group">
+                    <label className="srv_label">Section Title</label>
+                    <input
+                      type="text"
+                      className="srv_input"
+                      value={cmsForm.benefits.title}
+                      onChange={e => setCmsForm({
+                        ...cmsForm,
+                        benefits: { ...cmsForm.benefits, title: e.target.value }
+                      })}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="srv_form_group">
+                  <label className="srv_label">Section Subtitle</label>
+                  <input
+                    type="text"
+                    className="srv_input"
+                    value={cmsForm.benefits.subtitle}
+                    onChange={e => setCmsForm({
+                      ...cmsForm,
+                      benefits: { ...cmsForm.benefits, subtitle: e.target.value }
+                    })}
+                  />
+                </div>
+
+                <div style={{ marginTop: 20 }}>
+                  <div style={{ fontWeight: 700, fontSize: '0.92rem', color: '#334155', marginBottom: 12 }}>
+                    Benefit Cards ({cmsForm.benefits.items?.length || 0})
+                  </div>
+
+                  {(cmsForm.benefits.items || []).map((b, idx) => (
+                    <div key={idx} className="scms_subcard">
+                      <div className="scms_subcard_title">
+                        <span>Card #{idx + 1}</span>
+                        <button
+                          type="button"
+                          className="scms_btn_del"
+                          onClick={() => {
+                            const updated = cmsForm.benefits.items.filter((_, i) => i !== idx);
+                            setCmsForm({ ...cmsForm, benefits: { ...cmsForm.benefits, items: updated } });
+                          }}
+                        >
+                          <I d={ICONS.trash} s={13} /> Remove Card
+                        </button>
+                      </div>
+
+                      <div className="scms_grid_2">
+                        <div className="srv_form_group">
+                          <label className="srv_label">Card Title</label>
+                          <input
+                            type="text"
+                            className="srv_input"
+                            value={b.title}
+                            onChange={e => {
+                              const updated = [...cmsForm.benefits.items];
+                              updated[idx].title = e.target.value;
+                              setCmsForm({ ...cmsForm, benefits: { ...cmsForm.benefits, items: updated } });
+                            }}
+                            required
+                          />
+                        </div>
+                        <div className="srv_form_group">
+                          <label className="srv_label">Icon Type</label>
+                          <select
+                            className="srv_input"
+                            value={b.icon || 'shield'}
+                            onChange={e => {
+                              const updated = [...cmsForm.benefits.items];
+                              updated[idx].icon = e.target.value;
+                              setCmsForm({ ...cmsForm, benefits: { ...cmsForm.benefits, items: updated } });
+                            }}
+                          >
+                            <option value="practitioner">Practitioner / Staff 🧑‍⚕️</option>
+                            <option value="script">Digital Script / Prescription 📋</option>
+                            <option value="shield">Private Consultation / Shield 🛡️</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div className="srv_form_group" style={{ margin: 0 }}>
+                        <label className="srv_label">Description</label>
+                        <textarea
+                          className="srv_textarea"
+                          rows="2"
+                          value={b.desc}
+                          onChange={e => {
+                            const updated = [...cmsForm.benefits.items];
+                            updated[idx].desc = e.target.value;
+                            setCmsForm({ ...cmsForm, benefits: { ...cmsForm.benefits, items: updated } });
+                          }}
+                          required
+                        />
+                      </div>
+                    </div>
+                  ))}
+
+                  <button
+                    type="button"
+                    className="scms_btn_add_item"
+                    onClick={() => {
+                      const updated = [...(cmsForm.benefits.items || []), { title: 'New Benefit', desc: 'Describe the benefit...', icon: 'shield' }];
+                      setCmsForm({ ...cmsForm, benefits: { ...cmsForm.benefits, items: updated } });
+                    }}
+                  >
+                    <I d={ICONS.plus} s={14} /> Add Benefit Card
+                  </button>
+                </div>
+
+                <div className="scms_save_bar">
+                  <button type="submit" className="srv_btn_save" disabled={isSavingCMS}>
+                    {isSavingCMS ? 'Saving...' : 'Save Benefits Changes'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {/* Tab 6: Services FAQs */}
+        {activeTab === 'faqs' && (
+          <div className="scms_card_wrap">
+            <div className="scms_card">
+              <div className="scms_header">
+                <h3 className="scms_title"><I d={ICONS.info} s={18} /> Services Frequently Asked Questions</h3>
+                <p className="scms_sub">Manage the Q&amp;A accordion shown at the bottom of the Services page.</p>
+              </div>
+
+              <form onSubmit={e => { e.preventDefault(); handleSaveCMS('faqs'); }}>
+                <div className="scms_grid_2">
+                  <div className="srv_form_group">
+                    <label className="srv_label">FAQ Title</label>
+                    <input
+                      type="text"
+                      className="srv_input"
+                      value={cmsForm.faqs.title}
+                      onChange={e => setCmsForm({
+                        ...cmsForm,
+                        faqs: { ...cmsForm.faqs, title: e.target.value }
+                      })}
+                      required
+                    />
+                  </div>
+                  <div className="srv_form_group">
+                    <label className="srv_label">FAQ Subtitle</label>
+                    <input
+                      type="text"
+                      className="srv_input"
+                      value={cmsForm.faqs.subtitle}
+                      onChange={e => setCmsForm({
+                        ...cmsForm,
+                        faqs: { ...cmsForm.faqs, subtitle: e.target.value }
+                      })}
+                    />
+                  </div>
+                </div>
+
+                <div style={{ marginTop: 20 }}>
+                  <div style={{ fontWeight: 700, fontSize: '0.92rem', color: '#334155', marginBottom: 12 }}>
+                    Questions &amp; Answers ({cmsForm.faqs.items?.length || 0})
+                  </div>
+
+                  {(cmsForm.faqs.items || []).map((item, idx) => (
+                    <div key={idx} className="scms_subcard">
+                      <div className="scms_subcard_title">
+                        <span>FAQ #{idx + 1}</span>
+                        <button
+                          type="button"
+                          className="scms_btn_del"
+                          onClick={() => {
+                            const updated = cmsForm.faqs.items.filter((_, i) => i !== idx);
+                            setCmsForm({ ...cmsForm, faqs: { ...cmsForm.faqs, items: updated } });
+                          }}
+                        >
+                          <I d={ICONS.trash} s={13} /> Remove FAQ
+                        </button>
+                      </div>
+
+                      <div className="srv_form_group">
+                        <label className="srv_label">Question</label>
+                        <input
+                          type="text"
+                          className="srv_input"
+                          value={item.q}
+                          onChange={e => {
+                            const updated = [...cmsForm.faqs.items];
+                            updated[idx].q = e.target.value;
+                            setCmsForm({ ...cmsForm, faqs: { ...cmsForm.faqs, items: updated } });
+                          }}
+                          required
+                        />
+                      </div>
+
+                      <div className="srv_form_group" style={{ margin: 0 }}>
+                        <label className="srv_label">Answer</label>
+                        <textarea
+                          className="srv_textarea"
+                          rows="2"
+                          value={item.a}
+                          onChange={e => {
+                            const updated = [...cmsForm.faqs.items];
+                            updated[idx].a = e.target.value;
+                            setCmsForm({ ...cmsForm, faqs: { ...cmsForm.faqs, items: updated } });
+                          }}
+                          required
+                        />
+                      </div>
+                    </div>
+                  ))}
+
+                  <button
+                    type="button"
+                    className="scms_btn_add_item"
+                    onClick={() => {
+                      const updated = [...(cmsForm.faqs.items || []), { q: 'New Question?', a: 'Provide answer...' }];
+                      setCmsForm({ ...cmsForm, faqs: { ...cmsForm.faqs, items: updated } });
+                    }}
+                  >
+                    <I d={ICONS.plus} s={14} /> Add FAQ Item
+                  </button>
+                </div>
+
+                <div className="scms_save_bar">
+                  <button type="submit" className="srv_btn_save" disabled={isSavingCMS}>
+                    {isSavingCMS ? 'Saving...' : 'Save FAQs Changes'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {/* Tab 7: Bottom CTA Banner */}
+        {activeTab === 'cta' && (
+          <div className="scms_card_wrap">
+            <div className="scms_card">
+              <div className="scms_header">
+                <h3 className="scms_title"><I d={ICONS.star} s={18} /> Bottom Call-to-Action (CTA)</h3>
+                <p className="scms_sub">Manage the prominent call-to-action banner at the bottom of the Services page.</p>
+              </div>
+
+              <form onSubmit={e => { e.preventDefault(); handleSaveCMS('cta'); }}>
+                <div className="srv_form_group">
+                  <label className="srv_label">Headline Text</label>
+                  <input
+                    type="text"
+                    className="srv_input"
+                    value={cmsForm.cta.title}
+                    onChange={e => setCmsForm({ ...cmsForm, cta: { ...cmsForm.cta, title: e.target.value } })}
+                    placeholder="e.g. Ready to take the next step?"
+                    required
+                  />
+                </div>
+
+                <div className="scms_grid_2">
+                  <div className="srv_form_group">
+                    <label className="srv_label">Button Label</label>
+                    <input
+                      type="text"
+                      className="srv_input"
+                      value={cmsForm.cta.btnText}
+                      onChange={e => setCmsForm({ ...cmsForm, cta: { ...cmsForm.cta, btnText: e.target.value } })}
+                      placeholder="e.g. Book Now"
+                      required
+                    />
+                  </div>
+                  <div className="srv_form_group">
+                    <label className="srv_label">Button URL / Destination Link</label>
+                    <input
+                      type="text"
+                      className="srv_input"
+                      value={cmsForm.cta.btnUrl}
+                      onChange={e => setCmsForm({ ...cmsForm, cta: { ...cmsForm.cta, btnUrl: e.target.value } })}
+                      placeholder="e.g. /book-appointment"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="scms_save_bar">
+                  <button type="submit" className="srv_btn_save" disabled={isSavingCMS}>
+                    {isSavingCMS ? 'Saving...' : 'Save CTA Changes'}
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         )}

@@ -13,18 +13,18 @@ const CLINICS = [
 ];
 
 const SERVICES = [
-    { 
-        group: "Private Services", 
+    {
+        group: "Private Services",
         items: [
             "Period Delay Service",
             "Weight Loss Management",
             "Ear Wax Removal",
             "Cryotherapy",
             "Travel Clinic"
-        ] 
+        ]
     },
-    { 
-        group: "NHS Services — Pharmacy First", 
+    {
+        group: "NHS Services — Pharmacy First",
         items: [
             "Ear Ache Treatment (Age 1-17)",
             "Impetigo Treatment",
@@ -33,18 +33,18 @@ const SERVICES = [
             "Sinusitis Treatment",
             "Sore Throat Treatment",
             "Urinary Tract Infection (UTI) Treatment"
-        ] 
+        ]
     },
-    { 
-        group: "NHS Services — PHARMACY", 
+    {
+        group: "NHS Services — PHARMACY",
         items: [
             "Blood Pressure Testing",
             "Contraception Service",
             "Emergency Contraception Service"
-        ] 
+        ]
     },
-    { 
-        group: "NHS & Private Vaccinations", 
+    {
+        group: "NHS & Private Vaccinations",
         items: [
             "Seasonal Flu Vaccination (NHS)",
             "Seasonal Flu Vaccination (Private)",
@@ -52,10 +52,10 @@ const SERVICES = [
             "Covid Vaccination (Private)",
             "Meningitis B Vaccination (NHS)",
             "Meningitis B Vaccination (Private)"
-        ] 
+        ]
     },
-    { 
-        group: "Travel Clinic — Vaccines & Tablets", 
+    {
+        group: "Travel Clinic — Vaccines & Tablets",
         items: [
             "Chikungunya",
             "Cholera",
@@ -72,10 +72,10 @@ const SERVICES = [
             "Typhoid",
             "Yellow Fever",
             "Malaria Tablets"
-        ] 
+        ]
     }
 ];
-    
+
 const TIMES = [
     "09:00 AM", "09:30 AM", "10:00 AM", "10:30 AM",
     "11:00 AM", "11:30 AM", "01:00 PM", "01:30 PM",
@@ -100,7 +100,7 @@ const validateUKMobile = (num) => {
 
 const isSlotInPast = (slotTime, selectedDateStr) => {
     if (!selectedDateStr) return false;
-    
+
     const todayLocal = new Date();
     const y = todayLocal.getFullYear();
     const m = String(todayLocal.getMonth() + 1).padStart(2, '0');
@@ -138,10 +138,10 @@ function BookingPageInner() {
     // ── Session Storage key ──
     const SESSION_KEY = 'wcc_booking_session';
     const saveSession = (data) => {
-        try { sessionStorage.setItem(SESSION_KEY, JSON.stringify(data)); } catch {}
+        try { sessionStorage.setItem(SESSION_KEY, JSON.stringify(data)); } catch { }
     };
     const clearSession = () => {
-        try { sessionStorage.removeItem(SESSION_KEY); } catch {}
+        try { sessionStorage.removeItem(SESSION_KEY); } catch { }
     };
 
     // ── Always initialize with defaults (prevents SSR/client hydration mismatch) ──
@@ -234,7 +234,7 @@ function BookingPageInner() {
                 if (s.verificationState) setVerificationState(s.verificationState);
                 if (s.verifyComplete) setVerifyComplete(s.verifyComplete);
             }
-        } catch {}
+        } catch { }
     }, []); // runs once on client mount only
 
     // ── Persist session on every meaningful state change ──
@@ -316,7 +316,7 @@ function BookingPageInner() {
             const result = await response.json();
             if (result.success) {
                 setPatientId(result.data._id);
-                
+
                 const status = result.data.verificationStatus || 'none';
                 setVerificationState(status);
 
@@ -547,7 +547,7 @@ function BookingPageInner() {
                             </div>
                             <div>
                                 <div className="bk_brand_name">West Chemist</div>
-                                <div className="bk_brand_sub">PHARMACY Booking Portal</div>
+                                <div className="bk_brand_sub">Pharmacy Booking Portal</div>
                             </div>
                         </div>
 
@@ -670,7 +670,7 @@ function BookingPageInner() {
                             <div className="bk_panel anim_in" key="s1">
                                 <div className="bk_panel_head">
                                     <h1 className="bk_title">Patient Profile Registration</h1>
-                                    <p className="bk_desc">Please provide your details below to map your security record and PHARMACY request.</p>
+                                    <p className="bk_desc">Please provide your details below to map your security record and pharmacy request.</p>
                                 </div>
 
                                 <div className="bk_form">
@@ -713,7 +713,7 @@ function BookingPageInner() {
                                         <label className="bk_label">Select Clinic Location</label>
                                         <div className="bk_field_icon_wrapper">
                                             <select className="bk_input" name="clinic" value={formData.clinic} onChange={handle}>
-                                                <option value="">Choose PHARMACY facility...</option>
+                                                <option value="">Choose pharmacy facility...</option>
                                                 {CLINICS.map(c => <option key={c}>{c}</option>)}
                                             </select>
                                             <span className="bk_input_icon">
@@ -1034,244 +1034,244 @@ function BookingPageInner() {
                         {step === 3 && (
                             <div className="bk_panel anim_in" key="s3">
                                 <>
-                                        <div className="bk_schedule_wrap">
-                                            <div className="bk_schedule_top">
-                                                <h2 className="bk_schedule_title">{showSummaryPage ? 'Review Reservation Summary' : 'Select Date & Preferred Slot'}</h2>
-                                            </div>
+                                    <div className="bk_schedule_wrap">
+                                        <div className="bk_schedule_top">
+                                            <h2 className="bk_schedule_title">{showSummaryPage ? 'Review Reservation Summary' : 'Select Date & Preferred Slot'}</h2>
+                                        </div>
 
-                                            <div className={`bk_schedule_body ${showSummaryPage ? 'no_date' : (formData.date && formData.time ? 'has_time' : (formData.date ? 'has_date' : 'no_date'))}`}>
+                                        <div className={`bk_schedule_body ${showSummaryPage ? 'no_date' : (formData.date && formData.time ? 'has_time' : (formData.date ? 'has_date' : 'no_date'))}`}>
 
-                                                {!showSummaryPage && (
-                                                    <>
-                                                        {/* Calendar Grid Container */}
-                                                        <div className="bk_calendar">
-                                                            {rejectedMsg && (
-                                                                <div className="anim_in" style={{ padding: '16px', background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.3)', borderRadius: '12px', color: '#b91c1c', marginBottom: '20px', fontSize: '0.9rem', fontWeight: '600' }}>
-                                                                    {rejectedMsg === 'date'
-                                                                        ? "Admin rejected your chosen date. Please change the date where you are available."
-                                                                        : "Admin rejected your chosen time. Please change the time where you are available."}
-                                                                </div>
-                                                            )}
-                                                            <div className="bk_cal_nav">
-                                                                <button className="bk_cal_nav_btn" onClick={() => changeMonth(-1)}>
-                                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" style={{ transform: 'rotate(180deg)' }}>
-                                                                        <polyline points="9 18 15 12 9 6" />
-                                                                    </svg>
-                                                                </button>
-                                                                <span className="bk_cal_month">{months[viewDate.getMonth()]} {viewDate.getFullYear()}</span>
-                                                                <button className="bk_cal_nav_btn" onClick={() => changeMonth(1)}>
-                                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                                                                        <polyline points="9 18 15 12 9 6" />
-                                                                    </svg>
-                                                                </button>
-                                                            </div>
-                                                            <div className="bk_cal_grid">
-                                                                {weekdays.map(w => <div key={w} className="bk_cal_wd">{w}</div>)}
-                                                                {[...Array(firstDayIndex)].map((_, i) => (
-                                                                    <div key={`empty-${i}`} className="bk_cal_day empty" />
-                                                                ))}
-                                                                {[...Array(daysInMonth)].map((_, i) => {
-                                                                    const d = i + 1;
-                                                                    const isSel = isDateSelected(d);
-                                                                    
-                                                                    // Build date string YYYY-MM-DD in local context
-                                                                    const dObj = new Date(viewDate.getFullYear(), viewDate.getMonth(), d);
-                                                                    const dayOfWeek = dObj.getDay(); // 0 = Sunday, 6 = Saturday
-                                                                    
-                                                                    const y = dObj.getFullYear();
-                                                                    const m = String(dObj.getMonth() + 1).padStart(2, '0');
-                                                                    const dayStr = String(dObj.getDate()).padStart(2, '0');
-                                                                    const dateKey = `${y}-${m}-${dayStr}`;
-                                                                    
-                                                                    // Evaluate new scheduling precedence holiday status
-                                                                    const isHoliday = holidays.some(h => {
-                                                                        if (h.holidayType === 'specific-date' && h.startDateStr === dateKey) return true;
-                                                                        if (h.holidayType === 'date-range') {
-                                                                            const end = h.endDateStr || h.startDateStr;
-                                                                            if (dateKey >= h.startDateStr && dateKey <= end) return true;
-                                                                        }
-                                                                        if (h.holidayType === 'recurring-yearly' && h.month === viewDate.getMonth() && h.day === d) return true;
-                                                                        if (h.holidayType === 'recurring-monthly' && h.day === d) return true;
-                                                                        return false;
-                                                                    });
-
-                                                                    // Find matching schedule to check closed status
-                                                                    const specificDateSch = schedules.find(s => s.scheduleType === 'specific-date' && s.dateStr === dateKey);
-                                                                    const yearlySch = schedules.find(s => s.scheduleType === 'yearly' && s.month === viewDate.getMonth() && s.day === d);
-                                                                    const monthlySch = schedules.find(s => s.scheduleType === 'monthly' && s.dayOfMonth === d);
-                                                                    const weeklySch = schedules.find(s => s.scheduleType === 'weekly' && s.dayOfWeek === dayOfWeek);
-                                                                    const defaultSch = schedules.find(s => s.scheduleType === 'default');
-
-                                                                    const activeSch = specificDateSch || yearlySch || monthlySch || weeklySch || defaultSch;
-                                                                    const isClinicClosed = activeSch ? activeSch.isClosed : false;
-                                                                    
-                                                                    const disabled = isPast(d) || isHoliday || isClinicClosed;
-
-                                                                    return (
-                                                                        <div
-                                                                            key={d}
-                                                                            className={`bk_cal_day ${isSel ? 'selected' : ''} ${disabled ? 'disabled' : ''} ${isHoliday ? 'holiday' : ''} ${isClinicClosed ? 'closed_day' : ''}`}
-                                                                            onClick={() => !disabled && selectCalDate(d)}
-                                                                            title={isHoliday ? 'Closed (Holiday)' : isClinicClosed ? 'Clinic Closed' : ''}
-                                                                        >
-                                                                            {d}
-                                                                        </div>
-                                                                    );
-                                                                })}
-                                                            </div>
-                                                        </div>
-
-                                                        {/* Available Dynamic Hourly Slots */}
-                                                        {formData.date && (
-                                                            <div className="bk_avail_panel anim_in">
-                                                                <div>
-                                                                    <h4 className="bk_avail_heading">
-                                                                        Available slots on {new Date(formData.date).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'short' })}
-                                                                    </h4>
-                                                                    {availableSlots.length > 0 && availableSlots.filter(s => s.available && !isSlotInPast(s.time, formData.date)).length === 0 ? (
-                                                                        <div className="bk_no_slots_msg anim_in">
-                                                                            <div className="bk_no_slots_icon">
-                                                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e11d48" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                                                                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                                                                                    <line x1="16" y1="2" x2="16" y2="6" />
-                                                                                    <line x1="8" y1="2" x2="8" y2="6" />
-                                                                                    <line x1="3" y1="10" x2="21" y2="10" />
-                                                                                    <line x1="15" y1="14" x2="9" y2="20" />
-                                                                                    <line x1="9" y1="14" x2="15" y2="20" />
-                                                                                </svg>
-                                                                            </div>
-                                                                            <div className="bk_no_slots_title">All slots full, please take another</div>
-                                                                            <div className="bk_no_slots_desc">
-                                                                                All time slots for this date are fully booked or in the past. Please select another slot or date.
-                                                                            </div>
-                                                                        </div>
-                                                                    ) : (
-                                                                        <div className="bk_times">
-                                                                            {availableSlots
-                                                                                .filter(s => s.available && !isSlotInPast(s.time, formData.date))
-                                                                                .map(s => {
-                                                                                    const isSel = formData.time === s.time;
-                                                                                    return (
-                                                                                        <div
-                                                                                            key={s.time}
-                                                                                            className={`bk_time ${isSel ? 'selected' : ''}`}
-                                                                                            onClick={() => set('time', s.time)}
-                                                                                        >
-                                                                                            {s.time}
-                                                                                        </div>
-                                                                                    );
-                                                                                })}
-                                                                        </div>
-                                                                    )}
-                                                                </div>
+                                            {!showSummaryPage && (
+                                                <>
+                                                    {/* Calendar Grid Container */}
+                                                    <div className="bk_calendar">
+                                                        {rejectedMsg && (
+                                                            <div className="anim_in" style={{ padding: '16px', background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.3)', borderRadius: '12px', color: '#b91c1c', marginBottom: '20px', fontSize: '0.9rem', fontWeight: '600' }}>
+                                                                {rejectedMsg === 'date'
+                                                                    ? "Admin rejected your chosen date. Please change the date where you are available."
+                                                                    : "Admin rejected your chosen time. Please change the time where you are available."}
                                                             </div>
                                                         )}
-                                                    </>
-                                                )}
-
-                                                {!showSummaryPage && formData.date && formData.time && (
-                                                    <div className="bk_footer anim_in" style={{ gridColumn: '1 / -1', marginTop: 0, borderTop: 'none', paddingTop: '10px', justifyContent: 'center' }}>
-                                                        <button className="bk_btn_primary" onClick={() => setShowSummaryPage(true)} style={{ width: '100%', maxWidth: '300px' }}>
-                                                            Show Summary
-                                                        </button>
-                                                    </div>
-                                                )}
-
-                                                {/* Booking Details Ticket Sidebar Summary */}
-                                                {showSummaryPage && (
-                                                    <div className="bk_serv_details anim_in" style={{ borderLeft: 'none', paddingLeft: 0, maxWidth: '600px', margin: '0 auto', width: '100%' }}>
-                                                        <div className="bk_serv_card">
-                                                                                                                        <div className="bk_serv_header_row">
-                                                                <div className="bk_serv_name" style={{ marginBottom: 0 }}>{formData.service || "Cryotherapy"}</div>
-                                                                <button className="bk_btn_ghost" onClick={() => { setStep(1); setShowSummaryPage(false); }}>
-                                                                    Edit Service
-                                                                </button>
-                                                            </div>
-
-                                                            {formData.fullName && (
-                                                                <div className="bk_summary_item anim_in" style={{ borderTop: 'none', paddingTop: 0 }}>
-                                                                    <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
-                                                                        Patient Name
-                                                                    </span>
-                                                                    <strong>{formData.fullName}</strong>
-                                                                </div>
-                                                            )}
-
-                                                            {formData.mobile && (
-                                                                <div className="bk_summary_item anim_in">
-                                                                    <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
-                                                                        Phone Number
-                                                                    </span>
-                                                                    <strong>{formData.mobile}</strong>
-                                                                </div>
-                                                            )}
-
-                                                            {formData.clinic && (
-                                                                <div className="bk_summary_item anim_in">
-                                                                    <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
-                                                                        Location
-                                                                    </span>
-                                                                    <strong>{formData.clinic.split(' — ')[1] || formData.clinic}</strong>
-                                                                </div>
-                                                            )}
-
-                                                            {formData.date && (
-                                                                <div className="bk_summary_item anim_in">
-                                                                    <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>
-                                                                        Date Chosen
-                                                                    </span>
-                                                                    <strong>{new Date(formData.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}</strong>
-                                                                </div>
-                                                            )}
-                                                            {formData.time && (
-                                                                <div className="bk_summary_item anim_in">
-                                                                    <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
-                                                                        Time Chosen
-                                                                    </span>
-                                                                    <strong>{formData.time}</strong>
-                                                                </div>
-                                                            )}
-                                                        </div>
-
-                                                        <div className="bk_summary_actions">
-                                                            <button
-                                                                className="bk_btn_ghost"
-                                                                onClick={() => setShowSummaryPage(false)}
-                                                                style={{ flex: 1, justifyContent: 'center', padding: '16px 12px' }}
-                                                            >
-                                                                Edit Date/Time
+                                                        <div className="bk_cal_nav">
+                                                            <button className="bk_cal_nav_btn" onClick={() => changeMonth(-1)}>
+                                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" style={{ transform: 'rotate(180deg)' }}>
+                                                                    <polyline points="9 18 15 12 9 6" />
+                                                                </svg>
                                                             </button>
-                                                            <button
-                                                                className="bk_btn_serv_next active anim_in"
-                                                                disabled={loading}
-                                                                onClick={handleBookAppointment}
-                                                                style={{ flex: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}
-                                                            >
-                                                                {loading ? 'Securing Slot...' : 'Book PHARMACY Appointment'}
-                                                                <svg className="bk_btn_arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                                                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                                            <span className="bk_cal_month">{months[viewDate.getMonth()]} {viewDate.getFullYear()}</span>
+                                                            <button className="bk_cal_nav_btn" onClick={() => changeMonth(1)}>
+                                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                                                                    <polyline points="9 18 15 12 9 6" />
                                                                 </svg>
                                                             </button>
                                                         </div>
-                                                    </div>
-                                                )}
-                                            </div>
-                                        </div>
+                                                        <div className="bk_cal_grid">
+                                                            {weekdays.map(w => <div key={w} className="bk_cal_wd">{w}</div>)}
+                                                            {[...Array(firstDayIndex)].map((_, i) => (
+                                                                <div key={`empty-${i}`} className="bk_cal_day empty" />
+                                                            ))}
+                                                            {[...Array(daysInMonth)].map((_, i) => {
+                                                                const d = i + 1;
+                                                                const isSel = isDateSelected(d);
 
-                                        <div className="bk_footer">
-                                            <button className="bk_btn_ghost" onClick={() => setStep(2)}>
-                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ transform: 'rotate(180deg)' }}>
-                                                    <polyline points="9 18 15 12 9 6" />
-                                                </svg>
-                                                Back to Verification
-                                            </button>
+                                                                // Build date string YYYY-MM-DD in local context
+                                                                const dObj = new Date(viewDate.getFullYear(), viewDate.getMonth(), d);
+                                                                const dayOfWeek = dObj.getDay(); // 0 = Sunday, 6 = Saturday
+
+                                                                const y = dObj.getFullYear();
+                                                                const m = String(dObj.getMonth() + 1).padStart(2, '0');
+                                                                const dayStr = String(dObj.getDate()).padStart(2, '0');
+                                                                const dateKey = `${y}-${m}-${dayStr}`;
+
+                                                                // Evaluate new scheduling precedence holiday status
+                                                                const isHoliday = holidays.some(h => {
+                                                                    if (h.holidayType === 'specific-date' && h.startDateStr === dateKey) return true;
+                                                                    if (h.holidayType === 'date-range') {
+                                                                        const end = h.endDateStr || h.startDateStr;
+                                                                        if (dateKey >= h.startDateStr && dateKey <= end) return true;
+                                                                    }
+                                                                    if (h.holidayType === 'recurring-yearly' && h.month === viewDate.getMonth() && h.day === d) return true;
+                                                                    if (h.holidayType === 'recurring-monthly' && h.day === d) return true;
+                                                                    return false;
+                                                                });
+
+                                                                // Find matching schedule to check closed status
+                                                                const specificDateSch = schedules.find(s => s.scheduleType === 'specific-date' && s.dateStr === dateKey);
+                                                                const yearlySch = schedules.find(s => s.scheduleType === 'yearly' && s.month === viewDate.getMonth() && s.day === d);
+                                                                const monthlySch = schedules.find(s => s.scheduleType === 'monthly' && s.dayOfMonth === d);
+                                                                const weeklySch = schedules.find(s => s.scheduleType === 'weekly' && s.dayOfWeek === dayOfWeek);
+                                                                const defaultSch = schedules.find(s => s.scheduleType === 'default');
+
+                                                                const activeSch = specificDateSch || yearlySch || monthlySch || weeklySch || defaultSch;
+                                                                const isClinicClosed = activeSch ? activeSch.isClosed : false;
+
+                                                                const disabled = isPast(d) || isHoliday || isClinicClosed;
+
+                                                                return (
+                                                                    <div
+                                                                        key={d}
+                                                                        className={`bk_cal_day ${isSel ? 'selected' : ''} ${disabled ? 'disabled' : ''} ${isHoliday ? 'holiday' : ''} ${isClinicClosed ? 'closed_day' : ''}`}
+                                                                        onClick={() => !disabled && selectCalDate(d)}
+                                                                        title={isHoliday ? 'Closed (Holiday)' : isClinicClosed ? 'Clinic Closed' : ''}
+                                                                    >
+                                                                        {d}
+                                                                    </div>
+                                                                );
+                                                            })}
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Available Dynamic Hourly Slots */}
+                                                    {formData.date && (
+                                                        <div className="bk_avail_panel anim_in">
+                                                            <div>
+                                                                <h4 className="bk_avail_heading">
+                                                                    Available slots on {new Date(formData.date).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'short' })}
+                                                                </h4>
+                                                                {availableSlots.length > 0 && availableSlots.filter(s => s.available && !isSlotInPast(s.time, formData.date)).length === 0 ? (
+                                                                    <div className="bk_no_slots_msg anim_in">
+                                                                        <div className="bk_no_slots_icon">
+                                                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e11d48" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                                                                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                                                                                <line x1="16" y1="2" x2="16" y2="6" />
+                                                                                <line x1="8" y1="2" x2="8" y2="6" />
+                                                                                <line x1="3" y1="10" x2="21" y2="10" />
+                                                                                <line x1="15" y1="14" x2="9" y2="20" />
+                                                                                <line x1="9" y1="14" x2="15" y2="20" />
+                                                                            </svg>
+                                                                        </div>
+                                                                        <div className="bk_no_slots_title">All slots full, please take another</div>
+                                                                        <div className="bk_no_slots_desc">
+                                                                            All time slots for this date are fully booked or in the past. Please select another slot or date.
+                                                                        </div>
+                                                                    </div>
+                                                                ) : (
+                                                                    <div className="bk_times">
+                                                                        {availableSlots
+                                                                            .filter(s => s.available && !isSlotInPast(s.time, formData.date))
+                                                                            .map(s => {
+                                                                                const isSel = formData.time === s.time;
+                                                                                return (
+                                                                                    <div
+                                                                                        key={s.time}
+                                                                                        className={`bk_time ${isSel ? 'selected' : ''}`}
+                                                                                        onClick={() => set('time', s.time)}
+                                                                                    >
+                                                                                        {s.time}
+                                                                                    </div>
+                                                                                );
+                                                                            })}
+                                                                    </div>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                </>
+                                            )}
+
+                                            {!showSummaryPage && formData.date && formData.time && (
+                                                <div className="bk_footer anim_in" style={{ gridColumn: '1 / -1', marginTop: 0, borderTop: 'none', paddingTop: '10px', justifyContent: 'center' }}>
+                                                    <button className="bk_btn_primary" onClick={() => setShowSummaryPage(true)} style={{ width: '100%', maxWidth: '300px' }}>
+                                                        Show Summary
+                                                    </button>
+                                                </div>
+                                            )}
+
+                                            {/* Booking Details Ticket Sidebar Summary */}
+                                            {showSummaryPage && (
+                                                <div className="bk_serv_details anim_in" style={{ borderLeft: 'none', paddingLeft: 0, maxWidth: '600px', margin: '0 auto', width: '100%' }}>
+                                                    <div className="bk_serv_card">
+                                                        <div className="bk_serv_header_row">
+                                                            <div className="bk_serv_name" style={{ marginBottom: 0 }}>{formData.service || "Cryotherapy"}</div>
+                                                            <button className="bk_btn_ghost" onClick={() => { setStep(1); setShowSummaryPage(false); }}>
+                                                                Edit Service
+                                                            </button>
+                                                        </div>
+
+                                                        {formData.fullName && (
+                                                            <div className="bk_summary_item anim_in" style={{ borderTop: 'none', paddingTop: 0 }}>
+                                                                <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
+                                                                    Patient Name
+                                                                </span>
+                                                                <strong>{formData.fullName}</strong>
+                                                            </div>
+                                                        )}
+
+                                                        {formData.mobile && (
+                                                            <div className="bk_summary_item anim_in">
+                                                                <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
+                                                                    Phone Number
+                                                                </span>
+                                                                <strong>{formData.mobile}</strong>
+                                                            </div>
+                                                        )}
+
+                                                        {formData.clinic && (
+                                                            <div className="bk_summary_item anim_in">
+                                                                <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
+                                                                    Location
+                                                                </span>
+                                                                <strong>{formData.clinic.split(' — ')[1] || formData.clinic}</strong>
+                                                            </div>
+                                                        )}
+
+                                                        {formData.date && (
+                                                            <div className="bk_summary_item anim_in">
+                                                                <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>
+                                                                    Date Chosen
+                                                                </span>
+                                                                <strong>{new Date(formData.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}</strong>
+                                                            </div>
+                                                        )}
+                                                        {formData.time && (
+                                                            <div className="bk_summary_item anim_in">
+                                                                <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
+                                                                    Time Chosen
+                                                                </span>
+                                                                <strong>{formData.time}</strong>
+                                                            </div>
+                                                        )}
+                                                    </div>
+
+                                                    <div className="bk_summary_actions">
+                                                        <button
+                                                            className="bk_btn_ghost"
+                                                            onClick={() => setShowSummaryPage(false)}
+                                                            style={{ flex: 1, justifyContent: 'center', padding: '16px 12px' }}
+                                                        >
+                                                            Edit Date/Time
+                                                        </button>
+                                                        <button
+                                                            className="bk_btn_serv_next active anim_in"
+                                                            disabled={loading}
+                                                            onClick={handleBookAppointment}
+                                                            style={{ flex: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}
+                                                        >
+                                                            {loading ? 'Securing Slot...' : 'Book PHARMACY Appointment'}
+                                                            <svg className="bk_btn_arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                                                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                                <polyline points="12 5 19 12 12 19"></polyline>
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            )}
                                         </div>
+                                    </div>
+
+                                    <div className="bk_footer">
+                                        <button className="bk_btn_ghost" onClick={() => setStep(2)}>
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ transform: 'rotate(180deg)' }}>
+                                                <polyline points="9 18 15 12 9 6" />
+                                            </svg>
+                                            Back to Verification
+                                        </button>
+                                    </div>
                                 </>
                             </div>
                         )}
@@ -1333,8 +1333,8 @@ function BookingPageInner() {
                             width: '100%',
                             marginTop: '10px'
                         }}>
-                            <button 
-                                type="button" 
+                            <button
+                                type="button"
                                 style={{
                                     flex: 1,
                                     padding: '12px 18px',

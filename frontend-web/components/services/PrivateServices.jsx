@@ -3,50 +3,27 @@ import React, { useState, useEffect, useRef } from 'react';
 import './PrivateServices.css';
 import { API_URL, getImageUrl } from '@/config';
 
+const DEFAULT_PRIVATE_HEADER = {
+    eyebrow: 'Private Healthcare',
+    title: 'Personalised Pharmacy Solutions',
+    desc: 'Specialist ear care, medical dermatology, women\'s health, and travel protection — premium private clinical treatments delivered by trained practitioners.'
+};
+
 const isWeightLoss = (s) => {
     const slug = (s.slug || '').toLowerCase();
     return slug === 'wegovy' || slug === 'mounjaro' || slug === 'wegovy-pills';
 };
 
-const isVaccination = (s) => {
-    if (isWeightLoss(s)) return false;
-    const slug = (s.slug || '').toLowerCase();
-    const cat = (s.cat || '').toLowerCase();
-    const parentCat = (s.parentCategory || '').toLowerCase();
-    const title = (s.title || '').toLowerCase();
-
-    if (slug === 'travel-clinic' || title === 'travel clinic' || slug === 'travel-clinic-service') return false;
-
-    return (
-        parentCat === 'vaccination services' ||
-        parentCat.includes('vacc') ||
-        cat.includes('vacc') ||
-        cat.includes('immuniz') ||
-        title.includes('vaccin') ||
-        title.includes('immunis') ||
-        title.includes('immuniz') ||
-        title.includes('flu') ||
-        title.includes('covid') ||
-        title.includes('meningitis') ||
-        title.includes('shingles') ||
-        title.includes('chickenpox') ||
-        title.includes('hpv') ||
-        title.includes('rabies') ||
-        title.includes('hepatitis') ||
-        title.includes('typhoid') ||
-        title.includes('yellow fever') ||
-        title.includes('dengue') ||
-        title.includes('chikungunya') ||
-        title.includes('encephalitis') ||
-        title.includes('dtp') ||
-        title.includes('mmr') ||
-        title.includes('cholera')
-    );
-};
-
-export default function PrivateServices() {
+export default function PrivateServices({ initialHeader }) {
     const listRef = useRef(null);
     const [services, setServices] = useState([]);
+    const [header, setHeader] = useState(() => ({ ...DEFAULT_PRIVATE_HEADER, ...(initialHeader || {}) }));
+
+    useEffect(() => {
+        if (initialHeader) {
+            setHeader(prev => ({ ...prev, ...initialHeader }));
+        }
+    }, [initialHeader]);
 
     useEffect(() => {
         const fetchServices = async () => {
@@ -89,9 +66,9 @@ export default function PrivateServices() {
         <section className="ps_section">
             <div className="ps_container">
                 <div className="ps_header">
-                    <span className="ps_eyebrow">Private Healthcare</span>
-                    <h2 className="ps_title">Personalised Pharmacy Solutions</h2>
-                    <p className="ps_desc">Specialist ear care, medical dermatology, women's health, and travel protection — premium private clinical treatments delivered by trained practitioners.</p>
+                    {header.eyebrow && <span className="ps_eyebrow">{header.eyebrow}</span>}
+                    <h2 className="ps_title">{header.title}</h2>
+                    <p className="ps_desc">{header.desc}</p>
                 </div>
 
                 <div className="ps_grid" ref={listRef}>
@@ -113,15 +90,17 @@ export default function PrivateServices() {
                                 />
                                 <div className="ps_tag">{s.cat}</div>
                             </div>
-                            <div className="ps_info">
-                                <h3 className="ps_card_title">{s.title}</h3>
-                                <p className="ps_card_desc">{s.desc}</p>
+
+                            <div className="ps_content">
+                                <h3 className="ps_name">{s.title}</h3>
+                                <p className="ps_brief">{s.desc}</p>
+
                                 <div className="ps_actions">
                                     <button
                                         className="ps_btn_view"
                                         onClick={() => window.location.href = `/services/${s.slug}`}
                                     >
-                                        View
+                                        View Details
                                     </button>
                                     <button
                                         className="ps_btn_book"
@@ -137,5 +116,4 @@ export default function PrivateServices() {
             </div>
         </section>
     );
-
 }

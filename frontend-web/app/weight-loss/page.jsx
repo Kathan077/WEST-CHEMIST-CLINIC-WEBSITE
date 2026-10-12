@@ -1,5 +1,7 @@
-﻿import React from 'react';
+import React from 'react';
 import WeightLossContent from './WeightLossContent';
+
+import { API_URL } from '@/config';
 
 export const metadata = {
     title: 'Weight Loss & Medical Management - West Chemist',
@@ -7,10 +9,21 @@ export const metadata = {
     keywords: 'weight loss, wegovy, mounjaro, semaglutide, tirzepatide, weight management, west chemist',
 };
 
-export default function WeightLossPage() {
+export default async function WeightLossPage() {
+    let initialCMS = null;
+    try {
+        const res = await fetch(`${API_URL}/api/weight-loss/cms`, { cache: 'no-store' });
+        const json = await res.json();
+        if (json.success && json.data) {
+            initialCMS = json.data;
+        }
+    } catch (e) {
+        // Fallback handled in WeightLossContent
+    }
+
     return (
         <div className="min-h-screen">
-            <WeightLossContent />
+            <WeightLossContent initialCMS={initialCMS} />
         </div>
     );
 }

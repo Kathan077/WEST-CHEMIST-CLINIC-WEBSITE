@@ -1,38 +1,57 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ServiceFAQ.css';
 
-const faqs = [
-    {
-        q: "Do I need a GP referral for Pharmacy First services?",
-        a: "No, you can walk in or book directly for Pharmacy First conditions. We can assess and treat you without needing to see your GP first."
-    },
-    {
-        q: "Are the vaccinations suitable for children?",
-        a: "We offer various vaccinations for adults and children. Please contact us or check individual service details for specific age requirements."
-    },
-    {
-        q: "Is the weight loss program medically supervised?",
-        a: "Yes, our weight loss programs are supervised by trained practitioners who will monitor your progress and provide professional guidance."
-    },
-    {
-        q: "How long does a typical consultation take?",
-        a: "Most consultations take between 10 to 20 minutes, depending on the complexity of the service and your individual health needs."
-    }
-];
+const DEFAULT_FAQS = {
+    title: "Frequently Asked Questions",
+    subtitle: "Answers to common queries about our pharmacy services.",
+    items: [
+        {
+            q: "Do I need a GP referral for Pharmacy First services?",
+            a: "No, you can walk in or book directly for Pharmacy First conditions. We can assess and treat you without needing to see your GP first."
+        },
+        {
+            q: "Are the vaccinations suitable for children?",
+            a: "We offer various vaccinations for adults and children. Please contact us or check individual service details for specific age requirements."
+        },
+        {
+            q: "Is the weight loss program medically supervised?",
+            a: "Yes, our weight loss programs are supervised by trained practitioners who will monitor your progress and provide professional guidance."
+        },
+        {
+            q: "How long does a typical consultation take?",
+            a: "Most consultations take between 10 to 20 minutes, depending on the complexity of the service and your individual health needs."
+        }
+    ]
+};
 
-export default function ServiceFAQ() {
+export default function ServiceFAQ({ initialFaqs }) {
     const [activeIndex, setActiveIndex] = useState(null);
+    const [faqData, setFaqData] = useState(() => ({
+        title: initialFaqs?.title || DEFAULT_FAQS.title,
+        subtitle: initialFaqs?.subtitle || DEFAULT_FAQS.subtitle,
+        items: initialFaqs?.items?.length ? initialFaqs.items : DEFAULT_FAQS.items
+    }));
+
+    useEffect(() => {
+        if (initialFaqs) {
+            setFaqData({
+                title: initialFaqs.title || DEFAULT_FAQS.title,
+                subtitle: initialFaqs.subtitle || DEFAULT_FAQS.subtitle,
+                items: initialFaqs.items?.length ? initialFaqs.items : DEFAULT_FAQS.items
+            });
+        }
+    }, [initialFaqs]);
 
     return (
         <section className="faq_section">
             <div className="faq_container">
                 <div className="faq_header">
-                    <h2 className="faq_title">Frequently Asked Questions</h2>
-                    <p className="faq_subtitle">Answers to common queries about our PHARMACY services.</p>
+                    <h2 className="faq_title">{faqData.title}</h2>
+                    <p className="faq_subtitle">{faqData.subtitle}</p>
                 </div>
                 <div className="faq_list">
-                    {faqs.map((faq, idx) => (
+                    {(faqData.items || []).map((faq, idx) => (
                         <div
                             className={`faq_item ${activeIndex === idx ? 'faq_active' : ''}`}
                             key={idx}
@@ -56,4 +75,3 @@ export default function ServiceFAQ() {
         </section>
     );
 }
-

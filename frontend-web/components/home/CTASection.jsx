@@ -11,11 +11,24 @@ const DEFAULT_CTA = {
     ctaUrl: '/book-appointment'
 };
 
-export default function CTASection() {
+export default function CTASection({ initialCTA }) {
     const sectionRef = useRef(null);
-    const [ctaData, setCtaData] = useState(DEFAULT_CTA);
+    const [ctaData, setCtaData] = useState(() => ({
+        title: initialCTA?.title || DEFAULT_CTA.title,
+        ctaText: initialCTA?.btnText || initialCTA?.ctaText || DEFAULT_CTA.ctaText,
+        ctaUrl: initialCTA?.btnUrl || initialCTA?.ctaUrl || DEFAULT_CTA.ctaUrl
+    }));
 
     useEffect(() => {
+        if (initialCTA) {
+            setCtaData({
+                title: initialCTA.title || DEFAULT_CTA.title,
+                ctaText: initialCTA.btnText || initialCTA.ctaText || DEFAULT_CTA.ctaText,
+                ctaUrl: initialCTA.btnUrl || initialCTA.ctaUrl || DEFAULT_CTA.ctaUrl
+            });
+            return;
+        }
+
         const loadCMS = async () => {
             try {
                 const res = await fetch(`${API_URL}/api/homepage`);
@@ -33,7 +46,7 @@ export default function CTASection() {
             }
         };
         loadCMS();
-    }, []);
+    }, [initialCTA]);
 
     // Deep scroll reveal
     useEffect(() => {

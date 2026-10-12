@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { API_URL } from '@/config';
 import React, { useState, useEffect, useRef } from 'react';
@@ -505,7 +505,7 @@ export default function HomepageCMSPage() {
         fetch(`${API_URL}/api/contents/clinic-hours`),
         fetch(`${API_URL}/api/contents/health-tools-header`),
         fetch(`${API_URL}/api/contents/health-tools-list`),
-        fetch(`${API_URL}/api/services`)
+        fetch(`${API_URL}/api/services?t=${Date.now()}`, { cache: 'no-store' })
       ]);
 
       const resJson = await resCms.json();

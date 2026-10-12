@@ -5,15 +5,15 @@ import Link from 'next/link';
 import { API_URL } from '@/config';
 import './Abouthero.css';
 
-export default function AboutHero() {
+export default function AboutHero({ initialHero }) {
     const heroRef = useRef(null);
-    const [heroData, setHeroData] = useState({
-        title: 'About West Chemist',
-        content: 'Serving our communities for over 40 years, West Chemist is dedicated to providing high-quality prescription medicines, travel health, and personalized patient care. Our team of experienced pharmacists and professional healthcare staff are here to simplify medication management and support you and your family through all stages of life.'
-    });
+    const [heroData, setHeroData] = useState(() => ({
+        title: initialHero?.title || 'About West Chemist',
+        content: initialHero?.content || 'Serving our communities for over 40 years, West Chemist is dedicated to providing high-quality prescription medicines, travel health, and personalized patient care. Our team of experienced pharmacists and professional healthcare staff are here to simplify medication management and support you and your family through all stages of life.'
+    }));
     useEffect(() => {
         // Fetch dynamic content from backend
-        fetch(`${API_URL}/api/about`)
+        fetch(`${API_URL}/api/about`, { cache: 'no-store' })
             .then(res => res.json())
             .then(data => {
                 if (data.success && data.data) {

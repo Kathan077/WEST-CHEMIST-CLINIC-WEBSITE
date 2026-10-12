@@ -47,7 +47,7 @@ export default function Footer() {
                         </Link>
                         <p className="f_desc">
                             Your trusted local pharmacy and healthcare provider in Northampton, United Kingdom.
-                            Delivering PHARMACY excellence, expert advice, and genuine care.
+                            Delivering pharmacy excellence, expert advice, and genuine care.
                         </p>
 
                         {/* Trust Badges */}

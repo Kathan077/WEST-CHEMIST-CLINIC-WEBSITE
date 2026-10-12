@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import React, { useEffect, useRef, useState } from 'react';
 import { API_URL } from '@/config';
 import './AboutBranches.css';
@@ -27,8 +27,8 @@ const DEFAULT_BRANCHES = [
             stat2_label: "Consult Rooms",
             stat3_num: "100%",
             stat3_label: "Quality Care",
-            action_url: "https://maps.google.com/?q=4+Kingsley+Park+Terrace,+Northampton+NN2+7HG,+United+Kingdom",
-            action_text: "View Branch & Directions"
+            action_url: "/book-appointment",
+            action_text: "Book Consultation"
         }
     },
     {
@@ -52,51 +52,55 @@ const DEFAULT_BRANCHES = [
     }
 ];
 
-const Branches = () => {
+const formatBranchesList = (branchItems) => {
+    return branchItems.map(item => {
+        const meta = {};
+        if (item.metadata) {
+            Object.keys(item.metadata).forEach(key => {
+                meta[key] = item.metadata[key];
+            });
+        }
+        return {
+            ...item,
+            metadata: {
+                address: meta.address || '',
+                image: typeof meta.image === 'undefined'
+                    ? (item.title?.toLowerCase().includes('virtual') || item.title?.toLowerCase().includes('online')
+                        ? 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=800'
+                        : 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=800')
+                    : meta.image,
+                badge: meta.badge || '',
+                stat1_num: meta.stat1_num || '',
+                stat1_label: meta.stat1_label || '',
+                stat2_num: meta.stat2_num || '',
+                stat2_label: meta.stat2_label || '',
+                stat3_num: meta.stat3_num || '',
+                stat3_label: meta.stat3_label || '',
+                action_url: meta.action_url || '',
+                action_text: meta.action_text || 'Learn More'
+            }
+        };
+    });
+};
+
+const Branches = ({ initialBranches }) => {
     const sectionRef = useRef(null);
-    const [branches, setBranches] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [branches, setBranches] = useState(() => (
+        initialBranches && initialBranches.length > 0 ? formatBranchesList(initialBranches) : DEFAULT_BRANCHES
+    ));
+    const [loading, setLoading] = useState(() => (
+        !initialBranches || initialBranches.length === 0 ? false : false
+    ));
 
     useEffect(() => {
-        setLoading(true);
         // Fetch branch data from backend API
-        fetch(`${API_URL}/api/about`)
+        fetch(`${API_URL}/api/about`, { cache: 'no-store' })
             .then(res => res.json())
             .then(data => {
                 if (data.success && data.data) {
                     const branchItems = data.data.filter(item => item.type === 'branch');
                     if (branchItems.length > 0) {
-                        // Normalize metadata just in case Mongoose Map structure is different
-                        const formattedBranches = branchItems.map(item => {
-                            const meta = {};
-                            if (item.metadata) {
-                                // If it is a Map, it might be an object, or we can iterate
-                                Object.keys(item.metadata).forEach(key => {
-                                    meta[key] = item.metadata[key];
-                                });
-                            }
-                            return {
-                                ...item,
-                                metadata: {
-                                    address: meta.address || '',
-                                    image: typeof meta.image === 'undefined'
-                                        ? (item.title?.toLowerCase().includes('virtual') || item.title?.toLowerCase().includes('online')
-                                            ? 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=800'
-                                            : 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=800')
-                                        : meta.image,
-                                    badge: meta.badge || '',
-                                    stat1_num: meta.stat1_num || '',
-                                    stat1_label: meta.stat1_label || '',
-                                    stat2_num: meta.stat2_num || '',
-                                    stat2_label: meta.stat2_label || '',
-                                    stat3_num: meta.stat3_num || '',
-                                    stat3_label: meta.stat3_label || '',
-                                    action_url: meta.action_url || '',
-                                    action_text: meta.action_text || 'Learn More'
-                                }
-                            };
-                        });
-                        setBranches(formattedBranches);
+                        setBranches(formatBranchesList(branchItems));
                     } else {
                         setBranches(DEFAULT_BRANCHES);
                     }

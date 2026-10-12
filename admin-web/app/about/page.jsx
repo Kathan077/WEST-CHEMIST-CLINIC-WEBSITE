@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { API_URL } from '@/config';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
@@ -156,7 +156,7 @@ export default function AboutEditorPage() {
 
     try {
       const [resAbout, resApp] = await Promise.all([
-        fetch(`${API_URL}/api/about`),
+        fetch(`${API_URL}/api/about?t=${Date.now()}`, { cache: 'no-store' }),
         fetch(`${API_URL}/api/appointments/admin/all`, { headers: { Authorization: `Bearer ${token}` } })
       ]);
 
