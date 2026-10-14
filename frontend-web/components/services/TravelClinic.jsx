@@ -87,9 +87,9 @@ export default function TravelClinic({ initialHeader }) {
                                 <div className="tc_tag">{s.cat || 'Vaccination'}</div>
                             </div>
 
-                            <div className="tc_content">
-                                <h3 className="tc_name">{s.title}</h3>
-                                <p className="tc_brief">{s.desc}</p>
+                            <div className="tc_info">
+                                <h3 className="tc_card_title">{s.title}</h3>
+                                <p className="tc_card_desc">{s.desc}</p>
 
                                 <div className="tc_actions">
                                     <button 

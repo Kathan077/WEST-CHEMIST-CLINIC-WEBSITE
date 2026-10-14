@@ -6,17 +6,18 @@ import { API_URL, getImageUrl } from '@/config';
 import './AboutSection.css';
 
 const DEFAULT_ABOUT = {
-    title: 'Why Choose West Chemist?',
+    title: 'Empowering Your Wellness Journey',
     subtitle: 'YOUR TRUSTED COMMUNITY PHARMACY',
     desc: 'With over two decades of dedicated community service, West Chemist specializes in the timely provision of prescription medicines, travel health, and comprehensive patient care. We understand that managing health and medications can feel daunting  our team of experienced pharmacists and professional pharmacy staff across Northampton and East London are here to support you and your family through all stages of life.',
     image: '/images/about-pharmacist.jpg',
+    yearsExperience: 'Open Daily',
+    experienceLabel: 'Inc. Sat & Sun',
     features: [
-        { icon: 'award', title: 'Accredited Experience', desc: 'Over 20 years of trusted healthcare experience across Northampton & East London' },
-        { icon: 'users', title: 'Experienced Team', desc: 'Qualified pharmacists and healthcare staff dedicated to your well-being' },
-        { icon: 'check-square', title: 'Timely Prescriptions', desc: 'Fast, reliable prescription dispensing and professional pharmacy services' },
-        { icon: 'heart', title: 'Family Support', desc: 'Personalized guidance supporting you and your family through all stages of life' }
+        { icon: 'award', title: 'Accredited Experience', desc: 'Over two decades of trusted healthcare experience across Northampton & East London.' },
+        { icon: 'users', title: 'Experienced Team', desc: 'Qualified pharmacists and healthcare staff committed to your family’s well-being.' },
+        { icon: 'check-square', title: 'Timely Prescriptions', desc: 'Fast, reliable prescription dispensing and professional pharmacy services.' }
     ],
-    ctaText: 'More About Us',
+    ctaText: 'Learn More About Us',
     ctaUrl: '/about',
     secondaryCtaText: 'Contact Us',
     secondaryCtaUrl: '/contact'
@@ -32,7 +33,7 @@ const ICON_PATHS = {
     brain: { paths: ['M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-1.07-4.73A3 3 0 0 1 3.34 9a2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.84-2.76Z', 'M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 1.07-4.73 3 3 0 0 0 2.13-5.27 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.84-2.76Z'], vb: '0 0 24 24' },
     shield: { paths: ['M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'], vb: '0 0 24 24' },
     cross: { paths: ['M11 2a2 2 0 0 0-2 2v5H4a2 2 0 0 0-2 2v2c0 1.1.9 2 2 2h5v5c0 1.1.9 2 2 2h2a2 2 0 0 0 2-2v-5h5a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-5V4a2 2 0 0 0-2-2h-2z'], vb: '0 0 24 24' },
-    hospital: { paths: ['M12 6v4', 'M14 14h-4', 'M14 18h-4', 'M14 8h-4', 'M18 12h2a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2', 'M18 22V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v18'], vb: '0 0 24 24' },
+    hospital: { paths: ['M12 6v4', 'M14 14h-4', 'M14 18h-4', 'M14 8h-4', 'M18 12h2a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2', 'M18 22V4a2 2 0 0 0-2 2H8a2 2 0 0 0-2 2v18'], vb: '0 0 24 24' },
     pill: { paths: ['M10.5 20H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5', 'M2 12H10', 'M22 12H14', 'M13.5 4H20a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6.5'], vb: '0 0 24 24' },
     syringe: { paths: ['m18 2 4 4', 'm17 7 3-3', 'M19 9 8.7 19.3c-1 1-2.5 1-3.4 0l-.6-.6c-1-1-1-2.5 0-3.4L15 9'], vb: '0 0 24 24' },
     scale: { paths: ['M12 3a1 1 0 0 1 1 1v7.5a.5.5 0 0 1-1 0V4a1 1 0 0 1-1-1Z', 'M3 14a9 9 0 1 0 18 0'], vb: '0 0 24 24' },
@@ -60,12 +61,17 @@ const ICON_PATHS = {
     book: { paths: ['M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20'], vb: '0 0 24 24' }
 };
 
-const getFeatureIcon = (iconName) => {
-    const item = ICON_PATHS[iconName] || ICON_PATHS.heart;
+const DEFAULT_ICON_SEQUENCE = ['award', 'users', 'heart', 'shield', 'check_circle'];
+
+const getFeatureIcon = (iconName, idx = 0) => {
+    const selected = (iconName && ICON_PATHS[iconName]) 
+        ? iconName 
+        : DEFAULT_ICON_SEQUENCE[idx % DEFAULT_ICON_SEQUENCE.length];
+    const item = ICON_PATHS[selected] || ICON_PATHS.heart;
     return (
         <svg viewBox={item.vb} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            {item.paths.map((p, idx) => (
-                <path key={idx} d={p} />
+            {item.paths.map((p, pIdx) => (
+                <path key={pIdx} d={p} />
             ))}
         </svg>
     );
@@ -78,7 +84,7 @@ export default function AboutSection() {
     useEffect(() => {
         const loadCMS = async () => {
             try {
-                const res = await fetch(`${API_URL}/api/homepage`);
+                const res = await fetch(`${API_URL}/api/homepage`, { cache: 'no-store' });
                 const json = await res.json();
                 if (json.success && json.data && json.data.aboutSection) {
                     const sec = json.data.aboutSection;
@@ -99,6 +105,8 @@ export default function AboutSection() {
                         subtitle: sec.subtitle || DEFAULT_ABOUT.subtitle,
                         desc: sec.desc || DEFAULT_ABOUT.desc,
                         image: validImage,
+                        yearsExperience: sec.yearsExperience || DEFAULT_ABOUT.yearsExperience,
+                        experienceLabel: sec.experienceLabel || DEFAULT_ABOUT.experienceLabel,
                         features: formattedFeatures,
                         ctaText: sec.ctaText || DEFAULT_ABOUT.ctaText,
                         ctaUrl: sec.ctaUrl || DEFAULT_ABOUT.ctaUrl,
@@ -143,8 +151,8 @@ export default function AboutSection() {
                         <div className="img_stat_card">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                             <div>
-                                <div className="img_stat_num">Open Daily</div>
-                                <div className="img_stat_label">Inc. Sat & Sun</div>
+                                <div className="img_stat_num">{aboutData.yearsExperience || 'Open Daily'}</div>
+                                <div className="img_stat_label">{aboutData.experienceLabel || 'Inc. Sat & Sun'}</div>
                             </div>
                         </div>
 
@@ -153,9 +161,10 @@ export default function AboutSection() {
                         <div className="img_ring img_ring_2"></div>
 
                         <img
-                             src={aboutData.image && aboutData.image.includes('uploads') ? getImageUrl(aboutData.image) : '/images/about-pharmacist.jpg'}
+                             src={aboutData.image ? getImageUrl(aboutData.image) : '/images/about-pharmacist.jpg'}
                              alt="West Chemist pharmacist"
                              className="about_img"
+                             onError={(e) => { e.target.src = '/images/about-pharmacist.jpg'; }}
                         />
 
                         {/* Image overlay gradient */}
@@ -185,7 +194,7 @@ export default function AboutSection() {
                     <ul className="about_features">
                         {aboutData.features.map((f, i) => (
                             <li key={i} className="ab_feature ab_reveal" style={{ '--delay': `${380 + i * 80}ms` }}>
-                                <div className="feature_icon">{getFeatureIcon(f.icon)}</div>
+                                <div className="feature_icon">{getFeatureIcon(f.icon, i)}</div>
                                 <span>{f.text}</span>
                             </li>
                         ))}

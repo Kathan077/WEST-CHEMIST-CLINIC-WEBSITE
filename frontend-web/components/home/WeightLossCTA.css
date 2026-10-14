@@ -213,28 +213,49 @@
 
 
 .red_badge {
-    width: 150px;
-    height: 150px;
+    width: 138px;
+    height: 138px;
     background: var(--primary);
     color: #fff;
-    border: 6px solid #fff;
-    right: -20px;
-    bottom: 50px;
+    border: 4px solid #fff;
+    left: -20px;
+    bottom: -15px;
+    right: auto;
     animation: float1 6s ease-in-out infinite alternate;
     transform: translateZ(80px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 12px;
+    box-sizing: border-box;
+    box-shadow: 0 14px 32px rgba(75, 45, 113, 0.28);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.red_badge_lg {
-    font-size: 2.2rem;
-    font-weight: 900;
-    letter-spacing: -0.05em;
-    line-height: 1;
+.red_badge:hover {
+    box-shadow: 0 18px 38px rgba(75, 45, 113, 0.38);
+    transform: translateZ(90px) scale(1.05);
 }
 
-.red_badge_sm {
-    font-size: 0.95rem;
+.journey_badge_line1 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: #ffffff;
+    display: block;
+}
+
+.journey_badge_line2 {
+    font-size: 1.02rem;
     font-weight: 700;
-    letter-spacing: -0.02em;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: rgba(255, 255, 255, 0.95);
+    display: block;
+    margin-top: 3px;
 }
 
 .wl_badge svg {
@@ -307,18 +328,22 @@
     }
 
     .red_badge {
-        width: 110px;
-        height: 110px;
-        right: -10px;
-        border-width: 4px;
+        width: 115px;
+        height: 115px;
+        left: 10px;
+        bottom: -15px;
+        right: auto;
+        border-width: 3.5px;
+        padding: 8px;
     }
 
-    .red_badge_lg {
-        font-size: 1.6rem;
+    .journey_badge_line1 {
+        font-size: 0.92rem;
     }
 
-    .red_badge_sm {
-        font-size: 0.8rem;
+    .journey_badge_line2 {
+        font-size: 0.82rem;
+        margin-top: 2px;
     }
 
 

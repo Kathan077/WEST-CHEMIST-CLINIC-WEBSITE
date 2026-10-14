@@ -10,31 +10,34 @@
 }
 
 .tc_header {
-    text-align: left;
-    margin-bottom: 80px;
-    border-left: 5px solid var(--accent);
-    padding-left: 40px;
+    text-align: center;
+    margin-bottom: 70px;
 }
 
 .tc_eyebrow {
+    display: block;
     color: var(--accent);
     text-transform: uppercase;
+    letter-spacing: 0.2em;
     font-weight: 800;
-    letter-spacing: 0.1em;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
+    margin-bottom: 20px;
 }
 
 .tc_title {
-    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-size: clamp(2.8rem, 5vw, 4rem);
     color: var(--primary);
     font-weight: 900;
-    margin: 15px 0 20px;
+    margin-bottom: 25px;
+    letter-spacing: -0.02em;
 }
 
 .tc_desc {
-    color: #64748b;
-    font-size: 1.2rem;
-    max-width: 600px;
+    font-size: 1.25rem;
+    color: #475569;
+    max-width: 1050px;
+    margin: 0 auto;
+    line-height: 1.6;
 }
 
 /* ─── Modern Grid ─── */
@@ -172,15 +175,15 @@
 }
 
 @media (max-width: 768px) {
+    .tc_header {
+        margin-bottom: 50px;
+    }
+
     .tc_grid {
         grid-template-columns: 1fr;
         max-width: 500px;
         margin: 0 auto;
         gap: 40px;
-    }
-
-    .tc_header {
-        padding-left: 25px;
     }
 
     .tc_img_wrap {
@@ -194,9 +197,7 @@
     }
     
     .tc_header {
-        padding-left: 18px;
-        border-left-width: 4px;
-        margin-bottom: 40px;
+        margin-bottom: 35px;
     }
 
     .tc_title {

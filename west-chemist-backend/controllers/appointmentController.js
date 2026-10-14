@@ -278,12 +278,29 @@ const getAllAppointments = async (req, res) => {
     const appointments = await Appointment.find()
       .sort({ date: -1, time: -1 })
       .populate('patientId', 'fullName mobile email')
-      .populate('verificationId', 'status idType');
+      .populate('verificationId', 'status idType documentUrl checks createdAt verifiedAt');
+
+    const formattedAppointments = appointments.map(a => {
+      const appt = a.toObject ? a.toObject() : { ...a };
+      if (appt.verificationId && appt.verificationId.documentUrl) {
+        const docUrl = appt.verificationId.documentUrl;
+        if (!docUrl.startsWith('http://') && !docUrl.startsWith('https://')) {
+          const clean = docUrl.replace(/\\/g, '/');
+          const uploadIdx = clean.indexOf('/uploads/');
+          if (uploadIdx !== -1) {
+            appt.verificationId.documentUrl = clean.substring(uploadIdx);
+          } else if (!clean.startsWith('/')) {
+            appt.verificationId.documentUrl = `/uploads/ids/${clean.split('/').pop()}`;
+          }
+        }
+      }
+      return appt;
+    });
 
     res.status(200).json({
       success: true,
-      count: appointments.length,
-      data: appointments
+      count: formattedAppointments.length,
+      data: formattedAppointments
     });
   } catch (error) {
     console.error(`❌ Error in getAllAppointments: ${error.message}`);
@@ -339,7 +356,7 @@ const adminApproveAppointment = async (req, res) => {
 
     const populatedAppointment = await Appointment.findById(appointment._id)
       .populate('patientId', 'fullName mobile email')
-      .populate('verificationId', 'status idType');
+      .populate('verificationId', 'status idType documentUrl checks createdAt verifiedAt');
 
     // Send booking confirmation email asynchronously on admin approval
     emailService.sendBookingConfirmation(populatedAppointment, populatedAppointment.patientId).catch(err => {
@@ -385,7 +402,7 @@ const adminRejectAppointment = async (req, res) => {
 
     const populatedAppointment = await Appointment.findById(appointment._id)
       .populate('patientId', 'fullName mobile email')
-      .populate('verificationId', 'status idType');
+      .populate('verificationId', 'status idType documentUrl checks createdAt verifiedAt');
 
     res.status(200).json({
       success: true,
@@ -442,7 +459,7 @@ const adminRescheduleAppointment = async (req, res) => {
 
     const populatedAppointment = await Appointment.findById(appointment._id)
       .populate('patientId', 'fullName mobile email')
-      .populate('verificationId', 'status idType');
+      .populate('verificationId', 'status idType documentUrl checks createdAt verifiedAt');
 
     res.status(200).json({
       success: true,
@@ -464,7 +481,7 @@ const getAppointmentById = async (req, res) => {
     const { id } = req.params;
     const appointment = await Appointment.findById(id)
       .populate('patientId', 'fullName mobile email')
-      .populate('verificationId', 'status idType');
+      .populate('verificationId', 'status idType documentUrl checks createdAt verifiedAt');
 
     if (!appointment) {
       return res.status(404).json({

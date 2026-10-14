@@ -3,7 +3,6 @@ import Navbar from '../../components/layout/Navbar';
 import AboutHero from '../../components/About/Abouthero';
 import AboutMission from '../../components/About/AboutMission';
 import AboutWhy from '../../components/About/AboutValues'; // using AboutValues.jsx as AboutWhy internally
-import AboutImpact from '../../components/About/AboutImpact';
 import AboutBranches from '../../components/About/Branches';
 import AboutFaq from '../../components/About/AboutFaq';
 import { API_URL } from '@/config';
@@ -28,7 +27,6 @@ export default async function AboutPage() {
     const heroData = aboutData.find(item => item.type === 'hero');
     const cardItems = aboutData.filter(item => item.type === 'card');
     const branchItems = aboutData.filter(item => item.type === 'branch');
-    const impactData = aboutData.find(item => item.type === 'impact');
     const faqItems = aboutData.filter(item => item.type === 'faq');
 
     return (
@@ -38,7 +36,6 @@ export default async function AboutPage() {
             <AboutMission initialCards={cardItems} />
             <AboutBranches initialBranches={branchItems} />
             <AboutWhy />
-            <AboutImpact initialImpact={impactData} />
             <AboutFaq initialFaqs={faqItems} />
         </main>
     );

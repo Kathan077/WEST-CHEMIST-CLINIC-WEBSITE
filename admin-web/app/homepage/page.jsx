@@ -501,7 +501,7 @@ export default function HomepageCMSPage() {
 
     try {
       const [resCms, hoursRes, toolsHdrRes, toolsListRes, resSrv] = await Promise.all([
-        fetch(`${API_URL}/api/homepage`),
+        fetch(`${API_URL}/api/homepage?t=${Date.now()}`, { cache: 'no-store' }),
         fetch(`${API_URL}/api/contents/clinic-hours`),
         fetch(`${API_URL}/api/contents/health-tools-header`),
         fetch(`${API_URL}/api/contents/health-tools-list`),
@@ -633,9 +633,10 @@ export default function HomepageCMSPage() {
       hero: 'Hero Slider & Stats',
       services: 'Services Intro',
       hours: 'Clinic Opening Hours',
+      weightLossCta: 'Weight Loss CTA',
+      about: 'About Pharmacy',
       how: 'How It Works',
       testimonials: 'Patient Testimonials',
-      weightLossCta: 'Weight Loss CTA',
       seo: 'SEO Metadata'
     };
     const sectionLabel = sectionLabels[activeTab] || activeTab;
@@ -727,6 +728,29 @@ export default function HomepageCMSPage() {
       features[idx] = { ...features[idx], [field]: value };
       return { ...prev, aboutSection: { ...prev.aboutSection, features } };
     });
+  };
+
+  const addAboutFeature = () => {
+    setCmsData(prev => ({
+      ...prev,
+      aboutSection: {
+        ...prev.aboutSection,
+        features: [
+          ...(prev.aboutSection?.features || []),
+          { icon: 'award', title: '', desc: '' }
+        ]
+      }
+    }));
+  };
+
+  const deleteAboutFeature = (idx) => {
+    setCmsData(prev => ({
+      ...prev,
+      aboutSection: {
+        ...prev.aboutSection,
+        features: (prev.aboutSection?.features || []).filter((_, i) => i !== idx)
+      }
+    }));
   };
 
   const updateServices = (field, value) => {
@@ -869,9 +893,10 @@ export default function HomepageCMSPage() {
               <button className={`cnt_sidebar_btn ${activeTab === 'hero' ? 'active' : ''}`} onClick={() => setActiveTab('hero')}>Hero Slider & Stats</button>
               <button className={`cnt_sidebar_btn ${activeTab === 'services' ? 'active' : ''}`} onClick={() => setActiveTab('services')}>Services Intro</button>
               <button className={`cnt_sidebar_btn ${activeTab === 'hours' ? 'active' : ''}`} onClick={() => setActiveTab('hours')}>Clinic Opening Hours</button>
+              <button className={`cnt_sidebar_btn ${activeTab === 'weightLossCta' ? 'active' : ''}`} onClick={() => setActiveTab('weightLossCta')}>Weight Loss CTA</button>
+              <button className={`cnt_sidebar_btn ${activeTab === 'about' ? 'active' : ''}`} onClick={() => setActiveTab('about')}>About Pharmacy</button>
               <button className={`cnt_sidebar_btn ${activeTab === 'how' ? 'active' : ''}`} onClick={() => setActiveTab('how')}>How It Works</button>
               <button className={`cnt_sidebar_btn ${activeTab === 'testimonials' ? 'active' : ''}`} onClick={() => setActiveTab('testimonials')}>Patient Testimonials</button>
-              <button className={`cnt_sidebar_btn ${activeTab === 'weightLossCta' ? 'active' : ''}`} onClick={() => setActiveTab('weightLossCta')}>Weight Loss CTA</button>
               <button className={`cnt_sidebar_btn ${activeTab === 'seo' ? 'active' : ''}`} onClick={() => setActiveTab('seo')}>SEO Metadata</button>
             </div>
 
@@ -1405,10 +1430,13 @@ export default function HomepageCMSPage() {
                       />
                     </div>
                   </div>
+                </div>
+              )}
 
-                  {/* About Section Form fields merged here */}
-                  <div className="cnt_form_title" style={{ marginTop: '40px', borderTop: '2px solid #e2e8f0', paddingTop: '30px' }}>About Section / PHARMACY Credibility Info</div>
-                  <div className="cnt_form_sub">Modify history, statistics, features, and main graphics.</div>
+              {activeTab === 'about' && (
+                <div>
+                  <div className="cnt_form_title">About Pharmacy / Credibility Info</div>
+                  <div className="cnt_form_sub">Modify history, statistics, features, and main graphics for the About section.</div>
 
                   <div className="srv_form_grid">
                     <div className="srv_form_group">
@@ -1486,11 +1514,11 @@ export default function HomepageCMSPage() {
                       </div>
                     </div>
                     <div className="srv_form_group">
-                      <label className="srv_label">Experience Counter (e.g. 15+)</label>
+                      <label className="srv_label">Experience Counter (e.g. Open Daily or 15+)</label>
                       <input type="text" className="srv_input" value={cmsData.aboutSection.yearsExperience} onChange={e => updateAbout('yearsExperience', e.target.value)} />
                     </div>
                     <div className="srv_form_group">
-                      <label className="srv_label">Experience Badge Description Label</label>
+                      <label className="srv_label">Experience Badge Description Label (e.g. Inc. Sat & Sun)</label>
                       <input type="text" className="srv_input" value={cmsData.aboutSection.experienceLabel} onChange={e => updateAbout('experienceLabel', e.target.value)} />
                     </div>
                     <div className="srv_form_group">
@@ -1511,30 +1539,69 @@ export default function HomepageCMSPage() {
                     </div>
                   </div>
 
-                  <div className="cnt_form_title" style={{ marginTop: '20px', borderTop: '1px dashed #e2e8f0', paddingTop: '20px' }}>Features Checkmarks</div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginTop: '12px' }}>
-                    {cmsData.aboutSection.features.map((feat, fIdx) => (
-                      <div key={fIdx} style={{ background: '#f8fafc', padding: '16px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
-                        <strong style={{ fontSize: '0.8rem', color: 'var(--purple)', display: 'block', marginBottom: '8px' }}>Feature #{fIdx+1} Details</strong>
-                        <div className="srv_form_grid">
-                          <div className="srv_form_group">
-                            <label className="srv_label">Feature Icon</label>
-                            <div style={{ marginTop: '4px' }}>
-                              <IconPickerPanel selectedKey={feat.icon} onSelect={val => updateAboutFeature(fIdx, 'icon', val)} />
-                            </div>
-                          </div>
-                          <div className="srv_form_group">
-                            <label className="srv_label">Feature Title</label>
-                            <input type="text" className="srv_input" value={feat.title} onChange={e => updateAboutFeature(fIdx, 'title', e.target.value)} />
-                          </div>
-                          <div className="srv_form_group full">
-                            <label className="srv_label">Feature Description Text</label>
-                            <input type="text" className="srv_input" value={feat.desc} onChange={e => updateAboutFeature(fIdx, 'desc', e.target.value)} />
-                          </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '30px', borderTop: '1px dashed #e2e8f0', paddingTop: '20px' }}>
+                    <div>
+                      <div className="cnt_form_title" style={{ margin: 0, fontSize: '1.05rem' }}>Features Checkmarks</div>
+                      <div className="cnt_form_sub" style={{ margin: 0 }}>Bullet points displayed on the About section.</div>
+                    </div>
+                    <button 
+                      type="button" 
+                      className="srv_btn srv_btn_sm" 
+                      onClick={addAboutFeature}
+                      style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '6px 14px', fontSize: '0.82rem', fontWeight: 600, background: 'var(--purple)', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer' }}
+                    >
+                      <I d={ICONS.plus} s={14} /> Add Feature
+                    </button>
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginTop: '14px' }}>
+                    {(cmsData.aboutSection.features || []).map((feat, fIdx) => (
+                      <div key={fIdx} style={{ background: '#f8fafc', padding: '16px 18px', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.02)' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                          <span style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--purple)', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                            <span style={{ display: 'inline-block', width: '6px', height: '6px', borderRadius: '50%', background: 'var(--purple)' }}></span>
+                            Feature #{fIdx + 1} Details
+                          </span>
+                          <button 
+                            type="button" 
+                            className="action_link_btn cancel" 
+                            onClick={() => deleteAboutFeature(fIdx)}
+                            title="Delete Feature"
+                            style={{ flex: 'none', display: 'inline-flex', alignItems: 'center', gap: '5px', padding: '4px 10px', fontSize: '0.76rem', borderRadius: '6px' }}
+                          >
+                            <I d={ICONS.trash} s={13} /> Delete
+                          </button>
+                        </div>
+                        <div className="srv_form_group full" style={{ margin: 0 }}>
+                          <label className="srv_label" style={{ fontSize: '0.78rem', marginBottom: '6px', display: 'block', color: 'var(--t2)', fontWeight: 600 }}>
+                            Feature Description Text
+                          </label>
+                          <input 
+                            type="text" 
+                            className="srv_input" 
+                            value={feat.desc !== undefined && feat.desc !== '' ? feat.desc : (feat.title || '')} 
+                            onChange={e => {
+                              const val = e.target.value;
+                              setCmsData(prev => {
+                                const features = [...prev.aboutSection.features];
+                                features[fIdx] = { ...features[fIdx], desc: val, title: val };
+                                return { ...prev, aboutSection: { ...prev.aboutSection, features } };
+                              });
+                            }} 
+                            placeholder="e.g. Over two decades of trusted healthcare experience across Northampton & East London."
+                          />
                         </div>
                       </div>
                     ))}
                   </div>
+
+                  <button 
+                    type="button" 
+                    className="srv_add_btn" 
+                    onClick={addAboutFeature} 
+                    style={{ marginTop: '16px' }}
+                  >
+                    <I d={ICONS.plus} s={14} /> Add Feature Checkmark
+                  </button>
                 </div>
               )}
 

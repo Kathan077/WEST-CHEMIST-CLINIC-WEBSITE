@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { API_URL } from '@/config';
 
@@ -46,6 +46,19 @@ const ICONS = {
   doc:       "M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z M14 2v6h6 M16 13H8 M16 17H8 M10 9H8",
   info:      "M12 16v-4 M12 8h.01 M12 2a10 10 0 1010 10A10 10 0 0012 2z",
   globe:     "M12 2a10 10 0 1010 10A10 10 0 0012 2zM2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+};
+const getDocUrl = (rawUrl) => {
+  if (!rawUrl) return null;
+  if (rawUrl.startsWith('http://') || rawUrl.startsWith('https://')) return rawUrl;
+  const clean = rawUrl.replace(/\\/g, '/');
+  const uploadIdx = clean.indexOf('/uploads/');
+  if (uploadIdx !== -1) {
+    return `${API_URL}${clean.substring(uploadIdx)}`;
+  }
+  if (clean.startsWith('/')) {
+    return `${API_URL}${clean}`;
+  }
+  return `${API_URL}/uploads/ids/${clean}`;
 };
 
 /* ─── Toast Component ─── */
@@ -180,8 +193,11 @@ function RescheduleModal({ appointment, onClose, onConfirm }) {
 }
 
 function ViewApptModal({ appointment, onClose, onApprove, onReject, onReschedule }) {
-  const [ver, setVer] = useState(null);
-  const [loadingVer, setLoadingVer] = useState(true);
+  const initialVer = appointment.verificationId && typeof appointment.verificationId === 'object' && (appointment.verificationId.status || appointment.verificationId.documentUrl)
+    ? appointment.verificationId
+    : null;
+  const [ver, setVer] = useState(initialVer);
+  const [loadingVer, setLoadingVer] = useState(!initialVer && !!appointment.patientId?._id);
   const [adminNote, setAdminNote] = useState(appointment.adminNote || '');
   const [savingNote, setSavingNote] = useState(false);
 
@@ -193,8 +209,11 @@ function ViewApptModal({ appointment, onClose, onApprove, onReject, onReschedule
           headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await res.json();
-        if (data.success && data.data.length > 0) {
-          setVer(data.data[0]);
+        if (data.success && data.data && data.data.length > 0) {
+          const matched = data.data.find(v => 
+            v._id === (appointment.verificationId?._id || appointment.verificationId)
+          ) || data.data[data.data.length - 1];
+          setVer(matched);
         }
       } catch (err) {
         console.error(err);
@@ -388,20 +407,20 @@ function ViewApptModal({ appointment, onClose, onApprove, onReject, onReschedule
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', background: '#f8fafc', padding: '12px', borderRadius: '10px', border: '1px solid #f1f5f9' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.78rem' }}>
-                    <span style={{ color: ver.mrzCheck === 'done' ? '#0d9488' : '#eab308', fontWeight: 'bold' }}>
-                      {ver.mrzCheck === 'done' ? '✓' : '⏳'}
+                    <span style={{ color: (ver.checks?.mrz === 'passed' || ver.mrzCheck === 'done') ? '#0d9488' : '#eab308', fontWeight: 'bold' }}>
+                      {(ver.checks?.mrz === 'passed' || ver.mrzCheck === 'done') ? '✓' : '⏳'}
                     </span>
                     <span style={{ color: 'var(--t2)' }}>MRZ Code & Barcode Band Validation</span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.78rem' }}>
-                    <span style={{ color: ver.clarityCheck === 'done' ? '#0d9488' : '#eab308', fontWeight: 'bold' }}>
-                      {ver.clarityCheck === 'done' ? '✓' : '⏳'}
+                    <span style={{ color: (ver.checks?.blur === 'passed' || ver.clarityCheck === 'done') ? '#0d9488' : '#eab308', fontWeight: 'bold' }}>
+                      {(ver.checks?.blur === 'passed' || ver.clarityCheck === 'done') ? '✓' : '⏳'}
                     </span>
                     <span style={{ color: 'var(--t2)' }}>Image Blur & Focus Assessment</span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.78rem' }}>
-                    <span style={{ color: ver.tamperingCheck === 'done' ? '#0d9488' : '#ef4444', fontWeight: 'bold' }}>
-                      {ver.tamperingCheck === 'done' ? '✓' : ver.tamperingCheck === 'failed' ? '✗' : '⏳'}
+                    <span style={{ color: (ver.checks?.tampering === 'passed' || ver.tamperingCheck === 'done') ? '#0d9488' : (ver.checks?.tampering === 'failed' || ver.tamperingCheck === 'failed') ? '#ef4444' : '#eab308', fontWeight: 'bold' }}>
+                      {(ver.checks?.tampering === 'passed' || ver.tamperingCheck === 'done') ? '✓' : (ver.checks?.tampering === 'failed' || ver.tamperingCheck === 'failed') ? '✗' : '⏳'}
                     </span>
                     <span style={{ color: 'var(--t2)' }}>Hologram & Tampering Inspection</span>
                   </div>
@@ -431,32 +450,38 @@ function ViewApptModal({ appointment, onClose, onApprove, onReject, onReschedule
                   )}
                 </div>
 
-                <div style={{
-                  position: 'relative',
-                  height: '110px',
-                  borderRadius: '10px',
-                  border: '1px solid #cbd5e1',
-                  overflow: 'hidden',
-                  background: '#f1f5f9',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  cursor: 'pointer'
-                }}>
-                  {ver.documentImage ? (
+                <div 
+                  onClick={() => {
+                    const docSrc = getDocUrl(ver.documentUrl || ver.documentImage);
+                    if (docSrc) window.open(docSrc, '_blank');
+                  }}
+                  title={(ver.documentUrl || ver.documentImage) ? "Click to view full uploaded ID document" : undefined}
+                  style={{
+                    position: 'relative',
+                    height: '110px',
+                    borderRadius: '10px',
+                    border: '1px solid #cbd5e1',
+                    overflow: 'hidden',
+                    background: '#f1f5f9',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: (ver.documentUrl || ver.documentImage) ? 'pointer' : 'default'
+                  }}>
+                  {(ver.documentUrl || ver.documentImage) ? (
                     <img
-                      src={`${API_URL}/uploads/${ver.documentImage}`}
+                      src={getDocUrl(ver.documentUrl || ver.documentImage)}
                       alt="Uploaded Patient ID"
                       style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                       onError={(e) => {
                         e.target.style.display = 'none';
-                        e.target.nextSibling.style.display = 'flex';
+                        if (e.target.nextSibling) e.target.nextSibling.style.display = 'flex';
                       }}
                     />
                   ) : null}
                   
                   <div style={{
-                    display: ver.documentImage ? 'none' : 'flex',
+                    display: (ver.documentUrl || ver.documentImage) ? 'none' : 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -472,6 +497,19 @@ function ViewApptModal({ appointment, onClose, onApprove, onReject, onReschedule
                     <span style={{ fontSize: '0.62rem' }}>Encrypted on GPhC-v4.2 Server</span>
                   </div>
                 </div>
+
+                {(ver.documentUrl || ver.documentImage) && (
+                  <div style={{ textAlign: 'center', marginTop: '-6px' }}>
+                    <a
+                      href={getDocUrl(ver.documentUrl || ver.documentImage)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ fontSize: '0.75rem', color: 'var(--teal)', fontWeight: '700', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                    >
+                      <span>🔍 Open Full Size ID Document</span>
+                    </a>
+                  </div>
+                )}
               </>
             ) : (
               <div style={{
@@ -968,6 +1006,12 @@ export default function AdminAppointmentsPage() {
                       <div className="adm_patient_mobile">
                         {patient?.mobile || '—'}
                       </div>
+                      {appt.verificationId?.documentUrl && (
+                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 3, marginTop: 2, fontSize: '0.7rem', color: '#0d9488', fontWeight: 600 }}>
+                          <span>🪪</span>
+                          <span>{appt.verificationId.idType === 'passport' ? 'Passport' : 'Licence'}</span>
+                        </div>
+                      )}
                     </div>
                   </div>
 

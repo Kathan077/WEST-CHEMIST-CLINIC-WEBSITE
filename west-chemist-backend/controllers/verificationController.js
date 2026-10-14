@@ -34,7 +34,8 @@ const uploadDocument = async (req, res) => {
     }
 
     // Save document path or Cloudinary URL
-    const documentUrl = req.file.path || `/uploads/ids/${req.file.filename}`;
+    const isExternal = req.file.path && (req.file.path.startsWith('http://') || req.file.path.startsWith('https://'));
+    const documentUrl = isExternal ? req.file.path : `/uploads/ids/${req.file.filename}`;
 
     const verification = await Verification.create({
       patientId,
@@ -127,9 +128,22 @@ const processVerification = async (req, res) => {
 const getPatientVerifications = async (req, res) => {
   try {
     const verifications = await Verification.find({ patientId: req.params.patientId });
+    const formatted = verifications.map(v => {
+      const doc = v.toObject ? v.toObject() : { ...v };
+      if (doc.documentUrl && !doc.documentUrl.startsWith('http://') && !doc.documentUrl.startsWith('https://')) {
+        const clean = doc.documentUrl.replace(/\\/g, '/');
+        const uploadIdx = clean.indexOf('/uploads/');
+        if (uploadIdx !== -1) {
+          doc.documentUrl = clean.substring(uploadIdx);
+        } else if (!clean.startsWith('/')) {
+          doc.documentUrl = `/uploads/ids/${clean.split('/').pop()}`;
+        }
+      }
+      return doc;
+    });
     res.status(200).json({
       success: true,
-      data: verifications
+      data: formatted
     });
   } catch (error) {
     res.status(500).json({

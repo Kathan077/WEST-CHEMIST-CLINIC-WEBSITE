@@ -46,7 +46,7 @@
 .ss_header {
     text-align: center;
     margin-bottom: 70px;
-    max-width: 700px;
+    max-width: 1050px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -54,8 +54,8 @@
 .ss_eyebrow {
     display: inline-block;
     font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.15em;
+    font-weight: 800;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--secondary);
     background: #ffffff;
@@ -67,12 +67,12 @@
 }
 
 .ss_title {
-    font-size: clamp(2.2rem, 4vw, 3.2rem);
-    font-weight: 800;
-    color: var(--foreground);
+    font-size: clamp(2.8rem, 5vw, 4rem);
+    font-weight: 900;
+    color: var(--primary);
     line-height: 1.2;
     letter-spacing: -0.02em;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .ss_title_accent {
@@ -80,8 +80,8 @@
 }
 
 .ss_subtitle {
-    font-size: 1.1rem;
-    color: rgba(15, 23, 42, 0.65);
+    font-size: 1.25rem;
+    color: #475569;
     line-height: 1.6;
 }
 

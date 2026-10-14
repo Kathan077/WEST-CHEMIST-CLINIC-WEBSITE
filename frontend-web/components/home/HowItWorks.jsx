@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
@@ -162,11 +162,7 @@ export default function HowItWorks() {
             <div className="how_header hw_reveal">
                 <span className="how_eyebrow">{howData.subtitle}</span>
                 <h2 className="how_title">
-                    {howData.title?.split(" ").map((word, i) => (
-                        <span key={i} className="how_title_word" style={{ '--dw': `${i * 100}ms` }}>
-                            {word}&nbsp;
-                        </span>
-                    ))}
+                    {howData.title}
                 </h2>
                 <p className="how_subtitle">
                     {howData.desc}

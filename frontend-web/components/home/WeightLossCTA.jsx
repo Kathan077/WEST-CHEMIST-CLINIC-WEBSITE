@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
@@ -6,11 +6,11 @@ import { API_URL, getImageUrl } from '@/config';
 import './WeightLossCTA.css';
 
 const DEFAULT_WL = {
-    title: 'Take the First Step Toward Better Health',
-    desc: 'Looking to achieve your weight loss goals? Begin your journey today with expert guidance and personalized care from our pharmacy team.',
+    title: 'Personalised Weight Management',
+    desc: 'Looking to achieve and maintain a healthier weight? West Chemist offers personalised weight management support tailored to your needs and goals. Our pharmacy team provides professional guidance, treatment information, and ongoing support to help you make informed decisions throughout your journey.',
     image: '/images/e0dc23d6-3cb0-4a6a-9076-058313605f8d.png',
-    ctaText: 'Book Now',
-    ctaUrl: '/book-appointment',
+    ctaText: 'Start Your Weight Loss Journey',
+    ctaUrl: '/weight-loss',
     bullets: [
         'Personalized expert support',
         'In-person consultations available at our pharmacy',
@@ -43,7 +43,7 @@ export default function WeightLossCTA() {
     useEffect(() => {
         const loadCMS = async () => {
             try {
-                const res = await fetch(`${API_URL}/api/homepage`);
+                const res = await fetch(`${API_URL}/api/homepage`, { cache: 'no-store' });
                 const json = await res.json();
                 if (json.success && json.data && json.data.appointmentCta) {
                     const sec = json.data.appointmentCta;
@@ -141,10 +141,10 @@ export default function WeightLossCTA() {
                         
                         {/* ── Floating Badges ── */}
                         
-                        {/* Book Now Red Badge */}
+                        {/* Floating Journey Badge */}
                         <Link href={wlData.ctaUrl || "/book-appointment"} className="wl_badge red_badge">
-                            <span className="red_badge_lg">Book</span>
-                            <span className="red_badge_sm">Now</span>
+                            <span className="journey_badge_line1">Your Journey</span>
+                            <span className="journey_badge_line2">Starts Here</span>
                         </Link>
                     </div>
                 </div>

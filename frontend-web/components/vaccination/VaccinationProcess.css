@@ -4,40 +4,40 @@
 }
 
 .vp_container {
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 0 auto;
 }
 
 .vp_header {
     text-align: center;
-    margin-bottom: 80px;
+    margin-bottom: 70px;
 }
 
 .vp_eyebrow {
     color: var(--accent);
     text-transform: uppercase;
-    font-weight: 850;
-    letter-spacing: 0.3em;
-    font-size: 0.9rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    font-size: 0.8rem;
     margin-bottom: 20px;
-    display: inline-block;
+    display: block;
 }
 
 .vp_title {
-    font-size: clamp(3rem, 5vw, 4.5rem);
+    font-size: clamp(2.8rem, 5vw, 4rem);
     color: var(--primary);
-    font-weight: 950;
-    line-height: 1.1;
-    letter-spacing: -0.03em;
-    margin-bottom: 20px;
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 25px;
 }
 
 .vp_lead {
     font-size: 1.25rem;
-    color: #64748b;
-    max-width: 700px;
+    color: #475569;
+    max-width: 1050px;
     margin: 0 auto;
-    line-height: 1.7;
+    line-height: 1.6;
 }
 
 /* ─── Timeline ─── */

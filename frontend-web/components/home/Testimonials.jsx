@@ -86,16 +86,9 @@ export default function Testimonials() {
             
             <div className="t_container">
                 <div className="t_header t_reveal" style={{ '--delay': '0ms' }}>
-                    <div className="t_badge_wrap">
-                        <span className="t_medical_cross"></span>
-                        <span className="t_eyebrow">{testData.subtitle}</span>
-                    </div>
+                    <span className="t_eyebrow">{testData.subtitle}</span>
                     <h2 className="t_title">
-                        {testData.title?.split('Community')[0]}
-                        {testData.title?.includes('Community') && (
-                            <span className="t_accent">Community</span>
-                        )}
-                        {testData.title?.split('Community')[1]}
+                        {testData.title}
                     </h2>
                     <p className="t_desc">
                         {testData.desc}

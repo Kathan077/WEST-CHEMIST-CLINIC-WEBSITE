@@ -92,11 +92,11 @@ const DEFAULT_HOMEPAGE_CONTENT = {
     ]
   },
   appointmentCta: {
-    title: 'Guided Weight Management',
+    title: 'Personalised Weight Management',
     subtitle: 'TRANSFORM YOUR HEALTH',
-    desc: 'Are you looking to achieve and maintain a healthy weight? Our pharmacy team provides safe, professional weight management support tailored to you. We offer expert advice, progress tracking, and regulation-compliant guidance.',
+    desc: 'Looking to achieve and maintain a healthier weight? West Chemist offers personalised weight management support tailored to your needs and goals. Our pharmacy team provides professional guidance, treatment information, and ongoing support to help you make informed decisions throughout your journey.',
     image: '/images/e0dc23d6-3cb0-4a6a-9076-058313605f8d.png',
-    ctaText: 'Start Weight Loss Program',
+    ctaText: 'Start Your Weight Loss Journey',
     ctaUrl: '/weight-loss',
     bullets: [
       'Personalized expert support',
@@ -131,30 +131,7 @@ const getHomepageContent = async (req, res) => {
       cms = await HomepageCMS.create(DEFAULT_HOMEPAGE_CONTENT);
       console.log('🌱 Homepage CMS content successfully auto-seeded!');
     } else {
-      // Perform automated migration on existing CMS document if needed
       let updated = false;
-      if (cms.aboutSection) {
-        cms.aboutSection.subtitle = 'YOUR TRUSTED COMMUNITY PHARMACY';
-        cms.aboutSection.desc = 'With over two decades of dedicated community service, West Chemist specializes in the timely provision of prescription medicines, travel health, and comprehensive patient care. We understand that managing health and medications can feel daunting  our team of experienced pharmacists and professional pharmacy staff across Northampton and East London are here to support you and your family through all stages of life.';
-        cms.aboutSection.image = '/images/about-pharmacist.jpg';
-        cms.aboutSection.features = [
-          { icon: 'award', title: '20+ Years Experience', desc: 'Over two decades of trusted healthcare experience across Northampton & East London.' },
-          { icon: 'users', title: 'Dedicated Pharmacy Team', desc: 'Qualified pharmacists and healthcare staff committed to your family’s well-being.' },
-          { icon: 'check-square', title: 'Timely Prescriptions', desc: 'Fast, reliable prescription dispensing and professional pharmacy services.' }
-        ];
-        cms.markModified('aboutSection');
-        updated = true;
-      }
-      if (cms.appointmentCta) {
-        cms.appointmentCta.desc = 'Are you looking to achieve and maintain a healthy weight? Our pharmacy team provides safe, professional weight management support tailored to you. We offer expert advice, progress tracking, and regulation-compliant guidance.';
-        cms.appointmentCta.bullets = [
-          'Personalized expert support',
-          'In-person consultations available at our pharmacy',
-          'Flexible appointment options, including evening slots'
-        ];
-        cms.markModified('appointmentCta');
-        updated = true;
-      }
       if (cms.seoSettings?.metaTitle?.includes('West Chemist Clinic')) {
         cms.seoSettings.metaTitle = cms.seoSettings.metaTitle.replace(/West Chemist Clinic/g, 'West Chemist');
         cms.seoSettings.metaDescription = cms.seoSettings.metaDescription.replace(/West Chemist Clinic/g, 'West Chemist').replace(/specialist health advice/g, 'expert health advice');

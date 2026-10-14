@@ -1,14 +1,26 @@
-﻿/* ============================================================
+/* ============================================================
    TESTIMONIALS.CSS — PURE PHARMACY HOSPITAL VIBE
    ============================================================ */
 
 .testimonials_section {
     position: relative;
-    padding: 120px 5%;
+    padding: 140px 5% 120px;
     background: transparent;
-    /* PHARMACY light grey/blue removed for transparency */
     overflow: hidden;
     isolation: isolate;
+}
+
+.testimonials_section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(1000px, 85%);
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(15, 23, 42, 0.08), transparent);
+    pointer-events: none;
+    z-index: 1;
 }
 
 /* ════════════════════════════════════
@@ -65,53 +77,33 @@
     align-items: center;
 }
 
-.t_badge_wrap {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 18px;
-    background: #ffffff;
-    border-radius: 999px;
-    border: 1px solid rgba(0, 129, 167, 0.15);
-    margin-bottom: 24px;
-    box-shadow: 0 4px 15px rgba(0, 129, 167, 0.05);
-}
-
-.t_medical_cross {
-    width: 12px;
-    height: 12px;
-    /* Drawing a cross */
-    background:
-        linear-gradient(var(--primary), var(--primary)) center/2px 100% no-repeat,
-        linear-gradient(var(--primary), var(--primary)) center/100% 2px no-repeat;
-}
-
 .t_eyebrow {
     font-size: 0.85rem;
     font-weight: 700;
-    color: var(--primary);
+    color: var(--accent);
     text-transform: uppercase;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.2em;
+    margin-bottom: 16px;
+    display: inline-block;
 }
 
 .t_title {
-    font-size: clamp(2.4rem, 4vw, 3.2rem);
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
     font-weight: 800;
-    color: #0f172a;
-    line-height: 1.15;
-    margin-bottom: 20px;
-    letter-spacing: -0.03em;
-}
-
-.t_accent {
+    line-height: 1.1;
     color: var(--primary);
+    margin-bottom: 24px;
+    letter-spacing: -0.02em;
+    text-align: center;
 }
 
 .t_desc {
-    font-size: 1.15rem;
-    color: #475569;
-    max-width: 600px;
-    line-height: 1.6;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: rgba(15, 23, 42, 0.65);
+    max-width: 640px;
+    margin: 0 auto;
+    text-align: center;
 }
 
 /* ════════════════════════════════════
@@ -239,6 +231,10 @@
    RESPONSIVE
 ════════════════════════════════════ */
 @media (max-width: 1024px) {
+    .testimonials_section {
+        padding: 100px 5% 90px;
+    }
+
     .t_grid {
         gap: 24px;
     }
@@ -249,12 +245,12 @@
 }
 
 @media (max-width: 768px) {
-    .t_grid {
-        grid-template-columns: 1fr;
+    .testimonials_section {
+        padding: 80px 5% 70px;
     }
 
-    .t_section {
-        padding: 80px 5%;
+    .t_grid {
+        grid-template-columns: 1fr;
     }
 }
 

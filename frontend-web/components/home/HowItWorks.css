@@ -8,7 +8,7 @@
 ════════════════════════════════════ */
 .how_section {
     position: relative;
-    padding: 60px 5% 60px;
+    padding: 70px 5% 120px;
     background: transparent;
     overflow: hidden;
     isolation: isolate;
@@ -158,90 +158,42 @@
     position: relative;
     z-index: 1;
     text-align: center;
-    margin-bottom: 80px;
+    margin-bottom: 70px;
     max-width: 680px;
     margin-left: auto;
     margin-right: auto;
 }
 
 .how_eyebrow {
-    display: inline-block;
-    font-size: 0.73rem;
+    font-size: 0.85rem;
     font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
     color: var(--accent);
-    background: rgba(0, 132, 115, 0.08);
-    border: 1px solid rgba(0, 132, 115, 0.22);
-    padding: 5px 16px;
-    border-radius: 9999px;
-    margin-bottom: 18px;
-    animation: eyebrowPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
-}
-
-@keyframes eyebrowPop {
-    from {
-        opacity: 0;
-        transform: scale(0.88) translateY(-8px);
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 16px;
+    display: inline-block;
+    background: transparent;
+    border: none;
+    padding: 0;
 }
 
 .how_title {
-    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
     font-weight: 800;
-    color: black;
-    letter-spacing: -0.035em;
-    line-height: 1.08;
+    line-height: 1.1;
+    color: var(--primary);
     margin-bottom: 24px;
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.how_title_word {
-    display: inline-block;
-    opacity: 0;
-    transform: translate3d(0, 20px, 0) rotate(3deg);
-    transition:
-        opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1) var(--dw),
-        transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) var(--dw);
-}
-
-.hw_visible .how_title_word {
-    opacity: 1;
-    transform: translate3d(0, 0, 0) rotate(0deg);
-}
-
-/* Animated underline on title */
-.how_title::after {
-    content: '';
-    position: absolute;
-    bottom: -12px;
-    left: 50%;
-    margin-left: -28px;
-    width: 56px;
-    height: 3px;
-    border-radius: 99px;
-    background: linear-gradient(90deg, var(--accent), var(--secondary));
-    transform: scaleX(0);
-    transform-origin: left center;
-    transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1) 0.4s;
-}
-
-.hw_visible .how_title::after {
-    transform: scaleX(1);
+    letter-spacing: -0.02em;
+    text-align: center;
 }
 
 .how_subtitle {
     font-size: 1.05rem;
-    color: rgba(15, 23, 42, 0.56);
-    line-height: 1.75;
+    line-height: 1.7;
+    color: rgba(15, 23, 42, 0.65);
+    max-width: 640px;
+    margin: 0 auto;
+    text-align: center;
 }
 
 /* ════════════════════════════════════
@@ -741,7 +693,7 @@
 ════════════════════════════════════ */
 @media (max-width: 1024px) {
     .how_section {
-        padding: 40px 5% 40px;
+        padding: 50px 5% 90px;
     }
 
     .how_steps {
@@ -759,7 +711,7 @@
 ════════════════════════════════════ */
 @media (max-width: 640px) {
     .how_section {
-        padding: 30px 5% 30px;
+        padding: 40px 5% 70px;
     }
 
     .how_steps {

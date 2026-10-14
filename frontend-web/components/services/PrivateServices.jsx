@@ -91,9 +91,9 @@ export default function PrivateServices({ initialHeader }) {
                                 <div className="ps_tag">{s.cat}</div>
                             </div>
 
-                            <div className="ps_content">
-                                <h3 className="ps_name">{s.title}</h3>
-                                <p className="ps_brief">{s.desc}</p>
+                            <div className="ps_info">
+                                <h3 className="ps_card_title">{s.title}</h3>
+                                <p className="ps_card_desc">{s.desc}</p>
 
                                 <div className="ps_actions">
                                     <button
