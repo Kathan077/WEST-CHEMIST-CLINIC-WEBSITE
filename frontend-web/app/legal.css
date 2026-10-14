@@ -1,0 +1,112 @@
+/* ==========================================================================
+   Clean & Simple Legal Page Styling (Privacy Policy & Terms of Service)
+   ========================================================================== */
+
+.legal_simple_wrap {
+  width: 100%;
+  min-height: 80vh;
+  background-color: #f8fafc;
+  padding: 48px 20px 80px;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  color: #1e293b;
+}
+
+.legal_simple_container {
+  max-width: 840px;
+  margin: 0 auto;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 48px 44px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+@media (max-width: 640px) {
+  .legal_simple_wrap {
+    padding: 24px 12px 60px;
+  }
+  .legal_simple_container {
+    padding: 28px 20px;
+    border-radius: 8px;
+  }
+}
+
+/* Header */
+.legal_simple_header {
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 24px;
+  margin-bottom: 36px;
+}
+
+.legal_simple_title {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+  font-weight: 800;
+  color: #113c34;
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.legal_simple_meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  font-size: 0.88rem;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+.legal_simple_meta span.dot {
+  color: #cbd5e1;
+}
+
+.legal_simple_meta span.highlight {
+  font-weight: 600;
+  color: #206B5E;
+}
+
+/* Content Area */
+.legal_simple_body {
+  font-size: 1rem;
+  line-height: 1.85;
+  color: #334155;
+}
+
+.legal_simple_section {
+  margin-bottom: 32px;
+}
+
+.legal_simple_section h2 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #113c34;
+  margin-top: 24px;
+  margin-bottom: 12px;
+  line-height: 1.35;
+}
+
+.legal_simple_section p {
+  margin-bottom: 14px;
+  white-space: pre-line;
+}
+
+.legal_simple_section p:last-child {
+  margin-bottom: 0;
+}
+
+/* Print styling */
+@media print {
+  .legal_simple_wrap {
+    background: none !important;
+    padding: 0 !important;
+  }
+  .legal_simple_container {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+  }
+}

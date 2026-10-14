@@ -85,8 +85,7 @@ const TIMES = [
 
 const STEPS = [
     { num: 1, label: "Patient Profile" },
-    { num: 2, label: "Security Verification" },
-    { num: 3, label: "Appointment Scheduler" },
+    { num: 2, label: "Appointment Scheduler" },
 ];
 
 const validateUKMobile = (num) => {
@@ -227,7 +226,7 @@ function BookingPageInner() {
             const raw = sessionStorage.getItem(SESSION_KEY);
             if (raw) {
                 const s = JSON.parse(raw);
-                if (s.step) setStep(s.step);
+                if (s.step) setStep(Math.min(s.step, 2));
                 if (s.formData) setFormData(s.formData);
                 if (s.patientId) setPatientId(s.patientId);
                 if (s.verificationId) setVerificationId(s.verificationId);
@@ -300,7 +299,7 @@ function BookingPageInner() {
     const set = (k, v) => setFormData(p => ({ ...p, [k]: v }));
     const handle = e => set(e.target.name, e.target.value);
 
-    // STEP 1 Action: Register/Lookup Patient
+    // STEP 1 Action: Register/Lookup Patient & Auto-route Verification Request
     const handleStep1Submit = async () => {
         setLoading(true);
         setApiError('');
@@ -315,27 +314,34 @@ function BookingPageInner() {
             });
             const result = await response.json();
             if (result.success) {
-                setPatientId(result.data._id);
+                const pId = result.data._id;
+                setPatientId(pId);
 
-                const status = result.data.verificationStatus || 'none';
-                setVerificationState(status);
-
-                if (status === 'approved' || status === 'pending') {
-                    setVerificationId(result.data.verificationId || 'returning_verified');
-                    setVerifyComplete(true);
-                    setStep(3); // Skip verification step and go straight to slot scheduler!
-                } else {
-                    setVerifyComplete(false);
-                    setStep(2);
+                // Auto-create verification request for Admin Compliance review without document upload
+                try {
+                    const verResponse = await fetch(`${API_URL}/api/verifications/request`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            patientId: pId,
+                            idType: 'in-person'
+                        })
+                    });
+                    const verResult = await verResponse.json();
+                    if (verResult.success && verResult.data) {
+                        setVerificationId(verResult.data._id);
+                    }
+                } catch (vErr) {
+                    console.warn('Auto verification request notice:', vErr);
                 }
+
+                setStep(2); // Proceed straight to slot selection
             } else {
                 setApiError(result.message || 'Failed to process patient details.');
             }
         } catch (err) {
             console.warn('⚠️ West Chemist Backend is offline. Falling back to Demo Mode.');
             setPatientId('demo_patient_id_123');
-            setVerificationState('none');
-            setVerifyComplete(false);
             setStep(2);
         } finally {
             setLoading(false);
@@ -571,12 +577,6 @@ function BookingPageInner() {
                                                 <circle cx="12" cy="7" r="4" />
                                             </svg>
                                         );
-                                    } else if (s.num === 2) {
-                                        circleContent = (
-                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
-                                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                                            </svg>
-                                        );
                                     } else {
                                         circleContent = (
                                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
@@ -598,8 +598,7 @@ function BookingPageInner() {
                                             <div className="bk_step_label">{s.label}</div>
                                             <div className="bk_step_sublabel">
                                                 {s.num === 1 && "Patient Info"}
-                                                {s.num === 2 && "GPhC Compliance"}
-                                                {s.num === 3 && "Secure Slot"}
+                                                {s.num === 2 && "Secure Slot"}
                                             </div>
                                         </div>
                                         {s.num < STEPS.length && <div className="bk_step_line" />}
@@ -749,7 +748,7 @@ function BookingPageInner() {
 
                                 <div className="bk_footer">
                                     <button className="bk_btn_primary" disabled={!step1Valid || loading} onClick={handleStep1Submit}>
-                                        {loading ? 'Initializing Record...' : 'Secure & Proceed to Identity Validation'}
+                                        {loading ? 'Processing Profile...' : 'Proceed to Appointment Scheduler'}
                                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
                                             <polyline points="9 18 15 12 9 6" />
                                         </svg>
@@ -758,281 +757,9 @@ function BookingPageInner() {
                             </div>
                         )}
 
-                        {/* STEP 2: ID Verification */}
+                        {/* STEP 2: Appointment Scheduler */}
                         {step === 2 && (
                             <div className="bk_panel anim_in" key="s2">
-                                <div className="bk_panel_head">
-                                    <h1 className="bk_title">PHARMACY Compliance Verification</h1>
-                                    <p className="bk_desc">To comply with GPhC regulations, please complete an secure identity document scan.</p>
-                                </div>
-
-                                {verificationState === 'approved' ? (
-                                    <div className="bk_verified_bypass anim_in">
-                                        <div style={{
-                                            width: '80px',
-                                            height: '80px',
-                                            borderRadius: '50%',
-                                            background: 'rgba(13, 148, 136, 0.1)',
-                                            border: '2px solid #0d9488',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            margin: '0 auto 24px',
-                                            color: '#0d9488'
-                                        }}>
-                                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                                                <polyline points="22 4 12 14.01 9 11.01" />
-                                            </svg>
-                                        </div>
-                                        <h2 className="bk_bypass_title">Identity Securely Verified</h2>
-                                        <p className="bk_bypass_desc">
-                                            Welcome back, <strong>{formData.fullName}</strong>. Our PHARMACY system has retrieved your approved GPhC statutory verification. No further documents are required.
-                                        </p>
-                                        <div className="bk_footer" style={{ borderTop: 'none', padding: '0', justifyContent: 'center', gap: '16px' }}>
-                                            <button className="bk_btn_ghost" onClick={() => setStep(1)}>
-                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ transform: 'rotate(180deg)' }}>
-                                                    <polyline points="9 18 15 12 9 6" />
-                                                </svg>
-                                                Back to Profile
-                                            </button>
-                                            <button className="bk_btn_primary" onClick={() => setStep(3)}>
-                                                Continue to Scheduler
-                                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
-                                                    <polyline points="9 18 15 12 9 6" />
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </div>
-                                ) : verificationState === 'pending' ? (
-                                    <div className="bk_verified_bypass anim_in" style={{ textAlign: 'center', padding: '40px 20px' }}>
-                                        <div style={{
-                                            width: '80px',
-                                            height: '80px',
-                                            borderRadius: '50%',
-                                            background: 'rgba(245, 158, 11, 0.1)',
-                                            border: '2px solid #f59e0b',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            margin: '0 auto 24px',
-                                            color: '#f59e0b'
-                                        }}>
-                                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                                                <circle cx="12" cy="12" r="10" />
-                                                <polyline points="12 6 12 12 16 14" />
-                                            </svg>
-                                        </div>
-                                        <h2 style={{ fontSize: '1.5rem', color: '#0f172a', fontWeight: '800', marginBottom: '12px' }}>Verification Pending Audit</h2>
-                                        <p style={{ color: '#64748b', fontSize: '0.95rem', maxWidth: '440px', margin: '0 auto 30px', lineHeight: '1.6' }}>
-                                            Your previously uploaded identity document is currently undergoing PHARMACY audit. You can proceed to schedule your slot; confirmation will follow verification completion.
-                                        </p>
-                                        <div className="bk_footer" style={{ borderTop: 'none', padding: '0', justifyContent: 'center', gap: '16px' }}>
-                                            <button className="bk_btn_ghost" onClick={() => setStep(1)}>
-                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ transform: 'rotate(180deg)' }}>
-                                                    <polyline points="9 18 15 12 9 6" />
-                                                </svg>
-                                                Back to Profile
-                                            </button>
-                                            <button className="bk_btn_primary" onClick={() => setStep(3)}>
-                                                Continue to Scheduler
-                                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
-                                                    <polyline points="9 18 15 12 9 6" />
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </div>
-                                ) : (
-                                    <>
-                                        {/* Hidden input file picker */}
-                                        <input
-                                            type="file"
-                                            id="id-file-input"
-                                            style={{ display: 'none' }}
-                                            accept="image/*,application/pdf"
-                                            onChange={handleFileChange}
-                                        />
-
-                                        {!isScanning ? (
-                                            <>
-                                                <div className="bk_id_row">
-                                                    {[
-                                                        {
-                                                            id: 'passport',
-                                                            label: 'Passport Document',
-                                                            svg: (
-                                                                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z" />
-                                                                    <circle cx="12" cy="10" r="3" />
-                                                                    <path d="M12 2v8" />
-                                                                </svg>
-                                                            )
-                                                        },
-                                                        {
-                                                            id: 'license',
-                                                            label: 'Driving Licence',
-                                                            svg: (
-                                                                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                                    <rect width="18" height="18" x="3" y="3" rx="2" />
-                                                                    <line x1="7" y1="8" x2="11" y2="8" />
-                                                                    <line x1="7" y1="12" x2="13" y2="12" />
-                                                                    <line x1="7" y1="16" x2="17" y2="16" />
-                                                                </svg>
-                                                            )
-                                                        }
-                                                    ].map(opt => (
-                                                        <div
-                                                            key={opt.id}
-                                                            className={`bk_id_card ${formData.idType === opt.id ? 'selected' : ''}`}
-                                                            onClick={() => set('idType', opt.id)}
-                                                        >
-                                                            <span className="bk_id_icon" style={{ color: formData.idType === opt.id ? 'var(--secondary)' : 'var(--primary)' }}>
-                                                                {opt.svg}
-                                                            </span>
-                                                            <span className="bk_id_label">{opt.label}</span>
-                                                            {formData.idType === opt.id && <span className="bk_id_tick">✓</span>}
-                                                        </div>
-                                                    ))}
-                                                </div>
-
-                                                {formData.idType && (
-                                                    <div
-                                                        className={`bk_upload ${formData.fileUploaded ? 'uploaded' : ''}`}
-                                                        onClick={() => document.getElementById('id-file-input').click()}
-                                                        style={{ animation: 'fadeUp 0.4s ease' }}
-                                                    >
-                                                        {formData.fileUploaded ? (
-                                                            <>
-                                                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#0d9488" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ margin: '0 auto 16px' }}>
-                                                                    <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
-                                                                </svg>
-                                                                <p className="bk_upload_title" style={{ color: '#0d9488' }}>Document Securely Attached</p>
-                                                                <p className="bk_upload_sub">{formData.fileUploaded} · Click here to change file</p>
-                                                            </>
-                                                        ) : (
-                                                            <>
-                                                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ margin: '0 auto 16px' }}>
-                                                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                                                    <polyline points="17 8 12 3 7 8" />
-                                                                    <line x1="12" y1="3" x2="12" y2="15" />
-                                                                </svg>
-                                                                <p className="bk_upload_title">Drag or Browse Document</p>
-                                                                <p className="bk_upload_sub">Supports PDF, JPEG, or PNG formats up to 10MB</p>
-                                                            </>
-                                                        )}
-                                                    </div>
-                                                )}
-
-                                                <div className="bk_footer">
-                                                    <button className="bk_btn_ghost" onClick={() => setStep(1)}>
-                                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ transform: 'rotate(180deg)' }}>
-                                                            <polyline points="9 18 15 12 9 6" />
-                                                        </svg>
-                                                        Back to Profile
-                                                    </button>
-                                                    <button className="bk_btn_primary" disabled={!formData.fileUploaded} onClick={startVerification}>
-                                                        Initiate Verification & Validate
-                                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
-                                                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                                                        </svg>
-                                                    </button>
-                                                </div>
-                                            </>
-                                        ) : (
-                                            <div className="bk_scanner anim_in">
-                                                {!verifyComplete && <div className="bk_scanner_laser" />}
-                                                {/* Scanner Left - Progress Checks */}
-                                                <div>
-                                                    <div className="bk_scanner_top">
-                                                        <div className="bk_scanner_badge">
-                                                            {!verifyComplete && <span className="bk_pulse" />}
-                                                            <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
-                                                                {verifyComplete ? 'SECURE SCAN APPROVED' : 'SECURE SCAN IN PROGRESS'}
-                                                            </span>
-                                                        </div>
-                                                        {!verifyComplete && <span className="bk_scanner_eng">HUD v4.2 · SECURE</span>}
-                                                    </div>
-
-                                                    <div className="bk_checks">
-                                                        {[
-                                                            { key: 'mrz', label: 'MRZ Code & Barcode Extraction' },
-                                                            { key: 'blur', label: 'Clarity & Image Quality Assessment' },
-                                                            { key: 'tampering', label: 'Anti-Forgery & Tampering Neurals' },
-                                                            { key: 'readable', label: 'GPhC Compliance Confidence Score' },
-                                                        ].map(c => (
-                                                            <div key={c.key} className={`bk_check ${checks[c.key]}`}>
-                                                                {checkIcon(checks[c.key])}
-                                                                <span style={{ fontWeight: '600' }}>{c.label}</span>
-                                                                {checks[c.key] === 'done' && <span className="bk_check_ok">PASS</span>}
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                </div>
-
-                                                {/* Scanner Right - Visual Hud Console */}
-                                                <div className="bk_scanner_console">
-                                                    {/* Rotating Hologram Radar SVG overlay */}
-                                                    <div style={{
-                                                        position: 'absolute',
-                                                        top: '15px', right: '15px',
-                                                        width: '50px', height: '50px',
-                                                        opacity: 0.35
-                                                    }}>
-                                                        <svg viewBox="0 0 100 100" style={{ animation: 'spin 4s linear infinite', width: '100%', height: '100%' }}>
-                                                            <circle cx="50" cy="50" r="45" fill="none" stroke="#14b8a6" strokeWidth="4" strokeDasharray="10 20" />
-                                                            <circle cx="50" cy="50" r="25" fill="none" stroke="#14b8a6" strokeWidth="2" strokeDasharray="5 5" />
-                                                            <line x1="50" y1="50" x2="50" y2="5" stroke="#14b8a6" strokeWidth="4" />
-                                                        </svg>
-                                                    </div>
-
-                                                    <div>
-                                                        <div style={{ borderBottom: '1px solid rgba(20, 184, 166, 0.2)', paddingBottom: '8px', marginBottom: '12px', fontWeight: '900', color: '#fff', letterSpacing: '0.05em' }}>
-                                                            SYSTEM TELEMETRY LOG
-                                                        </div>
-                                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', opacity: 0.85 }}>
-                                                            {terminalLogs.length === 0 ? (
-                                                                <div style={{ color: '#64748b' }}>Awaiting terminal feed boot...</div>
-                                                            ) : (
-                                                                terminalLogs.map((log, idx) => (
-                                                                    <div key={idx} style={{ lineBreak: 'anywhere' }}>{log}</div>
-                                                                ))
-                                                            )}
-                                                        </div>
-                                                    </div>
-
-                                                    <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '16px', borderTop: '1px solid rgba(20, 184, 166, 0.2)', paddingTop: '10px', fontSize: '0.7rem', color: '#64748b' }}>
-                                                        <span>LATENCY: 42ms</span>
-                                                        <span style={{ color: verifyComplete ? '#34d399' : '#eab308' }}>
-                                                            {verifyComplete ? '● ENGINE ONLINE' : '● CALIBRATING'}
-                                                        </span>
-                                                    </div>
-                                                </div>
-
-                                                {verifyComplete && (
-                                                    <div className="bk_footer anim_in" style={{ gridColumn: '1 / -1', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '24px' }}>
-                                                        <div style={{ color: '#34d399', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.95rem' }}>
-                                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
-                                                            UK PHARMACY Compliance Verified Successfully.
-                                                        </div>
-                                                        <button className="bk_btn_primary" onClick={() => setStep(3)}>
-                                                            Open Scheduler & Select Slot
-                                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
-                                                                <polyline points="9 18 15 12 9 6" />
-                                                            </svg>
-                                                        </button>
-                                                    </div>
-                                                )}
-                                            </div>
-                                        )}
-                                    </>
-                                )}
-                            </div>
-                        )}
-
-                        {/* STEP 3: Schedule Slot */}
-                        {step === 3 && (
-                            <div className="bk_panel anim_in" key="s3">
                                 <>
                                     <div className="bk_schedule_wrap">
                                         <div className="bk_schedule_top">
@@ -1238,6 +965,23 @@ function BookingPageInner() {
                                                         )}
                                                     </div>
 
+                                                    <div style={{
+                                                        marginTop: '14px',
+                                                        marginBottom: '16px',
+                                                        padding: '12px 16px',
+                                                        borderRadius: '10px',
+                                                        background: 'rgba(13, 148, 136, 0.05)',
+                                                        border: '1px solid rgba(13, 148, 136, 0.2)',
+                                                        fontSize: '0.82rem',
+                                                        color: 'var(--t2)',
+                                                        lineHeight: '1.45'
+                                                    }}>
+                                                        <div style={{ fontWeight: '700', color: 'var(--teal)', display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px', fontSize: '0.85rem' }}>
+                                                            <span>📋</span> Provisional Request & Admin Confirmation Notice
+                                                        </div>
+                                                        Submitting this booking registers a provisional appointment request. Your booking is officially confirmed once audited and approved by our Superintendent Pharmacist via our clinic admin portal. Please present valid photo ID for in-person verification on arrival.
+                                                    </div>
+
                                                     <div className="bk_summary_actions">
                                                         <button
                                                             className="bk_btn_ghost"
@@ -1265,11 +1009,11 @@ function BookingPageInner() {
                                     </div>
 
                                     <div className="bk_footer">
-                                        <button className="bk_btn_ghost" onClick={() => setStep(2)}>
+                                        <button className="bk_btn_ghost" onClick={() => setStep(1)}>
                                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ transform: 'rotate(180deg)' }}>
                                                 <polyline points="9 18 15 12 9 6" />
                                             </svg>
-                                            Back to Verification
+                                            Back to Profile
                                         </button>
                                     </div>
                                 </>

@@ -154,8 +154,60 @@ const getPatientVerifications = async (req, res) => {
   }
 };
 
+/**
+ * Create a verification request without requiring an uploaded document
+ * @route POST /api/verifications/request
+ */
+const createVerificationRequest = async (req, res) => {
+  try {
+    const { patientId, idType = 'in-person' } = req.body;
+
+    if (!patientId) {
+      return res.status(400).json({
+        success: false,
+        message: 'Patient ID is required'
+      });
+    }
+
+    const patientExists = await Patient.findById(patientId);
+    if (!patientExists) {
+      return res.status(404).json({
+        success: false,
+        message: 'Associated Patient profile not found'
+      });
+    }
+
+    const verification = await Verification.create({
+      patientId,
+      idType: idType || 'in-person',
+      documentUrl: 'Physical ID Check on Clinic Arrival',
+      status: 'pending',
+      checks: {
+        mrz: 'pending',
+        blur: 'pending',
+        tampering: 'pending',
+        readable: 'pending'
+      }
+    });
+
+    res.status(201).json({
+      success: true,
+      message: 'Verification request created successfully and routed to admin',
+      data: verification
+    });
+  } catch (error) {
+    console.error(`❌ Error in createVerificationRequest: ${error.message}`);
+    res.status(500).json({
+      success: false,
+      message: 'Server error creating verification request',
+      error: error.message
+    });
+  }
+};
+
 module.exports = {
   uploadDocument,
   processVerification,
-  getPatientVerifications
+  getPatientVerifications,
+  createVerificationRequest
 };

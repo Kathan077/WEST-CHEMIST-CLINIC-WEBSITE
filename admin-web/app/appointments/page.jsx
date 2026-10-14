@@ -193,40 +193,8 @@ function RescheduleModal({ appointment, onClose, onConfirm }) {
 }
 
 function ViewApptModal({ appointment, onClose, onApprove, onReject, onReschedule }) {
-  const initialVer = appointment.verificationId && typeof appointment.verificationId === 'object' && (appointment.verificationId.status || appointment.verificationId.documentUrl)
-    ? appointment.verificationId
-    : null;
-  const [ver, setVer] = useState(initialVer);
-  const [loadingVer, setLoadingVer] = useState(!initialVer && !!appointment.patientId?._id);
   const [adminNote, setAdminNote] = useState(appointment.adminNote || '');
   const [savingNote, setSavingNote] = useState(false);
-
-  useEffect(() => {
-    const fetchVer = async () => {
-      const token = localStorage.getItem('adminToken');
-      try {
-        const res = await fetch(`${API_URL}/api/verifications/patient/${appointment.patientId?._id}`, {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        const data = await res.json();
-        if (data.success && data.data && data.data.length > 0) {
-          const matched = data.data.find(v => 
-            v._id === (appointment.verificationId?._id || appointment.verificationId)
-          ) || data.data[data.data.length - 1];
-          setVer(matched);
-        }
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoadingVer(false);
-      }
-    };
-    if (appointment.patientId?._id) {
-      fetchVer();
-    } else {
-      setLoadingVer(false);
-    }
-  }, [appointment]);
 
   const handleSaveNote = async () => {
     setSavingNote(true);
@@ -256,278 +224,184 @@ function ViewApptModal({ appointment, onClose, onApprove, onReject, onReschedule
 
   return (
     <div className="adm_modal_overlay" onClick={(e) => e.target === e.currentTarget && onClose()}>
-      <div className="adm_modal details_modal" style={{ maxWidth: '850px', width: '95%' }}>
+      <div className="adm_modal details_modal" style={{ maxWidth: '580px', width: '95%' }}>
         <div className="adm_modal_header">
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ fontSize: '1.25rem' }}>📄</span>
-            <span className="adm_modal_title">Appointment & Compliance Audit</span>
+            <span style={{ fontSize: '1.25rem' }}>📋</span>
+            <span className="adm_modal_title">Appointment Details</span>
           </div>
           <button className="adm_modal_close" onClick={onClose}>✕</button>
         </div>
 
-        <div className="details_modal_body" style={{ display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', gap: '24px', padding: '10px 0' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            <div style={{ padding: '16px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0', display: 'flex', gap: '16px', alignItems: 'center' }}>
-              <div style={{
-                width: '54px',
-                height: '54px',
-                borderRadius: '12px',
-                fontSize: '1.4rem',
-                fontWeight: '800',
-                color: '#fff',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                background: 'linear-gradient(135deg, var(--teal), var(--lavender))',
-                flexShrink: 0
-              }}>
-                {appointment.patientId?.fullName ? appointment.patientId.fullName[0].toUpperCase() : 'P'}
-              </div>
-              <div>
-                <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: '800', color: 'var(--t1)', textTransform: 'capitalize' }}>
-                  {appointment.patientId?.fullName || 'Anonymous Patient'}
-                </h3>
-                <p style={{ margin: '4px 0 0 0', fontSize: '0.85rem', color: 'var(--t3)', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <span>📞 +44 {appointment.patientId?.mobile || '—'}</span>
-                </p>
-              </div>
+        <div className="details_modal_body" style={{ display: 'flex', flexDirection: 'column', gap: '16px', padding: '12px 0' }}>
+          {/* Patient Header Card */}
+          <div style={{ padding: '16px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0', display: 'flex', gap: '16px', alignItems: 'center' }}>
+            <div style={{
+              width: '52px',
+              height: '52px',
+              borderRadius: '12px',
+              fontSize: '1.35rem',
+              fontWeight: '800',
+              color: '#fff',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              background: 'linear-gradient(135deg, var(--teal), var(--lavender))',
+              flexShrink: 0
+            }}>
+              {appointment.patientId?.fullName ? appointment.patientId.fullName[0].toUpperCase() : 'P'}
             </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', padding: '16px', background: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f1f5f9', paddingBottom: '8px' }}>
-                <span style={{ fontSize: '0.85rem', color: 'var(--t3)', fontWeight: '600' }}>PHARMACY Service</span>
-                <span className={`adm_service_tag ${getServiceClass(appointment.service)}`} style={{ margin: 0 }}>
-                  {appointment.service}
-                </span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f1f5f9', paddingBottom: '8px' }}>
-                <span style={{ fontSize: '0.85rem', color: 'var(--t3)', fontWeight: '600' }}>Clinic Branch</span>
-                <span style={{ fontSize: '0.85rem', color: 'var(--t1)', fontWeight: '700' }}>
-                  {appointment.clinic?.replace(/^(West Chemist\s*[\-—–\s]+\s*)/i, '').trim()}
-                </span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f1f5f9', paddingBottom: '8px' }}>
-                <span style={{ fontSize: '0.85rem', color: 'var(--t3)', fontWeight: '600' }}>Date</span>
-                <span style={{ fontSize: '0.85rem', color: 'var(--t1)', fontWeight: '700' }}>
-                  {new Date(appointment.date).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })}
-                </span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f1f5f9', paddingBottom: '8px' }}>
-                <span style={{ fontSize: '0.85rem', color: 'var(--t3)', fontWeight: '600' }}>Time Slot</span>
-                <span style={{ fontSize: '0.85rem', color: 'var(--teal)', fontWeight: '800' }}>
-                  {appointment.time}
-                </span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontSize: '0.85rem', color: 'var(--t3)', fontWeight: '600' }}>Booking Status</span>
-                <span className={`adm_badge ${appointment.status === 'confirmed' ? 'pending' : appointment.status}`} style={{ padding: '4px 10px', fontSize: '0.75rem' }}>
-                  <span className={`adm_badge_dot ${appointment.status === 'confirmed' ? 'pending' : appointment.status}`} />
-                  {appointment.status === 'confirmed' ? 'Pending Audit' : appointment.status.toUpperCase()}
-                </span>
-              </div>
-              {appointment.isRescheduleRequested && (
-                <div style={{
-                  marginTop: '12px',
-                  padding: '12px',
-                  background: 'rgba(94, 53, 177, 0.08)',
-                  border: '1px solid rgba(94, 53, 177, 0.2)',
-                  borderRadius: '12px',
-                  color: '#5e35b1',
-                  fontSize: '0.82rem',
-                  lineHeight: '1.4'
-                }}>
-                  <strong style={{ display: 'block', marginBottom: '4px', fontSize: '0.88rem' }}>🔄 Reschedule Requested</strong>
-                  Patient requested to move this booking to:<br/>
-                  <strong>Date:</strong> {new Date(appointment.rescheduledDate).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })}<br/>
-                  <strong>Time:</strong> {appointment.rescheduledTime}
-                </div>
-              )}
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <label style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--t2)' }}>Audit Notes (Internal)</label>
-              <div style={{ display: 'flex', gap: '8px' }}>
-                <input
-                  type="text"
-                  placeholder="Add internal notes e.g., verified identity card..."
-                  value={adminNote}
-                  onChange={(e) => setAdminNote(e.target.value)}
-                  style={{
-                    flex: 1,
-                    padding: '8px 12px',
-                    borderRadius: '8px',
-                    border: '1px solid #cbd5e1',
-                    fontSize: '0.82rem',
-                    background: '#f8fafc'
-                  }}
-                />
-                <button
-                  onClick={handleSaveNote}
-                  disabled={savingNote}
-                  style={{
-                    padding: '8px 14px',
-                    background: 'var(--purple)',
-                    color: '#fff',
-                    border: 'none',
-                    borderRadius: '8px',
-                    fontSize: '0.82rem',
-                    fontWeight: '600',
-                    cursor: 'pointer'
-                  }}
-                >
-                  {savingNote ? 'Saving...' : 'Save'}
-                </button>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <h3 style={{ margin: 0, fontSize: '1.05rem', fontWeight: '800', color: 'var(--t1)', textTransform: 'capitalize' }}>
+                {appointment.patientId?.fullName || 'Anonymous Patient'}
+              </h3>
+              <div style={{ margin: '4px 0 0 0', fontSize: '0.82rem', color: 'var(--t3)', display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
+                <span>📞 +44 {appointment.patientId?.mobile || '—'}</span>
+                {appointment.patientId?.email && <span>✉️ {appointment.patientId.email}</span>}
               </div>
             </div>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', borderLeft: '1px solid #e2e8f0', paddingLeft: '24px' }}>
-            <h4 style={{ margin: 0, fontSize: '0.9rem', fontWeight: '800', color: 'var(--t1)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-              ⚖️ Statutory GPhC Document Check
-            </h4>
+          {/* Service & Booking Details Card */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', padding: '16px', background: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #f1f5f9', paddingBottom: '8px' }}>
+              <span style={{ fontSize: '0.85rem', color: 'var(--t3)', fontWeight: '600' }}>Pharmacy Service</span>
+              <span className={`adm_service_tag ${getServiceClass(appointment.service)}`} style={{ margin: 0 }}>
+                {appointment.service}
+              </span>
+            </div>
 
-            {loadingVer ? (
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '40px 0', color: 'var(--t3)' }}>
-                <span className="chk spin" style={{ width: '24px', height: '24px', marginBottom: '8px' }}></span>
-                <span>Fetching Identity Records...</span>
-              </div>
-            ) : ver ? (
-              <>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <span style={{ fontSize: '1.2rem' }}>🪪</span>
-                    <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--t2)', textTransform: 'capitalize' }}>
-                      {ver.idType === 'passport' ? 'UK Passport' : 'Driving Licence'}
-                    </span>
-                  </div>
-                  <span className={`comp_check_badge ${ver.status === 'approved' ? 'passed' : ver.status === 'rejected' ? 'failed' : 'pending'}`} style={{ margin: 0, fontSize: '0.72rem' }}>
-                    {ver.status === 'approved' ? 'Passed' : ver.status === 'rejected' ? 'Failed' : 'Pending '}
-                  </span>
-                </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #f1f5f9', paddingBottom: '8px' }}>
+              <span style={{ fontSize: '0.85rem', color: 'var(--t3)', fontWeight: '600' }}>Clinic Branch</span>
+              <span style={{ fontSize: '0.85rem', color: 'var(--t1)', fontWeight: '700' }}>
+                {appointment.clinic?.replace(/^(West Chemist\s*[\-—–\s]+\s*)/i, '').trim()}
+              </span>
+            </div>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', background: '#f8fafc', padding: '12px', borderRadius: '10px', border: '1px solid #f1f5f9' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.78rem' }}>
-                    <span style={{ color: (ver.checks?.mrz === 'passed' || ver.mrzCheck === 'done') ? '#0d9488' : '#eab308', fontWeight: 'bold' }}>
-                      {(ver.checks?.mrz === 'passed' || ver.mrzCheck === 'done') ? '✓' : '⏳'}
-                    </span>
-                    <span style={{ color: 'var(--t2)' }}>MRZ Code & Barcode Band Validation</span>
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.78rem' }}>
-                    <span style={{ color: (ver.checks?.blur === 'passed' || ver.clarityCheck === 'done') ? '#0d9488' : '#eab308', fontWeight: 'bold' }}>
-                      {(ver.checks?.blur === 'passed' || ver.clarityCheck === 'done') ? '✓' : '⏳'}
-                    </span>
-                    <span style={{ color: 'var(--t2)' }}>Image Blur & Focus Assessment</span>
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.78rem' }}>
-                    <span style={{ color: (ver.checks?.tampering === 'passed' || ver.tamperingCheck === 'done') ? '#0d9488' : (ver.checks?.tampering === 'failed' || ver.tamperingCheck === 'failed') ? '#ef4444' : '#eab308', fontWeight: 'bold' }}>
-                      {(ver.checks?.tampering === 'passed' || ver.tamperingCheck === 'done') ? '✓' : (ver.checks?.tampering === 'failed' || ver.tamperingCheck === 'failed') ? '✗' : '⏳'}
-                    </span>
-                    <span style={{ color: 'var(--t2)' }}>Hologram & Tampering Inspection</span>
-                  </div>
-                </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #f1f5f9', paddingBottom: '8px' }}>
+              <span style={{ fontSize: '0.85rem', color: 'var(--t3)', fontWeight: '600' }}>Date & Time</span>
+              <span style={{ fontSize: '0.85rem', color: 'var(--t1)', fontWeight: '700' }}>
+                {new Date(appointment.date).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })}
+                <span style={{ color: 'var(--teal)', fontWeight: '800', marginLeft: '8px' }}>@ {appointment.time}</span>
+              </span>
+            </div>
 
-                <div style={{
-                  padding: '12px 16px',
-                  borderRadius: '10px',
-                  background: isApproved ? 'rgba(13, 148, 136, 0.06)' : isRejected ? 'rgba(239, 68, 68, 0.06)' : 'rgba(245, 158, 11, 0.06)',
-                  border: `1px solid ${isApproved ? 'rgba(13, 148, 136, 0.2)' : isRejected ? 'rgba(239, 68, 68, 0.2)' : 'rgba(245, 158, 11, 0.2)'}`,
-                  color: isApproved ? '#0f766e' : isRejected ? '#be123c' : '#b45309',
-                  fontSize: '0.8rem',
-                  lineHeight: '1.4'
-                }}>
-                  {isApproved ? (
-                    <div>
-                      <strong>✓ Regulatory Check Confirmed:</strong> Superintendent Pharmacist audited this document on the statutory GPhC logs.
-                    </div>
-                  ) : isRejected ? (
-                    <div>
-                      <strong>✗ Compliance Warning:</strong> This appointment was rejected. The security scan identified visual discrepancies or font mismatches.
-                    </div>
-                  ) : (
-                    <div>
-                      <strong>Awaiting Pharmacist Action:</strong> This record requires pharmacist verification. Ensure the uploaded ID matches the patient profile, then click <strong>Approve</strong> below to confirm.
-                    </div>
-                  )}
-                </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #f1f5f9', paddingBottom: '8px' }}>
+              <span style={{ fontSize: '0.85rem', color: 'var(--t3)', fontWeight: '600' }}>Booking Status</span>
+              <span className={`adm_badge ${appointment.status === 'confirmed' ? 'pending' : appointment.status}`} style={{ padding: '4px 10px', fontSize: '0.75rem' }}>
+                <span className={`adm_badge_dot ${appointment.status === 'confirmed' ? 'pending' : appointment.status}`} />
+                {appointment.status === 'confirmed' ? 'Pending Review' : appointment.status.toUpperCase()}
+              </span>
+            </div>
 
-                <div 
-                  onClick={() => {
-                    const docSrc = getDocUrl(ver.documentUrl || ver.documentImage);
-                    if (docSrc) window.open(docSrc, '_blank');
-                  }}
-                  title={(ver.documentUrl || ver.documentImage) ? "Click to view full uploaded ID document" : undefined}
-                  style={{
-                    position: 'relative',
-                    height: '110px',
-                    borderRadius: '10px',
-                    border: '1px solid #cbd5e1',
-                    overflow: 'hidden',
-                    background: '#f1f5f9',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    cursor: (ver.documentUrl || ver.documentImage) ? 'pointer' : 'default'
-                  }}>
-                  {(ver.documentUrl || ver.documentImage) ? (
-                    <img
-                      src={getDocUrl(ver.documentUrl || ver.documentImage)}
-                      alt="Uploaded Patient ID"
-                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                      onError={(e) => {
-                        e.target.style.display = 'none';
-                        if (e.target.nextSibling) e.target.nextSibling.style.display = 'flex';
-                      }}
-                    />
-                  ) : null}
-                  
-                  <div style={{
-                    display: (ver.documentUrl || ver.documentImage) ? 'none' : 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    textAlign: 'center',
-                    padding: '10px',
-                    color: '#64748b'
-                  }}>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginBottom: 4 }}>
-                      <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z" />
-                      <path d="M6 6h10M6 10h10" />
-                    </svg>
-                    <span style={{ fontSize: '0.7rem', fontWeight: 'bold' }}>DOCUMENT_SECURE_VAULT.PDF</span>
-                    <span style={{ fontSize: '0.62rem' }}>Encrypted on GPhC-v4.2 Server</span>
-                  </div>
-                </div>
-
-                {(ver.documentUrl || ver.documentImage) && (
-                  <div style={{ textAlign: 'center', marginTop: '-6px' }}>
-                    <a
-                      href={getDocUrl(ver.documentUrl || ver.documentImage)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ fontSize: '0.75rem', color: 'var(--teal)', fontWeight: '700', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
-                    >
-                      <span>🔍 Open Full Size ID Document</span>
-                    </a>
-                  </div>
-                )}
-              </>
-            ) : (
-              <div style={{
-                textAlign: 'center',
-                padding: '24px',
-                background: 'rgba(239, 68, 68, 0.05)',
-                border: '1px dashed rgba(239, 68, 68, 0.2)',
-                borderRadius: '12px',
-                color: '#be123c',
-                fontSize: '0.8rem'
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ fontSize: '0.85rem', color: 'var(--t3)', fontWeight: '600' }}>ID Verification</span>
+              <span style={{
+                fontSize: '0.75rem',
+                fontWeight: '700',
+                color: '#0d9488',
+                background: 'rgba(13, 148, 136, 0.08)',
+                border: '1px solid rgba(13, 148, 136, 0.2)',
+                padding: '3px 8px',
+                borderRadius: '6px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '5px'
               }}>
-                <strong>⚠️ No Verification Document:</strong> This patient registered bypass-override (demo mode) and did not upload an identity card.
+                <span>✓</span> In-Person Check on Arrival
+              </span>
+            </div>
+
+            {appointment.isRescheduleRequested && (
+              <div style={{
+                marginTop: '6px',
+                padding: '12px',
+                background: 'rgba(94, 53, 177, 0.08)',
+                border: '1px solid rgba(94, 53, 177, 0.2)',
+                borderRadius: '10px',
+                color: '#5e35b1',
+                fontSize: '0.82rem',
+                lineHeight: '1.4'
+              }}>
+                <strong style={{ display: 'block', marginBottom: '4px', fontSize: '0.88rem' }}>🔄 Reschedule Requested</strong>
+                Patient requested to move this booking to:<br/>
+                <strong>Date:</strong> {new Date(appointment.rescheduledDate).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })}<br/>
+                <strong>Time:</strong> {appointment.rescheduledTime}
               </div>
             )}
           </div>
+
+          {/* Audit Notes (Internal) */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <label style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--t2)' }}>Internal Pharmacist / Audit Notes</label>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <input
+                type="text"
+                placeholder="Add internal notes e.g., verified on arrival..."
+                value={adminNote}
+                onChange={(e) => setAdminNote(e.target.value)}
+                style={{
+                  flex: 1,
+                  padding: '9px 12px',
+                  borderRadius: '8px',
+                  border: '1px solid #cbd5e1',
+                  fontSize: '0.82rem',
+                  background: '#f8fafc'
+                }}
+              />
+              <button
+                onClick={handleSaveNote}
+                disabled={savingNote}
+                style={{
+                  padding: '9px 14px',
+                  background: 'var(--purple)',
+                  color: '#fff',
+                  border: 'none',
+                  borderRadius: '8px',
+                  fontSize: '0.82rem',
+                  fontWeight: '600',
+                  cursor: 'pointer'
+                }}
+              >
+                {savingNote ? 'Saving...' : 'Save'}
+              </button>
+            </div>
+          </div>
+
+          {/* Status summary banner if already approved/rejected */}
+          {isApproved && (
+            <div style={{
+              padding: '10px 14px',
+              borderRadius: '8px',
+              background: 'rgba(13, 148, 136, 0.06)',
+              border: '1px solid rgba(13, 148, 136, 0.2)',
+              color: '#0f766e',
+              fontSize: '0.8rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px'
+            }}>
+              <strong>✓ Confirmed Booking:</strong> This appointment is approved. Patient ID will be verified in person at reception.
+            </div>
+          )}
+          {isRejected && (
+            <div style={{
+              padding: '10px 14px',
+              borderRadius: '8px',
+              background: 'rgba(239, 68, 68, 0.06)',
+              border: '1px solid rgba(239, 68, 68, 0.2)',
+              color: '#be123c',
+              fontSize: '0.8rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px'
+            }}>
+              <strong>✗ Cancelled / Rejected:</strong> This appointment booking was rejected.
+            </div>
+          )}
         </div>
 
-        <div className="adm_modal_footer" style={{ marginTop: '20px', borderTop: '1px solid #e2e8f0', paddingTop: '16px', gap: '12px' }}>
+        <div className="adm_modal_footer" style={{ marginTop: '16px', borderTop: '1px solid #e2e8f0', paddingTop: '16px', display: 'flex', gap: '12px' }}>
           <button className="adm_modal_btn cancel_btn" onClick={onClose} style={{ marginRight: 'auto' }}>
             Close
           </button>
@@ -541,6 +415,15 @@ function ViewApptModal({ appointment, onClose, onApprove, onReject, onReschedule
               >
                 Reject Booking
               </button>
+              {onReschedule && (
+                <button
+                  className="adm_modal_btn"
+                  onClick={() => onReschedule(appointment)}
+                  style={{ background: '#f8fafc', color: 'var(--t1)', border: '1px solid #cbd5e1' }}
+                >
+                  Reschedule...
+                </button>
+              )}
               <button
                 className="adm_modal_btn confirm_btn"
                 onClick={() => onApprove(appointment._id, adminNote)}

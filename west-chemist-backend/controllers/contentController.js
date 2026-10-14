@@ -1,4 +1,5 @@
 const PageContent = require('../models/PageContent');
+const { PRIVACY_POLICY, TERMS_OF_SERVICE } = require('../config/legalContents');
 
 // @desc    Get all page contents
 // @route   GET /api/contents
@@ -27,14 +28,36 @@ const getContentByKey = async (req, res) => {
   try {
     const key = req.params.key.toLowerCase().trim();
     const alternativeKey = key.replace(/_/g, '-');
+    const underscoreKey = key.replace(/-/g, '_');
+
+    const isPrivacy = ['privacy', 'privacy_policy', 'privacy-policy'].includes(key) || ['privacy', 'privacy_policy', 'privacy-policy'].includes(alternativeKey);
+    const isTerms = ['terms', 'terms_and_conditions', 'terms-and-conditions', 'terms-conditions', 'terms_conditions'].includes(key) || ['terms', 'terms_and_conditions', 'terms-and-conditions', 'terms-conditions', 'terms_conditions'].includes(alternativeKey);
+
+    const searchKeys = [key, alternativeKey, underscoreKey];
+    if (isPrivacy) searchKeys.push('privacy_policy', 'privacy-policy', 'privacy');
+    if (isTerms) searchKeys.push('terms_and_conditions', 'terms-and-conditions', 'terms-conditions', 'terms');
+
     let content = await PageContent.findOne({
-      $or: [
-        { key: key },
-        { key: alternativeKey }
-      ]
+      key: { $in: searchKeys }
     });
     if (!content) {
-      if (key === 'clinic-hours') {
+      if (isPrivacy) {
+        content = await PageContent.create({
+          key: 'privacy_policy',
+          title: PRIVACY_POLICY.title,
+          content: PRIVACY_POLICY.content,
+          section: PRIVACY_POLICY.section,
+          metadata: PRIVACY_POLICY.metadata
+        });
+      } else if (isTerms) {
+        content = await PageContent.create({
+          key: 'terms_and_conditions',
+          title: TERMS_OF_SERVICE.title,
+          content: TERMS_OF_SERVICE.content,
+          section: TERMS_OF_SERVICE.section,
+          metadata: TERMS_OF_SERVICE.metadata
+        });
+      } else if (key === 'clinic-hours' || alternativeKey === 'clinic-hours') {
         content = await PageContent.create({
           key: 'clinic-hours',
           title: 'West Chemist Opening Hours',

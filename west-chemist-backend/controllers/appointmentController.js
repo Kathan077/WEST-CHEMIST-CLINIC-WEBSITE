@@ -43,13 +43,14 @@ const getAvailableSlots = async (req, res) => {
  */
 const bookAppointment = async (req, res) => {
   try {
-    const { patientId, clinic, service, date, time, verificationId } = req.body;
+    const { patientId, clinic, service, date, time } = req.body;
+    let verificationId = req.body.verificationId;
 
     // Validate inputs
-    if (!patientId || !clinic || !service || !date || !time || !verificationId) {
+    if (!patientId || !clinic || !service || !date || !time) {
       return res.status(400).json({
         success: false,
-        message: 'All fields (patientId, clinic, service, date, time, verificationId) are required'
+        message: 'Patient ID, clinic, service, date, and time are required'
       });
     }
 
@@ -99,16 +100,32 @@ const bookAppointment = async (req, res) => {
       });
     }
 
-    // Verify verification document exists and is approved
-    const verification = await Verification.findById(verificationId);
-    if (!verification) {
-      return res.status(404).json({
-        success: false,
-        message: 'Identity verification record not found'
-      });
+    // Verify verification document exists, or automatically generate a pending verification request for admin
+    let verification = null;
+    if (verificationId) {
+      verification = await Verification.findById(verificationId);
     }
 
-    if (verification.status === 'rejected') {
+    if (!verification) {
+      verification = await Verification.findOne({ patientId }).sort({ createdAt: -1 });
+      if (!verification) {
+        verification = await Verification.create({
+          patientId,
+          idType: 'in-person',
+          documentUrl: 'Physical ID Check on Clinic Arrival',
+          status: 'pending',
+          checks: {
+            mrz: 'pending',
+            blur: 'pending',
+            tampering: 'pending',
+            readable: 'pending'
+          }
+        });
+      }
+      verificationId = verification._id;
+    }
+
+    if (verification && verification.status === 'rejected') {
       return res.status(400).json({
         success: false,
         message: 'Appointment cannot be booked. Your identity verification was rejected.'

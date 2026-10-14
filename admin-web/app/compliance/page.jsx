@@ -299,7 +299,7 @@ export default function AdminCompliancePage() {
                         </td>
                         <td>
                           <span style={{ fontWeight: '700', textTransform: 'uppercase', fontSize: '0.8rem', background: '#f4effa', color: '#4b2d71', padding: '3px 8px', borderRadius: '6px' }}>
-                            {ver.idType}
+                            {ver.idType === 'in-person' ? 'In-Person Check' : ver.idType}
                           </span>
                         </td>
                         <td>

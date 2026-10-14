@@ -2,6 +2,7 @@ const Service = require('../models/Service');
 const PageContent = require('../models/PageContent');
 const Category = require('../models/Category');
 const Blog = require('../models/Blog');
+const { PRIVACY_POLICY, TERMS_OF_SERVICE } = require('./legalContents');
 
 const defaultServices = [
   // --- Private Services ---
@@ -620,6 +621,28 @@ const seedServicesAndPages = async () => {
     if (pageCount === 0) {
       await PageContent.insertMany(defaultPages);
       console.log(` [Database Seeding] Successfully seeded ${defaultPages.length} default page contents.`);
+    }
+
+    // Ensure privacy policy exists with full legal content
+    let privacyDoc = await PageContent.findOne({ key: { $in: ['privacy_policy', 'privacy-policy'] } });
+    if (!privacyDoc || !privacyDoc.content || privacyDoc.content.length < 200) {
+      await PageContent.findOneAndUpdate(
+        { key: 'privacy_policy' },
+        { $set: PRIVACY_POLICY },
+        { upsert: true, new: true }
+      );
+      console.log("💎 [Database Migration] Seeded comprehensive Privacy Policy.");
+    }
+
+    // Ensure terms of service exists with full legal content
+    let termsDoc = await PageContent.findOne({ key: { $in: ['terms_and_conditions', 'terms-and-conditions', 'terms-conditions'] } });
+    if (!termsDoc || !termsDoc.content || termsDoc.content.length < 200) {
+      await PageContent.findOneAndUpdate(
+        { key: 'terms_and_conditions' },
+        { $set: TERMS_OF_SERVICE },
+        { upsert: true, new: true }
+      );
+      console.log("💎 [Database Migration] Seeded comprehensive Terms of Service.");
     }
 
     // Ensure clinic-hours document exists

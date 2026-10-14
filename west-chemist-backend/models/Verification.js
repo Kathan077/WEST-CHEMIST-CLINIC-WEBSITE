@@ -10,15 +10,15 @@ const VerificationSchema = new mongoose.Schema(
     },
     idType: {
       type: String,
-      required: [true, 'ID document type is required'],
+      default: 'in-person',
       enum: {
-        values: ['passport', 'license'],
-        message: '{VALUE} is not a valid ID type (passport or license allowed)'
+        values: ['passport', 'license', 'in-person', 'clinic-check', 'digital-declaration'],
+        message: '{VALUE} is not a valid ID type'
       }
     },
     documentUrl: {
       type: String,
-      required: [true, 'ID document file path is required']
+      default: 'Physical ID Check on Clinic Arrival'
     },
     status: {
       type: String,
