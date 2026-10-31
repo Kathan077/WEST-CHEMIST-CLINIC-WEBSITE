@@ -134,6 +134,22 @@ const seedAboutDataIfEmpty = async () => {
       console.log('Successfully seeded default about branches.');
     }
 
+    // Seed Branch Header if none exists
+    const branchHeaderCount = await AboutItem.countDocuments({ type: 'branch_header' });
+    if (branchHeaderCount === 0) {
+      const defaultBranchHeader = {
+        type: 'branch_header',
+        title: 'Expert Care Across Multiple Locations.',
+        content: 'Both our pharmacy hubs are fully operational, delivering state-of-the-art healthcare dedicated to your comfort, precision, and privacy.',
+        icon: 'Our Pharmacy Locations',
+        metadata: {
+          eyebrow: 'Our Pharmacy Locations'
+        }
+      };
+      await AboutItem.create(defaultBranchHeader);
+      console.log('Successfully seeded default about branch header.');
+    }
+
     // Seed Impact if none exists
     const impactCount = await AboutItem.countDocuments({ type: 'impact' });
     if (impactCount === 0) {
@@ -159,6 +175,49 @@ const seedAboutDataIfEmpty = async () => {
       };
       await AboutItem.create(defaultImpact);
       console.log('Successfully seeded default about impact section.');
+    }
+
+    // Seed Core Values if none exists
+    const valuesCount = await AboutItem.countDocuments({ type: 'core_values' });
+    if (valuesCount === 0) {
+      const defaultValues = {
+        type: 'core_values',
+        title: 'Our Core Values',
+        content: 'Our guiding principles that shape every patient consultation and service.',
+        icon: 'heart',
+        metadata: {
+          val1_title: 'Patient First',
+          val1_desc: 'Every decision is made with your health and wellbeing in mind.',
+          val1_icon: 'heart',
+          val2_title: 'Compassion',
+          val2_desc: 'We treat every patient with kindness, respect, and understanding.',
+          val2_icon: 'shield',
+          val3_title: 'Pharmaceutical Excellence',
+          val3_desc: 'Safe, evidence-based care delivered by qualified professionals.',
+          val3_icon: 'star',
+          val4_title: 'Trust & Integrity',
+          val4_desc: 'Honest advice and ethical healthcare you can rely on.',
+          val4_icon: 'check'
+        }
+      };
+      await AboutItem.create(defaultValues);
+      console.log('Successfully seeded default about core values.');
+    }
+
+    // Seed FAQ Header if none exists
+    const faqHeaderCount = await AboutItem.countDocuments({ type: 'faq_header' });
+    if (faqHeaderCount === 0) {
+      const defaultFaqHeader = {
+        type: 'faq_header',
+        title: 'Frequently Asked Questions',
+        content: "Find quick answers to the most common questions about our services, treatments, and patient care. We're here to make things simple and clear for you.",
+        icon: 'FAQs',
+        metadata: {
+          badge: 'FAQs'
+        }
+      };
+      await AboutItem.create(defaultFaqHeader);
+      console.log('Successfully seeded default about FAQ header.');
     }
   } catch (error) {
     console.error('Error seeding initial about data:', error);
@@ -200,6 +259,23 @@ const createAboutItem = async (req, res) => {
         success: false,
         message: 'Item type is required'
       });
+    }
+
+    const singletonTypes = ['hero', 'impact', 'branch_header', 'core_values', 'faq_header'];
+    if (singletonTypes.includes(type)) {
+      let existing = await AboutItem.findOne({ type });
+      if (existing) {
+        if (typeof title !== 'undefined') existing.title = title ? title.trim() : '';
+        if (typeof content !== 'undefined') existing.content = content ? content.trim() : '';
+        if (typeof icon !== 'undefined') existing.icon = icon || '';
+        if (typeof metadata !== 'undefined') existing.metadata = metadata || {};
+        await existing.save();
+        return res.status(200).json({
+          success: true,
+          message: 'About item updated successfully',
+          data: existing
+        });
+      }
     }
 
     const newItem = await AboutItem.create({

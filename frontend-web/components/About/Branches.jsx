@@ -83,8 +83,22 @@ const formatBranchesList = (branchItems) => {
     });
 };
 
-const Branches = ({ initialBranches }) => {
+const DEFAULT_BRANCH_HEADER = {
+    eyebrow: "Our Pharmacy Locations",
+    title: "Expert Care Across Multiple Locations.",
+    lead: "Both our pharmacy hubs are fully operational, delivering state-of-the-art healthcare dedicated to your comfort, precision, and privacy."
+};
+
+const Branches = ({ initialBranches, initialHeader }) => {
     const sectionRef = useRef(null);
+    const [headerData, setHeaderData] = useState(() => {
+        if (!initialHeader) return DEFAULT_BRANCH_HEADER;
+        return {
+            eyebrow: initialHeader.metadata?.eyebrow || initialHeader.icon || DEFAULT_BRANCH_HEADER.eyebrow,
+            title: initialHeader.title || DEFAULT_BRANCH_HEADER.title,
+            lead: initialHeader.content || DEFAULT_BRANCH_HEADER.lead
+        };
+    });
     const [branches, setBranches] = useState(() => (
         initialBranches && initialBranches.length > 0 ? formatBranchesList(initialBranches) : DEFAULT_BRANCHES
     ));
@@ -93,11 +107,20 @@ const Branches = ({ initialBranches }) => {
     ));
 
     useEffect(() => {
-        // Fetch branch data from backend API
+        // Fetch branch data and header from backend API
         fetch(`${API_URL}/api/about`, { cache: 'no-store' })
             .then(res => res.json())
             .then(data => {
                 if (data.success && data.data) {
+                    const headerItem = data.data.find(item => item.type === 'branch_header');
+                    if (headerItem) {
+                        setHeaderData({
+                            eyebrow: headerItem.metadata?.eyebrow || headerItem.icon || DEFAULT_BRANCH_HEADER.eyebrow,
+                            title: headerItem.title || DEFAULT_BRANCH_HEADER.title,
+                            lead: headerItem.content || DEFAULT_BRANCH_HEADER.lead
+                        });
+                    }
+
                     const branchItems = data.data.filter(item => item.type === 'branch');
                     if (branchItems.length > 0) {
                         setBranches(formatBranchesList(branchItems));
@@ -135,16 +158,16 @@ const Branches = ({ initialBranches }) => {
         revealElements.forEach((el) => observer.observe(el));
 
         return () => observer.disconnect();
-    }, [branches]);
+    }, [branches, headerData]);
 
     return (
         <section className="br_section" ref={sectionRef}>
             <div className="br_container">
                 <div className="br_section_header reveal_on_scroll">
-                    <span className="br_eyebrow">Our Pharmacy Locations</span>
-                    <h2 className="br_main_title">Expert Care Across<br />Multiple Locations.</h2>
+                    <span className="br_eyebrow">{headerData.eyebrow}</span>
+                    <h2 className="br_main_title" style={{ whiteSpace: 'pre-line' }}>{headerData.title}</h2>
                     <p className="br_header_lead">
-                        Both our pharmacy hubs are fully operational, delivering state-of-the-art healthcare dedicated to your comfort, precision, and privacy.
+                        {headerData.lead}
                     </p>
                 </div>
 

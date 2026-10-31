@@ -30,7 +30,8 @@ const ICONS = {
   mission: "M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zm0-16l2 4 4 2-4 2-2 4-2-4-4-2 4-2 2-4z",
   image:   "M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2z M8.5 10a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z M21 15l-5-5L5 21",
   doc:     "M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z M14 2v6h6 M16 13H8 M16 17H8 M10 9H8",
-  globe:   "M12 2a10 10 0 1010 10A10 10 0 0012 2zM2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"
+  globe:   "M12 2a10 10 0 1010 10A10 10 0 0012 2zM2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z",
+  heart:   "M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
 };
 
 const resolveImage = (src) => {
@@ -86,6 +87,14 @@ export default function AboutEditorPage() {
   // Hero form state
   const [heroForm, setHeroForm] = useState({ id: '', title: '', content: '' });
 
+  // Branch Header form state (Our Pharmacy Locations section)
+  const [branchHeaderForm, setBranchHeaderForm] = useState({
+    id: '',
+    eyebrow: 'Our Pharmacy Locations',
+    title: 'Expert Care Across Multiple Locations.',
+    content: 'Both our pharmacy hubs are fully operational, delivering state-of-the-art healthcare dedicated to your comfort, precision, and privacy.'
+  });
+
   // Impact form state
   const [impactForm, setImpactForm] = useState({
     id: '',
@@ -106,9 +115,38 @@ export default function AboutEditorPage() {
     stat4_suffix: ''
   });
 
+  // Core Values form state (Our Core Values section)
+  const [valuesForm, setValuesForm] = useState({
+    id: '',
+    title: 'Our Core Values',
+    val1_title: 'Patient First',
+    val1_desc: 'Every decision is made with your health and wellbeing in mind.',
+    val1_icon: 'heart',
+    val2_title: 'Compassion',
+    val2_desc: 'We treat every patient with kindness, respect, and understanding.',
+    val2_icon: 'shield',
+    val3_title: 'Pharmaceutical Excellence',
+    val3_desc: 'Safe, evidence-based care delivered by qualified professionals.',
+    val3_icon: 'star',
+    val4_title: 'Trust & Integrity',
+    val4_desc: 'Honest advice and ethical healthcare you can rely on.',
+    val4_icon: 'check'
+  });
+
+  // FAQ Header form state (Badge, heading, description)
+  const [faqHeaderForm, setFaqHeaderForm] = useState({
+    id: '',
+    badge: 'FAQs',
+    title: 'Frequently Asked Questions',
+    description: "Find quick answers to the most common questions about our services, treatments, and patient care. We're here to make things simple and clear for you."
+  });
+
   // Save loaders
   const [savingHero, setSavingHero] = useState(false);
+  const [savingBranchHeader, setSavingBranchHeader] = useState(false);
   const [savingImpact, setSavingImpact] = useState(false);
+  const [savingValues, setSavingValues] = useState(false);
+  const [savingFaqHeader, setSavingFaqHeader] = useState(false);
   const [savingStatId, setSavingStatId] = useState(null);
   const [savingCardId, setSavingCardId] = useState(null);
   const [savingBranchId, setSavingBranchId] = useState(null);
@@ -196,6 +234,50 @@ export default function AboutEditorPage() {
             stat4_suffix: impactItem.metadata?.stat4_suffix || ''
           });
         }
+
+        // Initialize branch header state (Our Pharmacy Locations section)
+        const branchHeaderItem = dataAbout.data.find(item => item.type === 'branch_header');
+        if (branchHeaderItem) {
+          setBranchHeaderForm({
+            id: branchHeaderItem._id,
+            eyebrow: branchHeaderItem.metadata?.eyebrow || branchHeaderItem.icon || 'Our Pharmacy Locations',
+            title: branchHeaderItem.title || 'Expert Care Across Multiple Locations.',
+            content: branchHeaderItem.content || 'Both our pharmacy hubs are fully operational, delivering state-of-the-art healthcare dedicated to your comfort, precision, and privacy.'
+          });
+        }
+
+        // Initialize Core Values state
+        const valuesItem = dataAbout.data.find(item => item.type === 'core_values');
+        if (valuesItem) {
+          const meta = valuesItem.metadata || {};
+          setValuesForm({
+            id: valuesItem._id,
+            title: valuesItem.title || 'Our Core Values',
+            val1_title: meta.val1_title || 'Patient First',
+            val1_desc: meta.val1_desc || 'Every decision is made with your health and wellbeing in mind.',
+            val1_icon: meta.val1_icon || 'heart',
+            val2_title: meta.val2_title || 'Compassion',
+            val2_desc: meta.val2_desc || 'We treat every patient with kindness, respect, and understanding.',
+            val2_icon: meta.val2_icon || 'shield',
+            val3_title: meta.val3_title || 'Pharmaceutical Excellence',
+            val3_desc: meta.val3_desc || 'Safe, evidence-based care delivered by qualified professionals.',
+            val3_icon: meta.val3_icon || 'star',
+            val4_title: meta.val4_title || 'Trust & Integrity',
+            val4_desc: meta.val4_desc || 'Honest advice and ethical healthcare you can rely on.',
+            val4_icon: meta.val4_icon || 'check'
+          });
+        }
+
+        // Initialize FAQ Header state (Section Heading & Subtitle)
+        const faqHeaderItem = dataAbout.data.find(item => item.type === 'faq_header');
+        if (faqHeaderItem) {
+          setFaqHeaderForm({
+            id: faqHeaderItem._id,
+            badge: faqHeaderItem.metadata?.badge || faqHeaderItem.icon || 'FAQs',
+            title: faqHeaderItem.title || 'Frequently Asked Questions',
+            description: faqHeaderItem.content || "Find quick answers to the most common questions about our services, treatments, and patient care. We're here to make things simple and clear for you."
+          });
+        }
       }
       if (dataApp.success) setAppts(dataApp.data || []);
     } catch (err) {
@@ -256,6 +338,250 @@ export default function AboutEditorPage() {
       showToast('Error saving hero content', 'error');
     } finally {
       setSavingHero(false);
+    }
+  };
+
+  // Update Branch Header Section (Our Pharmacy Locations section header)
+  const handleBranchHeaderSave = async (e) => {
+    e.preventDefault();
+    setSavingBranchHeader(true);
+    const token = localStorage.getItem('adminToken');
+
+    try {
+      const method = branchHeaderForm.id ? 'PUT' : 'POST';
+      const endpoint = branchHeaderForm.id ? `${API_URL}/api/about/${branchHeaderForm.id}` : `${API_URL}/api/about`;
+      const bodyPayload = branchHeaderForm.id
+        ? {
+            title: branchHeaderForm.title,
+            content: branchHeaderForm.content,
+            icon: branchHeaderForm.eyebrow,
+            metadata: { eyebrow: branchHeaderForm.eyebrow }
+          }
+        : {
+            type: 'branch_header',
+            title: branchHeaderForm.title,
+            content: branchHeaderForm.content,
+            icon: branchHeaderForm.eyebrow,
+            metadata: { eyebrow: branchHeaderForm.eyebrow }
+          };
+
+      const res = await fetch(endpoint, {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(bodyPayload)
+      });
+
+      const json = await res.json();
+      if (res.ok && json.success) {
+        showToast('Pharmacy Network header saved successfully', 'success');
+        if (!branchHeaderForm.id) {
+          setBranchHeaderForm(prev => ({ ...prev, id: json.data._id }));
+        }
+        setAboutItems(prev => {
+          const exists = prev.some(i => i.type === 'branch_header');
+          if (exists) {
+            return prev.map(i => i.type === 'branch_header' ? json.data : i);
+          } else {
+            return [...prev, json.data];
+          }
+        });
+      } else {
+        showToast(json.message || 'Failed to update section header', 'error');
+      }
+    } catch (err) {
+      console.error(err);
+      showToast('Error saving header content', 'error');
+    } finally {
+      setSavingBranchHeader(false);
+    }
+  };
+
+  // Update Core Values Section
+  const handleValuesSave = async (e) => {
+    e.preventDefault();
+    setSavingValues(true);
+    const token = localStorage.getItem('adminToken');
+
+    try {
+      const method = valuesForm.id ? 'PUT' : 'POST';
+      const endpoint = valuesForm.id ? `${API_URL}/api/about/${valuesForm.id}` : `${API_URL}/api/about`;
+      const bodyPayload = {
+        type: 'core_values',
+        title: valuesForm.title,
+        content: 'Our guiding principles that shape every patient consultation and service.',
+        icon: 'heart',
+        metadata: {
+          val1_title: valuesForm.val1_title,
+          val1_desc: valuesForm.val1_desc,
+          val1_icon: valuesForm.val1_icon,
+          val2_title: valuesForm.val2_title,
+          val2_desc: valuesForm.val2_desc,
+          val2_icon: valuesForm.val2_icon,
+          val3_title: valuesForm.val3_title,
+          val3_desc: valuesForm.val3_desc,
+          val3_icon: valuesForm.val3_icon,
+          val4_title: valuesForm.val4_title,
+          val4_desc: valuesForm.val4_desc,
+          val4_icon: valuesForm.val4_icon
+        }
+      };
+
+      const res = await fetch(endpoint, {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(bodyPayload)
+      });
+
+      const json = await res.json();
+      if (res.ok && json.success) {
+        showToast('Core Values saved successfully', 'success');
+        if (!valuesForm.id) {
+          setValuesForm(prev => ({ ...prev, id: json.data._id }));
+        }
+        setAboutItems(prev => {
+          const exists = prev.some(i => i.type === 'core_values');
+          if (exists) {
+            return prev.map(i => i.type === 'core_values' ? json.data : i);
+          } else {
+            return [...prev, json.data];
+          }
+        });
+      } else {
+        showToast(json.message || 'Failed to update Core Values', 'error');
+      }
+    } catch (err) {
+      console.error(err);
+      showToast('Error saving Core Values', 'error');
+    } finally {
+      setSavingValues(false);
+    }
+  };
+
+  // Update FAQ Header Section (Heading, Badge, Description)
+  const handleFaqHeaderSave = async (e) => {
+    e.preventDefault();
+    setSavingFaqHeader(true);
+    const token = localStorage.getItem('adminToken');
+
+    try {
+      const method = faqHeaderForm.id ? 'PUT' : 'POST';
+      const endpoint = faqHeaderForm.id ? `${API_URL}/api/about/${faqHeaderForm.id}` : `${API_URL}/api/about`;
+      const bodyPayload = faqHeaderForm.id
+        ? {
+            title: faqHeaderForm.title,
+            content: faqHeaderForm.description,
+            icon: faqHeaderForm.badge,
+            metadata: { badge: faqHeaderForm.badge }
+          }
+        : {
+            type: 'faq_header',
+            title: faqHeaderForm.title,
+            content: faqHeaderForm.description,
+            icon: faqHeaderForm.badge,
+            metadata: { badge: faqHeaderForm.badge }
+          };
+
+      const res = await fetch(endpoint, {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(bodyPayload)
+      });
+
+      const json = await res.json();
+      if (res.ok && json.success) {
+        showToast('FAQ section heading saved successfully', 'success');
+        if (!faqHeaderForm.id) {
+          setFaqHeaderForm(prev => ({ ...prev, id: json.data._id }));
+        }
+        setAboutItems(prev => {
+          const exists = prev.some(i => i.type === 'faq_header');
+          if (exists) {
+            return prev.map(i => i.type === 'faq_header' ? json.data : i);
+          } else {
+            return [...prev, json.data];
+          }
+        });
+      } else {
+        showToast(json.message || 'Failed to update FAQ heading', 'error');
+      }
+    } catch (err) {
+      console.error(err);
+      showToast('Error saving FAQ heading', 'error');
+    } finally {
+      setSavingFaqHeader(false);
+    }
+  };
+
+  // Seed default branches if empty
+  const handleSeedDefaultBranches = async () => {
+    const token = localStorage.getItem('adminToken');
+    const defaults = [
+      {
+        type: 'branch',
+        title: 'Northampton Pharmacy',
+        content: 'Our primary healthcare hub offering comprehensive PHARMACY services, prescriptions, and expert advice in a state-of-the-art facility.',
+        icon: '📍',
+        metadata: {
+          address: '4 Kingsley Park Terrace, NN2 7HG',
+          badge: 'Flagship Branch',
+          stat1_num: 'Daily',
+          stat1_label: 'Pharmacy',
+          stat2_num: '10+',
+          stat2_label: 'Consult Rooms',
+          stat3_num: '100%',
+          stat3_label: 'Quality Care',
+          action_url: '/book-appointment',
+          action_text: 'Book Consultation'
+        }
+      },
+      {
+        type: 'branch',
+        title: 'East London Consultation Hub',
+        content: 'A convenient consultation pharmacy offering rapid health tests, travel vaccinations, and private consultations in East London.',
+        icon: '📍',
+        metadata: {
+          address: '102 Mile End Rd, London E1 4UN',
+          badge: 'Consultation Hub',
+          stat1_num: '7 Days',
+          stat1_label: 'Availability',
+          stat2_num: 'Zero',
+          stat2_label: 'Travel Needed',
+          stat3_num: 'Secure',
+          stat3_label: 'Consultations',
+          action_url: '/book-appointment',
+          action_text: 'Book Pharmacy Consultation'
+        }
+      }
+    ];
+
+    try {
+      for (const b of defaults) {
+        const res = await fetch(`${API_URL}/api/about`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(b)
+        });
+        const json = await res.json();
+        if (json.success) {
+          setAboutItems(prev => [...prev, json.data]);
+        }
+      }
+      showToast('Default branch hubs populated successfully!', 'success');
+    } catch (err) {
+      console.error(err);
+      showToast('Network error populating branches', 'error');
     }
   };
 
@@ -691,7 +1017,10 @@ export default function AboutEditorPage() {
                 <I d={ICONS.impact} s={14} /> Our Impact
               </button>
               <button className={`abt_tab_btn ${activeTab === 'cards' ? 'active' : ''}`} onClick={() => setActiveTab('cards')}>
-                <I d={ICONS.mission} s={14} /> Mission & Values ({cards.length})
+                <I d={ICONS.mission} s={14} /> Mission & Vision ({cards.length})
+              </button>
+              <button className={`abt_tab_btn ${activeTab === 'values' ? 'active' : ''}`} onClick={() => setActiveTab('values')}>
+                <I d={ICONS.heart} s={14} /> Core Values
               </button>
               <button className={`abt_tab_btn ${activeTab === 'branches' ? 'active' : ''}`} onClick={() => setActiveTab('branches')}>
                 <I d={ICONS.map} s={14} /> PHARMACY Network ({branches.length})
@@ -1009,226 +1338,452 @@ export default function AboutEditorPage() {
                 </section>
               )}
 
-              {/* 4. Branches Section Tab */}
-              {activeTab === 'branches' && (
+              {/* Core Values Section Tab */}
+              {activeTab === 'values' && (
                 <section className="abt_card anim_fade">
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
                     <h3 className="abt_title">
-                      📍 PHARMACY Network & Locations
+                      <I d={ICONS.heart} s={18} />
+                      Core Values Section
                     </h3>
-                    <button className="abt_btn_add" onClick={() => setShowAddBranch(!showAddBranch)} style={{ marginTop: 0 }}>
-                      <I d={ICONS.plus} s={14} />
-                      {showAddBranch ? 'Cancel' : 'Add Clinic Branch'}
-                    </button>
+                    <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#008473', background: 'rgba(0,132,115,0.08)', padding: '5px 12px', borderRadius: '50px' }}>
+                      LIVE CMS SYNC
+                    </span>
                   </div>
-                  <p className="abt_sub">Add, edit, or remove physical and virtual clinic branches rendered on the public website.</p>
+                  <p className="abt_sub">Customize the section title and the 4 radial core values displayed on the public About page.</p>
 
-                  {/* Add New Branch Form Block */}
-                  {showAddBranch && (
-                    <form onSubmit={handleAddBranchSubmit} className="abt_add_form" style={{ maxWidth: '800px' }}>
-                      <h4 className="abt_add_form_title">✨ Create Clinic Branch Location</h4>
-                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '14px', marginBottom: '14px' }}>
+                  <form onSubmit={handleValuesSave}>
+                    <div className="abt_form_group">
+                      <label className="abt_label">Section Heading</label>
+                      <input
+                        type="text"
+                        className="abt_input"
+                        placeholder="e.g. Our Core Values"
+                        value={valuesForm.title}
+                        onChange={(e) => setValuesForm({ ...valuesForm, title: e.target.value })}
+                        required
+                      />
+                    </div>
+
+                    <h5 style={{ fontSize: '0.82rem', color: 'var(--t2)', textTransform: 'uppercase', borderBottom: '1px solid var(--border)', paddingBottom: '4px', margin: '24px 0 16px' }}>
+                      Core Values (4 Pillars)
+                    </h5>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '16px' }}>
+                      {[
+                        { num: 1, pos: 'Top-Left', titleKey: 'val1_title', descKey: 'val1_desc', iconKey: 'val1_icon' },
+                        { num: 2, pos: 'Top-Right', titleKey: 'val2_title', descKey: 'val2_desc', iconKey: 'val2_icon' },
+                        { num: 3, pos: 'Bottom-Left', titleKey: 'val3_title', descKey: 'val3_desc', iconKey: 'val3_icon' },
+                        { num: 4, pos: 'Bottom-Right', titleKey: 'val4_title', descKey: 'val4_desc', iconKey: 'val4_icon' }
+                      ].map(({ num, pos, titleKey, descKey, iconKey }) => (
+                        <div key={num} style={{ background: '#fcfbfe', border: '1.5px solid var(--border)', borderRadius: '12px', padding: '16px' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                            <span style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--purple)', background: 'rgba(120,89,163,0.08)', padding: '3px 8px', borderRadius: '6px' }}>
+                              Value {num} ({pos})
+                            </span>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                              <label className="abt_label" style={{ margin: 0, fontSize: '0.68rem' }}>Icon</label>
+                              <select
+                                className="abt_select"
+                                style={{ padding: '4px 8px', fontSize: '0.78rem' }}
+                                value={valuesForm[iconKey]}
+                                onChange={(e) => setValuesForm({ ...valuesForm, [iconKey]: e.target.value })}
+                              >
+                                <option value="heart">Heart</option>
+                                <option value="shield">Shield</option>
+                                <option value="star">Star</option>
+                                <option value="check">Checkmark</option>
+                                <option value="award">Award</option>
+                                <option value="users">Community / Users</option>
+                              </select>
+                            </div>
+                          </div>
+
+                          <div className="abt_form_group">
+                            <label className="abt_label" style={{ fontSize: '0.68rem' }}>Title</label>
+                            <input
+                              type="text"
+                              className="abt_input"
+                              placeholder="e.g. Patient First"
+                              value={valuesForm[titleKey]}
+                              onChange={(e) => setValuesForm({ ...valuesForm, [titleKey]: e.target.value })}
+                              required
+                            />
+                          </div>
+
+                          <div className="abt_form_group" style={{ marginBottom: 0 }}>
+                            <label className="abt_label" style={{ fontSize: '0.68rem' }}>Description</label>
+                            <textarea
+                              className="abt_textarea"
+                              rows="3"
+                              placeholder="Describe this core value..."
+                              value={valuesForm[descKey]}
+                              onChange={(e) => setValuesForm({ ...valuesForm, [descKey]: e.target.value })}
+                              required
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 20 }}>
+                      <button type="submit" className="abt_btn_save" disabled={savingValues}>
+                        {savingValues ? <span className="abt_spinner" /> : <I d={ICONS.save} s={14} />}
+                        {savingValues ? 'Saving Core Values...' : 'Save Core Values changes'}
+                      </button>
+                    </div>
+                  </form>
+                </section>
+              )}
+
+              {/* 4. Branches Section Tab */}
+              {activeTab === 'branches' && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                  
+                  {/* 4A. Section Header & Lead Editor */}
+                  <section className="abt_card anim_fade">
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+                      <h3 className="abt_title">
+                        <I d={ICONS.edit} s={18} />
+                        Pharmacy Locations Section Header
+                      </h3>
+                      <span style={{ fontSize: '0.74rem', fontWeight: 800, color: '#008473', background: 'rgba(0,132,115,0.08)', padding: '5px 12px', borderRadius: '50px' }}>
+                        LIVE CMS SYNC
+                      </span>
+                    </div>
+                    <p className="abt_sub">Customize the section title, eyebrow badge, and overview text displayed above your pharmacy locations on the public website.</p>
+                    <form onSubmit={handleBranchHeaderSave}>
+                      <div className="abt_form_row">
                         <div className="abt_form_group">
-                          <label className="abt_label">Branch Name</label>
+                          <label className="abt_label">Section Eyebrow / Tag</label>
                           <input
                             type="text"
                             className="abt_input"
-                            placeholder="e.g. London flagship clinic"
-                            value={newBranch.title}
-                            onChange={(e) => setNewBranch({ ...newBranch, title: e.target.value })}
+                            placeholder="e.g. OUR PHARMACY LOCATIONS"
+                            value={branchHeaderForm.eyebrow}
+                            onChange={(e) => setBranchHeaderForm({ ...branchHeaderForm, eyebrow: e.target.value })}
                             required
                           />
                         </div>
                         <div className="abt_form_group">
-                          <label className="abt_label">Location Badge</label>
+                          <label className="abt_label">Main Section Heading</label>
                           <input
                             type="text"
                             className="abt_input"
-                            placeholder="e.g. Flagship Branch or Fully Operational"
-                            value={newBranch.badge}
-                            onChange={(e) => setNewBranch({ ...newBranch, badge: e.target.value })}
-                          />
-                        </div>
-                        <div className="abt_form_group">
-                          <label className="abt_label">Street Address</label>
-                          <input
-                            type="text"
-                            className="abt_input"
-                            placeholder="e.g. 4 Kingsley Park Terrace, NN2 7HG"
-                            value={newBranch.address}
-                            onChange={(e) => setNewBranch({ ...newBranch, address: e.target.value })}
+                            placeholder="e.g. Expert Care Across Multiple Locations."
+                            value={branchHeaderForm.title}
+                            onChange={(e) => setBranchHeaderForm({ ...branchHeaderForm, title: e.target.value })}
+                            required
                           />
                         </div>
                       </div>
 
-                      <ImageUploader
-                        label="Branch Cover Image"
-                        value={newBranch.image}
-                        onChange={(val) => setNewBranch({ ...newBranch, image: val })}
-                      />
-
                       <div className="abt_form_group">
-                        <label className="abt_label">Clinic Overview/Description</label>
+                        <label className="abt_label">Section Sub-headline / Description</label>
                         <textarea
                           className="abt_textarea"
-                          rows="2"
-                          placeholder="Details about services provided at this clinic..."
-                          value={newBranch.content}
-                          onChange={(e) => setNewBranch({ ...newBranch, content: e.target.value })}
+                          rows="3"
+                          placeholder="Provide the overview description text..."
+                          value={branchHeaderForm.content}
+                          onChange={(e) => setBranchHeaderForm({ ...branchHeaderForm, content: e.target.value })}
                           required
                         />
                       </div>
 
-                      {/* Branch Key stats */}
-                      <h5 style={{ fontSize: '0.82rem', color: 'var(--t2)', textTransform: 'uppercase', borderBottom: '1px solid var(--border)', paddingBottom: '4px', margin: '14px 0 8px' }}>Key Statistics & Metrics</h5>
-                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px', marginBottom: '14px' }}>
-                        <div>
-                          <label className="abt_label" style={{ fontSize: '0.7rem' }}>Stat 1 value</label>
-                          <input type="text" className="abt_input" placeholder="e.g. Daily" value={newBranch.stat1_num} onChange={e => setNewBranch({ ...newBranch, stat1_num: e.target.value })} style={{ width: '100%' }} />
-                          <label className="abt_label" style={{ fontSize: '0.7rem', marginTop: 4, display: 'block' }}>Stat 1 label</label>
-                          <input type="text" className="abt_input" placeholder="e.g. Pharmacy" value={newBranch.stat1_label} onChange={e => setNewBranch({ ...newBranch, stat1_label: e.target.value })} style={{ width: '100%' }} />
-                        </div>
-                        <div>
-                          <label className="abt_label" style={{ fontSize: '0.7rem' }}>Stat 2 value</label>
-                          <input type="text" className="abt_input" placeholder="e.g. 10+" value={newBranch.stat2_num} onChange={e => setNewBranch({ ...newBranch, stat2_num: e.target.value })} style={{ width: '100%' }} />
-                          <label className="abt_label" style={{ fontSize: '0.7rem', marginTop: 4, display: 'block' }}>Stat 2 label</label>
-                          <input type="text" className="abt_input" placeholder="e.g. Rooms" value={newBranch.stat2_label} onChange={e => setNewBranch({ ...newBranch, stat2_label: e.target.value })} style={{ width: '100%' }} />
-                        </div>
-                        <div>
-                          <label className="abt_label" style={{ fontSize: '0.7rem' }}>Stat 3 value</label>
-                          <input type="text" className="abt_input" placeholder="e.g. 100%" value={newBranch.stat3_num} onChange={e => setNewBranch({ ...newBranch, stat3_num: e.target.value })} style={{ width: '100%' }} />
-                          <label className="abt_label" style={{ fontSize: '0.7rem', marginTop: 4, display: 'block' }}>Stat 3 label</label>
-                          <input type="text" className="abt_input" placeholder="e.g. Care" value={newBranch.stat3_label} onChange={e => setNewBranch({ ...newBranch, stat3_label: e.target.value })} style={{ width: '100%' }} />
-                        </div>
-                      </div>
-
-                      {/* Action trigger */}
-                      <h5 style={{ fontSize: '0.82rem', color: 'var(--t2)', textTransform: 'uppercase', borderBottom: '1px solid var(--border)', paddingBottom: '4px', margin: '14px 0 8px' }}>Action Trigger Button</h5>
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
-                        <div className="abt_form_group">
-                          <label className="abt_label">Button text</label>
-                          <input
-                            type="text"
-                            className="abt_input"
-                            placeholder="e.g. Book Consultation"
-                            value={newBranch.action_text}
-                            onChange={(e) => setNewBranch({ ...newBranch, action_text: e.target.value })}
-                          />
-                        </div>
-                        <div className="abt_form_group">
-                          <label className="abt_label">Button Link URL</label>
-                          <input
-                            type="text"
-                            className="abt_input"
-                            placeholder="e.g. /book-appointment"
-                            value={newBranch.action_url}
-                            onChange={(e) => setNewBranch({ ...newBranch, action_url: e.target.value })}
-                          />
-                        </div>
-                      </div>
-
-                      <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px' }}>
-                        <button type="submit" className="abt_btn_save" disabled={creatingBranch}>
-                          {creatingBranch && <span className="abt_spinner" />}
-                          Add Branch Location
+                      <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 12 }}>
+                        <button type="submit" className="abt_btn_save" disabled={savingBranchHeader}>
+                          {savingBranchHeader ? <span className="abt_spinner" /> : <I d={ICONS.save} s={14} />}
+                          {savingBranchHeader ? 'Saving Header...' : 'Save Section Header'}
                         </button>
                       </div>
                     </form>
-                  )}
+                  </section>
 
-                  {/* Branches cards list */}
-                  {branches.length === 0 ? (
-                    <div className="abt_empty_state">
-                      No branch locations defined yet.
+                  {/* 4B. Branch Locations List & Add Form */}
+                  <section className="abt_card anim_fade">
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+                      <h3 className="abt_title">
+                        <I d={ICONS.map} s={18} />
+                        Pharmacy Network Locations ({branches.length})
+                      </h3>
+                      <button className="abt_btn_add" onClick={() => setShowAddBranch(!showAddBranch)} style={{ marginTop: 0 }}>
+                        <I d={ICONS.plus} s={14} />
+                        {showAddBranch ? 'Cancel' : 'Add Clinic Branch'}
+                      </button>
                     </div>
-                  ) : (
-                    <div className="abt_card_list">
-                      {branches.map(item => {
-                        return (
-                          <BranchCardItem
-                            key={item._id}
-                            item={item}
-                            onUpdate={handleUpdateBranch}
-                            onDelete={handleDeleteItem}
-                            saving={savingBranchId === item._id}
+                    <p className="abt_sub">Add, edit, or remove physical pharmacy hubs and consultation locations rendered on the public website.</p>
+
+                    {/* Add New Branch Form Block */}
+                    {showAddBranch && (
+                      <form onSubmit={handleAddBranchSubmit} className="abt_add_form" style={{ maxWidth: '800px' }}>
+                        <h4 className="abt_add_form_title">✨ Create Clinic Branch Location</h4>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '14px', marginBottom: '14px' }}>
+                          <div className="abt_form_group">
+                            <label className="abt_label">Branch Name</label>
+                            <input
+                              type="text"
+                              className="abt_input"
+                              placeholder="e.g. Northampton Pharmacy"
+                              value={newBranch.title}
+                              onChange={(e) => setNewBranch({ ...newBranch, title: e.target.value })}
+                              required
+                            />
+                          </div>
+                          <div className="abt_form_group">
+                            <label className="abt_label">Location Badge</label>
+                            <input
+                              type="text"
+                              className="abt_input"
+                              placeholder="e.g. FLAGSHIP BRANCH or CONSULTATION HUB"
+                              value={newBranch.badge}
+                              onChange={(e) => setNewBranch({ ...newBranch, badge: e.target.value })}
+                            />
+                          </div>
+                          <div className="abt_form_group">
+                            <label className="abt_label">Street Address</label>
+                            <input
+                              type="text"
+                              className="abt_input"
+                              placeholder="e.g. 4 Kingsley Park Terrace, NN2 7HG"
+                              value={newBranch.address}
+                              onChange={(e) => setNewBranch({ ...newBranch, address: e.target.value })}
+                            />
+                          </div>
+                        </div>
+
+                        <ImageUploader
+                          label="Branch Cover Image"
+                          value={newBranch.image}
+                          onChange={(val) => setNewBranch({ ...newBranch, image: val })}
+                        />
+
+                        <div className="abt_form_group">
+                          <label className="abt_label">Clinic Overview / Description</label>
+                          <textarea
+                            className="abt_textarea"
+                            rows="2"
+                            placeholder="Details about services provided at this clinic location..."
+                            value={newBranch.content}
+                            onChange={(e) => setNewBranch({ ...newBranch, content: e.target.value })}
+                            required
                           />
-                        );
-                      })}
-                    </div>
-                  )}
-                </section>
+                        </div>
+
+                        {/* Branch Key stats */}
+                        <h5 style={{ fontSize: '0.82rem', color: 'var(--t2)', textTransform: 'uppercase', borderBottom: '1px solid var(--border)', paddingBottom: '4px', margin: '14px 0 8px' }}>Key Statistics & Metrics</h5>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px', marginBottom: '14px' }}>
+                          <div>
+                            <label className="abt_label" style={{ fontSize: '0.7rem' }}>Stat 1 value</label>
+                            <input type="text" className="abt_input" placeholder="e.g. Daily" value={newBranch.stat1_num} onChange={e => setNewBranch({ ...newBranch, stat1_num: e.target.value })} style={{ width: '100%' }} />
+                            <label className="abt_label" style={{ fontSize: '0.7rem', marginTop: 4, display: 'block' }}>Stat 1 label</label>
+                            <input type="text" className="abt_input" placeholder="e.g. Pharmacy" value={newBranch.stat1_label} onChange={e => setNewBranch({ ...newBranch, stat1_label: e.target.value })} style={{ width: '100%' }} />
+                          </div>
+                          <div>
+                            <label className="abt_label" style={{ fontSize: '0.7rem' }}>Stat 2 value</label>
+                            <input type="text" className="abt_input" placeholder="e.g. 10+" value={newBranch.stat2_num} onChange={e => setNewBranch({ ...newBranch, stat2_num: e.target.value })} style={{ width: '100%' }} />
+                            <label className="abt_label" style={{ fontSize: '0.7rem', marginTop: 4, display: 'block' }}>Stat 2 label</label>
+                            <input type="text" className="abt_input" placeholder="e.g. Consult Rooms" value={newBranch.stat2_label} onChange={e => setNewBranch({ ...newBranch, stat2_label: e.target.value })} style={{ width: '100%' }} />
+                          </div>
+                          <div>
+                            <label className="abt_label" style={{ fontSize: '0.7rem' }}>Stat 3 value</label>
+                            <input type="text" className="abt_input" placeholder="e.g. 100%" value={newBranch.stat3_num} onChange={e => setNewBranch({ ...newBranch, stat3_num: e.target.value })} style={{ width: '100%' }} />
+                            <label className="abt_label" style={{ fontSize: '0.7rem', marginTop: 4, display: 'block' }}>Stat 3 label</label>
+                            <input type="text" className="abt_input" placeholder="e.g. Quality Care" value={newBranch.stat3_label} onChange={e => setNewBranch({ ...newBranch, stat3_label: e.target.value })} style={{ width: '100%' }} />
+                          </div>
+                        </div>
+
+                        {/* Action trigger */}
+                        <h5 style={{ fontSize: '0.82rem', color: 'var(--t2)', textTransform: 'uppercase', borderBottom: '1px solid var(--border)', paddingBottom: '4px', margin: '14px 0 8px' }}>Action Trigger Button</h5>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
+                          <div className="abt_form_group">
+                            <label className="abt_label">Button text</label>
+                            <input
+                              type="text"
+                              className="abt_input"
+                              placeholder="e.g. Book Consultation"
+                              value={newBranch.action_text}
+                              onChange={(e) => setNewBranch({ ...newBranch, action_text: e.target.value })}
+                            />
+                          </div>
+                          <div className="abt_form_group">
+                            <label className="abt_label">Button Link URL</label>
+                            <input
+                              type="text"
+                              className="abt_input"
+                              placeholder="e.g. /book-appointment"
+                              value={newBranch.action_url}
+                              onChange={(e) => setNewBranch({ ...newBranch, action_url: e.target.value })}
+                            />
+                          </div>
+                        </div>
+
+                        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px' }}>
+                          <button type="submit" className="abt_btn_save" disabled={creatingBranch}>
+                            {creatingBranch && <span className="abt_spinner" />}
+                            Add Branch Location
+                          </button>
+                        </div>
+                      </form>
+                    )}
+
+                    {/* Branches cards list */}
+                    {branches.length === 0 ? (
+                      <div className="abt_empty_state" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
+                        <span>No pharmacy branch locations defined yet in the database.</span>
+                        <button
+                          type="button"
+                          className="abt_btn_add"
+                          onClick={handleSeedDefaultBranches}
+                          style={{ margin: '8px 0 0', background: 'var(--purple)', color: '#fff' }}
+                        >
+                          ✨ Seed Default Hubs (Northampton & East London)
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="abt_card_list">
+                        {branches.map(item => {
+                          return (
+                            <BranchCardItem
+                              key={item._id}
+                              item={item}
+                              onUpdate={handleUpdateBranch}
+                              onDelete={handleDeleteItem}
+                              saving={savingBranchId === item._id}
+                            />
+                          );
+                        })}
+                      </div>
+                    )}
+                  </section>
+                </div>
               )}
 
               {/* 5. FAQs Section Tab */}
               {activeTab === 'faqs' && (
-                <section className="abt_card anim_fade">
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+                <div className="anim_fade" style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                  {/* FAQ Section Heading Card */}
+                  <section className="abt_card">
                     <h3 className="abt_title">
-                      ❓ Frequently Asked Questions (FAQs)
+                      ❓ FAQ Section Heading & Subtitle
                     </h3>
-                    <button className="abt_btn_add" onClick={() => setShowAddFaq(!showAddFaq)} style={{ marginTop: 0 }}>
-                      <I d={ICONS.plus} s={14} />
-                      {showAddFaq ? 'Cancel' : 'Add New FAQ'}
-                    </button>
-                  </div>
-                  <p className="abt_sub">Manage the collapsible FAQ answers rendered dynamically at the bottom of the About page.</p>
+                    <p className="abt_sub">Customize the badge pill, main heading, and introduction text shown at the top of the FAQ section on the website.</p>
 
-                  {/* Add New FAQ Form Block */}
-                  {showAddFaq && (
-                    <form onSubmit={handleAddFaqSubmit} className="abt_add_form">
-                      <h4 className="abt_add_form_title">✨ Create FAQ Item</h4>
-                      <div className="abt_form_group">
-                        <label className="abt_label">Question Text</label>
-                        <input
-                          type="text"
-                          className="abt_input"
-                          placeholder="e.g. What are your opening hours?"
-                          value={newFaq.title}
-                          onChange={(e) => setNewFaq({ ...newFaq, title: e.target.value })}
-                          required
-                        />
+                    <form onSubmit={handleFaqHeaderSave}>
+                      <div className="abt_form_row">
+                        <div className="abt_form_group">
+                          <label className="abt_label">Badge / Pill Tag</label>
+                          <input
+                            type="text"
+                            className="abt_input"
+                            placeholder="e.g. FAQs"
+                            value={faqHeaderForm.badge}
+                            onChange={(e) => setFaqHeaderForm({ ...faqHeaderForm, badge: e.target.value })}
+                          />
+                        </div>
+                        <div className="abt_form_group">
+                          <label className="abt_label">Main Section Heading</label>
+                          <input
+                            type="text"
+                            className="abt_input"
+                            placeholder="e.g. Frequently Asked Questions"
+                            value={faqHeaderForm.title}
+                            onChange={(e) => setFaqHeaderForm({ ...faqHeaderForm, title: e.target.value })}
+                            required
+                          />
+                        </div>
                       </div>
+
                       <div className="abt_form_group">
-                        <label className="abt_label">Answer / Details</label>
+                        <label className="abt_label">Section Description / Sub-headline</label>
                         <textarea
                           className="abt_textarea"
-                          rows="3"
-                          placeholder="Provide the explanation/answer..."
-                          value={newFaq.content}
-                          onChange={(e) => setNewFaq({ ...newFaq, content: e.target.value })}
+                          rows="2"
+                          placeholder="Provide intro text for the FAQs..."
+                          value={faqHeaderForm.description}
+                          onChange={(e) => setFaqHeaderForm({ ...faqHeaderForm, description: e.target.value })}
                           required
                         />
                       </div>
-                      <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '12px' }}>
-                        <button type="submit" className="abt_btn_save" disabled={creatingFaq}>
-                          {creatingFaq && <span className="abt_spinner" />}
-                          Add FAQ
+
+                      <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 12 }}>
+                        <button type="submit" className="abt_btn_save" disabled={savingFaqHeader}>
+                          {savingFaqHeader ? <span className="abt_spinner" /> : <I d={ICONS.save} s={14} />}
+                          {savingFaqHeader ? 'Saving FAQ Heading...' : 'Save FAQ Heading'}
                         </button>
                       </div>
                     </form>
-                  )}
+                  </section>
 
-                  {/* FAQs List */}
-                  {faqs.length === 0 ? (
-                    <div className="abt_empty_state">
-                      No FAQs defined. Add questions to display them in the website FAQ section.
+                  {/* FAQ Questions List Card */}
+                  <section className="abt_card">
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+                      <h3 className="abt_title">
+                        ❓ FAQ Questions & Answers
+                      </h3>
+                      <button className="abt_btn_add" onClick={() => setShowAddFaq(!showAddFaq)} style={{ marginTop: 0 }}>
+                        <I d={ICONS.plus} s={14} />
+                        {showAddFaq ? 'Cancel' : 'Add New FAQ'}
+                      </button>
                     </div>
-                  ) : (
-                    <div className="abt_row_list">
-                      {faqs.map(item => {
-                        return (
-                          <FaqRowItem
-                            key={item._id}
-                            item={item}
-                            onUpdate={handleUpdateFaq}
-                            onDelete={handleDeleteItem}
-                            saving={savingFaqId === item._id}
+                    <p className="abt_sub">Manage the collapsible FAQ answers rendered dynamically at the bottom of the About page.</p>
+
+                    {/* Add New FAQ Form Block */}
+                    {showAddFaq && (
+                      <form onSubmit={handleAddFaqSubmit} className="abt_add_form">
+                        <h4 className="abt_add_form_title">✨ Create FAQ Item</h4>
+                        <div className="abt_form_group">
+                          <label className="abt_label">Question Text</label>
+                          <input
+                            type="text"
+                            className="abt_input"
+                            placeholder="e.g. What are your opening hours?"
+                            value={newFaq.title}
+                            onChange={(e) => setNewFaq({ ...newFaq, title: e.target.value })}
+                            required
                           />
-                        );
-                      })}
-                    </div>
-                  )}
-                </section>
+                        </div>
+                        <div className="abt_form_group">
+                          <label className="abt_label">Answer / Details</label>
+                          <textarea
+                            className="abt_textarea"
+                            rows="3"
+                            placeholder="Provide the explanation/answer..."
+                            value={newFaq.content}
+                            onChange={(e) => setNewFaq({ ...newFaq, content: e.target.value })}
+                            required
+                          />
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '12px' }}>
+                          <button type="submit" className="abt_btn_save" disabled={creatingFaq}>
+                            {creatingFaq && <span className="abt_spinner" />}
+                            Add FAQ
+                          </button>
+                        </div>
+                      </form>
+                    )}
+
+                    {/* FAQs List */}
+                    {faqs.length === 0 ? (
+                      <div className="abt_empty_state">
+                        No FAQs defined. Add questions to display them in the website FAQ section.
+                      </div>
+                    ) : (
+                      <div className="abt_row_list">
+                        {faqs.map(item => {
+                          return (
+                            <FaqRowItem
+                              key={item._id}
+                              item={item}
+                              onUpdate={handleUpdateFaq}
+                              onDelete={handleDeleteItem}
+                              saving={savingFaqId === item._id}
+                            />
+                          );
+                        })}
+                      </div>
+                    )}
+                  </section>
+                </div>
               )}
 
             </div>

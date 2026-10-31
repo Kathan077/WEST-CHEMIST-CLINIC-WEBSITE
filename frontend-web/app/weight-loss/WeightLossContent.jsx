@@ -174,7 +174,7 @@ export default function WeightLossContent({ initialCMS }) {
         // Fetch CMS Data
         const fetchCMS = async () => {
             try {
-                const res = await fetch(`${API_URL}/api/weight-loss/cms`, { cache: 'no-store' });
+                const res = await fetch(`${API_URL}/api/weight-loss/cms?t=${Date.now()}`, { cache: 'no-store' });
                 const json = await res.json();
                 if (res.ok && json.success && json.data) {
                     setCms(prev => ({

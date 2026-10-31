@@ -101,24 +101,24 @@ export default function AdminWeightLossPage() {
       desc: 'We provide MHRA-approved medications and comprehensive health coaching to support your metabolic health journey.'
     },
     comparisonTable: {
-      subtitle: 'Head to Head',
-      title: 'Mounjaro vs Wegovy Comparison',
-      desc: 'Compare the features, mechanism, and efficacy of the leading medical weight management treatments.',
+      subtitle: 'TREATMENT COMPARISON',
+      title: 'Mounjaro vs Wegovy: Understanding Your Options',
+      desc: 'Mounjaro and Wegovy are prescription medicines used for weight management in eligible patients. Explore their key differences, how they work, and how they are administered to better understand your options. Our pharmacy team can help you discuss the potential benefits and risks with a qualified healthcare professional.',
       col1Name: 'Parameter',
       col2Name: 'Mounjaro® (Tirzepatide)',
       col3Name: 'Wegovy® (Semaglutide)',
       rows: []
     },
     howItWorks: {
-      subtitle: 'Your Journey',
-      title: 'How Our Weight Loss Program Works',
-      desc: 'A simple, secure, and pharmacist-led process to help you get started safely.',
+      subtitle: 'YOUR PATH TO BETTER HEALTH',
+      title: 'Your Weight Management Journey, Step by Step',
+      desc: 'Our pharmacy team provides personalised guidance throughout your weight management journey, from your initial consultation and suitability assessment to treatment support and ongoing follow-up.',
       steps: []
     },
     faqs: {
-      subtitle: 'Support',
+      subtitle: 'SUPPORT',
       title: 'Frequently Asked Questions',
-      desc: 'Find clear, direct answers about our private weight loss management services.',
+      desc: 'Find answers to common questions about our private weight management service, treatment options, eligibility, and ongoing pharmacy support.',
       items: []
     },
     cta: {
@@ -829,6 +829,56 @@ export default function AdminWeightLossPage() {
             <p className="wl_sec_sub">Configure the column headings and every parameter comparison row shown in the Mounjaro vs Wegovy table.</p>
 
             <form onSubmit={e => { e.preventDefault(); handleSaveCMS('comparisonTable'); }}>
+              {/* Section Header & Description */}
+              <div style={{ background: '#f8fafc', padding: '18px 20px', borderRadius: 12, border: '1px solid #e2e8f0', marginBottom: 24 }}>
+                <div style={{ fontSize: '0.88rem', fontWeight: 700, color: '#1e293b', marginBottom: 14, display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <I d={ICONS.edit} s={16} /> Section Heading & Description
+                </div>
+                <div className="wl_form_2col">
+                  <div className="wl_form_group">
+                    <label className="wl_label">Eyebrow / Pill Tag</label>
+                    <input
+                      type="text"
+                      className="wl_input"
+                      value={cmsForm.comparisonTable.subtitle || ''}
+                      onChange={e => setCmsForm({
+                        ...cmsForm,
+                        comparisonTable: { ...cmsForm.comparisonTable, subtitle: e.target.value }
+                      })}
+                      placeholder="e.g. TREATMENT COMPARISON"
+                    />
+                  </div>
+                  <div className="wl_form_group">
+                    <label className="wl_label">Main Section Heading</label>
+                    <input
+                      type="text"
+                      className="wl_input"
+                      value={cmsForm.comparisonTable.title || ''}
+                      onChange={e => setCmsForm({
+                        ...cmsForm,
+                        comparisonTable: { ...cmsForm.comparisonTable, title: e.target.value }
+                      })}
+                      placeholder="e.g. Mounjaro vs Wegovy: Understanding Your Options"
+                    />
+                  </div>
+                </div>
+                <div className="wl_form_group" style={{ marginTop: 12 }}>
+                  <label className="wl_label">Section Description / Sub-headline</label>
+                  <textarea
+                    className="wl_textarea"
+                    rows="3"
+                    value={cmsForm.comparisonTable.desc || ''}
+                    onChange={e => setCmsForm({
+                      ...cmsForm,
+                      comparisonTable: { ...cmsForm.comparisonTable, desc: e.target.value }
+                    })}
+                    placeholder="Provide introduction paragraph for the treatment comparison..."
+                  />
+                </div>
+              </div>
+
+              <div className="wl_form_divider" style={{ margin: '20px 0 16px' }}>Table Column Headings</div>
+
               {/* Column Headings */}
               <div className="wl_form_3col" style={{ marginBottom: 20 }}>
                 <div className="wl_form_group">
@@ -1005,9 +1055,57 @@ export default function AdminWeightLossPage() {
                 <I d={ICONS.plus} s={14} /> Add Step
               </button>
             </div>
-            <p className="wl_sec_sub">Manage the steps patient takes to begin their medical weight loss program.</p>
-
             <form onSubmit={e => { e.preventDefault(); handleSaveCMS('howItWorks'); }}>
+              {/* Section Header & Description */}
+              <div style={{ background: '#f8fafc', padding: '18px 20px', borderRadius: 12, border: '1px solid #e2e8f0', marginBottom: 24 }}>
+                <div style={{ fontSize: '0.88rem', fontWeight: 700, color: '#1e293b', marginBottom: 14, display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <I d={ICONS.edit} s={16} /> Section Heading & Description
+                </div>
+                <div className="wl_form_2col">
+                  <div className="wl_form_group">
+                    <label className="wl_label">Eyebrow / Pill Tag</label>
+                    <input
+                      type="text"
+                      className="wl_input"
+                      value={cmsForm.howItWorks.subtitle || ''}
+                      onChange={e => setCmsForm({
+                        ...cmsForm,
+                        howItWorks: { ...cmsForm.howItWorks, subtitle: e.target.value }
+                      })}
+                      placeholder="e.g. YOUR PATH TO BETTER HEALTH"
+                    />
+                  </div>
+                  <div className="wl_form_group">
+                    <label className="wl_label">Main Section Heading</label>
+                    <input
+                      type="text"
+                      className="wl_input"
+                      value={cmsForm.howItWorks.title || ''}
+                      onChange={e => setCmsForm({
+                        ...cmsForm,
+                        howItWorks: { ...cmsForm.howItWorks, title: e.target.value }
+                      })}
+                      placeholder="e.g. Your Weight Management Journey, Step by Step"
+                    />
+                  </div>
+                </div>
+                <div className="wl_form_group" style={{ marginTop: 12 }}>
+                  <label className="wl_label">Section Description / Sub-headline</label>
+                  <textarea
+                    className="wl_textarea"
+                    rows="3"
+                    value={cmsForm.howItWorks.desc || ''}
+                    onChange={e => setCmsForm({
+                      ...cmsForm,
+                      howItWorks: { ...cmsForm.howItWorks, desc: e.target.value }
+                    })}
+                    placeholder="Provide introduction paragraph for the journey steps..."
+                  />
+                </div>
+              </div>
+
+              <div className="wl_form_divider" style={{ margin: '20px 0 16px' }}>Journey Steps</div>
+
               <div style={{ marginTop: 14 }}>
                 {(cmsForm.howItWorks.steps || []).map((step, idx) => (
                   <div className="wl_dynamic_item" key={idx}>
@@ -1118,6 +1216,56 @@ export default function AdminWeightLossPage() {
             <p className="wl_sec_sub">Add, edit, or remove questions and answers displayed in the accordion on the Weight Loss page.</p>
 
             <form onSubmit={e => { e.preventDefault(); handleSaveCMS('faqs'); }}>
+              {/* Section Header & Description */}
+              <div style={{ background: '#f8fafc', padding: '18px 20px', borderRadius: 12, border: '1px solid #e2e8f0', marginBottom: 24 }}>
+                <div style={{ fontSize: '0.88rem', fontWeight: 700, color: '#1e293b', marginBottom: 14, display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <I d={ICONS.edit} s={16} /> Section Heading & Description
+                </div>
+                <div className="wl_form_2col">
+                  <div className="wl_form_group">
+                    <label className="wl_label">Eyebrow / Pill Tag</label>
+                    <input
+                      type="text"
+                      className="wl_input"
+                      value={cmsForm.faqs.subtitle || ''}
+                      onChange={e => setCmsForm({
+                        ...cmsForm,
+                        faqs: { ...cmsForm.faqs, subtitle: e.target.value }
+                      })}
+                      placeholder="e.g. SUPPORT"
+                    />
+                  </div>
+                  <div className="wl_form_group">
+                    <label className="wl_label">Main Section Heading</label>
+                    <input
+                      type="text"
+                      className="wl_input"
+                      value={cmsForm.faqs.title || ''}
+                      onChange={e => setCmsForm({
+                        ...cmsForm,
+                        faqs: { ...cmsForm.faqs, title: e.target.value }
+                      })}
+                      placeholder="e.g. Frequently Asked Questions"
+                    />
+                  </div>
+                </div>
+                <div className="wl_form_group" style={{ marginTop: 12 }}>
+                  <label className="wl_label">Section Description / Sub-headline</label>
+                  <textarea
+                    className="wl_textarea"
+                    rows="3"
+                    value={cmsForm.faqs.desc || ''}
+                    onChange={e => setCmsForm({
+                      ...cmsForm,
+                      faqs: { ...cmsForm.faqs, desc: e.target.value }
+                    })}
+                    placeholder="Provide introduction paragraph for the FAQs..."
+                  />
+                </div>
+              </div>
+
+              <div className="wl_form_divider" style={{ margin: '20px 0 16px' }}>FAQ Questions & Answers</div>
+
               <div style={{ marginTop: 14 }}>
                 {(cmsForm.faqs.items || []).map((faq, idx) => (
                   <div className="wl_dynamic_item" key={idx}>

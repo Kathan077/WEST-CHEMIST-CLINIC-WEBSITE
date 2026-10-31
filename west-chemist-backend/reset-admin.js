@@ -21,15 +21,15 @@ async function resetAdmin() {
 
   // Create a fresh admin — bcrypt hashing is handled by the pre-save hook
   const newAdmin = await Admin.create({
-    username: 'admin',
-    email: 'admin@westchemist.com',
-    password: 'adminpassword123'
+    username: 'kalkihealthltd',
+    email: 'kalkihealthltd@gmail.com',
+    password: 'kalkihealthltd123'
   });
 
   console.log('\n💎 New admin account created successfully:');
-  console.log('   👤 Username : admin');
-  console.log('   📧 Email    : admin@westchemist.com');
-  console.log('   🔑 Password : adminpassword123');
+  console.log('   👤 Username : kalkihealthltd');
+  console.log('   📧 Email    : kalkihealthltd@gmail.com');
+  console.log('   🔑 Password : kalkihealthltd123');
   console.log(`   🆔 ID       : ${newAdmin._id}\n`);
 
   await mongoose.disconnect();

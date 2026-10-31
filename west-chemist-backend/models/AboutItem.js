@@ -4,7 +4,7 @@ const aboutItemSchema = new mongoose.Schema({
   type: {
     type: String,
     required: true,
-    enum: ['hero', 'stat', 'card', 'faq', 'branch', 'impact'],
+    enum: ['hero', 'stat', 'card', 'faq', 'branch', 'impact', 'branch_header', 'core_values', 'faq_header'],
     trim: true
   },
   title: {

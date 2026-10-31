@@ -6,7 +6,7 @@ import './NHSServices.css';
 const DEFAULT_NHS_HEADER = {
     eyebrow: 'Official NHS Healthcare Partner',
     title: 'NHS Pharmacy First Services',
-    desc: 'Get convenient access to NHS-funded clinical consultations and eligible treatments for selected common conditions through our Pharmacy First service. Our trained pharmacy team can assess your symptoms, provide professional advice, and recommend appropriate treatment, helping you access care without always needing a GP appointment.',
+    desc: 'Get convenient access to NHS-funded consultations and eligible treatments for selected common conditions through our Pharmacy First service. Our trained pharmacy team can assess your symptoms, provide professional advice and recommend appropriate treatment, helping you access care without always needing to see your GP.',
     logo: '/images/nhs-logo.svg'
 };
 

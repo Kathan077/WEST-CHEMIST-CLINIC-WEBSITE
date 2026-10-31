@@ -64,7 +64,7 @@ const ServicesCMSSchema = new mongoose.Schema(
         },
         desc: {
           type: String,
-          default: 'Get convenient access to NHS-funded clinical consultations and eligible treatments for selected common conditions through our Pharmacy First service. Our trained pharmacy team can assess your symptoms, provide professional advice, and recommend appropriate treatment, helping you access care without always needing a GP appointment.'
+          default: 'Get convenient access to NHS-funded consultations and eligible treatments for selected common conditions through our Pharmacy First service. Our trained pharmacy team can assess your symptoms, provide professional advice and recommend appropriate treatment, helping you access care without always needing to see your GP.'
         },
         logo: {
           type: String,

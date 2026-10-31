@@ -84,21 +84,21 @@ export default function Sidebar({ activePage }) {
     <aside className="dash_sb">
       {!isMobile && (
         <div className="sb_logo">
-          <div className="sb_logo_mark">W</div>
-          <div className="sb_logo_name">
-            West Chemist
-            <small>Admin Portal</small>
-          </div>
+          <img
+            src="/images/west-chemist-logo-cropped.png"
+            alt="West Chemist Logo"
+            className="sb_logo_img"
+          />
         </div>
       )}
 
-      <div style={{ flex: 1, overflowY: 'auto' }}>
+      <div className="sb_scroll_area" style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden' }}>
         {!isMobile && (
           <div className="sb_section">
             <div className="sb_section_label">General</div>
           </div>
         )}
-        <div style={{ padding: '0 14px' }}>
+        <div style={{ padding: '0 12px' }}>
           {nav.map(n => (
             <a key={n.label} href={n.path} className={`sb_link${n.active ? ' active' : ''}`}>
               <I d={n.icon} />
@@ -107,22 +107,19 @@ export default function Sidebar({ activePage }) {
             </a>
           ))}
         </div>
-
-        {!isMobile && (
-          <div className="sb_section" style={{ marginTop: 8 }}>
-            <div className="sb_section_label">Settings</div>
-          </div>
-        )}
-        <div style={{ padding: '0 14px' }}>
-          <a className="sb_link" href="#" onClick={e => { e.preventDefault(); logout(); }}>
-            <I d={ICONS.logout} />
-            <span>Log Out</span>
-          </a>
-        </div>
       </div>
 
       {!isMobile && (
         <div className="sb_foot">
+          <button
+            type="button"
+            className="sb_logout_btn"
+            onClick={(e) => { e.preventDefault(); logout(); }}
+            title="Log Out of Admin Portal"
+          >
+            <I d={ICONS.logout} s={16} />
+            <span>Log Out</span>
+          </button>
           <div className="sb_user">
             <div className="sb_av">{(adminUser?.username || 'A')[0].toUpperCase()}</div>
             <div style={{ flex: 1, minWidth: 0 }}>

@@ -12,10 +12,13 @@ export const metadata = {
     description: 'Learn more about West Chemist, our mission, and our dedicated community pharmacy services.',
 };
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function AboutPage() {
     let aboutData = [];
     try {
-        const res = await fetch(`${API_URL}/api/about`, { cache: 'no-store' });
+        const res = await fetch(`${API_URL}/api/about?t=${Date.now()}`, { cache: 'no-store' });
         const json = await res.json();
         if (json.success && Array.isArray(json.data)) {
             aboutData = json.data;
@@ -26,7 +29,10 @@ export default async function AboutPage() {
 
     const heroData = aboutData.find(item => item.type === 'hero');
     const cardItems = aboutData.filter(item => item.type === 'card');
+    const branchHeaderData = aboutData.find(item => item.type === 'branch_header');
     const branchItems = aboutData.filter(item => item.type === 'branch');
+    const coreValuesData = aboutData.find(item => item.type === 'core_values');
+    const faqHeaderData = aboutData.find(item => item.type === 'faq_header');
     const faqItems = aboutData.filter(item => item.type === 'faq');
 
     return (
@@ -34,9 +40,9 @@ export default async function AboutPage() {
             <Navbar />
             <AboutHero initialHero={heroData} />
             <AboutMission initialCards={cardItems} />
-            <AboutBranches initialBranches={branchItems} />
-            <AboutWhy />
-            <AboutFaq initialFaqs={faqItems} />
+            <AboutBranches initialBranches={branchItems} initialHeader={branchHeaderData} />
+            <AboutWhy initialValues={coreValuesData} />
+            <AboutFaq initialFaqs={faqItems} initialHeader={faqHeaderData} />
         </main>
     );
 }

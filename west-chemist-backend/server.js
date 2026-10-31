@@ -34,4 +34,4 @@ process.on('unhandledRejection', (err) => {
   });
 });
 
-// Nodemon reload trigger comment (reloaded with .env configured)
+// Nodemon auto-reload trigger

@@ -38,7 +38,7 @@ export default function ContactHero() {
         <div className="gridOverlay" />
       </div>
 
-      <motion.div 
+      <motion.div
         className="heroContent"
         variants={containerVariants}
         initial="hidden"
@@ -47,10 +47,9 @@ export default function ContactHero() {
         <motion.h1 variants={itemVariants} className="title">
           Contact Us
         </motion.h1>
-        
+
         <motion.p variants={itemVariants} className="subtitle">
-          Experience premium care with West Chemist. 
-          Reach out to our qualified team and discover how we can help you achieve your wellness goals.
+          Experience professional, personalised care at West Chemist. Get in touch with our qualified pharmacy team to discover how we can support your health and wellbeing.
         </motion.p>
       </motion.div>
     </div>

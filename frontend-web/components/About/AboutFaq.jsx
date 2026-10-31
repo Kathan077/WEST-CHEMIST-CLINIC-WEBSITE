@@ -45,7 +45,21 @@ const formatFaqsList = (faqItems) => {
     }));
 };
 
-export default function AboutFaq({ initialFaqs }) {
+const DEFAULT_HEADER = {
+    badge: 'FAQs',
+    title: 'Frequently Asked Questions',
+    description: "Find quick answers to the most common questions about our services, treatments, and patient care. We're here to make things simple and clear for you."
+};
+
+export default function AboutFaq({ initialFaqs, initialHeader }) {
+    const [headerData, setHeaderData] = useState(() => {
+        if (!initialHeader) return DEFAULT_HEADER;
+        return {
+            badge: initialHeader.metadata?.badge || initialHeader.icon || DEFAULT_HEADER.badge,
+            title: initialHeader.title || DEFAULT_HEADER.title,
+            description: initialHeader.content || DEFAULT_HEADER.description
+        };
+    });
     const [faqs, setFaqs] = useState(() => (
         initialFaqs && initialFaqs.length > 0 ? formatFaqsList(initialFaqs) : DEFAULT_FAQS
     ));
@@ -55,11 +69,20 @@ export default function AboutFaq({ initialFaqs }) {
     const sectionRef = useRef(null);
 
     useEffect(() => {
-        // Fetch FAQs from backend API
-        fetch(`${API_URL}/api/about`, { cache: 'no-store' })
+        // Fetch FAQs and FAQ header from backend API with cache buster
+        fetch(`${API_URL}/api/about?t=${Date.now()}`, { cache: 'no-store' })
             .then(res => res.json())
             .then(data => {
                 if (data.success && data.data) {
+                    const headerItem = data.data.find(item => item.type === 'faq_header');
+                    if (headerItem) {
+                        setHeaderData({
+                            badge: headerItem.metadata?.badge || headerItem.icon || DEFAULT_HEADER.badge,
+                            title: headerItem.title || DEFAULT_HEADER.title,
+                            description: headerItem.content || DEFAULT_HEADER.description
+                        });
+                    }
+
                     const faqItems = data.data.filter(item => item.type === 'faq');
                     if (faqItems.length > 0) {
                         const formatted = formatFaqsList(faqItems);
@@ -94,9 +117,9 @@ export default function AboutFaq({ initialFaqs }) {
         <section className="med_faq_bg" ref={sectionRef}>
             <div className="med_faq_container">
                 <div className="med_faq_header">
-                    <span className="med_faq_badge">FAQs</span>
-                    <h2>Frequently Asked Questions</h2>
-                    <p>Find quick answers to the most common questions about our services, treatments, and patient care. We're here to make things simple and clear for you.</p>
+                    {headerData.badge && <span className="med_faq_badge">{headerData.badge}</span>}
+                    <h2>{headerData.title}</h2>
+                    <p>{headerData.description}</p>
                 </div>
 
                 <div className="med_faq_list">

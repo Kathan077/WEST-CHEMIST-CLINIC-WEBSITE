@@ -1,11 +1,23 @@
 const mongoose = require('mongoose');
 
 const connectDB = async () => {
+  const mongoUri = process.env.MONGODB_URI || process.env.MONGO_URI;
+
+  if (!mongoUri || mongoUri.trim() === '') {
+    console.error('\n❌ ====================================================');
+    console.error('❌ MONGODB CONNECTION ERROR: Missing MONGODB_URI');
+    console.error('👉 Please define MONGODB_URI in your west-chemist-backend/.env file:');
+    console.error('   MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/west-chemist-clinic');
+    console.error('   (Or your local MongoDB URI: mongodb://127.0.0.1:27017/west-chemist-clinic)');
+    console.error('====================================================\n');
+    process.exit(1);
+  }
+
   try {
-    const conn = await mongoose.connect(process.env.MONGODB_URI, {
+    const conn = await mongoose.connect(mongoUri, {
       // Modern Mongoose options (Mongoose 6+ has these enabled by default, but good to ensure stability)
     });
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
+    console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
 
     // Drop unique index to allow multiple bookings per slot (up to capacity)
     try {

@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { API_URL } from '@/config';
 import { useState, useEffect, useCallback, useMemo } from 'react';

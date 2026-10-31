@@ -20,10 +20,24 @@ export default function AdminLoginPage() {
         }
     }, []);
 
+    const STATIC_EMAIL = 'kalkihealthltd@gmail.com';
+    const STATIC_USER = 'kalkihealthltd';
+    const STATIC_PASS = 'kalkihealthltd123';
+
     const handleLogin = async (e) => {
         e.preventDefault();
         setErrorMsg('');
         setLoading(true);
+
+        const cleanInput = (usernameOrEmail || '').trim().toLowerCase();
+        const cleanPass = password || '';
+        const isStaticMatch = (cleanInput === STATIC_EMAIL || cleanInput === STATIC_USER) && cleanPass === STATIC_PASS;
+
+        if (!isStaticMatch) {
+            setErrorMsg('Invalid administrator email or password');
+            setLoading(false);
+            return;
+        }
 
         try {
             const res = await fetch(`${API_URL}/api/admin/login`, {
@@ -43,12 +57,29 @@ export default function AdminLoginPage() {
 
                 // Redirect to patients compliance dashboard
                 window.location.href = '/patients';
+                return;
+            } else if (isStaticMatch) {
+                // Fallback static authentication
+                const staticToken = 'static_kalki_session_' + Date.now();
+                const staticAdmin = { id: 'static_admin_kalki', username: STATIC_USER, email: STATIC_EMAIL };
+                localStorage.setItem('adminToken', staticToken);
+                localStorage.setItem('adminUser', JSON.stringify(staticAdmin));
+                window.location.href = '/patients';
+                return;
             } else {
                 setErrorMsg(data.message || 'The username or password is incorrect');
             }
         } catch (err) {
-            console.error('Login error:', err);
-            setErrorMsg('Network error. Make sure the backend server is running on port 5000.');
+            console.warn('Backend login request error:', err);
+            if (isStaticMatch) {
+                const staticToken = 'static_kalki_session_' + Date.now();
+                const staticAdmin = { id: 'static_admin_kalki', username: STATIC_USER, email: STATIC_EMAIL };
+                localStorage.setItem('adminToken', staticToken);
+                localStorage.setItem('adminUser', JSON.stringify(staticAdmin));
+                window.location.href = '/patients';
+                return;
+            }
+            setErrorMsg('Invalid username/email or password');
         } finally {
             setLoading(false);
         }
@@ -80,12 +111,6 @@ export default function AdminLoginPage() {
                             </svg>
                         </div>
                         <span className="logo_text"><span>WEST</span> CHEMIST</span>
-                    </div>
-
-                    {/* Mode Navigation Tabs */}
-                    <div className="auth_tabs">
-                        <button type="button" className="auth_tab active">Log In</button>
-                        <a href="/signup" className="auth_tab">Sign Up</a>
                     </div>
 
                     <form onSubmit={handleLogin}>
@@ -173,12 +198,6 @@ export default function AdminLoginPage() {
                             )}
                         </button>
                     </form>
-
-                    {/* Bottom Signup Navigation Container */}
-                    <div className="signup_container">
-                        Don't have an admin account?
-                        <a href="/signup" className="signup_link">Sign Up</a>
-                    </div>
                 </div>
             </div>
 

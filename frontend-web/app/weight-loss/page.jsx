@@ -9,10 +9,13 @@ export const metadata = {
     keywords: 'weight loss, wegovy, mounjaro, semaglutide, tirzepatide, weight management, west chemist',
 };
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function WeightLossPage() {
     let initialCMS = null;
     try {
-        const res = await fetch(`${API_URL}/api/weight-loss/cms`, { cache: 'no-store' });
+        const res = await fetch(`${API_URL}/api/weight-loss/cms?t=${Date.now()}`, { cache: 'no-store' });
         const json = await res.json();
         if (json.success && json.data) {
             initialCMS = json.data;
