@@ -11,9 +11,8 @@ const FALLBACK_TERMS = {
     {
       num: '1',
       title: 'About These Terms',
-      content: `These Terms govern your use of www.westchemist.co.uk and our pharmacy appointment booking system operated by Kalki Health Ltd (trading as West Chemist). We operate healthcare and pharmacy services across our 2 pharmacy branches:
-• Northampton Branch (Flagship Pharmacy): 4 Kingsley Park Terrace, Northampton, NN2 7HG (GPhC Reg No: 1035465)
-• East London Branch: East London Consultation Hub, UK
+      content: `These Terms govern your use of www.westchemist.co.uk and our pharmacy appointment booking system operated by Kalki Health Ltd (trading as West Chemist). We operate healthcare and pharmacy services from our registered pharmacy in Northampton:
+• Northampton Pharmacy (Registered Premises): 4 Kingsley Park Terrace, Northampton, NN2 7HG (GPhC Reg No: 1035465)
 Superintendent Pharmacist: Viren Bhatia.`
     },
     {
@@ -24,10 +23,10 @@ Superintendent Pharmacist: Viren Bhatia.`
     {
       num: '3',
       title: 'Appointment Booking & Mandatory Admin Approval',
-      content: `• Provisional Booking: Submitting an appointment online for either pharmacy location is an initial provisional booking request. It is not an automatically guaranteed or confirmed slot.
+      content: `• Provisional Booking: Submitting an appointment online for our pharmacy is an initial provisional booking request. It is not an automatically guaranteed or confirmed slot.
 • Mandatory Admin Approval: An appointment is officially confirmed only after our Superintendent Pharmacist or pharmacy team reviews and approves it via our pharmacy admin portal.
 • Status Updates: You can view your current booking status (Pending, Approved, Rescheduled, or Rejected) on our Track Booking page.
-• Pharmacy Attendance: Please arrive 5–10 minutes before your approved appointment time at your selected pharmacy branch (Northampton or East London).`
+• Pharmacy Attendance: Please arrive 5–10 minutes before your approved appointment time at our pharmacy (4 Kingsley Park Terrace, Northampton, NN2 7HG).`
     },
     {
       num: '4',
@@ -45,8 +44,7 @@ Superintendent Pharmacist: Viren Bhatia.`
       num: '6',
       title: 'Medical Emergencies & Contact',
       content: `West Chemist does not provide emergency medical services. In a life-threatening emergency, immediately call 999 or visit your nearest NHS A&E.
-• Northampton Branch: 4 Kingsley Park Terrace, Northampton, NN2 7HG | Tel: (01604) 713297
-• East London Branch: East London Consultation Hub, UK
+• Northampton Pharmacy: 4 Kingsley Park Terrace, Northampton, NN2 7HG | Tel: (01604) 713297
 • Pharmacy Email: kalkihealthltd@gmail.com`
     }
   ]
@@ -108,7 +106,7 @@ export default function TermsPage() {
             <span className="dot">•</span>
             <span>GPhC Reg No: 1035465</span>
             <span className="dot">•</span>
-            <span>Northampton & East London, UK</span>
+            <span>Northampton, UK</span>
           </div>
         </header>
 

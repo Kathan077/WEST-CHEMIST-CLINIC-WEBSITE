@@ -40,6 +40,17 @@ const getContentByKey = async (req, res) => {
     let content = await PageContent.findOne({
       key: { $in: searchKeys }
     });
+
+    if (content && content.content && content.content.includes('East London')) {
+      if (isPrivacy) {
+        content.content = PRIVACY_POLICY.content;
+        await content.save();
+      } else if (isTerms) {
+        content.content = TERMS_OF_SERVICE.content;
+        await content.save();
+      }
+    }
+
     if (!content) {
       if (isPrivacy) {
         content = await PageContent.create({

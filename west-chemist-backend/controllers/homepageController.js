@@ -54,10 +54,10 @@ const DEFAULT_HOMEPAGE_CONTENT = {
   aboutSection: {
     title: 'Empowering Your Wellness Journey',
     subtitle: 'YOUR TRUSTED COMMUNITY PHARMACY',
-    desc: 'xperienced pharmacists and professional pharmacy staff across Northampton and East London are here to support you and your family through all stages of life.',
+    desc: 'Our team of experienced pharmacists and professional pharmacy staff in Northampton are here to support you and your family through all stages of life.',
     image: '/images/about-pharmacist.jpg',
     features: [
-      { icon: 'award', title: '20+ Years Experience', desc: 'Over two decades of trusted healthcare experience across Northampton & East London.' },
+      { icon: 'award', title: '20+ Years Experience', desc: 'Over two decades of trusted healthcare experience in Northampton.' },
       { icon: 'users', title: 'Dedicated Pharmacy Team', desc: 'Qualified pharmacists and healthcare staff committed to your family’s well-being.' },
       { icon: 'check-square', title: 'Timely Prescriptions', desc: 'Fast, reliable prescription dispensing and professional pharmacy services.' }
     ],
@@ -132,6 +132,17 @@ const getHomepageContent = async (req, res) => {
       console.log('🌱 Homepage CMS content successfully auto-seeded!');
     } else {
       let updated = false;
+      if (cms.aboutSection && cms.aboutSection.desc && (cms.aboutSection.desc.includes('East London') || cms.aboutSection.desc.startsWith('xperienced'))) {
+        cms.aboutSection.desc = 'Our team of experienced pharmacists and professional pharmacy staff in Northampton are here to support you and your family through all stages of life.';
+        if (Array.isArray(cms.aboutSection.features)) {
+          cms.aboutSection.features = cms.aboutSection.features.map(f => ({
+            ...f,
+            desc: (f.desc || '').replace(/across Northampton & East London/g, 'in Northampton').replace(/across Northampton and East London/g, 'in Northampton')
+          }));
+        }
+        cms.markModified('aboutSection');
+        updated = true;
+      }
       if (cms.seoSettings?.metaTitle?.includes('West Chemist Clinic')) {
         cms.seoSettings.metaTitle = cms.seoSettings.metaTitle.replace(/West Chemist Clinic/g, 'West Chemist');
         cms.seoSettings.metaDescription = cms.seoSettings.metaDescription.replace(/West Chemist Clinic/g, 'West Chemist').replace(/specialist health advice/g, 'expert health advice');

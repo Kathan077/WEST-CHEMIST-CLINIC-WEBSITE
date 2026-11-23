@@ -82,7 +82,7 @@ const fallbackBlogs = {
   <li><strong>High precision:</strong> The clinician maintains a direct line of sight throughout, ensuring safety.</li>
   <li><strong>Immediate relief:</strong> Blockages are resolved quickly, restoring normal hearing and relieving ear pressure instantly.</li>
 </ol>
-<p>At West Chemist, our accredited pharmacists perform gentle microsuction earwax removal in our dedicated consultation rooms. Book your consultation today to regain clear hearing.</p>`,
+<p>At West Chemist, our accredited pharmacists perform gentle microsuction earwax removal in our dedicated consultation room. Book your consultation today to regain clear hearing.</p>`,
         images: ["https://images.unsplash.com/photo-1559839734-2b71f1536783?w=1200&q=80"],
         date: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000)
     },

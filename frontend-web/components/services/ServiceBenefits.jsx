@@ -19,7 +19,7 @@ const DEFAULT_BENEFITS = {
         },
         {
             title: "Private Consultation",
-            desc: "Discuss your health in complete confidence in our dedicated private consultation rooms.",
+            desc: "Discuss your health in complete confidence in our dedicated private consultation room.",
             icon: 'shield'
         }
     ]

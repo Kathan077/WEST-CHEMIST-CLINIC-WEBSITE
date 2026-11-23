@@ -100,33 +100,14 @@ const seedAboutDataIfEmpty = async () => {
             address: '4 Kingsley Park Terrace, NN2 7HG',
             image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=800',
             badge: 'Flagship Pharmacy',
-            stat1_num: 'Daily',
-            stat1_label: 'Pharmacy',
-            stat2_num: 'Private',
-            stat2_label: 'Consult Room',
+            stat1_num: 'Mon-Fri',
+            stat1_label: 'Pharmacy Hours',
+            stat2_num: '',
+            stat2_label: '',
             stat3_num: '100%',
-            stat3_label: 'Quality Care',
+            stat3_label: 'Pharmacy First',
             action_url: 'https://maps.google.com/?q=4+Kingsley+Park+Terrace,+Northampton+NN2+7HG,+United+Kingdom',
             action_text: 'View Pharmacy & Directions'
-          }
-        },
-        {
-          type: 'branch',
-          title: 'East London Consultation Hub',
-          content: 'Our dedicated consultation hub offering in-person health assessments, travel vaccinations, and private consultations in East London.',
-          icon: '📍',
-          metadata: {
-            address: 'East London, UK',
-            image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=800',
-            badge: 'Consultation Hub',
-            stat1_num: '7 Days',
-            stat1_label: 'Availability',
-            stat2_num: 'Private',
-            stat2_label: 'Consult Room',
-            stat3_num: 'Secure',
-            stat3_label: 'Consultations',
-            action_url: '/book-appointment',
-            action_text: 'Book Consultation'
           }
         }
       ];
@@ -139,11 +120,11 @@ const seedAboutDataIfEmpty = async () => {
     if (branchHeaderCount === 0) {
       const defaultBranchHeader = {
         type: 'branch_header',
-        title: 'Expert Care Across Multiple Locations.',
-        content: 'Both our pharmacy hubs are fully operational, delivering state-of-the-art healthcare dedicated to your comfort, precision, and privacy.',
-        icon: 'Our Pharmacy Locations',
+        title: 'Expert Pharmacy Care In Northampton.',
+        content: 'Our community pharmacy in Northampton is fully equipped, delivering professional pharmaceutical services, prescriptions, and NHS Pharmacy First consultations dedicated to your health and privacy.',
+        icon: 'Our Pharmacy Location',
         metadata: {
-          eyebrow: 'Our Pharmacy Locations'
+          eyebrow: 'Our Pharmacy Location'
         }
       };
       await AboutItem.create(defaultBranchHeader);
@@ -231,6 +212,41 @@ const getAboutItems = async (req, res) => {
   try {
     // Seed default items only if database has no items yet
     await seedAboutDataIfEmpty();
+
+    // Migration cleanups:
+    // 1. Permanently remove any fictitious East London, London, or Virtual branches
+    await AboutItem.deleteMany({
+      type: 'branch',
+      $or: [
+        { title: /East London/i },
+        { title: /Virtual/i },
+        { 'metadata.address': /London/i }
+      ]
+    });
+
+    // 2. Update branch header to remove "Multiple Locations"
+    await AboutItem.updateMany(
+      { type: 'branch_header' },
+      {
+        $set: {
+          title: 'Expert Pharmacy Care In Northampton.',
+          content: 'Our community pharmacy in Northampton is fully equipped, delivering professional pharmaceutical services, prescriptions, and NHS Pharmacy First consultations dedicated to your health and privacy.',
+          icon: 'Our Pharmacy Location',
+          'metadata.eyebrow': 'Our Pharmacy Location'
+        }
+      }
+    );
+
+    // 3. Remove consult rooms count stat from Northampton branch (only 1 consultation room, no count needed)
+    await AboutItem.updateMany(
+      { type: 'branch' },
+      {
+        $set: {
+          'metadata.stat2_num': '',
+          'metadata.stat2_label': ''
+        }
+      }
+    );
 
     const items = await AboutItem.find();
     res.status(200).json({

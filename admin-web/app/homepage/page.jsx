@@ -1587,7 +1587,7 @@ export default function HomepageCMSPage() {
                                 return { ...prev, aboutSection: { ...prev.aboutSection, features } };
                               });
                             }} 
-                            placeholder="e.g. Over two decades of trusted healthcare experience across Northampton & East London."
+                            placeholder="e.g. Over two decades of trusted healthcare experience in Northampton."
                           />
                         </div>
                       </div>

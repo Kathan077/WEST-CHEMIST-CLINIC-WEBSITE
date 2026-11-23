@@ -14,46 +14,29 @@ const resolveImage = (src) => {
 const DEFAULT_BRANCHES = [
     {
         _id: 'default-flagship',
-        title: "Northampton Branch",
-        content: "Our primary healthcare hub offering comprehensive PHARMACY services, prescriptions, and expert advice in a state-of-the-art facility.",
+        title: "Northampton Pharmacy",
+        content: "Our primary community healthcare hub offering comprehensive pharmacy services, prescriptions, and expert advice in a state-of-the-art facility.",
         icon: "",
         metadata: {
             address: "4 Kingsley Park Terrace, NN2 7HG",
             image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=800",
-            badge: "Flagship Branch",
-            stat1_num: "Daily",
-            stat1_label: "Pharmacy",
-            stat2_num: "10+",
-            stat2_label: "Consult Rooms",
+            badge: "Flagship Pharmacy",
+            stat1_num: "Mon-Fri",
+            stat1_label: "Pharmacy Hours",
+            stat2_num: "",
+            stat2_label: "",
             stat3_num: "100%",
-            stat3_label: "Quality Care",
+            stat3_label: "Pharmacy First",
             action_url: "/book-appointment",
             action_text: "Book Consultation"
-        }
-    },
-    {
-        _id: 'default-virtual',
-        title: "East London Consultation Hub",
-        content: "Our dedicated consultation hub offering in-person health assessments, travel vaccinations, and private consultations in East London.",
-        icon: "",
-        metadata: {
-            address: "East London, UK",
-            image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=800",
-            badge: "Consultation Hub",
-            stat1_num: "7 Days",
-            stat1_label: "Availability",
-            stat2_num: "Zero",
-            stat2_label: "Travel Needed",
-            stat3_num: "Secure",
-            stat3_label: "Consultations",
-            action_url: "/book-appointment",
-            action_text: "Book Pharmacy Consultation"
         }
     }
 ];
 
 const formatBranchesList = (branchItems) => {
-    return branchItems.map(item => {
+    return branchItems
+        .filter(item => !item.title?.toLowerCase().includes('east london') && !item.title?.toLowerCase().includes('virtual') && !item.metadata?.address?.toLowerCase().includes('london'))
+        .map(item => {
         const meta = {};
         if (item.metadata) {
             Object.keys(item.metadata).forEach(key => {
@@ -64,11 +47,7 @@ const formatBranchesList = (branchItems) => {
             ...item,
             metadata: {
                 address: meta.address || '',
-                image: typeof meta.image === 'undefined'
-                    ? (item.title?.toLowerCase().includes('virtual') || item.title?.toLowerCase().includes('online')
-                        ? 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=800'
-                        : 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=800')
-                    : meta.image,
+                image: meta.image || 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=800',
                 badge: meta.badge || '',
                 stat1_num: meta.stat1_num || '',
                 stat1_label: meta.stat1_label || '',
@@ -84,9 +63,9 @@ const formatBranchesList = (branchItems) => {
 };
 
 const DEFAULT_BRANCH_HEADER = {
-    eyebrow: "Our Pharmacy Locations",
-    title: "Expert Care Across Multiple Locations.",
-    lead: "Both our pharmacy hubs are fully operational, delivering state-of-the-art healthcare dedicated to your comfort, precision, and privacy."
+    eyebrow: "Our Pharmacy Location",
+    title: "Expert Pharmacy Care In Northampton.",
+    lead: "Our community pharmacy in Northampton is fully equipped, delivering professional pharmaceutical services, prescriptions, and NHS Pharmacy First consultations dedicated to your health and privacy."
 };
 
 const Branches = ({ initialBranches, initialHeader }) => {

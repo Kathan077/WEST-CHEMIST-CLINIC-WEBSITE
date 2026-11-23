@@ -62,7 +62,8 @@
    ========================================= */
 .br_unified_grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: minmax(320px, 760px);
+    justify-content: center;
     gap: 40px;
 }
 
@@ -194,10 +195,10 @@
 
 .br_pro_stats {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr)); /* Ensures rigid column isolation */
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     gap: 12px;
     margin-bottom: 35px;
-    padding: 18px 15px;
+    padding: 18px 20px;
     background: #ffffff;
     border-radius: 20px;
     border: 1px solid rgba(0, 0, 0, 0.04);

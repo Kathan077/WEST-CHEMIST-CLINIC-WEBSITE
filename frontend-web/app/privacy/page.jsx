@@ -11,9 +11,8 @@ const FALLBACK_PRIVACY = {
     {
       num: '1',
       title: 'Who We Are',
-      content: `West Chemist Pharmacy (operated by Kalki Health Ltd) provides community and healthcare pharmacy services across 2 pharmacy branches:
-• Northampton Branch (Registered Pharmacy): 4 Kingsley Park Terrace, Northampton, NN2 7HG (GPhC Reg No: 1035465)
-• East London Branch: East London Consultation Hub, UK
+      content: `West Chemist Pharmacy (operated by Kalki Health Ltd) provides community and healthcare pharmacy services from our registered pharmacy premises in Northampton:
+• Northampton Pharmacy (Registered Premises): 4 Kingsley Park Terrace, Northampton, NN2 7HG (GPhC Reg No: 1035465)
 Superintendent Pharmacist: Viren Bhatia | Contact: kalkihealthltd@gmail.com | (01604) 713297`
     },
     {
@@ -21,7 +20,7 @@ Superintendent Pharmacist: Viren Bhatia | Contact: kalkihealthltd@gmail.com | (0
       title: 'Information We Collect',
       content: `We collect only the basic information you submit when booking an appointment or contacting us:
 • Patient Details: Full name and UK mobile number.
-• Booking Preferences: Selected pharmacy branch (Northampton or East London Hub), pharmacy service, preferred date, and time slot.
+• Booking Preferences: Pharmacy service, preferred date, and time slot at our Northampton pharmacy.
 • Technical Data: Essential session cookies required for website navigation.
 Note: We do not collect online payments, and we do not request or store digital identity documents on this website.`
     },
@@ -47,7 +46,7 @@ Note: We do not collect online payments, and we do not request or store digital 
       content: `Under UK GDPR, you have the right to access, update, or request the removal of your booking records. To make an inquiry, contact us at:
 • Email: kalkihealthltd@gmail.com
 • Phone: (01604) 713297
-• Locations: Northampton Pharmacy (4 Kingsley Park Terrace, NN2 7HG) & East London Consultation Hub`
+• Location: Northampton Pharmacy, 4 Kingsley Park Terrace, Northampton, NN2 7HG`
     }
   ]
 };
@@ -108,7 +107,7 @@ export default function PrivacyPolicyPage() {
             <span className="dot">•</span>
             <span>GPhC Reg No: 1035465</span>
             <span className="dot">•</span>
-            <span>Northampton & East London, UK</span>
+            <span>Northampton, UK</span>
           </div>
         </header>
 

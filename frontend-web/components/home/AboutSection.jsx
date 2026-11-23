@@ -8,12 +8,12 @@ import './AboutSection.css';
 const DEFAULT_ABOUT = {
     title: 'Empowering Your Wellness Journey',
     subtitle: 'YOUR TRUSTED COMMUNITY PHARMACY',
-    desc: 'With over two decades of dedicated community service, West Chemist specializes in the timely provision of prescription medicines, travel health, and comprehensive patient care. We understand that managing health and medications can feel daunting  our team of experienced pharmacists and professional pharmacy staff across Northampton and East London are here to support you and your family through all stages of life.',
+    desc: 'With over two decades of dedicated community service, West Chemist specializes in the timely provision of prescription medicines, travel health, and comprehensive patient care. We understand that managing health and medications can feel daunting — our team of experienced pharmacists and professional pharmacy staff in Northampton are here to support you and your family through all stages of life.',
     image: '/images/about-pharmacist.jpg',
     yearsExperience: 'Open Daily',
     experienceLabel: 'Inc. Sat & Sun',
     features: [
-        { icon: 'award', title: 'Accredited Experience', desc: 'Over two decades of trusted healthcare experience across Northampton & East London.' },
+        { icon: 'award', title: 'Accredited Experience', desc: 'Over two decades of trusted healthcare experience in Northampton.' },
         { icon: 'users', title: 'Experienced Team', desc: 'Qualified pharmacists and healthcare staff committed to your family’s well-being.' },
         { icon: 'check-square', title: 'Timely Prescriptions', desc: 'Fast, reliable prescription dispensing and professional pharmacy services.' }
     ],

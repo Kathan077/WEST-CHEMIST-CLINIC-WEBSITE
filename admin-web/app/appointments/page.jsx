@@ -467,8 +467,7 @@ export default function AdminAppointmentsPage() {
   const [isMobile,     setIsMobile]      = useState(false);
 
   const CLINICS = [
-    "West Chemist — Northampton Branch",
-    "West Chemist — East London Consultation Hub"
+    "West Chemist — Northampton Branch"
   ];
   const [selectedBranch, setSelectedBranch] = useState("West Chemist — Northampton Branch");
 
@@ -712,7 +711,6 @@ export default function AdminAppointmentsPage() {
                 }}
               >
                 <option value="West Chemist — Northampton Branch">Northampton Branch</option>
-                <option value="West Chemist — East London Consultation Hub">East London Consultation Hub</option>
               </select>
             </div>
             <div className="adm_live_dot">Live</div>

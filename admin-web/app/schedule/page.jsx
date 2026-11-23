@@ -108,8 +108,7 @@ export default function SchedulePage() {
   };
 
   const CLINICS = [
-    "West Chemist — Northampton Branch",
-    "West Chemist — East London Consultation Hub"
+    "West Chemist — Northampton Branch"
   ];
 
   const [selectedBranch, setSelectedBranch] = useState("West Chemist — Northampton Branch");

@@ -8,8 +8,7 @@ import Footer from '../../components/layout/Footer';
 import './Booking.css';
 
 const CLINICS = [
-    "West Chemist — Northampton Branch",
-    "West Chemist — East London Consultation Hub"
+    "West Chemist — Northampton Branch"
 ];
 
 const SERVICES = [
@@ -145,7 +144,7 @@ function BookingPageInner() {
 
     // ── Always initialize with defaults (prevents SSR/client hydration mismatch) ──
     const [step, setStep] = useState(1);
-    const [formData, setFormData] = useState({ fullName: '', mobile: '', clinic: '', service: '', idType: '', fileUploaded: null, date: '', time: '', preferredTime: '' });
+    const [formData, setFormData] = useState({ fullName: '', mobile: '', clinic: 'West Chemist — Northampton Branch', service: '', idType: '', fileUploaded: null, date: '', time: '', preferredTime: '' });
     const [isScanning, setIsScanning] = useState(false);
     const [verifyComplete, setVerifyComplete] = useState(false);
     const [checks, setChecks] = useState({ mrz: 'pending', blur: 'pending', tampering: 'pending', readable: 'pending' });

@@ -533,32 +533,14 @@ export default function AboutEditorPage() {
         metadata: {
           address: '4 Kingsley Park Terrace, NN2 7HG',
           badge: 'Flagship Branch',
-          stat1_num: 'Daily',
-          stat1_label: 'Pharmacy',
-          stat2_num: '10+',
-          stat2_label: 'Consult Rooms',
+          stat1_num: 'Mon-Fri',
+          stat1_label: 'Pharmacy Hours',
+          stat2_num: '',
+          stat2_label: '',
           stat3_num: '100%',
-          stat3_label: 'Quality Care',
+          stat3_label: 'Pharmacy First',
           action_url: '/book-appointment',
           action_text: 'Book Consultation'
-        }
-      },
-      {
-        type: 'branch',
-        title: 'East London Consultation Hub',
-        content: 'A convenient consultation pharmacy offering rapid health tests, travel vaccinations, and private consultations in East London.',
-        icon: '📍',
-        metadata: {
-          address: '102 Mile End Rd, London E1 4UN',
-          badge: 'Consultation Hub',
-          stat1_num: '7 Days',
-          stat1_label: 'Availability',
-          stat2_num: 'Zero',
-          stat2_label: 'Travel Needed',
-          stat3_num: 'Secure',
-          stat3_label: 'Consultations',
-          action_url: '/book-appointment',
-          action_text: 'Book Pharmacy Consultation'
         }
       }
     ];
@@ -1636,7 +1618,7 @@ export default function AboutEditorPage() {
                           onClick={handleSeedDefaultBranches}
                           style={{ margin: '8px 0 0', background: 'var(--purple)', color: '#fff' }}
                         >
-                          ✨ Seed Default Hubs (Northampton & East London)
+                          ✨ Seed Default Hub (Northampton Pharmacy)
                         </button>
                       </div>
                     ) : (

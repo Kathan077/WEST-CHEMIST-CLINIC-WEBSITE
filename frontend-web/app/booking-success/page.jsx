@@ -10,8 +10,7 @@ import Footer from '../../components/layout/Footer';
 import '../book-appointment/Booking.css';
 
 const CLINICS = [
-    "West Chemist — Northampton Branch",
-    "West Chemist — East London Consultation Hub"
+    "West Chemist — Northampton Branch"
 ];
 
 const SERVICES = [
@@ -267,7 +266,7 @@ function BookingSuccessContent() {
     const [fullName, setFullName] = useState(searchParams.get('fullName') || 'Patient');
     const [mobile, setMobile] = useState(searchParams.get('mobile') || '');
     const [service, setService] = useState(searchParams.get('service') || 'Pharmacy Service');
-    const [clinic, setClinic] = useState(searchParams.get('clinic') || 'West Chemist');
+    const [clinic, setClinic] = useState(searchParams.get('clinic') || 'West Chemist — Northampton Branch');
     const [date, setDate] = useState(searchParams.get('date') || '');
     const [time, setTime] = useState(searchParams.get('time') || '');
     const [patientId, setPatientId] = useState(searchParams.get('patientId') || '57849182');
@@ -279,7 +278,7 @@ function BookingSuccessContent() {
 
     // Reschedule & Edit details states
     const [isEditing, setIsEditing] = useState(false);
-    const [editClinic, setEditClinic] = useState(searchParams.get('clinic') || 'West Chemist');
+    const [editClinic, setEditClinic] = useState(searchParams.get('clinic') || 'West Chemist — Northampton Branch');
     const [editService, setEditService] = useState(searchParams.get('service') || 'PHARMACY Service');
     const [editDate, setEditDate] = useState(searchParams.get('date') || '');
     const [editTime, setEditTime] = useState(searchParams.get('time') || '');

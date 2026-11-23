@@ -454,8 +454,7 @@ export default function AdminPatientsPage() {
   };
 
   const CLINICS = [
-    "West Chemist — Northampton Branch",
-    "West Chemist — East London Consultation Hub"
+    "West Chemist — Northampton Branch"
   ];
   const [selectedBranch, setSelectedBranch] = useState("West Chemist — Northampton Branch");
 
@@ -908,7 +907,6 @@ export default function AdminPatientsPage() {
               }}
             >
               <option value="West Chemist — Northampton Branch">Northampton Branch</option>
-              <option value="West Chemist — East London Consultation Hub">East London Consultation Hub</option>
             </select>
           </div>
         </header>

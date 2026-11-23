@@ -538,7 +538,7 @@ const defaultPages = [
   {
     key: "about-us",
     title: "About West Chemist Clinic",
-    content: "West Chemist Clinic is a leading private healthcare provider offering a comprehensive suite of PHARMACY treatments, diagnostics, vaccinations, and weight management services. Run by GPhC registered PHARMACY pharmacists, we combine PHARMACY excellence with patient-centered care to deliver top-tier PHARMACY solutions directly in your community. Our state-of-the-art facilities offer a welcoming environment with private consulting rooms and same-day availability.",
+    content: "West Chemist Clinic is a leading private healthcare provider offering a comprehensive suite of PHARMACY treatments, diagnostics, vaccinations, and weight management services. Run by GPhC registered PHARMACY pharmacists, we combine PHARMACY excellence with patient-centered care to deliver top-tier PHARMACY solutions directly in your community. Our state-of-the-art facilities offer a welcoming environment with a private consultation room and same-day availability.",
     section: "about"
   },
   {
